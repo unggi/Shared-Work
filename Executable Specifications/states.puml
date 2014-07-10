@@ -1,0 +1,33 @@
+@startuml
+!include Skin.iuml
+state Capture {
+state Executed
+state Amending
+state Confirmed {
+state WaitingForCheckout
+state CheckedOut
+[*] --> WaitingForCheckout : BlockConfirm
+WaitingForCheckout --> CheckedOut : BlockCheckedOut
+CheckedOut --> [*] : Completed
+}
+state Cancelled
+[*] --> Executed : BlockExecute
+Executed --> Confirmed : BlockConfirm
+Confirmed --> Amending : BlockAmend
+Amending --> [*] : Completed
+Confirmed --> Cancelled : Completed
+Cancelled --> [*] : BlockCancel
+}
+[*] --> Capture : BlockExecute
+Capture --> [*] : Completed
+@enduml
+@startuml
+!include Skin.iuml
+state Waiting
+state Sleep
+state Awake
+[*] --> Sleep : Initialize
+Sleep --> Awake : Run
+Awake --> Waiting : Wait
+Waiting --> [*] : Kill
+@enduml

@@ -1,0 +1,54 @@
+
+skinparam class {
+    BackgroundColor #f9b4b4
+    BorderColor black
+    ArrowColor black
+}
+
+
+skinparam backgroundColor white
+
+skinparam state {
+    StartColor #7dc8c8
+    EndColor MediumBlue
+    BackgroundColor #7dc8c8
+    BackgroundColor<<WAIT>> #f9b4b4
+    BorderColor<<WAIT>> #f9b4b4
+    BorderColor #7dc8c8
+    FontName Calibri
+    FontSize 18
+}
+
+!define ACTION_STATE <b><size:10><<ACTION>></size></b>\n<size:18>
+!define WAIT_STATE <b><size:10><<WAIT>></size></b>\n<size:18>
+!define EXCEPTION_STATE <b><size:10><<EXCEPTION>></size></b>\n<size:18>
+!define MESSAGE <size:10><b><color:666666>
+!define STATE_METHOD <size:8><i>
+
+skinparam sequence {
+    ActorBorderColor #444444
+    ActorBackgroundColor #dddddd
+    ArrowColor #185F5F
+    LifeLineBackgroundColor #9E2727
+    LifeLineBorderColor #9E2727
+    ParticipantBackgroundColor #185F5F
+    ParticipantBorderColor #185F5F
+    ParticipantFontColor #EEEEEE
+    ParticipantFontStyle bold
+    ParticipantFontName Calibri
+    ArrowFontName Calibri
+    ArrowFontSize 10
+    ArrowFontColor #666666
+    ArrowFontStyle plain
+}
+
+skinparam object {
+    ArrowColor #
+    BackgroundColor #add1b2
+    BorderColor #555555
+    FontSize 12
+    FontName Calibri
+    FontStyle plain
+
+}
+

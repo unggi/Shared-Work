@@ -1,0 +1,128 @@
+package nomura.uml
+
+import scala.collection._
+import java.io.{PrintWriter, FileOutputStream}
+
+
+trait StateModel {
+
+  type StateStack = mutable.Stack[CompositeState]
+
+  /**
+   * Stack is used to hold traversal state as a machine is build or as a machine is executed.
+   */
+  val stack = new StateStack()
+  /**
+   * The model root is the top node of the whole model but the initial model
+   */
+  var modelRoot: CompositeState = null
+
+  /**
+   * Create Plant UML rendering of this state machine.
+   * @param name The base name of the output file for rendering. The output will be "name.puml".
+   */
+  def generateUml(name: String) {
+
+    val fstrm = new FileOutputStream(name + ".puml")
+    val pw = new PrintWriter(fstrm)
+
+    new UmlGenerator(this).generate(pw)
+    pw.flush()
+    pw.close()
+    fstrm.close()
+  }
+
+  def model(name: String)(body: => Unit) {
+    StateModelRegistry.find(name) match {
+      case Some(model) =>
+        modelRoot = model.modelRoot
+      case None =>
+        // Create a new state model and add it to the stack without a parent
+        val state = new CompositeState(name, None)
+        stack.push(state)
+        body
+        stack.pop()
+        modelRoot = state
+        StateModelRegistry.register(name, this)
+    }
+    require(modelRoot != null)
+    generateUml(name)
+
+  }
+
+  def state[T](name: String)(onEntryAction: (T) => Unit) = {
+    // Create a new state and add it to the parent
+    val state = new ActionState[T](name, Some(stack.top))(onEntryAction)
+    stack.top.states.put(name, state)
+
+  }
+
+  def composite(name: String)(body: => Unit) = {
+
+    // Create a new state model and add it to the caller
+    val state = new CompositeState(name, Some(stack.top))
+    stack.top.states.put(name, state)
+    stack.push(state)
+    require(state.findState(CompositeState.START_STATE).isDefined, s"Did not find start state")
+    body
+    stack.pop()
+
+  }
+
+  def transition() = new {
+
+    def from(fromState: InitialState) = new {
+      require(!stack.isEmpty)
+      val myCompositeStartNode = stack.top.start
+
+      def to(t: String) = new {
+        val toState = stack.top.findState(t)
+        require(toState.isDefined, s"To State not found <$t>")
+
+        def on(event: Any) = addTransition(myCompositeStartNode, toState.get, findTypeName(event))
+
+      }
+    }
+
+    def from(f: String) = new {
+
+      require(!stack.isEmpty)
+
+      val fromState = stack.top.findState(f)
+      require(fromState.isDefined, s"From State not found <$f>")
+
+      def to(t: String) = new {
+        val toState = stack.top.findState(t)
+        require(toState.isDefined, s"To State not found <$t>")
+
+        def on(event: Any) = addTransition(fromState.get, toState.get, findTypeName(event))
+
+      }
+
+      def to(toState: FinalState) = new {
+        require(!stack.isEmpty)
+        val myCompositeFinalNode = stack.top.terminal
+
+        def on(event: Any) = addTransition(myCompositeFinalNode, toState, findTypeName(event))
+
+      }
+    }
+  }
+
+  protected def addTransition(from: State, to: State, on: Class[_]) = from.transition(to, on)
+
+  protected def findTypeName(instance: Any): Class[_] =
+    instance.getClass.getName match {
+      case cls: String if cls.endsWith("$") =>
+        val className = cls.dropRight(1)
+        Class.forName(className)
+      case cls: String =>
+        Class.forName(cls)
+      case _ =>
+        /* Should never happen */
+        null
+    }
+
+}
+
+

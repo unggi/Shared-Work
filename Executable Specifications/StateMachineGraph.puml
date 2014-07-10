@@ -1,0 +1,47 @@
+@startuml
+
+!include Skin.iuml
+
+skinparam object {
+    BackgroundColor<<Active>> darkgreen
+    FontColor<<Active>> darkgrey
+    FontWeight<<Active>> bold
+ }
+
+object C00 <<Active>>
+object C11 <<Active>>
+object C21 <<Active>>
+
+C00 -d-> I11
+C00 -d-> F11
+C00 -d-> S11
+C00 -d-> S12
+C00 -d-> C11
+
+I11 -> S11
+S11 -> S12
+S12 -> C11
+C11 -> F11
+
+C11 -d-> I21
+C11 -d-> F21
+C11 -d-> S21
+C11 -d-> S22
+C11 -d-> C21
+
+I21 -> S21
+S21 -> S22
+S22 -> C21
+C21 -> F21
+
+C21 -d-> I31
+C21 -d-> F31
+C21 -d-> S31
+C21 -d-> S32
+
+
+I31 -> S31
+S31 -> S32
+S32 -> F31
+
+@enduml

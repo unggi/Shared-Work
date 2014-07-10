@@ -1,0 +1,117 @@
+package nomura.uml
+
+import akka.actor.Actor
+import akka.event.Logging
+import nomura.uml.LifeCycleEvents.{Completed, QueryState}
+import scala.collection.mutable
+
+abstract class StateMachine(val name: String) extends Actor with StateModel {
+
+  val log = Logging(context.system, this)
+
+  /**
+   * Useful String constants
+   */
+  val start = CompositeState.START_STATE
+  val terminal = CompositeState.TERMINAL_STATE
+
+  var currentState: State = _
+
+  val selfMessageQueue = new mutable.Queue[Any]
+
+  override def preStart() {
+
+    require(modelRoot != null, "Model Root hasn't been initialized - construction sequence error")
+
+    //
+    // Then move to the first state which can receive an event and is reachable by control flow
+    // from the start node.
+    //
+    currentState = flow(modelRoot.start)
+  }
+
+  def receive = {
+    case query: QueryState =>
+      sender() ! currentState.name
+    case event =>
+      //
+      // Make sure the sender didn't send an object rather than a class instance.
+      // This is a common accident!!!
+      require(!event.getClass.getSimpleName.endsWith("$"),
+        s"""Did you accidentally forget to instantiate a message?
+           |Found a static class event ${event.getClass.getCanonicalName}""".stripMargin)
+
+      // Process an external event
+      processEvent.applyOrElse(event, unhandled)
+
+      // then process self messages that were sent during the action method of the
+      // target state.
+      for (msg <- selfMessageQueue)
+        processEvent.applyOrElse(msg, unhandled)
+
+  }
+
+  def processEvent: Receive = {
+
+    case event: Any =>
+
+      log.info(s"\n\t>>>> INSTANCE[$name] in STATE[${currentState.parent.getOrElse(modelRoot).name}/${currentState.name}] received EVENT[${event.getClass.getSimpleName}] ")
+
+      currentState.transitions.get(event.getClass) match {
+
+        case Some(targetState: CompositeState) =>
+          currentState = targetState.start
+          processEvent.applyOrElse(event, unhandled)
+
+        case Some(finalState: FinalState) =>
+          unhandled(event)
+
+        case Some(initialState: InitialState) =>
+          processEvent.applyOrElse(event, unhandled)
+
+        case Some(targetState: State) =>
+          currentState = targetState
+          currentState.invoke(event)
+
+        case _ =>
+          unhandled(_)
+      }
+
+      // follow the control flow from the new state
+      currentState = flow(currentState)
+  }
+
+  def flow(from: State): State =
+    from.transitionForEvent(classOf[Completed]) match {
+
+      case Some(targetState: CompositeState) =>
+        targetState.start.invoke(Completed())
+        flow(targetState.start)
+
+      case Some(targetState: InitialState) =>
+        flow(targetState)
+
+      case Some(targetState: FinalState) =>
+        if (targetState.hasParent && targetState.parent.get != modelRoot)
+          flow(targetState.parent.get)
+        else
+          targetState
+
+      case Some(targetState: State) =>
+        targetState.invoke(Completed())
+        flow(targetState)
+
+      case None =>
+        from
+
+    }
+
+  override def unhandled(event: Any): Unit =
+    log.error(s"Unhandled message type in state [${currentState.name}]: no transition for [${event.getClass}}]")
+
+  protected def sendSelf(message: Any): Unit =
+    selfMessageQueue.enqueue(message)
+
+}
+
+
