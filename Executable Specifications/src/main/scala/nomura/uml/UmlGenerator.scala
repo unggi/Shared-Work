@@ -2,7 +2,6 @@ package nomura.uml
 
 import java.io.PrintWriter
 import scala.collection._
-import nomura.uml.statemachine.UmlTransitions
 
 class StateVisitor(model: CompositeState) {
 
