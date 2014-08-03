@@ -2,22 +2,31 @@ package spg
 
 import java.io._
 import java.sql.Time
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.zip.{ZipEntry, ZipFile, ZipInputStream}
+import java.util.zip.ZipFile
+
 import au.com.bytecode.opencsv.CSVReader
-import au.com.bytecode.opencsv.bean.{ColumnPositionMappingStrategy, CsvToBean}
 import org.neo4j.graphdb._
-import org.neo4j.graphdb.factory.{GraphDatabaseSettings, GraphDatabaseFactory}
 import org.neo4j.unsafe.batchinsert.BatchInserters
+
 import scala.collection.JavaConversions._
+import scala.collection.mutable
+
+// TODO Support for numeric data types in graph model
+// TODO Support for date data types in graph model
+// TODO Link counterparties to sales through coverage relation
+// TODO Link trades to counterparties
+// TODO Link trades to sales? Not sure if sales reps are in the trade object
+// TODO Link trades to books
 
 object DataLoader {
 
   val date = "20140721"
   val TRADE_HISTORY = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\mbs-batch\\data\\HistoricalTradesSolrExtract_" + date + ".txt"
   val CMO_SECURITIES = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\solr-security-feed\\data\\cmo." + date + ".zip"
-
+  val POOL_SECURITIES = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\solr-security-feed\\data\\pool." + date + ".zip"
+  val COUNTERPARTY_COVERAGE = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\mbs-batch\\data\\CounterpartySalesExtractForSolr_" + date + ".txt"
+  val COUNTERPARTIES = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\mbs-batch\\data\\CounterpartyExtractForSolr_" + date + ".txt"
   val DB_PATH = "target/neo4j-test-loading-db"
 
   def main(args: Array[String]): Unit = {
@@ -27,38 +36,155 @@ object DataLoader {
 
     val db = createBatchInserter(DB_PATH)
 
+    val counterparty = new File(COUNTERPARTIES)
+    require(counterparty.exists, s"Counterparty daily file does not exist or cannot be read: ${counterparty}")
+
+    val countpartyCoverage = new File(COUNTERPARTY_COVERAGE)
+    require(countpartyCoverage.exists, s"Counterparty daily file does not exist or cannot be read: ${countpartyCoverage}")
+
     val cmo = new File(CMO_SECURITIES)
     require(cmo.exists(), s"CMO File does not exist or cannot be read: ${cmo}")
 
-    val cmoRecordCount = processCmoSecurities(cmo, db)
-      println(s"Processed ${cmoRecordCount} CMO security records")
-
-    System.exit(1)
+    val pool = new File(POOL_SECURITIES)
+    require(pool.exists(), s"CMO File does not exist or cannot be read: ${cmo}")
 
     val history = new File(TRADE_HISTORY)
     require(history.exists, "History file not found or cannot be opened.")
 
+    val cmoRecordCount = processCmoSecurities(cmo, db)
+    println(s"Processed ${cmoRecordCount} CMO security records")
+
+    val counterpartyCount = processCounterparties(counterparty, db)
+    println(s"Processed ${counterpartyCount} Counterparty records.")
+
+    val counterpartyCoverageRecordCount = processCounterpartySalesCoverage(countpartyCoverage, db)
+    println(s"Processed ${counterpartyCoverageRecordCount} Counterparty records.")
+
+
+    val poolRecordCount = processPoolSecurities(pool, db)
+    println(s"Processed ${poolRecordCount} Pool security records")
+
+
     println(s"Loading  Trade History File\n\nHistory File Path = [${TRADE_HISTORY}]\n")
-
-
     val tradeRecordCount = processTradeHistory(history, db)
-
     println(s"Processed Trade ${tradeRecordCount} records")
 
     db.shutdown()
   }
 
+  val IntClass = classOf[Int]
+  val DoubleClass = classOf[Double]
+  val StringClass = classOf[String]
+  val DateClass = classOf[Date]
+  val TimeClass = classOf[Time]
+
+  def copyRecordToNode(beanClass: Class[_], node: Node, fields: IndexedSeq[String], record: Array[String]): Unit = {
+
+    for (i <- 0 until fields.size) {
+      val fieldName = fields(i)
+      val textValue = record(i)
+      if (textValue.length != 0) {
+
+        val field = beanClass.getDeclaredField(fieldName)
+        require(field != null, s"Field not found: bean = ${beanClass.getSimpleName} field = ${fieldName}")
+
+        try {
+          field.getType match {
+            case IntClass =>
+              val integer = FieldFormatter.asInteger(textValue)
+              node.setProperty(fieldName, integer.get)
+            case DoubleClass =>
+              val dbl = FieldFormatter.asDouble(textValue)
+              node.setProperty(fieldName, dbl.get)
+            case DateClass =>
+              val date = FieldFormatter.asDate(textValue)
+              node.setProperty(fieldName, date.get.getTime)
+            case TimeClass =>
+              val time = FieldFormatter.asTime(textValue)
+              node.setProperty(fieldName, time.get.getTime)
+            case StringClass =>
+              node.setProperty(fieldName, textValue)
+            case x =>
+              println(s"Unknown Field Type Class = $beanClass Field = $fieldName FieldType = ${x.getSimpleName} value = $textValue")
+          }
+        } catch {
+          case e => println(s"Exception for $beanClass field = $fieldName type = ${field.getType.getSimpleName} value ${e.getMessage}")
+        }
+      }
+    }
+  }
+
+  def processCounterparties(path: File, db: GraphDatabaseService): Int = {
+    val label = DynamicLabel.label("Counterparty")
+
+    val map = mutable.HashMap[String, String](
+      "account_id" -> "AccountID",
+      "cp_key" -> "CPKey",
+      "sname" -> "ShortName",
+      "name" -> "Name",
+      "recent" -> "Recent",
+      "alias" -> "Alias"
+    )
+
+    for ((k, v) <- map) {
+      println(s"Key = $k Value = $v")
+    }
+
+    CSV(path, 1000, ',', Some(map)) {
+      (line, fields, record) =>
+        val node = db.createNode(label)
+        copyRecordToNode(classOf[CounterpartyBean], node, fields, record)
+    }
+  }
+
+
+  def processCounterpartySalesCoverage(path: File, db: GraphDatabaseService): Int = {
+    val label = DynamicLabel.label("CounterpartyCoverage")
+
+    val map = mutable.HashMap(
+      "cpkeyRepId" -> "ID", "cp_key" -> "CounterpartyID", "repId" -> "RepID", "salesName" -> "SalesName")
+
+    for ((k, v) <- map) {
+      println(s"Key = $k Value = $v")
+    }
+
+    CSV(path, 1000, ',', Some(map)) {
+      (line, fields, record) =>
+        val node = db.createNode(label)
+        copyRecordToNode(classOf[CounterpartySalesCoverageBean], node, fields, record)
+    }
+  }
+
+  val securityMap = new mutable.HashMap[String, Long]()
+
   def processCmoSecurities(path: File, db: GraphDatabaseService): Int = {
     val label = DynamicLabel.label("Security")
-    CSV(path, 100, '|') {
+    // Map Field Names
+    val map = mutable.HashMap(
+      "ESMP" -> "ESMID", "CSP" -> "CUSIP"
+    )
+
+    for ((k, v) <- map) {
+      println(s"Key = $k Value = $v")
+    }
+
+    CSV(path, 100000, '|', Some(map)) {
       (line, fields, record) =>
-        val cmo = new CmoBean()
         val node = db.createNode(label)
-        for (i <- 0 until record.size) {
-          FieldAccessor.setField(cmo, fields(i), record(i))
-          val propValue = FieldAccessor.getField(cmo, fields(i))
-          node.setProperty(fields(i), propValue)
-        }
+        copyRecordToNode(classOf[CmoBean], node, fields, record)
+        securityMap.put(node.getProperty("CSP").asInstanceOf[String], node.getId)
+    }
+  }
+
+  def processPoolSecurities(path: File, db: GraphDatabaseService): Int = {
+    val label = DynamicLabel.label("Security")
+    CSV(path, 100000, '|') {
+      (line, fields, record) =>
+
+        val pool = new PoolBean()
+        val node = db.createNode(label)
+        copyRecordToNode(pool.getClass(), node, fields, record)
+        securityMap.put(pool.CSP, node.getId)
     }
   }
 
@@ -67,19 +193,20 @@ object DataLoader {
 
     CSV(path, 100000) {
       (line, fields, record) =>
-        val bean = new TradeBean()
-
         val node = db.createNode(label)
-        for (i <- 0 until record.size) {
-          FieldAccessor.setField(bean, fields(i), record(i))
-          val propValue = FieldAccessor.getField(bean, fields(i))
-          node.setProperty(fields(i), propValue)
-        }
+        copyRecordToNode(classOf[TradeBean], node, fields, record)
+      //        securityMap.get(bean.Cusip) match {
+      //          case Some(id) =>
+      //            node.createRelationshipTo(db.getNodeById(id), Relationships.PRODUCT)
+      //          case None =>
+      //            println(s"Security not found: ${bean.Cusip}")
+      //        }
     }
   }
 
-
-  def CSV(path: File, interval: Int, delimiter: Char = '~')(block: (Int, Array[String], Array[String]) => Unit): Int = {
+  def CSV(path: File, interval: Int, delimiter: Char = '~',
+          fieldMap: Option[mutable.HashMap[String, String]] = None)
+         (block: (Int, Array[String], Array[String]) => Unit): Int = {
 
     require(path.exists(), s"[${path}] not found")
 
@@ -97,7 +224,24 @@ object DataLoader {
 
     val header: Array[String] = reader.readNext()
 
-    val fields = for (fld <- header) yield fld
+    val fields =
+      for (fld <- header if (fld.length > 0))
+      yield
+        if (fieldMap.isDefined)
+          fieldMap.get.get(fld).getOrElse(fld)
+        else
+          fld
+
+    println(s" ======== >> Processing ${path.getName}")
+    println(s"There are ${header.size} header columns in each input line")
+    println(s"There are ${fields.size} fields in the data object")
+
+    println()
+    println("Fields { ")
+    for (f <- fields) {
+      println(s"  ${f} ")
+    }
+    println("}")
 
     val startTime = new Date().getTime
 

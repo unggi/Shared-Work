@@ -4,8 +4,8 @@ import java.sql.Time
 import java.util.Date
 
 class CmoBean {
-  var ESMP: String = ""
-  var CSP: String = ""
+  var ESMID: String = ""
+  var CUSIP: String = ""
   var SecurityType: String = ""
   var AnnouncementDate: Date = _
   var Description: String = ""
@@ -32,7 +32,7 @@ class CmoBean {
   var CurrentFactorEffectiveDate: Date = _
   var IsMtgePaidOff: String = ""
   var MtgeCMOGroup: String = ""
-  var IsRegS: Int = 0
+  var IsRegS: String = ""
   var BMT: String = ""
   var ISIN: String = ""
   var dataSource: String = ""

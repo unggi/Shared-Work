@@ -1,17 +1,18 @@
 package spg
 
-import java.io.InvalidClassException
 import java.sql.Time
 import java.text.SimpleDateFormat
 import java.util.Date
 
-import scala.reflect.macros.ParseException
-import scala.util.{Failure, Success, Try}
+import scala.util.{Success, Try}
 
 object FieldFormatter {
 
   import java.lang.Double._
   import java.lang.Integer._
+
+  val dateFormats = List("yyyy-MM-dd", "yyyyMMdd")
+  val timeFormats = List("yyyy-MM-dd HH:mm:ss", "yyyyMMdd HH:mm:ss")
 
   val ClassOfDouble = classOf[Double]
   val ClassOfInt = classOf[Int]
@@ -27,11 +28,14 @@ object FieldFormatter {
   def format(value: String): String = value
 
   def format(value: Time): String =
-    new SimpleDateFormat("yyyyMMdd HH:mm:ss").format(value)
+    if (value != null)
+      new SimpleDateFormat(timeFormats(0)).format(value)
+    else
+      ""
 
   def format(value: Date): String =
     if (value != null)
-      new SimpleDateFormat("yyyyMMdd").format(value)
+      new SimpleDateFormat(dateFormats(0)).format(value)
     else
       ""
 
@@ -51,24 +55,28 @@ object FieldFormatter {
 
   def asString(input: String): Try[String] = Success(input)
 
-  def asDate(input: String): Try[Date] =
-    Try(new SimpleDateFormat("yyyyMMdd").parse(input)) orElse
-      Try(new SimpleDateFormat("yyyyMMdd").parse(input))
+  def asDate(input: String): Try[Date] = {
 
-  def asTime(input: String): Try[Time] =
-    Try(new SimpleDateFormat("yyyyMMdd HH:mm:ss").parse(input).asInstanceOf[Time]) orElse
-      Try(new SimpleDateFormat("yyyy-MM=dd HH:mm:ss").parse(input).asInstanceOf[Time])
-
-
-  def parse(input: String, cls: Class[_]): Try[Any] =
-    cls match {
-      case ClassOfDouble => Try(parseDouble(input))
-      case ClassOfInt => Try(parseInt(input))
-      case ClassOfString => Try(input)
-      case ClassOfDate => Try(new SimpleDateFormat("yyyyMMdd").parse(input)) orElse
-        Try(new SimpleDateFormat("yyyyy-MM-dd"))
-      case ClassOfTime => Try(new SimpleDateFormat("yyyyMMdd HH:mm:ss").parse(input).asInstanceOf[Time]) orElse
-        Try(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(input).asInstanceOf[Time])
-      case _ => Failure(new InvalidClassException(s"${cls.getCanonicalName} is not a supported class type"))
+    Try {
+      val format1 = new SimpleDateFormat(dateFormats(0))
+      format1.setLenient(false)
+      format1.parse(input)
+    } orElse Try {
+      val format2 = new SimpleDateFormat(dateFormats(1))
+      format2.setLenient(false)
+      format2.parse(input)
     }
+  }
+
+  def asTime(input: String): Try[Time] = {
+    Try {
+      val format1 = new SimpleDateFormat(timeFormats(0))
+      format1.setLenient(false)
+      new Time(format1.parse(input).getTime)
+    } orElse Try {
+      val format2 = new SimpleDateFormat(timeFormats(1))
+      format2.setLenient(false)
+      new Time(format2.parse(input).getTime)
+    }
+  }
 }
