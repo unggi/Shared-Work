@@ -7,5 +7,5 @@ import org.neo4j.graphdb.RelationshipType;
  */
 
 enum Relationships implements RelationshipType {
-    KNOWS
+    PRODUCT
 }

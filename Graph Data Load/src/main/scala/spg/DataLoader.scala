@@ -2,159 +2,276 @@ package spg
 
 import java.io._
 import java.sql.Time
-import java.text.SimpleDateFormat
-import java.util
 import java.util.Date
-import java.util.Formatter.DateTime
+import java.util.zip.ZipFile
+
 import au.com.bytecode.opencsv.CSVReader
-import au.com.bytecode.opencsv.bean.{ColumnPositionMappingStrategy, CsvToBean}
-import org.neo4j.cypher.internal.compiler.v1_9.symbols.RelationshipType
 import org.neo4j.graphdb._
-import org.neo4j.graphdb.factory.{GraphDatabaseSettings, GraphDatabaseFactory}
 import org.neo4j.unsafe.batchinsert.BatchInserters
 
-import scala.collection.mutable.ListBuffer
+import scala.collection.JavaConversions._
+import scala.collection.mutable
+
+// TODO Support for numeric data types in graph model
+// TODO Support for date data types in graph model
+// TODO Link counterparties to sales through coverage relation
+// TODO Link trades to counterparties
+// TODO Link trades to sales? Not sure if sales reps are in the trade object
+// TODO Link trades to books
 
 object DataLoader {
 
-  val TRADE_HISTORY = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\mbs-batch\\data\\HistoricalTradesSolrExtract_20140702.txt"
-
+  val date = "20140721"
+  val TRADE_HISTORY = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\mbs-batch\\data\\HistoricalTradesSolrExtract_" + date + ".txt"
+  val CMO_SECURITIES = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\solr-security-feed\\data\\cmo." + date + ".zip"
+  val POOL_SECURITIES = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\solr-security-feed\\data\\pool." + date + ".zip"
+  val COUNTERPARTY_COVERAGE = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\mbs-batch\\data\\CounterpartySalesExtractForSolr_" + date + ".txt"
+  val COUNTERPARTIES = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\mbs-batch\\data\\CounterpartyExtractForSolr_" + date + ".txt"
   val DB_PATH = "target/neo4j-test-loading-db"
 
-  def CSV(path: File, messageFrequency: Int)(block: (Int, Array[String], Array[String]) => Unit): Int = {
+  def main(args: Array[String]): Unit = {
 
-    val reader = new CSVReader(new InputStreamReader(new FileInputStream(path)), '~', '\000')
-    var record: Array[String] = reader.readNext()
+    // Initialize Neo4J configuration
+    //    createConfiguration()
 
-    val fields = for (fld <- record) yield fld
+    val db = createBatchInserter(DB_PATH)
+
+    val counterparty = new File(COUNTERPARTIES)
+    require(counterparty.exists, s"Counterparty daily file does not exist or cannot be read: ${counterparty}")
+
+    val countpartyCoverage = new File(COUNTERPARTY_COVERAGE)
+    require(countpartyCoverage.exists, s"Counterparty daily file does not exist or cannot be read: ${countpartyCoverage}")
+
+    val cmo = new File(CMO_SECURITIES)
+    require(cmo.exists(), s"CMO File does not exist or cannot be read: ${cmo}")
+
+    val pool = new File(POOL_SECURITIES)
+    require(pool.exists(), s"CMO File does not exist or cannot be read: ${cmo}")
+
+    val history = new File(TRADE_HISTORY)
+    require(history.exists, "History file not found or cannot be opened.")
+
+    val cmoRecordCount = processCmoSecurities(cmo, db)
+    println(s"Processed ${cmoRecordCount} CMO security records")
+
+    val counterpartyCount = processCounterparties(counterparty, db)
+    println(s"Processed ${counterpartyCount} Counterparty records.")
+
+    val counterpartyCoverageRecordCount = processCounterpartySalesCoverage(countpartyCoverage, db)
+    println(s"Processed ${counterpartyCoverageRecordCount} Counterparty records.")
+
+
+    val poolRecordCount = processPoolSecurities(pool, db)
+    println(s"Processed ${poolRecordCount} Pool security records")
+
+
+    println(s"Loading  Trade History File\n\nHistory File Path = [${TRADE_HISTORY}]\n")
+    val tradeRecordCount = processTradeHistory(history, db)
+    println(s"Processed Trade ${tradeRecordCount} records")
+
+    db.shutdown()
+  }
+
+  val IntClass = classOf[Int]
+  val DoubleClass = classOf[Double]
+  val StringClass = classOf[String]
+  val DateClass = classOf[Date]
+  val TimeClass = classOf[Time]
+
+  def copyRecordToNode(beanClass: Class[_], node: Node, fields: IndexedSeq[String], record: Array[String]): Unit = {
+
+    for (i <- 0 until fields.size) {
+      val fieldName = fields(i)
+      val textValue = record(i)
+      if (textValue.length != 0) {
+
+        val field = beanClass.getDeclaredField(fieldName)
+        require(field != null, s"Field not found: bean = ${beanClass.getSimpleName} field = ${fieldName}")
+
+        try {
+          field.getType match {
+            case IntClass =>
+              val integer = FieldFormatter.asInteger(textValue)
+              node.setProperty(fieldName, integer.get)
+            case DoubleClass =>
+              val dbl = FieldFormatter.asDouble(textValue)
+              node.setProperty(fieldName, dbl.get)
+            case DateClass =>
+              val date = FieldFormatter.asDate(textValue)
+              node.setProperty(fieldName, date.get.getTime)
+            case TimeClass =>
+              val time = FieldFormatter.asTime(textValue)
+              node.setProperty(fieldName, time.get.getTime)
+            case StringClass =>
+              node.setProperty(fieldName, textValue)
+            case x =>
+              println(s"Unknown Field Type Class = $beanClass Field = $fieldName FieldType = ${x.getSimpleName} value = $textValue")
+          }
+        } catch {
+          case e => println(s"Exception for $beanClass field = $fieldName type = ${field.getType.getSimpleName} value ${e.getMessage}")
+        }
+      }
+    }
+  }
+
+  def processCounterparties(path: File, db: GraphDatabaseService): Int = {
+    val label = DynamicLabel.label("Counterparty")
+
+    val map = mutable.HashMap[String, String](
+      "account_id" -> "AccountID",
+      "cp_key" -> "CPKey",
+      "sname" -> "ShortName",
+      "name" -> "Name",
+      "recent" -> "Recent",
+      "alias" -> "Alias"
+    )
+
+    for ((k, v) <- map) {
+      println(s"Key = $k Value = $v")
+    }
+
+    CSV(path, 1000, ',', Some(map)) {
+      (line, fields, record) =>
+        val node = db.createNode(label)
+        copyRecordToNode(classOf[CounterpartyBean], node, fields, record)
+    }
+  }
+
+
+  def processCounterpartySalesCoverage(path: File, db: GraphDatabaseService): Int = {
+    val label = DynamicLabel.label("CounterpartyCoverage")
+
+    val map = mutable.HashMap(
+      "cpkeyRepId" -> "ID", "cp_key" -> "CounterpartyID", "repId" -> "RepID", "salesName" -> "SalesName")
+
+    for ((k, v) <- map) {
+      println(s"Key = $k Value = $v")
+    }
+
+    CSV(path, 1000, ',', Some(map)) {
+      (line, fields, record) =>
+        val node = db.createNode(label)
+        copyRecordToNode(classOf[CounterpartySalesCoverageBean], node, fields, record)
+    }
+  }
+
+  val securityMap = new mutable.HashMap[String, Long]()
+
+  def processCmoSecurities(path: File, db: GraphDatabaseService): Int = {
+    val label = DynamicLabel.label("Security")
+    // Map Field Names
+    val map = mutable.HashMap(
+      "ESMP" -> "ESMID", "CSP" -> "CUSIP"
+    )
+
+    for ((k, v) <- map) {
+      println(s"Key = $k Value = $v")
+    }
+
+    CSV(path, 100000, '|', Some(map)) {
+      (line, fields, record) =>
+        val node = db.createNode(label)
+        copyRecordToNode(classOf[CmoBean], node, fields, record)
+        securityMap.put(node.getProperty("CSP").asInstanceOf[String], node.getId)
+    }
+  }
+
+  def processPoolSecurities(path: File, db: GraphDatabaseService): Int = {
+    val label = DynamicLabel.label("Security")
+    CSV(path, 100000, '|') {
+      (line, fields, record) =>
+
+        val pool = new PoolBean()
+        val node = db.createNode(label)
+        copyRecordToNode(pool.getClass(), node, fields, record)
+        securityMap.put(pool.CSP, node.getId)
+    }
+  }
+
+  def processTradeHistory(path: File, db: GraphDatabaseService): Int = {
+    val label = DynamicLabel.label("Trade")
+
+    CSV(path, 100000) {
+      (line, fields, record) =>
+        val node = db.createNode(label)
+        copyRecordToNode(classOf[TradeBean], node, fields, record)
+      //        securityMap.get(bean.Cusip) match {
+      //          case Some(id) =>
+      //            node.createRelationshipTo(db.getNodeById(id), Relationships.PRODUCT)
+      //          case None =>
+      //            println(s"Security not found: ${bean.Cusip}")
+      //        }
+    }
+  }
+
+  def CSV(path: File, interval: Int, delimiter: Char = '~',
+          fieldMap: Option[mutable.HashMap[String, String]] = None)
+         (block: (Int, Array[String], Array[String]) => Unit): Int = {
+
+    require(path.exists(), s"[${path}] not found")
+
+    val fstrm =
+      if (path.getName.endsWith(".zip")) {
+        val zip = new ZipFile(path)
+        val entry = zip.entries.find(e => e.getName.endsWith(".csv"))
+        require(entry.isDefined, s"Could not find a CSV file in Zipfile ${path.getCanonicalPath}")
+        zip.getInputStream(entry.get)
+      }
+      else
+        new FileInputStream(path)
+
+    val reader = new CSVReader(new InputStreamReader(fstrm), delimiter, '\000')
+
+    val header: Array[String] = reader.readNext()
+
+    val fields =
+      for (fld <- header if (fld.length > 0))
+      yield
+        if (fieldMap.isDefined)
+          fieldMap.get.get(fld).getOrElse(fld)
+        else
+          fld
+
+    println(s" ======== >> Processing ${path.getName}")
+    println(s"There are ${header.size} header columns in each input line")
+    println(s"There are ${fields.size} fields in the data object")
+
+    println()
+    println("Fields { ")
+    for (f <- fields) {
+      println(s"  ${f} ")
+    }
+    println("}")
 
     val startTime = new Date().getTime
 
     var line = 1
-    while (((record = reader.readNext) != null) && record.repr != null) {
-      //
-      //Invoke the lambda function which processes a single record in the CSV file
-      //
-      block(line, fields, record)
+    Stream.continually(reader.readNext).takeWhile(record => (record ne null) && (record.repr ne null)).foreach {
+      record =>
+        //
+        //Invoke the lambda function which processes a single record in the CSV file
+        //
+        block(line, fields, record)
 
-      //
-      // Every "messageFrequency" rows, print time and processing stats.
-      //
-      if (line % messageFrequency == 0) {
-        val now = new Date().getTime()
-        val msSinceStart: Double = now - startTime
-        val rate: Double = (msSinceStart / line) * 1000.0
-        val rt = Runtime.getRuntime
-        print(f"Read $line%10d records. Total Time = ${msSinceStart / 1000.0}%.2f secs. Time per Record = ${rate}%.2f ns.")
-        println(f" Memory (free/total) ${rt.freeMemory() / 1000000.0}%.2f/${rt.totalMemory() / 1000000.0}%.2f ")
-      }
+        //
+        // Every "interval" rows, print time and processing stats.
+        //
+        if (line % interval == 0) {
+          val now = new Date().getTime()
+          val msSinceStart: Double = now - startTime
+          val rate: Double = (msSinceStart / line) * 1000.0
+          val rt = Runtime.getRuntime
+          print(f"Read $line%10d records. Total Time = ${msSinceStart / 1000.0}%.2f secs. Time per Record = ${rate}%.2f ns.")
+          println(f" Memory (free/total) ${rt.freeMemory() / 1000000.0}%.2f/${rt.totalMemory() / 1000000.0}%.2f ")
+        }
 
-      line = line + 1
+        line = line + 1
     }
 
     reader.close()
     line
   }
 
-  def main(args: Array[String]): Unit = {
-
-    println(s"Loading  Trade History File\n\nHistory File Path = [${TRADE_HISTORY}]\n")
-
-    val history = new File(TRADE_HISTORY)
-    require(history.exists, "History file not found or cannot be opened.")
-
-    // Initialize Neo4J configuration
-    //    createConfiguration()
-
-    val db = createBatchInserter(DB_PATH)
-    val label = DynamicLabel.label("Trade")
-
-    val count = CSV(history, 100000) {
-      (line, fields, record) =>
-        val bean = new TradeBean()
-
-        val node = db.createNode(label)
-        for (i <- 0 until record.size) {
-          setField(bean, fields(i), record(i))
-          val propValue = getFieldAsCanonicalString(bean, fields(i))
-          node.setProperty(fields(i), propValue)
-        }
-    }
-
-    println(s"Processed ${count} records")
-
-    db.shutdown()
-  }
-
-  val ClassOfDouble = classOf[Double]
-  val ClassOfInt = classOf[Int]
-  val ClassOfString = classOf[String]
-  val ClassOfDate = classOf[Date]
-  val ClassOfTime = classOf[Time]
-
-  def setField(bean: TradeBean, name: String, value: String) {
-
-    import java.lang.Double._
-    import java.lang.Integer._
-
-    val field = bean.getClass.getDeclaredField(name)
-    field.setAccessible(true)
-    require(field != null)
-
-    try {
-      field.getType match {
-        case ClassOfDouble =>
-          field.setDouble(bean, parseDouble(value))
-        case ClassOfInt =>
-          field.setInt(bean, parseInt(value))
-        case ClassOfString =>
-          field.set(bean, value)
-        case ClassOfTime =>
-          val df = new SimpleDateFormat("yyyy-mm-dd hh:MM:ss.SSS")
-          val time = new Time(df.parse(value).getTime)
-          field.set(bean, time)
-        case ClassOfDate =>
-          val df = new SimpleDateFormat("yyyymmdd")
-          field.set(bean, df.parse(value))
-        case cls => println(s"Unhandled type ${cls} for Field: $name")
-      }
-    } catch {
-      case e: NumberFormatException =>
-        println(s"Bad numeric format in input: field = ${name} value = ${value}")
-    }
-  }
-
-  def getFieldAsCanonicalString(bean: AnyRef, fieldName: String): String = {
-
-    import java.lang.Double._
-    import java.lang.Integer._
-
-    val field = bean.getClass.getDeclaredField(fieldName)
-    field.setAccessible(true)
-    require(field != null, s"Field not found with name ${fieldName} in bean of class type ${bean.getClass.getSimpleName}")
-
-    field.getType match {
-      case ClassOfDouble =>
-        val value = field.getDouble(bean)
-        f"${value}%.6f"
-      case ClassOfInt =>
-        val value = field.getInt(bean)
-        value.toString
-      case ClassOfString =>
-        (field.get(bean)).asInstanceOf[String]
-      case ClassOfTime =>
-        val df = new SimpleDateFormat("yyyymmdd hh:MM:ss")
-        val value = field.get(bean).asInstanceOf[Time]
-        df.format(value)
-      case ClassOfDate =>
-        val df = new SimpleDateFormat("yyyymmdd")
-        val value = field.get(bean).asInstanceOf[Date]
-        df.format(value)
-      case cls =>
-        println(s"Unhandled type ${cls} for Field: ${fieldName}")
-        ""
-    }
-  }
 
   /**
    *
@@ -186,48 +303,8 @@ object DataLoader {
   }
 }
 
-class TradeBean {
-  var TradeKey: Double = 0.0
-  var TradeId: Int = 0
-  var RevId: Int = 0
-  var Ledger: String = ""
-  var BookName: String = ""
-  var BuySell: String = ""
-  var Counterparty = ""
-  var TradePrice = 0.0
-  var Quantity = 0.0
-  var SecurityId: String = ""
-  var Cusip: String = ""
-  var TradeDate: Date = _
-  var SettleDate: Date = _
-  var InstrumentType: String = ""
-  var CreateDate: Date = _
-  var ExecutionDate: Date = _
-  var OrigCreateTime: Time = _
-  var Comments: String = ""
-  var SalesCredit: String = ""
-  var SalesPerson: String = ""
-  var SalesPersonName: String = ""
-  var SalesQualityOfBusiness: String = ""
-  var CurrentFace: Double = 0.0
-  var LevelSpot1: String = ""
-  var LevelSpot2: String = ""
-  var LevelSpot3: String = ""
-  var LevelSpot4: String = ""
-  var MarketContextNotes: String = ""
-  var MarketContextUpdateUser: String = ""
-  var CounterpartyName: String = ""
-  var SecurityDescription: String = ""
-  var TradeStatus: String = ""
-  var DealType: String = ""
-  var DealSubType: String = ""
-  var MatchStatus: String = ""
-  var SecurityType: String = ""
-  var InstrumentSubType: String = ""
-  var OrigCreateUser: String = ""
-  var CreateUser: String = ""
-  var Trader: String = ""
-  var OrigSource: String = ""
-  var BookDesk: String = ""
-  var BookStrategy: String = ""
-}
+
+
+
+
+
