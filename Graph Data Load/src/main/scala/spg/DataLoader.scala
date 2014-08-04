@@ -172,14 +172,19 @@ object DataLoader {
       (line, fields, record) =>
         val node = db.createNode(label)
         copyRecordToNode(classOf[CmoBean], node, fields, record)
-        securityMap.put(node.getProperty("CSP").asInstanceOf[String], node.getId)
+        securityMap.put(node.getProperty("ESMID").asInstanceOf[String], node.getId)
     }
   }
 
   def processPoolSecurities(path: File, db: GraphDatabaseService): Int = {
     val label = DynamicLabel.label("Security")
-    CSV(path, 100000, '|') {
+    val map = mutable.HashMap(
+      "ESMP" -> "ESMID", "CSP" -> "CUSIP"
+    )
+
+    CSV(path, 100000, '|', Some(map)) {
       (line, fields, record) =>
+
 
         val pool = new PoolBean()
         val node = db.createNode(label)
@@ -204,7 +209,9 @@ object DataLoader {
     }
   }
 
-  def CSV(path: File, interval: Int, delimiter: Char = '~',
+  def CSV(path: File,
+          interval: Int,
+          delimiter: Char = '~',
           fieldMap: Option[mutable.HashMap[String, String]] = None)
          (block: (Int, Array[String], Array[String]) => Unit): Int = {
 
@@ -271,7 +278,6 @@ object DataLoader {
     reader.close()
     line
   }
-
 
   /**
    *
