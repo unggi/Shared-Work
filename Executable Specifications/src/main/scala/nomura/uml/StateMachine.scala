@@ -27,7 +27,7 @@ abstract class StateMachine(val name: String) extends Actor with StateModel {
     // Then move to the first state which can receive an event and is reachable by control flow
     // from the start node.
     //
-    currentState = flow(modelRoot.start)
+    currentState = flowOutOfState(modelRoot.start)
   }
 
   def receive = {
@@ -78,28 +78,28 @@ abstract class StateMachine(val name: String) extends Actor with StateModel {
       }
 
       // follow the control flow from the new state
-      currentState = flow(currentState)
+      currentState = flowOutOfState(currentState)
   }
 
-  def flow(from: State): State =
+  def flowOutOfState(from: State): State =
     from.transitionForEvent(classOf[Completed]) match {
 
       case Some(targetState: CompositeState) =>
         targetState.start.invoke(Completed())
-        flow(targetState.start)
+        flowOutOfState(targetState.start)
 
       case Some(targetState: InitialState) =>
-        flow(targetState)
+        flowOutOfState(targetState)
 
       case Some(targetState: FinalState) =>
         if (targetState.hasParent && targetState.parent.get != modelRoot)
-          flow(targetState.parent.get)
+          flowOutOfState(targetState.parent.get)
         else
           targetState
 
       case Some(targetState: State) =>
         targetState.invoke(Completed())
-        flow(targetState)
+        flowOutOfState(targetState)
 
       case None =>
         from

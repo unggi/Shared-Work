@@ -12,17 +12,17 @@ state "ACTION_STATE Cancelled" as Cancelled <<ACTION>>
 [*] --> Customer_Initiating_RFQ
 Customer_Initiating_RFQ --> Submit_RFQ : MESSAGE Submit
 Submit_RFQ --> Waiting_on_Trader_Response
+Waiting_on_Trader_Response --> Waiting_on_Customer_Confirm : MESSAGE Accept
+Waiting_on_Customer_Confirm --> Trade_is_Done : MESSAGE Accept
+Trade_is_Done --> [*]
+Waiting_on_Customer_Confirm --> Cancelled : MESSAGE Cancel
+Cancelled --> [*]
+Waiting_on_Trader_Response --> Rejected : MESSAGE Reject
+Rejected --> [*]
 Waiting_on_Trader_Response --> Waiting_on_Customer_Response : MESSAGE Quote
+Waiting_on_Customer_Response --> Trade_is_Done : MESSAGE Accept
 Waiting_on_Customer_Response --> Update_Quote_with_Counter_Offer : MESSAGE Counter
 Update_Quote_with_Counter_Offer --> Waiting_on_Trader_Response
 Waiting_on_Customer_Response --> Cancelled : MESSAGE Cancel
-Cancelled --> [*]
-Waiting_on_Customer_Response --> Trade_is_Done : MESSAGE Accept
-Trade_is_Done --> [*]
-Waiting_on_Trader_Response --> Rejected : MESSAGE Reject
-Rejected --> [*]
-Waiting_on_Trader_Response --> Waiting_on_Customer_Confirm : MESSAGE Accept
-Waiting_on_Customer_Confirm --> Cancelled : MESSAGE Cancel
-Waiting_on_Customer_Confirm --> Trade_is_Done : MESSAGE Accept
 Customer_Initiating_RFQ --> Cancelled : MESSAGE Cancel
 @enduml

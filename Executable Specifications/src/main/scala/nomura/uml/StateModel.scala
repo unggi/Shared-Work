@@ -1,7 +1,10 @@
 package nomura.uml
 
+import java.io.{FileOutputStream, PrintWriter}
+
+import nomura.uml.LifeCycleEvents.Completed
+
 import scala.collection._
-import java.io.{PrintWriter, FileOutputStream}
 
 
 trait StateModel {
@@ -69,6 +72,36 @@ trait StateModel {
 
   }
 
+  def flow() = new {
+
+    class ToClause() {
+      var fromState: Option[State] = None
+
+      def to(toState: State) = addTransition(fromState.get, toState, classOf[Completed])
+
+      def to(toStateName: String) = {
+        val toState = stack.top.findState(toStateName)
+        require(toState.isDefined, s"To State not found <$toStateName>")
+
+        addTransition(fromState.get, toState.get, classOf[Completed])
+
+      }
+    }
+
+    def from(fromStateNode: State) = new ToClause() {
+      fromState = Some(fromStateNode)
+    }
+
+    def from(fromStateName: String) = new ToClause() {
+      require(!stack.isEmpty)
+
+      fromState = stack.top.findState(fromStateName)
+      require(fromState.isDefined, s"From State not found <$fromStateName>")
+
+    }
+  }
+
+
   def transition() = new {
 
     def from(fromState: InitialState) = new {
@@ -107,6 +140,8 @@ trait StateModel {
 
       }
     }
+
+
   }
 
   protected def addTransition(from: State, to: State, on: Class[_]) = from.transition(to, on)

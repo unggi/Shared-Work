@@ -79,7 +79,7 @@ class RFQ extends StateMachine("RFQ") {
     }
 
 
-    transition from start to "Customer Initiating RFQ" on Completed
+    flow from start to "Customer Initiating RFQ"
     transition from "Customer Initiating RFQ" to "Submit RFQ" on Submit
     transition from "Customer Initiating RFQ" to "Cancelled" on Cancel
     transition from "Waiting on Trader Response" to "Waiting on Customer Response" on Quote
