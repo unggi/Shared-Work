@@ -2,9 +2,7 @@ package nomura.uml
 
 import org.scalatest._
 import akka.actor.{ActorRef, ActorSystem, Props}
-import akka.event.Logging
 import akka.testkit.{TestKit, TestActorRef}
-import scala.Some
 import nomura.uml.LifeCycleEvents.Completed
 
 
@@ -78,7 +76,6 @@ class RFQ extends StateMachine("RFQ") {
         price = event.price
     }
 
-
     flow from start to "Customer Initiating RFQ"
     transition from "Customer Initiating RFQ" to "Submit RFQ" on Submit
     transition from "Customer Initiating RFQ" to "Cancelled" on Cancel
@@ -88,19 +85,15 @@ class RFQ extends StateMachine("RFQ") {
     transition from "Waiting on Customer Confirm" to "Trade is Done" on Accept
     transition from "Waiting on Customer Response" to "Trade is Done" on Accept
     transition from "Waiting on Customer Confirm" to "Cancelled" on Cancel
-    transition from "Trade is Done" to terminal on Completed
-    transition from "Cancelled" to terminal on Completed
-    transition from "Rejected" to terminal on Completed
+    flow from "Trade is Done" to terminal
+    flow from "Cancelled" to terminal
+    flow from "Rejected" to terminal
     transition from "Waiting on Customer Response" to "Cancelled" on Cancel
     transition from "Waiting on Customer Response" to "Update Quote with Counter Offer" on Counter
-    transition from "Submit RFQ" to "Waiting on Trader Response" on Completed
-    transition from "Update Quote with Counter Offer" to "Waiting on Trader Response" on Completed
-
+    flow from "Submit RFQ" to "Waiting on Trader Response"
+    flow from "Update Quote with Counter Offer" to "Waiting on Trader Response"
   }
 }
-
-
-
 
 
 class TestRFQModel extends TestKit(ActorSystem("Testing"))

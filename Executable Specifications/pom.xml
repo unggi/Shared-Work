@@ -6,10 +6,10 @@
     <version>1.0-SNAPSHOT</version>
     <inceptionYear>2014</inceptionYear>
     <properties>
-        <scala.version>2.11.1</scala.version>
+        <scala.version>2.11.2</scala.version>
         <maven.scala.plugin.version>2.15.2</maven.scala.plugin.version>
         <akka.version>2.3.4</akka.version>
-        <scalatest.version>2.2.0</scalatest.version>
+        <scalatest.version>2.2.1</scalatest.version>
     </properties>
 
     <repositories>
@@ -34,7 +34,6 @@
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_2.11</artifactId>
             <version>${scalatest.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>

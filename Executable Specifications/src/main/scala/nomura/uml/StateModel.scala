@@ -81,10 +81,14 @@ trait StateModel {
 
       def to(toStateName: String) = {
         val toState = stack.top.findState(toStateName)
-        require(toState.isDefined, s"To State not found <$toStateName>")
+        fatal(toState.isDefined, s"To State not found <$toStateName>")
 
         addTransition(fromState.get, toState.get, classOf[Completed])
+      }
 
+      def to(finalState: FinalState) = {
+        val myCompositeFinalNode = stack.top.terminal
+        addTransition(myCompositeFinalNode, finalState, classOf[Completed])
       }
     }
 
@@ -96,11 +100,14 @@ trait StateModel {
       require(!stack.isEmpty)
 
       fromState = stack.top.findState(fromStateName)
-      require(fromState.isDefined, s"From State not found <$fromStateName>")
+      fatal(fromState.isDefined, s"Flow from State - from state not found <$fromStateName>")
+    }
 
+    def from(fromStateNode: InitialState) = new ToClause {
+      require(!stack.isEmpty)
+      fromState = Some(stack.top.start)
     }
   }
-
 
   def transition() = new {
 
@@ -110,7 +117,7 @@ trait StateModel {
 
       def to(t: String) = new {
         val toState = stack.top.findState(t)
-        require(toState.isDefined, s"To State not found <$t>")
+        fatal(toState.isDefined, s"TRANSITION from ${myCompositeStartNode.name} - to State not found <$t>")
 
         def on(event: Any) = addTransition(myCompositeStartNode, toState.get, findTypeName(event))
 
@@ -122,26 +129,24 @@ trait StateModel {
       require(!stack.isEmpty)
 
       val fromState = stack.top.findState(f)
-      require(fromState.isDefined, s"From State not found <$f>")
+      fatal(fromState.isDefined, s"TRANSITION from State not found <$f>")
 
       def to(t: String) = new {
         val toState = stack.top.findState(t)
-        require(toState.isDefined, s"To State not found <$t>")
+        fatal(toState.isDefined, s"TRANSITION from ${f} - to State not found <$t>")
 
         def on(event: Any) = addTransition(fromState.get, toState.get, findTypeName(event))
-
       }
 
       def to(toState: FinalState) = new {
         require(!stack.isEmpty)
         val myCompositeFinalNode = stack.top.terminal
 
-        def on(event: Any) = addTransition(myCompositeFinalNode, toState, findTypeName(event))
+        // TODO Suspicious - looks like the current state is ignored and this transition goes from the current final state to the parent final state.
 
+        def on(event: Any) = addTransition(myCompositeFinalNode, toState, findTypeName(event))
       }
     }
-
-
   }
 
   protected def addTransition(from: State, to: State, on: Class[_]) = from.transition(to, on)
@@ -158,6 +163,14 @@ trait StateModel {
         null
     }
 
+
+   def fatal(condition: Boolean, message: String ) =
+    if (condition == false) {
+      System.err.println(s"FATAL ERROR in Model Definition: $message" )
+      System.exit(1)
+    }
+
 }
+
 
 

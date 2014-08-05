@@ -28,22 +28,21 @@ class DeepHierarchy extends StateMachine("DeepHierarchy") {
             event: Advance =>
               depth = 3
           }
-          transition from start to "Level3a" on Completed
+          flow from start to "Level3a"
           transition from "Level3a" to "Level3b" on Advance
-          transition from "Level3b" to terminal on Completed
+          flow from "Level3b" to terminal
         }
-        transition from start to "Level 3" on Completed
-        transition from "Level 3" to terminal on Completed
+        flow from start to "Level 3"
+        flow from "Level 3" to terminal
       }
-      transition from start to "Level 2" on Completed
-      transition from "Level 2" to terminal on Completed
+      flow from start to "Level 2"
+      flow from "Level 2" to terminal
     }
-    transition from start to "Level 1" on Completed
-    transition from "Level 1" to terminal on Completed
+    flow from start to "Level 1"
+    flow from "Level 1" to terminal
   }
 
 }
-
 
 class IntermediateCompositeState extends StateMachine("IntermediateCompositeState") {
 

@@ -3,8 +3,8 @@
   <component name="FacetManager">
     <facet type="scala" name="Scala">
       <configuration>
-        <option name="compilerLibraryLevel" value="Project" />
-        <option name="compilerLibraryName" value="Maven: org.scala-lang:scala-compiler-bundle:2.11.1" />
+        <option name="compilerLibraryLevel" value="Global" />
+        <option name="compilerLibraryName" value="scala-compiler" />
         <option name="compilerOptions" value="-target:jvm-1.7" />
         <option name="languageLevel" value="Scala 2.11" />
         <option name="vmOptions" value="" />
@@ -21,12 +21,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.11.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.scalatest:scalatest_2.11:2.2.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.scala-lang:scala-reflect:2.11.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.scala-lang.modules:scala-xml_2.11:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.11.2" level="project" />
+    <orderEntry type="library" name="Maven: org.scalatest:scalatest_2.11:2.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang:scala-reflect:2.11.2" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang.modules:scala-xml_2.11:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: com.typesafe.akka:akka-actor_2.11:2.3.4" level="project" />
     <orderEntry type="library" name="Maven: com.typesafe:config:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: com.typesafe.akka:akka-mailboxes-common_2.11:2.3.4" level="project" />

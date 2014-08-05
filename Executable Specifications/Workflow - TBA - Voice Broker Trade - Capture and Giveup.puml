@@ -1,0 +1,22 @@
+@startuml
+!include Skin.iuml
+state "WAIT_STATE RTTM Matching Trades" as RTTM_Matching_Trades <<WAIT>>
+state "WAIT_STATE Trader Rejects" as Trader_Rejects <<WAIT>>
+state "Broker Trade Booking" as Broker_Trade_Booking {
+state "WAIT_STATE Post Trade Notification" as Post_Trade_Notification <<WAIT>>
+state "WAIT_STATE Broker Report to RTTM " as Broker_Report_to_RTTM_ <<WAIT>>
+state "WAIT_STATE Enter Broker Trade" as Enter_Broker_Trade <<WAIT>>
+[*] --> Enter_Broker_Trade
+Enter_Broker_Trade --> RTTM_Matching_Trades : MESSAGE AllegedTrade
+}
+state "ACTION_STATE Trade is Matched" as Trade_is_Matched <<ACTION>>
+state "WAIT_STATE Trader Reviews Trade" as Trader_Reviews_Trade <<WAIT>>
+state "WAIT_STATE Trader Accepts" as Trader_Accepts <<WAIT>>
+[*] --> Broker_Trade_Booking
+Broker_Trade_Booking --> Trader_Reviews_Trade : MESSAGE NewBrokerTrade
+Trader_Reviews_Trade --> Trader_Accepts : MESSAGE ConfirmBrokerTrade
+Trader_Accepts --> RTTM_Matching_Trades : MESSAGE AllegedTrade
+RTTM_Matching_Trades --> Trade_is_Matched : MESSAGE RTTMTradeMatchReport
+Trade_is_Matched --> [*]
+Trader_Reviews_Trade --> Trader_Rejects : MESSAGE RejectBrokerTrade
+@enduml
