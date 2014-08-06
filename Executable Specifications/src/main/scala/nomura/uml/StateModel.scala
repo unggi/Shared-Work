@@ -1,6 +1,6 @@
 package nomura.uml
 
-import java.io.{FileOutputStream, PrintWriter}
+import java.io.{File, FileOutputStream, PrintWriter}
 
 import nomura.uml.LifeCycleEvents.Completed
 
@@ -20,16 +20,26 @@ trait StateModel {
    */
   var modelRoot: CompositeState = null
 
+
   /**
    * Create Plant UML rendering of this state machine.
    * @param name The base name of the output file for rendering. The output will be "name.puml".
    */
   def generateUml(name: String) {
 
-    val fstrm = new FileOutputStream(name + ".puml")
+    val path = new File("diagrams/" + getClass().getPackage.getName.replace('.', '/') + "/" + name + ".puml")
+
+    if (path.exists)
+      path.delete()
+
+
+    if (!path.getParentFile.exists)
+      path.getParentFile.mkdirs()
+
+    val fstrm = new FileOutputStream(path)
     val pw = new PrintWriter(fstrm)
 
-    new UmlGenerator(this).generate(pw)
+    new UmlGenerator(this, path.getCanonicalPath).generate(pw)
     pw.flush()
     pw.close()
     fstrm.close()
@@ -47,10 +57,9 @@ trait StateModel {
         stack.pop()
         modelRoot = state
         StateModelRegistry.register(name, this)
+        generateUml(name)
     }
     require(modelRoot != null)
-    generateUml(name)
-
   }
 
   def state[T](name: String)(onEntryAction: (T) => Unit) = {
@@ -164,9 +173,9 @@ trait StateModel {
     }
 
 
-   def fatal(condition: Boolean, message: String ) =
+  def fatal(condition: Boolean, message: String) =
     if (condition == false) {
-      System.err.println(s"FATAL ERROR in Model Definition: $message" )
+      System.err.println(s"FATAL ERROR in Model Definition <${getClass.getSimpleName}>: $message")
       System.exit(1)
     }
 

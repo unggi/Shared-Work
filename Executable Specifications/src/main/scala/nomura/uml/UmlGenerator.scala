@@ -1,7 +1,9 @@
 package nomura.uml
 
-import java.io.PrintWriter
+import java.io.{File, PrintWriter}
 import scala.collection._
+import scala.reflect.io.Directory
+import scala.util.Try
 
 class StateVisitor(model: CompositeState) {
 
@@ -79,7 +81,7 @@ class TransitionVisitor(model: CompositeState) {
 }
 
 
-class UmlGenerator(stateModel: StateModel) {
+class UmlGenerator(stateModel: StateModel, docPath: String) {
 
   def generate(pw: PrintWriter) {
     new UmlStates(stateModel.modelRoot, pw).visit()
@@ -89,9 +91,18 @@ class UmlGenerator(stateModel: StateModel) {
 
   class UmlStates(model: CompositeState, pw: PrintWriter) extends StateVisitor(model) {
 
+    val includedSkinParams = "Skin.iuml"
+
     override def visit() {
+
+
+      val b = new StringBuilder
+      for (i <- 1 until docPath.substring(docPath.indexOf("diagrams\\")).count(_ == '\\'))
+        b.append("../")
+
       pw.println("@startuml")
-      pw.println("!include Skin.iuml")
+
+      pw.println(s"!include ${b.toString}/${includedSkinParams}")
       super.visit()
       new UmlTransitions(model, pw).visit()
       pw.println("@enduml")

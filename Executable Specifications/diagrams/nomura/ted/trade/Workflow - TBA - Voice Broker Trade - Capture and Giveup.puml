@@ -1,0 +1,10 @@
+@startuml
+!include ../../..//Skin.iuml
+state "ACTION_STATE RTTM Trade Matching" as RTTM_Trade_Matching <<ACTION>>
+state "ACTION_STATE Broker Trade Capture" as Broker_Trade_Capture <<ACTION>>
+state "ACTION_STATE Trader Trade Capture" as Trader_Trade_Capture <<ACTION>>
+[*] --> Broker_Trade_Capture
+Broker_Trade_Capture --> RTTM_Trade_Matching
+RTTM_Trade_Matching --> Trader_Trade_Capture
+Trader_Trade_Capture --> [*]
+@enduml

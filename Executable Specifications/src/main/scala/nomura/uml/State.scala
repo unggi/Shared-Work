@@ -34,7 +34,10 @@ class ActionState[T](stateName: String, parent: Option[CompositeState])(onEntryA
   catch {
     case e: ClassCastException =>
 
-      System.err.println(s"Invalid Event Type Received: Action State [${stateName}] received ${any.getClass.getCanonicalName} \nException: ${e.getMessage}")
+      System.err.println(s"Invalid Event Type Received by State Machine [${getClass.getSimpleName}]: Action State [${stateName}] received ${any.getClass.getSimpleName}")
+      System.err.println(s"Exception Message: ${e.getMessage}")
+      System.err.println("Stack Trace: ")
+      e.printStackTrace(System.err)
   }
 
 
