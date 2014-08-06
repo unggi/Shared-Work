@@ -1,22 +1,39 @@
 @startuml
 !include Skin.iuml
-state "WAIT_STATE RTTM Matching Trades" as RTTM_Matching_Trades <<WAIT>>
-state "WAIT_STATE Trader Rejects" as Trader_Rejects <<WAIT>>
-state "Broker Trade Booking" as Broker_Trade_Booking {
-state "WAIT_STATE Post Trade Notification" as Post_Trade_Notification <<WAIT>>
-state "WAIT_STATE Broker Report to RTTM " as Broker_Report_to_RTTM_ <<WAIT>>
-state "WAIT_STATE Enter Broker Trade" as Enter_Broker_Trade <<WAIT>>
-[*] --> Enter_Broker_Trade
-Enter_Broker_Trade --> RTTM_Matching_Trades : MESSAGE AllegedTrade
-}
+state "RTTM Trade Matching" as RTTM_Trade_Matching {
+state "ACTION_STATE No Match" as No_Match <<ACTION>>
+state "WAIT_STATE Match Incoming Firm Trade" as Match_Incoming_Firm_Trade <<WAIT>>
 state "ACTION_STATE Trade is Matched" as Trade_is_Matched <<ACTION>>
-state "WAIT_STATE Trader Reviews Trade" as Trader_Reviews_Trade <<WAIT>>
-state "WAIT_STATE Trader Accepts" as Trader_Accepts <<WAIT>>
-[*] --> Broker_Trade_Booking
-Broker_Trade_Booking --> Trader_Reviews_Trade : MESSAGE NewBrokerTrade
-Trader_Reviews_Trade --> Trader_Accepts : MESSAGE ConfirmBrokerTrade
-Trader_Accepts --> RTTM_Matching_Trades : MESSAGE AllegedTrade
-RTTM_Matching_Trades --> Trade_is_Matched : MESSAGE RTTMTradeMatchReport
+state "WAIT_STATE Match Incoming Broker Trade" as Match_Incoming_Broker_Trade <<WAIT>>
+state "WAIT_STATE Matching Trades" as Matching_Trades <<WAIT>>
+[*] --> Matching_Trades
+Matching_Trades --> Match_Incoming_Firm_Trade : MESSAGE IncomingFirmTrade
+Match_Incoming_Firm_Trade --> No_Match : MESSAGE NoTradeMatch
+No_Match --> Matching_Trades
+Match_Incoming_Firm_Trade --> Trade_is_Matched : MESSAGE TradeMatchFound
 Trade_is_Matched --> [*]
+Matching_Trades --> Match_Incoming_Broker_Trade : MESSAGE IncomingBrokerTrade
+Match_Incoming_Broker_Trade --> No_Match : MESSAGE NoTradeMatch
+Match_Incoming_Broker_Trade --> Trade_is_Matched : MESSAGE TradeMatchFound
+}
+state "Trade Capture" as Trade_Capture {
+state "WAIT_STATE Trader Rejects" as Trader_Rejects <<WAIT>>
+state "WAIT_STATE Trader Reviews Trade" as Trader_Reviews_Trade <<WAIT>>
+state "ACTION_STATE Trader Accepts" as Trader_Accepts <<ACTION>>
+[*] --> Trader_Reviews_Trade
+Trader_Reviews_Trade --> Trader_Accepts : MESSAGE ConfirmBrokerTrade
+Trader_Accepts --> [*]
 Trader_Reviews_Trade --> Trader_Rejects : MESSAGE RejectBrokerTrade
+}
+state "Broker Trade Booking" as Broker_Trade_Booking {
+state "ACTION_STATE Broker Report to RTTM" as Broker_Report_to_RTTM <<ACTION>>
+state "ACTION_STATE Post Trade Notification" as Post_Trade_Notification <<ACTION>>
+state "ACTION_STATE Enter Broker Trade" as Enter_Broker_Trade <<ACTION>>
+[*] --> Enter_Broker_Trade
+Enter_Broker_Trade --> Post_Trade_Notification
+Post_Trade_Notification --> Broker_Report_to_RTTM
+Broker_Report_to_RTTM --> [*]
+}
+[*] --> Broker_Trade_Booking
+Broker_Trade_Booking --> [*]
 @enduml

@@ -27,9 +27,16 @@ class ActionState[T](stateName: String, parent: Option[CompositeState])(onEntryA
 
   def onEntry(event: T): Unit = onEntryAction(event)
 
-  override def invoke(any: Any): Unit = {
+  override def invoke(any: Any): Unit =
+  try {
     onEntry(any.asInstanceOf[T])
   }
+  catch {
+    case e: ClassCastException =>
+
+      System.err.println(s"Invalid Event Type Received: Action State [${stateName}] received ${any.getClass.getCanonicalName} \nException: ${e.getMessage}")
+  }
+
 
 }
 
