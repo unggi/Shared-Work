@@ -192,8 +192,6 @@ class TBAVoiceBrokerTradeWorkflow(val name: String) extends Workflow {
 class TestTBAVoiceBrokerTradeModel extends TestKit(ActorSystem("TED-World")) with WordSpecLike with
 MustMatchers with BeforeAndAfterAll {
 
-
-
   override def afterAll {
     TestKit.shutdownActorSystem(StateMachineActorSystem.system)
   }

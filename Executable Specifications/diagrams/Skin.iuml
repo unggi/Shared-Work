@@ -8,16 +8,19 @@ skinparam class {
 
 skinparam backgroundColor white
 
+
 skinparam state {
     StartColor #7dc8c8
-    EndColor MediumBlue
+   EndColor MediumBlue
     BackgroundColor #7dc8c8
     BackgroundColor<<WAIT>> #f9b4b4
-    BorderColor<<WAIT>> #f9b4b4
-    BorderColor #7dc8c8
-    FontName Calibri
-    FontSize 18
+   BorderColor<<WAIT>> #f9b4b4
+   BorderColor #7dc8c8
+   FontName Calibri
+   FontSize 18
 }
+
+
 
 !define ACTION_STATE <b><size:10><<ACTION>></size></b>\n<size:18>
 !define WAIT_STATE <b><size:10><<WAIT>></size></b>\n<size:18>
