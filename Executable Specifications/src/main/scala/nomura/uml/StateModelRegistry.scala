@@ -14,7 +14,7 @@ object StateModelRegistry {
   def find(key: String): Option[StateModel] = models.get(key)
 
   def dump(key: String, pw: PrintWriter) {
-    val generator = new UmlGenerator(find(key).get)
+    val generator = new UmlGenerator(find(key).get, key)
 
     generator.generate(pw)
     pw.flush()
