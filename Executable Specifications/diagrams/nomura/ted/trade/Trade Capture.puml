@@ -4,7 +4,7 @@ state "WAIT_STATE Trader Rejects" as Trader_Rejects <<WAIT>>
 state "WAIT_STATE Trader Reviews Trade" as Trader_Reviews_Trade <<WAIT>>
 state "ACTION_STATE Trader Accepts" as Trader_Accepts <<ACTION>>
 [*] --> Trader_Reviews_Trade : MESSAGE NewBrokerTrade
+Trader_Reviews_Trade --> Trader_Rejects : MESSAGE RejectBrokerTrade
 Trader_Reviews_Trade --> Trader_Accepts : MESSAGE ConfirmBrokerTrade
 Trader_Accepts --> [*]
-Trader_Reviews_Trade --> Trader_Rejects : MESSAGE RejectBrokerTrade
 @enduml
