@@ -1,9 +1,5 @@
 .class
 target/
 .idea/
-
-
-Executable Specifications/Executable Specifications.iml
+project/
 *.iml
-Graph Data Load/.idea/workspace.xml
-Graph Data Load/.idea/workspace.xml
