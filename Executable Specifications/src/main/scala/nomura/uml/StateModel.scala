@@ -27,11 +27,12 @@ trait StateModel {
    */
   def generateUml(name: String) {
 
-    val path = new File("diagrams/" + getClass().getPackage.getName.replace('.', '/') + "/" + name + ".puml")
+    val slash = File.separatorChar
+
+    val path = new File("diagrams/" + getClass().getPackage.getName.replace('.', slash) + slash + name + ".puml")
 
     if (path.exists)
       path.delete()
-
 
     if (!path.getParentFile.exists)
       path.getParentFile.mkdirs()

@@ -95,10 +95,10 @@ class UmlGenerator(stateModel: StateModel, docPath: String) {
 
     override def visit() {
 
-
+      val slash = File.separatorChar
       val b = new StringBuilder
-      for (i <- 1 until docPath.substring(docPath.indexOf("diagrams\\")).count(_ == '\\'))
-        b.append("../")
+      for (i <- 1 until docPath.substring(docPath.indexOf("diagrams" + slash)).count(_ == slash))
+        b.append(".." + slash)
 
       pw.println("@startuml")
 
