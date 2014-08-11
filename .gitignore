@@ -3,4 +3,9 @@ target/
 .idea/
 project/
 *.iml
+<<<<<<< HEAD
 diagrams/nomura/
+=======
+
+*.iml
+>>>>>>> Multiple fixes to Broker Trade Workflow

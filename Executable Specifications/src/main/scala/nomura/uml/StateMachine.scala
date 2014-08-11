@@ -3,6 +3,7 @@ package nomura.uml
 import akka.actor.Actor
 import akka.event.Logging
 import nomura.uml.LifeCycleEvents.{Completed, QueryState}
+
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -15,10 +16,8 @@ abstract class StateMachine(val name: String) extends Actor with StateModel {
    */
   val start = CompositeState.START_STATE
   val terminal = CompositeState.TERMINAL_STATE
-
-  var currentState: State = _
-
   val selfMessageQueue = new mutable.Queue[Any]
+  var currentState: State = _
 
   override def preStart() {
 
@@ -47,8 +46,14 @@ abstract class StateMachine(val name: String) extends Actor with StateModel {
 
       // then process self messages that were sent during the action method of the
       // target state.
+<<<<<<< HEAD
       while (selfMessageQueue.nonEmpty) {
         val msg = selfMessageQueue.dequeue()
+=======
+      while (!selfMessageQueue.isEmpty) {
+        val msg = selfMessageQueue.dequeue()
+        log.debug("Process Dequeued Message: " + msg.toString)
+>>>>>>> Multiple fixes to Broker Trade Workflow
         processEvent.applyOrElse(msg, unhandled)
       }
   }
