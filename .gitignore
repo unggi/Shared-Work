@@ -8,4 +8,9 @@ diagrams/nomura/
 =======
 
 *.iml
+<<<<<<< HEAD
 >>>>>>> Multiple fixes to Broker Trade Workflow
+=======
+
+*.puml
+>>>>>>> Ignore PUML Files
