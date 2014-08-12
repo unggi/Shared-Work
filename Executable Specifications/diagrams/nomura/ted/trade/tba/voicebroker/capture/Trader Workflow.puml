@@ -1,0 +1,12 @@
+@startuml
+!include ..\..\..\..\..\..\/Skin.iuml
+state "WAIT_STATE Trader Rejects" as Trader_Rejects <<WAIT>>
+state "ACTION_STATE Notify RTTM" as Notify_RTTM <<ACTION>>
+state "WAIT_STATE Trader Reviews Trade" as Trader_Reviews_Trade <<WAIT>>
+state "ACTION_STATE Trader Accepts" as Trader_Accepts <<ACTION>>
+[*] --> Trader_Reviews_Trade : MESSAGE NewBrokerTrade
+Trader_Reviews_Trade --> Trader_Accepts : MESSAGE ConfirmBrokerTrade
+Trader_Accepts --> Notify_RTTM
+Notify_RTTM --> [*]
+Trader_Reviews_Trade --> Trader_Rejects : MESSAGE RejectBrokerTrade
+@enduml
