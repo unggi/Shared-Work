@@ -1,9 +1,10 @@
 package nomura.ted.trade.tba.voicebroker.capture
 
+
+import _root_.nomura.ted.trade.dba.voicebroker.capture.OrchestrationWorkflow
+import nomura.uml.StateMachine
 import akka.actor.ActorSystem
 import akka.testkit.{TestActorRef, TestKit}
-import nomura.ted.trade.dba.voicebroker.capture.OrchestrationWorkflow
-import nomura.uml._
 import org.scalatest._
 
 abstract class ProductRef(ESMID: String)
@@ -26,10 +27,11 @@ trait StateTestMatcher {
       actor.underlyingActor.currentState.name mustEqual stateName
     }
 
-    def mustBeInTerminalState(): Unit =  {
+    def mustBeInTerminalState(): Unit = {
       actor.underlyingActor.currentState.name mustEqual "[*]"
     }
   }
+
 }
 
 class TestTBAVoiceBrokerTradeModel extends TestKit(ActorSystem("TED-World")) with WordSpecLike with
@@ -53,6 +55,8 @@ MustMatchers with BeforeAndAfterAll with StateTestMatcher {
     workflow.register("Trader", trader)
     workflow.register("Broker", broker)
     workflow.register("RTTM", rttm)
+
+    val trade = new BrokerTrade()
 
     "Broker is in wait on verbal execution of trade after initialization" in {
       workflow.start()
