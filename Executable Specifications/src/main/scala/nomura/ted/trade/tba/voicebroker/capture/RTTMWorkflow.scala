@@ -1,9 +1,10 @@
 package nomura.ted.trade.tba.voicebroker.capture
 
-import nomura.uml.LifeCycleEvents.Completed
-import nomura.uml.{StateMachine, Workflow, WorkflowParticipant}
+import _root_.nomura.uml.LifeCycleEvents.Completed
+import _root_.nomura.uml.StateMachine
 
-class RTTMWorkflow(val workflow: Workflow) extends StateMachine("RTTM Trade Matching Workflow") with WorkflowParticipant {
+
+class RTTMWorkflow(val workflow: OrchestrationWorkflow) extends StateMachine("RTTM Workflow") {
 
   var brokerTradeID: Option[String] = None
   var dealerTradeID: Option[String] = None

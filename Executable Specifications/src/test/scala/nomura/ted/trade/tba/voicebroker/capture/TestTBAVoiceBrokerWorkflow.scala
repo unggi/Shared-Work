@@ -1,38 +1,13 @@
 package nomura.ted.trade.tba.voicebroker.capture
 
 
-import _root_.nomura.ted.trade.dba.voicebroker.capture.OrchestrationWorkflow
-import nomura.uml.StateMachine
+import _root_.nomura.testutils.StateTestMatcher
+import _root_.nomura.uml.{TraceFacility, StateMachineActorSystem}
 import akka.actor.ActorSystem
 import akka.testkit.{TestActorRef, TestKit}
 import org.scalatest._
 
-abstract class ProductRef(ESMID: String)
 
-case class PoolID(ESMID: String, poolNumber: String, cusip: String) extends ProductRef(ESMID)
-
-abstract class Party(RDMID: String)
-
-case class Broker(RDMID: String) extends Party(RDMID)
-
-case class Trader(RDMID: String) extends Party(RDMID)
-
-case class Customer(RDMID: String) extends Party(RDMID)
-
-trait StateTestMatcher {
-  self: MustMatchers =>
-
-  implicit class StateTestHelper[T <: StateMachine](actor: TestActorRef[T]) {
-    def mustBeInState(stateName: String) {
-      actor.underlyingActor.currentState.name mustEqual stateName
-    }
-
-    def mustBeInTerminalState(): Unit = {
-      actor.underlyingActor.currentState.name mustEqual "[*]"
-    }
-  }
-
-}
 
 class TestTBAVoiceBrokerTradeModel extends TestKit(ActorSystem("TED-World")) with WordSpecLike with
 MustMatchers with BeforeAndAfterAll with StateTestMatcher {
@@ -44,7 +19,7 @@ MustMatchers with BeforeAndAfterAll with StateTestMatcher {
 
   }
 
-  "Broker Trade Workflow Successful" when {
+  "Broker Trade Capture is Successful" when {
 
     val workflow = new OrchestrationWorkflow("TBA Voice Broker Trade Capture Workflow")
 
@@ -56,7 +31,7 @@ MustMatchers with BeforeAndAfterAll with StateTestMatcher {
     workflow.register("Broker", broker)
     workflow.register("RTTM", rttm)
 
-    val trade = new BrokerTrade()
+    // val trade = new BrokerTrade()
 
     "Broker is in wait on verbal execution of trade after initialization" in {
       workflow.start()

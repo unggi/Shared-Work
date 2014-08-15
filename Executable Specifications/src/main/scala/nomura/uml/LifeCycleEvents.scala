@@ -1,14 +1,12 @@
 package nomura.uml
 
-
 trait BusinessEvent {
 
 }
 
-
 object LifeCycleEvents {
 
-  case class Initialize() extends  BusinessEvent
+  case class Initialize() extends BusinessEvent
 
   case class Terminate() extends BusinessEvent
 

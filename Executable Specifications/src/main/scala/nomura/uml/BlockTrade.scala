@@ -1,7 +1,5 @@
 package nomura.uml
 
-
-
 case class BlockExecute(name: String) extends BusinessEvent
 
 case class BlockConfirm() extends BusinessEvent

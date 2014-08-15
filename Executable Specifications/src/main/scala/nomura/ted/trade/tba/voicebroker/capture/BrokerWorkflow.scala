@@ -1,7 +1,7 @@
 package nomura.ted.trade.tba.voicebroker.capture
 
-import nomura.uml.LifeCycleEvents.Completed
-import nomura.uml.{StateMachine, Workflow, WorkflowParticipant}
+import _root_.nomura.uml.LifeCycleEvents.Completed
+import _root_.nomura.uml.{StateMachine, Workflow, WorkflowParticipant}
 
 class BrokerWorkflow(val workflow: Workflow) extends StateMachine("Broker Trade Booking Workflow") with WorkflowParticipant {
 

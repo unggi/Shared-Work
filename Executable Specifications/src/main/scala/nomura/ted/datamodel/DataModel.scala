@@ -1,9 +1,8 @@
 package nomura.ted.datamodel
 
-import java.util.Date
-import nomura.ted.trade.tba.voicebroker.capture.{RejectBrokerTrade, ConfirmBrokerTrade}
 import nomura.uml.LifeCycleEvents.Completed
 import nomura.uml.StateMachine
+import org.joda.time.LocalDate
 
 trait PositionIdentifier {
 
@@ -44,20 +43,24 @@ class Obligation
 
 class Commitment
 
+class Holding
+class Security
+
 Obligation --->"1" Commitment: deliverer >
 Obligation --->"1" Commitment: receiver >
 
 interface FinancialInstrument
-class Security -u-|> FinancialInstrument
-class Cash -u-|> FinancialInstrument
-class TBA -u-|> Security
+Security -u-|> FinancialInstrument
+Cash -u-|> FinancialInstrument
+TBA -u-|> Security
 
-class Holding ---> Quantity: quantity
-class Holding ---> Denomination: units
-class Holding -l-> FinancialInstrument: instrument
+Holding ---> Quantity: quantity
+Holding ---> SizeDenomination: units
+Holding -l-> FinancialInstrument: instrument
+
+Commitment -l-> Holding
 
 @enduml
-
 
  */
 
@@ -97,12 +100,17 @@ object TBA {
 
 }
 
-class TBA(val agency: String, val coupon: Double, val maturity: Int, val deliveryMonth: Int, val deliveryYear: Int) extends Security {
+class TBA(
+           val agency: String,
+           val coupon: Double,
+           val maturity: Int,
+           val deliveryMonth: Int,
+           val deliveryYear: Int)
+  extends Security {
 
   def id: String = f"$agency $maturity%2d $coupon%.2f ${TBA.deliveryMonthNames(deliveryMonth)} $deliveryYear"
 
   def description: String = "TBA " + id
-
 }
 
 trait SizeDenomination {
@@ -131,24 +139,31 @@ trait Obligation {
 
   def product: Holding
 
-  def tradeDate: Date
+  def tradeDate: LocalDate
 
-  def settleDate: Date
+  def settleDate: LocalDate
 }
 
-class BrokerTrade(trader: Trader, broker: Broker, originalFace: Double,
-                  security: Security, currentFace: Double,
-                  price: Double, val _tradeDate: Date,
-                  val _settleDate: Date)
+case class AcceptBrokerTrade()
+case class RejectBrokerTrade()
+
+class BrokerTrade(trader: Trader,
+                  broker: Broker,
+                  originalFace: Double,
+                  security: Security,
+                  currentFace: Double,
+                  price: Double,
+                  val _tradeDate: LocalDate,
+                  val _settleDate: LocalDate)
   extends StateMachine("Broker Trade") with Obligation {
 
   def product: Holding = new Holding(originalFace, SizeDenomination.FaceAmount, security)
 
   def money: CashHolding = new CashHolding(currentFace, Currency.USD)
 
-  def settleDate: Date = _settleDate
+  def settleDate: LocalDate = _settleDate
 
-  def tradeDate: Date = _tradeDate
+  def tradeDate: LocalDate = _tradeDate
 
   override val deliverer = new Commitment(trader, product, money)
   override val receiver = new Commitment(broker, money, product)
@@ -159,7 +174,7 @@ class BrokerTrade(trader: Trader, broker: Broker, originalFace: Double,
     }
 
     state("Front Office Confirmed") {
-      event: ConfirmBrokerTrade =>
+      event: AcceptBrokerTrade =>
     }
 
     state("Front Office Rejected") {
@@ -168,11 +183,12 @@ class BrokerTrade(trader: Trader, broker: Broker, originalFace: Double,
     }
 
     flow from start to "Pending Front Office Confirmation"
-    transition from "Pending Front Office Confirmation" to "Front Office Confirmed"
-    transition from "Pending Front Office Confirmation" to terminal
+    transition from "Pending Front Office Confirmation" to "Front Office Confirmed" on AcceptBrokerTrade
+    flow from "Front Office Confirmed" to terminal
+    transition from "Pending Front Office Confirmation" to "Front Office Rejected" on RejectBrokerTrade
+    flow from "Front Office Rejected" to terminal
 
   }
-
 }
 
 trait Substitutable {
@@ -197,18 +213,4 @@ trait Revisionable {
 
   override def toString(): String = s"$economicRevision:$nonEconomicRevision"
 }
-
-
-abstract class Counterparty()
-
-class Client() extends Counterparty()
-
-class Trader() extends Counterparty()
-
-class Salesperson() extends Counterparty()
-
-class Broker() extends Counterparty()
-
-class Dealer() extends Counterparty()
-
 

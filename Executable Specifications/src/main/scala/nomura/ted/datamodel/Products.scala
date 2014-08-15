@@ -1,0 +1,2 @@
+package nomura.ted.datamodel
+
