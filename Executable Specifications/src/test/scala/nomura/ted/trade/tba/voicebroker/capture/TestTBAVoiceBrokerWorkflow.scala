@@ -2,11 +2,10 @@ package nomura.ted.trade.tba.voicebroker.capture
 
 
 import _root_.nomura.testutils.StateTestMatcher
-import _root_.nomura.uml.{TraceFacility, StateMachineActorSystem}
 import akka.actor.ActorSystem
 import akka.testkit.{TestActorRef, TestKit}
+import nomura.uml.{StateMachineActorSystem, TraceFacility, WorkflowParticipant}
 import org.scalatest._
-
 
 
 class TestTBAVoiceBrokerTradeModel extends TestKit(ActorSystem("TED-World")) with WordSpecLike with
@@ -21,7 +20,18 @@ MustMatchers with BeforeAndAfterAll with StateTestMatcher {
 
   "Broker Trade Capture is Successful" when {
 
-    val workflow = new OrchestrationWorkflow("TBA Voice Broker Trade Capture Workflow")
+    val workflow = new OrchestrationWorkflow {
+      def name: String = "TBA Voice Broker Trade Capture Workflow"
+
+      def participants = new collection.mutable.HashMap[String, WorkflowParticipant]()
+
+      def start(): Unit = {}
+
+      def start(): Unit {
+        send ("Broker", Completed () )
+      }
+
+    }
 
     val broker = TestActorRef(new BrokerWorkflow(workflow))
     val trader = TestActorRef(new TraderWorkflow(workflow))

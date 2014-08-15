@@ -1,15 +1,17 @@
 package nomura.ted.trade.tba.voicebroker.capture
 
 import nomura.uml.LifeCycleEvents.Completed
-import nomura.uml.Workflow
+import nomura.uml.{WorkflowParticipant, Workflow}
+
+import scala.collection.mutable
 
 
-class OrchestrationWorkflow(val name: String) extends Workflow {
+trait OrchestrationWorkflow extends Workflow {
 
-   def validParticipants: Set[String] = Set("Trader", "Broker", "RTTM")
+  def name: String
 
-   def start(): Unit = {
-     send("Broker", Completed())
-   }
+  def participants: mutable.HashMap[String, WorkflowParticipant]
 
- }
+  def start(): Unit
+
+}
