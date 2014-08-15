@@ -198,6 +198,7 @@ trait Revisionable {
   override def toString(): String = s"$economicRevision:$nonEconomicRevision"
 }
 
+
 abstract class Counterparty()
 
 class Client() extends Counterparty()
