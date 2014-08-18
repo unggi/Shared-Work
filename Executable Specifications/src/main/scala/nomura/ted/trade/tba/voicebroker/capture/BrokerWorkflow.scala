@@ -1,38 +1,42 @@
 package nomura.ted.trade.tba.voicebroker.capture
 
 import _root_.nomura.uml.LifeCycleEvents.Completed
-import _root_.nomura.uml.{StateMachine, Workflow, WorkflowParticipant}
+import akka.actor.ActorRef
+import nomura.uml.{DispatchToParticipant, StateMachine, WorkflowParticipant}
 
-class BrokerWorkflow(val workflow: Workflow) extends StateMachine("Broker Trade Booking Workflow") with WorkflowParticipant {
-
+class BrokerWorkflow(_workflow: ActorRef)
+  extends StateMachine("Broker Trade Booking Workflow")
+  with WorkflowParticipant {
   var trade: Option[NewBrokerTrade] = None
 
-   model("Broker Workflow") {
+  def workflow = _workflow
 
-     state("Verbal Execution of Trade") {
-       event: Completed =>
-     }
+  model("Broker Workflow") {
 
-     state("Enter Broker Trade") {
-       event: NewBrokerTrade =>
-         trade = Some(event)
-     }
+    state("Verbal Execution of Trade") {
+      event: Completed =>
+    }
 
-     state("Post Trade Notification") {
-       event: Completed =>
-         // Tell the trader via the post trade feed that there is a new trade
-         workflow.send("Trader", trade.get)
-     }
+    state("Enter Broker Trade") {
+      event: NewBrokerTrade =>
+        trade = Some(event)
+    }
 
-     state("Broker Report to RTTM") {
-       event: Completed =>
-         workflow.send("RTTM", IncomingBrokerTrade(trade.get.brokerTradeID))
-     }
+    state("Post Trade Notification") {
+      event: Completed =>
+        // Tell the trader via the post trade feed that there is a new trade
+        workflow ! DispatchToParticipant("Trader", trade.get)
+    }
 
-     flow from start to "Verbal Execution of Trade"
-     transition from "Verbal Execution of Trade" to "Enter Broker Trade" on NewBrokerTrade
-     flow from "Enter Broker Trade" to "Post Trade Notification"
-     flow from "Post Trade Notification" to "Broker Report to RTTM"
-     flow from "Broker Report to RTTM" to terminal
-   }
- }
+    state("Broker Report to RTTM") {
+      event: Completed =>
+        workflow ! DispatchToParticipant("RTTM", IncomingBrokerTrade(trade.get.brokerTradeID))
+    }
+
+    flow from start to "Verbal Execution of Trade"
+    transition from "Verbal Execution of Trade" to "Enter Broker Trade" on NewBrokerTrade
+    flow from "Enter Broker Trade" to "Post Trade Notification"
+    flow from "Post Trade Notification" to "Broker Report to RTTM"
+    flow from "Broker Report to RTTM" to terminal
+  }
+}

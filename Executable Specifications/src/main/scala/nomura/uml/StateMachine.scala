@@ -2,7 +2,7 @@ package nomura.uml
 
 import akka.actor.Actor
 import akka.event.Logging
-import nomura.uml.LifeCycleEvents.{Completed, QueryState}
+import nomura.uml.LifeCycleEvents.{Completed, QueryState, QueryStateReply, StateDescription}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -32,7 +32,11 @@ abstract class StateMachine(val name: String) extends Actor with StateModel {
 
   def receive = {
     case query: QueryState =>
-      sender() ! currentState.name
+
+      val nextEvents = currentState.transitions.keys.map(_.getCanonicalName).toArray
+      val description = StateDescription(currentState.name, nextEvents)
+      sender() ! QueryStateReply(description)
+
     case event =>
       //
       // Make sure the sender didn't send an object rather than a class instance.
@@ -46,14 +50,8 @@ abstract class StateMachine(val name: String) extends Actor with StateModel {
 
       // then process self messages that were sent during the action method of the
       // target state.
-<<<<<<< HEAD
       while (selfMessageQueue.nonEmpty) {
         val msg = selfMessageQueue.dequeue()
-=======
-      while (!selfMessageQueue.isEmpty) {
-        val msg = selfMessageQueue.dequeue()
-        log.debug("Process Dequeued Message: " + msg.toString)
->>>>>>> Multiple fixes to Broker Trade Workflow
         processEvent.applyOrElse(msg, unhandled)
       }
   }
@@ -115,9 +113,6 @@ abstract class StateMachine(val name: String) extends Actor with StateModel {
   override def unhandled(event: Any): Unit =
     log.error(s"Unhandled message type in state [${currentState.name}]: no transition for [${event.getClass}}]")
 
-  protected def sendSelf(message: Any): Unit =
-    selfMessageQueue.enqueue(message)
-
   def trace[T](stateMachine: StateMachine, event: Any)(body: => T): T = {
     val record = StateTraceRecord(stateMachine.name, currentState.name, "<not available>", event.getClass.getSimpleName)
     TraceFacility.records.append(record)
@@ -126,6 +121,9 @@ abstract class StateMachine(val name: String) extends Actor with StateModel {
 
     result
   }
+
+  protected def sendSelf(message: Any): Unit =
+    selfMessageQueue.enqueue(message)
 
 }
 

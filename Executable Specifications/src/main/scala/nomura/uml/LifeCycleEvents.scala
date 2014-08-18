@@ -14,7 +14,9 @@ object LifeCycleEvents {
 
   case class QueryState() extends BusinessEvent
 
-  case class QueryStateReply(name: State) extends BusinessEvent
+  case class QueryStateReply(description: StateDescription) extends BusinessEvent
+
+  case class StateDescription(currentState: String, nextEvents: Array[String])
 
 }
 

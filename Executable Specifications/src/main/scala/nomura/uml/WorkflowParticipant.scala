@@ -1,8 +1,7 @@
 package nomura.uml
 
-/**
- * Created by usoemard on 8/8/2014.
- */
+import akka.actor.ActorRef
+
 trait WorkflowParticipant {
-   def workflow: Workflow
- }
+  def workflow: ActorRef
+}

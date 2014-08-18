@@ -1,6 +1,6 @@
 package nomura.uml
 
-import java.io.PrintWriter
+import java.io.{File, PrintWriter}
 
 import scala.collection._
 
@@ -94,18 +94,10 @@ class UmlGenerator(stateModel: StateModel, docPath: String) {
 
     override def visit() {
 
-<<<<<<< HEAD
       val slash = File.separatorChar
       val b = new StringBuilder
       for (i <- 1 until docPath.substring(docPath.indexOf("diagrams" + slash)).count(_ == slash))
         b.append(".." + slash)
-=======
-      println(s"Writing UML file: ${docPath}")
-
-      val b = new StringBuilder
-      for (i <- 1 until docPath.substring(docPath.indexOf("diagrams/")).count(_ == '/'))
-        b.append("../")
->>>>>>> Multiple fixes to Broker Trade Workflow
 
       pw.println("@startuml")
 

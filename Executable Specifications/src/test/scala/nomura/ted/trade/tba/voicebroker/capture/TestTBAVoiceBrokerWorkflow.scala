@@ -1,15 +1,19 @@
 package nomura.ted.trade.tba.voicebroker.capture
 
+// TODO Add messages for communication between work flows and the Orchestrator
+// TODO Fix voice broker test case to work with new Orchestrator
+// TODO Add messages to update the trade
 
-import _root_.nomura.testutils.StateTestMatcher
-import akka.actor.ActorSystem
-import akka.testkit.{TestActorRef, TestKit}
-import nomura.uml.{StateMachineActorSystem, TraceFacility, WorkflowParticipant}
+
+import akka.testkit.TestKit
+import nomura.testutils.StateTestMatcher
+import nomura.uml._
 import org.scalatest._
 
 
-class TestTBAVoiceBrokerTradeModel extends TestKit(ActorSystem("TED-World")) with WordSpecLike with
+class TestTBAVoiceBrokerTradeModel extends TestKit(StateMachineActorSystem.system) with WordSpecLike with
 MustMatchers with BeforeAndAfterAll with StateTestMatcher {
+
 
   override def afterAll {
 
@@ -20,51 +24,38 @@ MustMatchers with BeforeAndAfterAll with StateTestMatcher {
 
   "Broker Trade Capture is Successful" when {
 
-    val workflow = new OrchestrationWorkflow {
-      def name: String = "TBA Voice Broker Trade Capture Workflow"
-
-      def participants = new collection.mutable.HashMap[String, WorkflowParticipant]()
-
-      def start(): Unit = {}
-
-      def start(): Unit {
-        send ("Broker", Completed () )
-      }
-
-    }
-
-    val broker = TestActorRef(new BrokerWorkflow(workflow))
-    val trader = TestActorRef(new TraderWorkflow(workflow))
-    val rttm = TestActorRef(new RTTMWorkflow(workflow))
-
-    workflow.register("Trader", trader)
-    workflow.register("Broker", broker)
-    workflow.register("RTTM", rttm)
-
-    // val trade = new BrokerTrade()
+    val workflow = BusinessProcess.create("TBA Voice Broker Trade")
 
     "Broker is in wait on verbal execution of trade after initialization" in {
-      workflow.start()
-      broker mustBeInState "Verbal Execution of Trade"
+
+      workflow currentStateOf "Trader" mustBe "[*]"
+      workflow currentStateOf "Broker" mustBe "Verbal Execution of Trade"
+      workflow currentStateOf "RTTM" mustBe "Matching Trades"
+
+      workflow printCurrentStates
+
     }
 
-    "Broker gets a NewBrokerTrade after verbal execution -> terminal state ([*])" in {
+    "Broker sends a NewBrokerTrade message" in {
       val newTradeEvent = NewBrokerTrade("123", "123456789", "372897", "FN", "DW", "JS")
-      workflow.send("Broker", newTradeEvent)
-      broker mustBeInTerminalState
+
+      workflow ! DispatchToParticipant("Broker", newTradeEvent)
+
+      workflow currentStateOf "Broker" mustBe "[*]"
+      workflow currentStateOf "Trader" mustBe "Trader Reviews Trade"
+      workflow currentStateOf "RTTM" mustBe "Matching Trades"
+
     }
 
-    "Trader must have received a new broker trader message -> Trader Reviews Trade" in {
-      trader mustBeInState "Trader Reviews Trade"
-    }
+    "Trader sends ConfirmBrokerTrade and all participants will terminate" in {
 
-    "Trader confirms the trade and workflow is terminated" in {
-      workflow.send("Trader", ConfirmBrokerTrade("123"))
-      trader mustBeInTerminalState
-    }
+      workflow ! DispatchToParticipant(BusinessProcess.TRADER, ConfirmBrokerTrade("123"))
 
-    "RTTM must be in a terminal state too" in {
-      rttm mustBeInTerminalState
+      workflow currentStateOf "Broker" mustBe "[*]"
+      workflow currentStateOf "Trader" mustBe "[*]"
+      workflow currentStateOf "RTTM" mustBe "[*]"
+
+
     }
   }
 }

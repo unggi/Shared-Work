@@ -1,13 +1,18 @@
 package nomura.ted.trade.tba.voicebroker.capture
 
 import _root_.nomura.uml.LifeCycleEvents.Completed
-import _root_.nomura.uml.StateMachine
+import akka.actor.ActorRef
+import nomura.uml.{StateMachine, WorkflowParticipant}
 
 
-class RTTMWorkflow(val workflow: OrchestrationWorkflow) extends StateMachine("RTTM Workflow") {
+class RTTMWorkflow(_workflow: ActorRef)
+  extends StateMachine("RTTM Workflow")
+  with WorkflowParticipant {
 
   var brokerTradeID: Option[String] = None
   var dealerTradeID: Option[String] = None
+
+  def workflow: ActorRef = _workflow
 
   def compareTrades(): Unit = {
     if (brokerTradeID.isDefined && dealerTradeID.isDefined && brokerTradeID.get.equals(dealerTradeID.get))

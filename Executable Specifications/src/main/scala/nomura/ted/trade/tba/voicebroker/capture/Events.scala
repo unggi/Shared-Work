@@ -19,17 +19,14 @@ case class TradeExecutionReport(brokerTradeID: String)
 
 case class IncomingBrokerTrade(brokerTradeID: String)
 
-<<<<<<< HEAD
 case class IncomingDealerTrade(tradeID: String)
+
+case class IncomingFirmTrade(tradeID: String)
 
 case class TradeMatchFound(tradeID: String)
 
 case class NoTradeMatch()
 
-=======
-case class IncomingFirmTrade(tradeID: String)
+case class WorkflowTermination(name: String)
 
-case class TradeMatchFound(tradeID: String, brokerTradeID: String)
-
-case class NoTradeMatch()
->>>>>>> Multiple fixes to Broker Trade Workflow
+case class OrchestrationTermination(name: String)
