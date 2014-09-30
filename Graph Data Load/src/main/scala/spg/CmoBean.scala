@@ -3,17 +3,47 @@ package spg
 import java.sql.Time
 import java.util.Date
 
+
+@GraphNode(name="Security")
 class CmoBean {
-  var ESMID: String = ""
+  @ID
+  var ESMID: Int = -1
+
+  /**
+   * CUSIP - may not be populated.
+   */
   var CUSIP: String = ""
+  /**
+   * Security/Collateral Type
+   *
+   *
+   */
   var SecurityType: String = ""
+  /**
+   * Announcement Date
+   */
   var AnnouncementDate: Date = _
+  /**
+   *  Security Description
+   */
   var Description: String = ""
+  /**
+   * Rule 144A?
+   */
   var IsRule144A: String = ""
+  /**
+   * Issue Date
+   */
   var IssueDate: Date = _
+  /**
+   *
+   */
   var ParValue: Double = 0.0
   var Series: String = ""
   var IssuerName: String = ""
+  /**
+   * *
+   */
   var CollateralType: String = ""
   var FirstSettlementDate: Date = _
   var CouponDividendFrequency: Int = 0

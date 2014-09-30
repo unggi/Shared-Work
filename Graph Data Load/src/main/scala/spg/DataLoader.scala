@@ -1,6 +1,7 @@
 package spg
 
 import java.io._
+import java.lang.reflect.Field
 import java.sql.Time
 import java.util.Date
 import java.util.zip.ZipFile
@@ -10,14 +11,8 @@ import org.neo4j.graphdb._
 import org.neo4j.unsafe.batchinsert.BatchInserters
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable.HashMap
 import scala.collection.mutable
-
-// TODO Support for numeric data types in graph model
-// TODO Support for date data types in graph model
-// TODO Link counterparties to sales through coverage relation
-// TODO Link trades to counterparties
-// TODO Link trades to sales? Not sure if sales reps are in the trade object
-// TODO Link trades to books
 
 object DataLoader {
 
@@ -31,10 +26,9 @@ object DataLoader {
 
   def main(args: Array[String]): Unit = {
 
-    // Initialize Neo4J configuration
-    //    createConfiguration()
-
-    val db = createBatchInserter(DB_PATH)
+    //
+    // Check files exist
+    //
 
     val counterparty = new File(COUNTERPARTIES)
     require(counterparty.exists, s"Counterparty daily file does not exist or cannot be read: ${counterparty}")
@@ -51,234 +45,229 @@ object DataLoader {
     val history = new File(TRADE_HISTORY)
     require(history.exists, "History file not found or cannot be opened.")
 
-    val cmoRecordCount = processCmoSecurities(cmo, db)
-    println(s"Processed ${cmoRecordCount} CMO security records")
+    //
+    // Create database
+    //
 
-    val counterpartyCount = processCounterparties(counterparty, db)
-    println(s"Processed ${counterpartyCount} Counterparty records.")
-
-    val counterpartyCoverageRecordCount = processCounterpartySalesCoverage(countpartyCoverage, db)
-    println(s"Processed ${counterpartyCoverageRecordCount} Counterparty records.")
+    val db = createBatchInserter(DB_PATH)
 
 
-    val poolRecordCount = processPoolSecurities(pool, db)
-    println(s"Processed ${poolRecordCount} Pool security records")
+    //
+    //
+    //    val poolRecordCount = processPoolSecurities(pool, db)
+    //    println(s"Processed ${poolRecordCount} Pool security records")
+    //
+    //    val cmoRecordCount = processCmoSecurities(cmo, db)
+    //    println(s"Processed ${cmoRecordCount} CMO security records")
+    //
+    //
+    //    println(s"Loading  Trade History File\n\nHistory File Path = [${TRADE_HISTORY}]\n")
+    //    val tradeRecordCount = processTradeHistory(history, db)
+    //    println(s"Processed Trade ${tradeRecordCount} records")
 
 
-    println(s"Loading  Trade History File\n\nHistory File Path = [${TRADE_HISTORY}]\n")
-    val tradeRecordCount = processTradeHistory(history, db)
-    println(s"Processed Trade ${tradeRecordCount} records")
+    //    val counterpartyCount = processCounterparties(counterparty, db)
+    //    println(s"Processed ${counterpartyCount} Counterparty records.")
+    //
+    //    val counterpartyCoverageRecordCount = processCounterpartySalesCoverage(countpartyCoverage, db)
+    //    println(s"Processed ${counterpartyCoverageRecordCount} Counterparty records.")
+    //
+
+
 
     db.shutdown()
   }
 
-  val IntClass = classOf[Int]
-  val DoubleClass = classOf[Double]
-  val StringClass = classOf[String]
-  val DateClass = classOf[Date]
-  val TimeClass = classOf[Time]
 
-  def copyRecordToNode(beanClass: Class[_], node: Node, fields: IndexedSeq[String], record: Array[String]): Unit = {
-
-    for (i <- 0 until fields.size) {
-      val fieldName = fields(i)
-      val textValue = record(i)
-      if (textValue.length != 0) {
-
-        val field = beanClass.getDeclaredField(fieldName)
-        require(field != null, s"Field not found: bean = ${beanClass.getSimpleName} field = ${fieldName}")
-
-        try {
-          field.getType match {
-            case IntClass =>
-              val integer = FieldFormatter.asInteger(textValue)
-              node.setProperty(fieldName, integer.get)
-            case DoubleClass =>
-              val dbl = FieldFormatter.asDouble(textValue)
-              node.setProperty(fieldName, dbl.get)
-            case DateClass =>
-              val date = FieldFormatter.asDate(textValue)
-              node.setProperty(fieldName, date.get.getTime)
-            case TimeClass =>
-              val time = FieldFormatter.asTime(textValue)
-              node.setProperty(fieldName, time.get.getTime)
-            case StringClass =>
-              node.setProperty(fieldName, textValue)
-            case x =>
-              println(s"Unknown Field Type Class = $beanClass Field = $fieldName FieldType = ${x.getSimpleName} value = $textValue")
-          }
-        } catch {
-          case e => println(s"Exception for $beanClass field = $fieldName type = ${field.getType.getSimpleName} value ${e.getMessage}")
-        }
-      }
-    }
-  }
-
-  def processCounterparties(path: File, db: GraphDatabaseService): Int = {
-    val label = DynamicLabel.label("Counterparty")
-
-    val map = mutable.HashMap[String, String](
-      "account_id" -> "AccountID",
-      "cp_key" -> "CPKey",
-      "sname" -> "ShortName",
-      "name" -> "Name",
-      "recent" -> "Recent",
-      "alias" -> "Alias"
-    )
-
-    for ((k, v) <- map) {
-      println(s"Key = $k Value = $v")
-    }
-
-    CSV(path, 1000, ',', Some(map)) {
-      (line, fields, record) =>
-        val node = db.createNode(label)
-        copyRecordToNode(classOf[CounterpartyBean], node, fields, record)
-    }
-  }
-
-
-  def processCounterpartySalesCoverage(path: File, db: GraphDatabaseService): Int = {
-    val label = DynamicLabel.label("CounterpartyCoverage")
-
-    val map = mutable.HashMap(
-      "cpkeyRepId" -> "ID", "cp_key" -> "CounterpartyID", "repId" -> "RepID", "salesName" -> "SalesName")
-
-    for ((k, v) <- map) {
-      println(s"Key = $k Value = $v")
-    }
-
-    CSV(path, 1000, ',', Some(map)) {
-      (line, fields, record) =>
-        val node = db.createNode(label)
-        copyRecordToNode(classOf[CounterpartySalesCoverageBean], node, fields, record)
-    }
-  }
-
-  val securityMap = new mutable.HashMap[String, Long]()
-
-  def processCmoSecurities(path: File, db: GraphDatabaseService): Int = {
-    val label = DynamicLabel.label("Security")
-    // Map Field Names
-    val map = mutable.HashMap(
-      "ESMP" -> "ESMID", "CSP" -> "CUSIP"
-    )
-
-    for ((k, v) <- map) {
-      println(s"Key = $k Value = $v")
-    }
-
-    CSV(path, 100000, '|', Some(map)) {
-      (line, fields, record) =>
-        val node = db.createNode(label)
-        copyRecordToNode(classOf[CmoBean], node, fields, record)
-        securityMap.put(node.getProperty("ESMID").asInstanceOf[String], node.getId)
-    }
-  }
-
-  def processPoolSecurities(path: File, db: GraphDatabaseService): Int = {
-    val label = DynamicLabel.label("Security")
-    val map = mutable.HashMap(
-      "ESMP" -> "ESMID", "CSP" -> "CUSIP"
-    )
-
-    CSV(path, 100000, '|', Some(map)) {
-      (line, fields, record) =>
-
-
-        val pool = new PoolBean()
-        val node = db.createNode(label)
-        copyRecordToNode(pool.getClass(), node, fields, record)
-        securityMap.put(pool.CSP, node.getId)
-    }
-  }
-
-  def processTradeHistory(path: File, db: GraphDatabaseService): Int = {
-    val label = DynamicLabel.label("Trade")
-
-    CSV(path, 100000) {
-      (line, fields, record) =>
-        val node = db.createNode(label)
-        copyRecordToNode(classOf[TradeBean], node, fields, record)
-      //        securityMap.get(bean.Cusip) match {
-      //          case Some(id) =>
-      //            node.createRelationshipTo(db.getNodeById(id), Relationships.PRODUCT)
-      //          case None =>
-      //            println(s"Security not found: ${bean.Cusip}")
-      //        }
-    }
-  }
-
-  def CSV(path: File,
-          interval: Int,
-          delimiter: Char = '~',
-          fieldMap: Option[mutable.HashMap[String, String]] = None)
-         (block: (Int, Array[String], Array[String]) => Unit): Int = {
-
-    require(path.exists(), s"[${path}] not found")
-
-    val fstrm =
-      if (path.getName.endsWith(".zip")) {
-        val zip = new ZipFile(path)
-        val entry = zip.entries.find(e => e.getName.endsWith(".csv"))
-        require(entry.isDefined, s"Could not find a CSV file in Zipfile ${path.getCanonicalPath}")
-        zip.getInputStream(entry.get)
-      }
-      else
-        new FileInputStream(path)
-
-    val reader = new CSVReader(new InputStreamReader(fstrm), delimiter, '\000')
-
-    val header: Array[String] = reader.readNext()
-
-    val fields =
-      for (fld <- header if (fld.length > 0))
-      yield
-        if (fieldMap.isDefined)
-          fieldMap.get.get(fld).getOrElse(fld)
-        else
-          fld
-
-    println(s" ======== >> Processing ${path.getName}")
-    println(s"There are ${header.size} header columns in each input line")
-    println(s"There are ${fields.size} fields in the data object")
-
-    println()
-    println("Fields { ")
-    for (f <- fields) {
-      println(s"  ${f} ")
-    }
-    println("}")
-
-    val startTime = new Date().getTime
-
-    var line = 1
-    Stream.continually(reader.readNext).takeWhile(record => (record ne null) && (record.repr ne null)).foreach {
-      record =>
-        //
-        //Invoke the lambda function which processes a single record in the CSV file
-        //
-        block(line, fields, record)
-
-        //
-        // Every "interval" rows, print time and processing stats.
-        //
-        if (line % interval == 0) {
-          val now = new Date().getTime()
-          val msSinceStart: Double = now - startTime
-          val rate: Double = (msSinceStart / line) * 1000.0
-          val rt = Runtime.getRuntime
-          print(f"Read $line%10d records. Total Time = ${msSinceStart / 1000.0}%.2f secs. Time per Record = ${rate}%.2f ns.")
-          println(f" Memory (free/total) ${rt.freeMemory() / 1000000.0}%.2f/${rt.totalMemory() / 1000000.0}%.2f ")
-        }
-
-        line = line + 1
-    }
-
-    reader.close()
-    line
-  }
-
+  //
+  //
+  //  def processCounterparties(path: File, db: GraphDatabaseService): Int = {
+  //    val label = DynamicLabel.label("Counterparty")
+  //
+  //    val map = mutable.HashMap[String, String](
+  //      "account_id" -> "AccountID",
+  //      "cp_key" -> "CPKey",
+  //      "sname" -> "ShortName",
+  //      "name" -> "Name",
+  //      "recent" -> "Recent",
+  //      "alias" -> "Alias"
+  //    )
+  //
+  //    for ((k, v) <- map) {
+  //      println(s"Key = $k Value = $v")
+  //    }
+  //
+  //    CSV(path, 1000, ',', Some(map)) {
+  //      (line, fields, record) =>
+  //        val node = db.createNode(label)
+  //        copyRecordToNode(classOf[CounterpartyBean], node, fields, record)
+  //    }
+  //  }
+  //
+  //
+  //  def processCounterpartySalesCoverage(path: File, db: GraphDatabaseService): Int = {
+  //    val label = DynamicLabel.label("CounterpartyCoverage")
+  //
+  //    val map = mutable.HashMap(
+  //      "cpkeyRepId" -> "ID", "cp_key" -> "CounterpartyID", "repId" -> "RepID", "salesName" -> "SalesName")
+  //
+  //    for ((k, v) <- map) {
+  //      println(s"Key = $k Value = $v")
+  //    }
+  //
+  //    CSV(path, 1000, ',', Some(map)) {
+  //      (line, fields, record) =>
+  //        val node = db.createNode(label)
+  //        copyRecordToNode(classOf[CounterpartySalesCoverageBean], node, fields, record)
+  //    }
+  //  }
+  //
+  //
+  //  val securityMap = new mutable.HashMap[String, Long]()
+  //
+  //  def processCmoSecurities(path: File, db: GraphDatabaseService): Int = {
+  //
+  //    val label = DynamicLabel.label("Security")
+  //
+  //    // Map Field Names
+  //    val map = mutable.HashMap(
+  //      "ESMP" -> "ESMID", "CSP" -> "CUSIP"
+  //    )
+  //
+  //
+  //    CSV(path, 100000, '|', Some(map)) {
+  //      (line, fields, record) =>
+  //        val node = db.createNode(label)
+  //        val bean = new CmoBean()
+  //        copyRecordToNode(bean, node, fields, record)
+  //        println(s"CMO is ${bean}")
+  //      //securityMap.put(securityID, node.getId)
+  //    }
+  //  }
+  //
+  //  def processPoolSecurities(path: File, db: GraphDatabaseService): Int = {
+  //    val label = DynamicLabel.label("Security")
+  //    val map = mutable.HashMap(
+  //      "ESMP" -> "ESMID", "CSP" -> "CUSIP"
+  //    )
+  //
+  //    CSV(path, 100000, '|', Some(map)) {
+  //      (line, fields, record) =>
+  //
+  //
+  //        val node = db.createNode(label)
+  //        val bean = new PoolBean()
+  //        copyRecordToNode(bean, node, fields, record)
+  //
+  //      //
+  //      //
+  //
+  //
+  //      //ecurityMap.put(securityID, node.getId)
+  //    }
+  //  }
+  //
+  //  def processTradeHistory(path: File, db: GraphDatabaseService): Int = {
+  //    val label = DynamicLabel.label("Trade")
+  //
+  //    val map = mutable.HashMap(
+  //      "SecurityId" -> "ESMID"
+  //    )
+  //
+  //    CSV(path, 100000) {
+  //      (line, fields, record) =>
+  //        val node = db.createNode(label)
+  //        copyRecordToNode(classOf[TradeBean], node, fields, record)
+  //
+  //        //
+  //        // Replace Security ID with ESM ID
+  //        //
+  //        // ESMID maps to SecurityId in the input file. The value of this field in the input file
+  //        // is a Winfits ID. Use Cusip or pool number to find the corresponding ID from the security Map.
+  //        //
+  //        val cusip = node.getProperty("CUSIP").asInstanceOf[String]
+  //        val pool = node.getProperty("ESMID").asInstanceOf[String]
+  //
+  //        val nodeID = securityMap.get(cusip) orElse securityMap.get(pool)
+  //
+  //        nodeID match {
+  //          case Some(id) =>
+  //            val securityNode = db.getNodeById(id)
+  //            node.createRelationshipTo(securityNode, Relationships.PRODUCT)
+  //          case None =>
+  //            println(s"Security not found: Cusip = $cusip PoolNum = $pool)")
+  //        }
+  //    }
+  //  }
+  //
+  //
+  //  case class Mapping(val column: String, val property: String)
+  //
+  //  def CSV(path: File,
+  //          interval: Int,
+  //          fieldMap: Array[Mapping],
+  //          delimiter: Char = '~')
+  //         (block: (Int, Array[Mapping], Array[String]) => Unit): Int = {
+  //
+  //    require(path.exists(), s"[${path}] not found")
+  //
+  //    val fstrm =
+  //      if (path.getName.endsWith(".zip")) {
+  //        val zip = new ZipFile(path)
+  //        val entry = zip.entries.find(e => e.getName.endsWith(".csv"))
+  //        require(entry.isDefined, s"Could not find a CSV file in Zipfile ${path.getCanonicalPath}")
+  //        zip.getInputStream(entry.get)
+  //      }
+  //      else
+  //        new FileInputStream(path)
+  //
+  //    val reader = new CSVReader(new InputStreamReader(fstrm), delimiter, '\000')
+  //
+  //    val header: Array[String] = reader.readNext()
+  //
+  //    println(s" ======== >> Processing ${path.getName}")
+  //    println(s"There are ${header.size} header columns in each input line")
+  //    println(s"There are ${fieldMap.size} fields in the field map")
+  //
+  //    require(header.size == fieldMap.size, "The fieldMap must define a mapping for each field in the CSV file.")
+  //    println()
+  //    println("Field Mapping { ")
+  //    println("   CSV File         -> Node Property ")
+  //    for (f <- fieldMap) {
+  //      mapping: Mapping =>
+  //        println(s"  ${mapping.column} -> ${mapping.property}")
+  //    }
+  //    println("}")
+  //
+  //    val startTime = new Date().getTime
+  //
+  //    var line = 1
+  //    Stream.continually(reader.readNext).takeWhile(record => (record ne null) && (record.repr ne null)).foreach {
+  //      record =>
+  //        //
+  //        //Invoke the lambda function which processes a single record in the CSV file
+  //        //
+  //        block(line, fieldMap, record)
+  //
+  //        //
+  //        // Every "interval" rows, print time and processing stats.
+  //        //
+  //        if (line % interval == 0) {
+  //          val now = new Date().getTime()
+  //          val msSinceStart: Double = now - startTime
+  //          val rate: Double = (msSinceStart / line) * 1000.0
+  //          val rt = Runtime.getRuntime
+  //          print(f"Read $line%10d records. Total Time = ${msSinceStart / 1000.0}%.2f secs. Time per Record = ${rate}%.2f ns.")
+  //          println(f" Memory (free/total) ${rt.freeMemory() / 1000000.0}%.2f/${rt.totalMemory() / 1000000.0}%.2f ")
+  //        }
+  //
+  //        line = line + 1
+  //    }
+  //
+  //    reader.close()
+  //    line
+  //  }
+  //
   /**
    *
    * @param f - the file representing the root of the database to be removed.
@@ -308,6 +297,7 @@ object DataLoader {
     BatchInserters.batchDatabase(path)
   }
 }
+
 
 
 

@@ -19,6 +19,7 @@ object FieldFormatter {
   val ClassOfString = classOf[String]
   val ClassOfDate = classOf[Date]
   val ClassOfTime = classOf[Time]
+  val ClassOfBoolean = classOf[Boolean]
 
 
   def format(value: Double): String = value.toString
@@ -46,6 +47,7 @@ object FieldFormatter {
       case str: String => format(str)
       case time: Time => format(time)
       case date: Date => format(date)
+      case bool: Boolean => format(Boolean)
       case _ => s"${value.getClass.getSimpleName} is not a supported data type"
     }
 
@@ -79,4 +81,7 @@ object FieldFormatter {
       new Time(format2.parse(input).getTime)
     }
   }
+
+  def asBoolean(input: String): Try[Boolean] = Try(if (asInteger(input) != 0) true else false)
+
 }

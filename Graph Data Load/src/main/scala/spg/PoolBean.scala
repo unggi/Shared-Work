@@ -3,10 +3,15 @@ package spg
 import java.sql.Time
 import java.util.Date
 
+@GraphNode(name="AgencyPool")
 class PoolBean {
 
-  var ESMP: String = ""
-  var CSP: String = ""
+  @ID
+  var ESMID: Int = -1
+  /**
+   * Cusip
+   */
+  var CUSIP: String = ""
   var SecurityType: String = ""
   var Description: String = ""
   var IsRule144A: String = ""

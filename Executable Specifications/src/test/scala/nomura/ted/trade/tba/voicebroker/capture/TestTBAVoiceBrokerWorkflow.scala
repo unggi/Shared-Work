@@ -1,8 +1,7 @@
 package nomura.ted.trade.tba.voicebroker.capture
 
-// TODO Add messages for communication between work flows and the Orchestrator
-// TODO Fix voice broker test case to work with new Orchestrator
 // TODO Add messages to update the trade
+// TODO Add the trade object to the workflow
 
 
 import akka.testkit.TestKit
