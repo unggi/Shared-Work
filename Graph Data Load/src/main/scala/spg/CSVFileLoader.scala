@@ -20,7 +20,6 @@ case class ColumnToModelMapping(column: String, model: String) {
 
 trait CSVFileLoader {
 
-
   def sourcePath: File
 
   def progressInterval: Int = 10000
@@ -42,9 +41,7 @@ trait CSVFileLoader {
       entry =>
         pw.println(s"  ${entry.column} -> ${entry.model} : ${entry.field.getName}")
     }
-
     pw.println("}")
-
   }
 
   def mapColumns(cls: Class[_], map: Tuple2[String, String]*): Unit = {
@@ -100,6 +97,7 @@ trait CSVFileLoader {
         //
         // Every "interval" rows, print time and processing stats.
         //
+
         if (line % progressInterval == 0)
           printProgressMessage(pw, startTime, line)
 
@@ -148,18 +146,14 @@ trait CSVFileLoader {
     import FieldAccessor._
     val beanClass = bean.getClass
 
-    for (entry <- mapping; textValue <- record) {
+    for ((entry:ColumnToModelMapping, textValue: String) <- mapping.zip(record)) {
 
       if (textValue.length > 0) {
 
         val modelName = entry.model
-
-
-
         var field: Field = null
 
         try {
-
           field = entry.field
           require(field != null, s"Field not found: bean = ${beanClass.getSimpleName} field = ${entry.field}")
 

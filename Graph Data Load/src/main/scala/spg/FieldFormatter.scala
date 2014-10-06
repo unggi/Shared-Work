@@ -82,6 +82,6 @@ object FieldFormatter {
     }
   }
 
-  def asBoolean(input: String): Try[Boolean] = Try(if (asInteger(input) != 0) true else false)
+  def asBoolean(input: String): Try[Boolean] = Try(if (asInteger(input).getOrElse(0) == 0) false else true)
 
 }
