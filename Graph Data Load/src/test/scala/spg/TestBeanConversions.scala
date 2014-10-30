@@ -1,6 +1,8 @@
 package spg
 
 import org.scalatest.{FlatSpec, Matchers}
+import spg.datamodel.TradeBean
+import spg.etl.{FieldFormatter, FieldAccessor}
 
 /**
  * Created by usoemard on 7/17/2014.

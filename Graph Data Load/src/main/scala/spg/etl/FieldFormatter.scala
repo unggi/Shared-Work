@@ -1,4 +1,4 @@
-package spg
+package spg.etl
 
 import java.sql.Time
 import java.text.SimpleDateFormat

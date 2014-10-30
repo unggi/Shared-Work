@@ -1,20 +1,11 @@
-package spg
+package spg.etl
 
 import java.io._
-import java.lang.reflect.Field
-import java.sql.Time
-import java.util.Date
-import java.util.zip.ZipFile
 
-import au.com.bytecode.opencsv.CSVReader
 import org.neo4j.graphdb._
 import org.neo4j.unsafe.batchinsert.BatchInserters
 
-import scala.collection.JavaConversions._
-import scala.collection.immutable.HashMap
-import scala.collection.mutable
-
-object DataLoader {
+object Main {
 
   val date = "20140721"
   val TRADE_HISTORY = "\\\\spgnasprd.us.nomura.com\\mbsdata$\\mbsdata\\prod\\mbs-batch\\data\\HistoricalTradesSolrExtract_" + date + ".txt"

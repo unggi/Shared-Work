@@ -3,6 +3,8 @@ package spg
 import java.io.{File, FileOutputStream, PrintWriter}
 import java.lang.reflect.Field
 
+import spg.datamodel.{TradeBean, CounterpartySalesCoverageBean, CounterpartyBean}
+
 import scala.collection.mutable
 
 

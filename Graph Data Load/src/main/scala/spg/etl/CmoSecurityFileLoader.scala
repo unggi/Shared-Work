@@ -1,10 +1,13 @@
-package spg
+package spg.etl
 
 import java.io.File
-import org.neo4j.graphdb.{GraphDatabaseService, DynamicLabel}
+
+import org.neo4j.graphdb.{DynamicLabel, GraphDatabaseService}
+import spg.datamodel.CmoBean
+import spg.etl.csv.CSVBatchDriver
 
 
-class CmoSecurityFileLoader(override val sourcePath: File, db: GraphDatabaseService) extends CSVFileLoader {
+class CmoSecurityFileLoader(override val sourcePath: File, db: GraphDatabaseService) extends CSVBatchDriver {
 
  override def delimiter: Char = '|'
 

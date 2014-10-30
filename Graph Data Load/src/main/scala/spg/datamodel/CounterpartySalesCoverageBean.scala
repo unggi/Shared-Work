@@ -1,5 +1,6 @@
-package spg
+package spg.datamodel
 
+import spg.DerivedRelationship
 
 class CounterpartySalesCoverageBean {
 

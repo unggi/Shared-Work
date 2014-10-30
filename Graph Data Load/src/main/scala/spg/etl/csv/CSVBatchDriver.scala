@@ -1,4 +1,4 @@
-package spg
+package spg.etl.csv
 
 import java.io._
 import java.lang.reflect.Field
@@ -8,25 +8,73 @@ import java.util.zip.ZipFile
 
 import au.com.bytecode.opencsv.CSVReader
 import org.neo4j.graphdb.Node
-import collection.JavaConversions._
-import scala.collection.mutable.ListBuffer
-import scala.collection.parallel.mutable
-import scala.util.Try
+import spg.etl.{BatchDriver, DataSource, FieldFormatter}
 
+import scala.collection.JavaConversions._
+import scala.collection.immutable.HashMap
+import scala.collection.mutable.ListBuffer
 
 case class ColumnToModelMapping(column: String, model: String) {
   var field: Field = _
 }
 
-trait CSVFileLoader {
+class NormalizedRecord extends HashMap[String, String]
 
-  def sourcePath: File
-
-  def progressInterval: Int = 10000
+class CSVDataSource(sourcePath: File, driver: BatchDriver[NormalizedRecord]) extends DataSource[NormalizedRecord] {
 
   var currentLineNumber = 0
 
+  def progressInterval: Int = 10000
+
   val mapping = new ListBuffer[ColumnToModelMapping]()
+
+  val startTime = new Date().getTime
+  var input: List[Array[String]] = _
+
+  def initialize: Unit = {
+
+    val fstrm = openFile()
+    val reader = new CSVReader(new InputStreamReader(fstrm), delimiter, '\000')
+    val input = reader.readAll
+    val header: Array[String] = reader.readNext()
+
+    // Check the headers from the file against the field to model mapping.
+    mapping.zip(header).foreach {
+      case (map: ColumnToModelMapping, csv: String) =>
+        println(s"Column = <${map.column}>  CSV = <${csv}> ")
+        require(map.column.equals(csv), s"CSV Column Heading: ${map.column} <> ${csv}")
+    }
+    currentLineNumber = 1
+
+  }
+
+  def hasMore = {
+
+  }
+
+  def next: NormalizedRecord = {
+    val line = reader.readNext
+    val record: NormalizedRecord = _
+    if (line != null || line.repr != null) {
+      // Convert to Record
+
+      //
+      // Every "interval" rows, print time and processing stats.
+      //
+
+      if (currentLineNumber % progressInterval == 0)
+        driver.printProgressMessage(startTime, currentLineNumber)
+
+      currentLineNumber = currentLineNumber + 1
+    }
+
+    reader.close()
+
+    driver.printProgressMessage(startTime, currentLineNumber)
+
+    record
+
+  }
 
   def delimiter: Char = '~'
 
@@ -55,7 +103,6 @@ trait CSVFileLoader {
         catch {
           case e: Throwable =>
             println(s"Missing field: ${cls.getSimpleName} does not have field ${model} from ${column}")
-
         }
         mapping.append(c)
     }
@@ -70,59 +117,13 @@ trait CSVFileLoader {
     }
     else
       new FileInputStream(sourcePath)
+}
 
 
-  def processFile(pw: PrintWriter) {
+trait CSVBatchDriver extends BatchDriver[NormalizedRecord] {
 
-    showColumnMapping(pw)
+  def sourcePath: File
 
-    val startTime = new Date().getTime
-    val fstrm = openFile()
-    val reader = new CSVReader(new InputStreamReader(fstrm), delimiter, '\000')
-    val header: Array[String] = reader.readNext()
-
-    // Check the headers from the file against the field to model mapping.
-
-    mapping.zip(header).foreach {
-      case (map: ColumnToModelMapping, csv: String) =>
-        println(s"Column = <${map.column}>  CSV = <${csv}> ")
-        require(map.column.equals(csv), s"CSV Column Heading: ${map.column} <> ${csv}")
-    }
-
-    var line = 1
-    Stream.continually(reader.readNext).takeWhile(record => (record ne null) && (record.repr ne null)).foreach {
-      record =>
-        processRow(line, record)
-
-        //
-        // Every "interval" rows, print time and processing stats.
-        //
-
-        if (line % progressInterval == 0)
-          printProgressMessage(pw, startTime, line)
-
-        line = line + 1
-    }
-
-    reader.close()
-
-    printProgressMessage(pw, startTime, line)
-
-    pw.flush()
-    line
-
-  }
-
-  def printProgressMessage(pw: PrintWriter, startTime: Long, lines: Int): Unit = {
-    val now = new Date().getTime()
-    val msSinceStart: Double = now - startTime
-    val rate: Double = (msSinceStart / lines) * 1000.0
-    val rt = Runtime.getRuntime
-    pw.print(f"Read $lines%10d records. Total Time = ${msSinceStart / 1000.0}%.2f secs. Time per Record = ${rate}%.2f ns.")
-    pw.println(f" Memory (free/total) ${rt.freeMemory() / 1000000.0}%.2f/${rt.totalMemory() / 1000000.0}%.2f ")
-    pw.flush()
-
-  }
 
   /**
    * To be overidden in a subclass
@@ -143,10 +144,10 @@ trait CSVFileLoader {
 
   def rowToBean(bean: AnyRef, node: Node, record: Array[String]): Unit = {
 
-    import FieldAccessor._
+    import spg.etl.FieldAccessor._
     val beanClass = bean.getClass
 
-    for ((entry:ColumnToModelMapping, textValue: String) <- mapping.zip(record)) {
+    for ((entry: ColumnToModelMapping, textValue: String) <- mapping.zip(record)) {
 
       if (textValue.length > 0) {
 

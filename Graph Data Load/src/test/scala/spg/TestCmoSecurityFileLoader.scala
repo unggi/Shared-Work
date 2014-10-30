@@ -3,6 +3,7 @@ package spg
 import java.io.{PrintWriter, File}
 
 import org.scalatest.{FlatSpec, Matchers}
+import spg.etl.CmoSecurityFileLoader
 import spg.util.GraphDatabaseTestHelper
 
 class TestCmoSecurityFileLoader extends FlatSpec with Matchers with GraphDatabaseTestHelper{

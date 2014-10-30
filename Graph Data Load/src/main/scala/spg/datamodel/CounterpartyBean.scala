@@ -1,4 +1,6 @@
-package spg
+package spg.datamodel
+
+import spg.{GraphNode, ID}
 
 /**
  * Client Account Details - accounts, aliases and short names for the parent account of a client.

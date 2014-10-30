@@ -1,7 +1,9 @@
-package spg
+package spg.datamodel
 
 import java.sql.Time
 import java.util.Date
+
+import spg.{GraphNode, ID}
 
 @GraphNode(name="AgencyPool")
 class PoolBean {
