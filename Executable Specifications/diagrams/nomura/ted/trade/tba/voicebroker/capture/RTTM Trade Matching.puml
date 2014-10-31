@@ -1,5 +1,9 @@
 @startuml
+<<<<<<< HEAD
 !include ../../../../../..//Skin.iuml
+=======
+!include ..\..\..\..\..\..\/Skin.iuml
+>>>>>>> parent of a3acf30... test
 state "ACTION_STATE No Match" as No_Match <<ACTION>>
 state "WAIT_STATE Match Incoming Dealer Trade" as Match_Incoming_Dealer_Trade <<WAIT>>
 state "ACTION_STATE Trade is Matched" as Trade_is_Matched <<ACTION>>
@@ -7,6 +11,7 @@ state "WAIT_STATE Match Incoming Broker Trade" as Match_Incoming_Broker_Trade <<
 state "WAIT_STATE Matching Trades" as Matching_Trades <<WAIT>>
 [*] --> Matching_Trades
 Matching_Trades --> Match_Incoming_Broker_Trade : MESSAGE IncomingBrokerTrade
+<<<<<<< HEAD
 Match_Incoming_Broker_Trade --> Trade_is_Matched : MESSAGE TradeMatchFound
 Trade_is_Matched --> [*]
 Match_Incoming_Broker_Trade --> No_Match : MESSAGE NoTradeMatch
@@ -14,4 +19,13 @@ No_Match --> Matching_Trades
 Matching_Trades --> Match_Incoming_Dealer_Trade : MESSAGE IncomingDealerTrade
 Match_Incoming_Dealer_Trade --> Trade_is_Matched : MESSAGE TradeMatchFound
 Match_Incoming_Dealer_Trade --> No_Match : MESSAGE NoTradeMatch
+=======
+Match_Incoming_Broker_Trade --> No_Match : MESSAGE NoTradeMatch
+No_Match --> Matching_Trades
+Match_Incoming_Broker_Trade --> Trade_is_Matched : MESSAGE TradeMatchFound
+Trade_is_Matched --> [*]
+Matching_Trades --> Match_Incoming_Dealer_Trade : MESSAGE IncomingDealerTrade
+Match_Incoming_Dealer_Trade --> No_Match : MESSAGE NoTradeMatch
+Match_Incoming_Dealer_Trade --> Trade_is_Matched : MESSAGE TradeMatchFound
+>>>>>>> parent of a3acf30... test
 @enduml
