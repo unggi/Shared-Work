@@ -6,27 +6,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c61e1df-cd0e-4f8f-a312-ef0c6fbb0125" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/spg/etl/BatchDriver.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/spg/etl/CypherToModelConversion.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/spg/etl/DataSource.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/spg/etl/DataTarget.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/spg/etl/DataTransformation.scala" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TODO.txt" />
-      <change type="DELETED" beforePath="C:\Work\GitHub\Shared-Work\Graph Data Load\src\main\scala\spg\CypherToModelConversion.scala" afterPath="" />
-      <change type="MOVED" beforePath="C:\Work\GitHub\Shared-Work\Graph Data Load\src\main\scala\spg\CSVFileLoader.scala" afterPath="$PROJECT_DIR$/src/main/scala/spg/etl/csv/CSVBatchDriver.scala" />
-      <change type="MOVED" beforePath="C:\Work\GitHub\Shared-Work\Graph Data Load\src\main\scala\spg\CmoBean.scala" afterPath="$PROJECT_DIR$/src/main/scala/spg/datamodel/CmoBean.scala" />
-      <change type="MOVED" beforePath="C:\Work\GitHub\Shared-Work\Graph Data Load\src\main\scala\spg\CmoSecurityFileLoader.scala" afterPath="$PROJECT_DIR$/src/main/scala/spg/etl/CmoSecurityFileLoader.scala" />
-      <change type="MOVED" beforePath="C:\Work\GitHub\Shared-Work\Graph Data Load\src\main\scala\spg\CounterpartyBean.scala" afterPath="$PROJECT_DIR$/src/main/scala/spg/datamodel/CounterpartyBean.scala" />
-      <change type="MOVED" beforePath="C:\Work\GitHub\Shared-Work\Graph Data Load\src\main\scala\spg\CounterpartySalesCoverageBean.scala" afterPath="$PROJECT_DIR$/src/main/scala/spg/datamodel/CounterpartySalesCoverageBean.scala" />
-      <change type="MOVED" beforePath="C:\Work\GitHub\Shared-Work\Graph Data Load\src\main\scala\spg\DataLoader.scala" afterPath="$PROJECT_DIR$/src/main/scala/spg/etl/Main.scala" />
-      <change type="MOVED" beforePath="C:\Work\GitHub\Shared-Work\Graph Data Load\src\main\scala\spg\FieldAccessor.scala" afterPath="$PROJECT_DIR$/src/main/scala/spg/etl/FieldAccessor.scala" />
-      <change type="MOVED" beforePath="C:\Work\GitHub\Shared-Work\Graph Data Load\src\main\scala\spg\FieldFormatter.scala" afterPath="$PROJECT_DIR$/src/main/scala/spg/etl/FieldFormatter.scala" />
-      <change type="MOVED" beforePath="C:\Work\GitHub\Shared-Work\Graph Data Load\src\main\scala\spg\PoolBean.scala" afterPath="$PROJECT_DIR$/src/main/scala/spg/datamodel/PoolBean.scala" />
-      <change type="MOVED" beforePath="C:\Work\GitHub\Shared-Work\Graph Data Load\src\main\scala\spg\TradeBean.scala" afterPath="$PROJECT_DIR$/src/main/scala/spg/datamodel/TradeBean.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/spg/ModelGenerator.scala" afterPath="$PROJECT_DIR$/src/main/scala/spg/ModelGenerator.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/spg/TestBeanConversions.scala" afterPath="$PROJECT_DIR$/src/test/scala/spg/TestBeanConversions.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/spg/TestCmoSecurityFileLoader.scala" afterPath="$PROJECT_DIR$/src/test/scala/spg/TestCmoSecurityFileLoader.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/spg/TestGraphLoad.scala" afterPath="$PROJECT_DIR$/src/test/scala/spg/TestGraphLoad.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Graph Data Load.iws" />
@@ -58,8 +37,8 @@
       <file leaf-file-name="CSVBatchDriver.scala" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/spg/etl/csv/CSVBatchDriver.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35762483" vertical-offset="92" max-vertical-offset="3553">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.3805668" vertical-offset="92" max-vertical-offset="3553">
+              <caret line="22" column="47" selection-start-line="22" selection-start-column="47" selection-end-line="22" selection-end-column="47" />
               <folding>
                 <element signature="e#21#37#0" expanded="true" />
                 <element signature="e#878#882#0" expanded="true" />
@@ -999,7 +978,7 @@
       <workItem from="1413305735765" duration="9806000" />
       <workItem from="1413473577187" duration="4518000" />
       <workItem from="1414084838142" duration="7690000" />
-      <workItem from="1414415631618" duration="34856000" />
+      <workItem from="1414415631618" duration="35855000" />
     </task>
     <task id="LOCAL-00001" summary="Refactored csv file loading">
       <created>1412101837292</created>
@@ -1009,11 +988,15 @@
       <created>1414594629460</created>
       <updated>1414594629460</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Refactoring in progress.&#10;">
+      <created>1414706974425</created>
+      <updated>1414706974425</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="319769000" />
+    <option name="totallyTimeSpent" value="320768000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1127,7 +1110,8 @@
     <MESSAGE value="Refactored objects.&#10;" />
     <MESSAGE value="Refactored csv file loading" />
     <MESSAGE value="Created by hand an overview of the datamodel.&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created by hand an overview of the datamodel.&#10;" />
+    <MESSAGE value="Refactoring in progress.&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring in progress.&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1547,8 +1531,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/spg/etl/csv/CSVBatchDriver.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35762483" vertical-offset="92" max-vertical-offset="3587">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.3805668" vertical-offset="92" max-vertical-offset="3553">
+          <caret line="22" column="47" selection-start-line="22" selection-start-column="47" selection-end-line="22" selection-end-column="47" />
           <folding>
             <element signature="e#21#37#0" expanded="true" />
             <element signature="e#878#882#0" expanded="true" />
