@@ -1,9 +1,5 @@
 @startuml
-<<<<<<< HEAD
-!include ../../../../../..//Skin.iuml
-=======
 !include ..\..\..\..\..\..\/Skin.iuml
->>>>>>> parent of a3acf30... test
 state "ACTION_STATE Broker Report to RTTM" as Broker_Report_to_RTTM <<ACTION>>
 state "ACTION_STATE Post Trade Notification" as Post_Trade_Notification <<ACTION>>
 state "WAIT_STATE Verbal Execution of Trade" as Verbal_Execution_of_Trade <<WAIT>>
