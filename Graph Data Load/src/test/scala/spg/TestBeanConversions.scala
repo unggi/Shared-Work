@@ -1,8 +1,11 @@
 package spg
 
 import org.scalatest.{FlatSpec, Matchers}
+<<<<<<< HEAD
 import spg.datamodel.TradeBean
 import spg.etl.{FieldFormatter, FieldAccessor}
+=======
+>>>>>>> parent of 9f7f0df... Refreshing
 
 /**
  * Created by usoemard on 7/17/2014.

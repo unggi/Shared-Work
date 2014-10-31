@@ -18,7 +18,11 @@
         <processorPath useClasspath="true" />
       </profile>
     </annotationProcessing>
+<<<<<<< HEAD
     <bytecodeTargetLevel target="1.8" />
+=======
+    <bytecodeTargetLevel target="1.7" />
+>>>>>>> parent of 9f7f0df... Refreshing
   </component>
 </project>
 

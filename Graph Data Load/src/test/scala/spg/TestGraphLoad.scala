@@ -3,7 +3,10 @@ package spg
 import org.neo4j.graphdb.GraphDatabaseService
 import org.neo4j.graphdb.factory.GraphDatabaseFactory
 import org.scalatest.{Suite, BeforeAndAfterAll, Matchers, FlatSpec}
+<<<<<<< HEAD
 import spg.etl.Main
+=======
+>>>>>>> parent of 9f7f0df... Refreshing
 
 trait GraphDatabaseSuite extends BeforeAndAfterAll {
   suite: Suite =>
@@ -11,7 +14,11 @@ trait GraphDatabaseSuite extends BeforeAndAfterAll {
   var db : GraphDatabaseService = _
 
   override def beforeAll() {
+<<<<<<< HEAD
     db = new GraphDatabaseFactory().newEmbeddedDatabase(Main.DB_PATH)
+=======
+    db = new GraphDatabaseFactory().newEmbeddedDatabase(DataLoader.DB_PATH)
+>>>>>>> parent of 9f7f0df... Refreshing
   }
 
   override def afterAll() {

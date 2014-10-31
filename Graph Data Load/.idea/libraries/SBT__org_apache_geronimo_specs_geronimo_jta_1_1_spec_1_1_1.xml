@@ -3,7 +3,16 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.geronimo.specs/geronimo-jta_1.1_spec/jars/geronimo-jta_1.1_spec-1.1.1.jar!/" />
     </CLASSES>
+<<<<<<< HEAD
     <JAVADOC />
     <SOURCES />
+=======
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.geronimo.specs/geronimo-jta_1.1_spec/docs/geronimo-jta_1.1_spec-1.1.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.geronimo.specs/geronimo-jta_1.1_spec/srcs/geronimo-jta_1.1_spec-1.1.1-sources.jar!/" />
+    </SOURCES>
+>>>>>>> parent of 9f7f0df... Refreshing
   </library>
 </component>
