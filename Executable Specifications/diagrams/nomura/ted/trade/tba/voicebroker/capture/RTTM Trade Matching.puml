@@ -1,0 +1,17 @@
+@startuml
+!include ..\..\..\..\..\..\/Skin.iuml
+state "ACTION_STATE No Match" as No_Match <<ACTION>>
+state "WAIT_STATE Match Incoming Dealer Trade" as Match_Incoming_Dealer_Trade <<WAIT>>
+state "ACTION_STATE Trade is Matched" as Trade_is_Matched <<ACTION>>
+state "WAIT_STATE Match Incoming Broker Trade" as Match_Incoming_Broker_Trade <<WAIT>>
+state "WAIT_STATE Matching Trades" as Matching_Trades <<WAIT>>
+[*] --> Matching_Trades
+Matching_Trades --> Match_Incoming_Broker_Trade : MESSAGE IncomingBrokerTrade
+Match_Incoming_Broker_Trade --> No_Match : MESSAGE NoTradeMatch
+No_Match --> Matching_Trades
+Match_Incoming_Broker_Trade --> Trade_is_Matched : MESSAGE TradeMatchFound
+Trade_is_Matched --> [*]
+Matching_Trades --> Match_Incoming_Dealer_Trade : MESSAGE IncomingDealerTrade
+Match_Incoming_Dealer_Trade --> No_Match : MESSAGE NoTradeMatch
+Match_Incoming_Dealer_Trade --> Trade_is_Matched : MESSAGE TradeMatchFound
+@enduml
