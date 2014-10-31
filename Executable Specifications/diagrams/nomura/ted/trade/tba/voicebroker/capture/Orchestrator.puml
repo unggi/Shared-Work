@@ -1,9 +1,0 @@
-@startuml
-!include ../../../../../..//Skin.iuml
-state "WAIT_STATE Waiting on Completions" as Waiting_on_Completions <<WAIT>>
-state "ACTION_STATE Initializing" as Initializing <<ACTION>>
-[*] --> Initializing
-Initializing --> Waiting_on_Completions
-Waiting_on_Completions --> [*] : MESSAGE OrchestrationTermination
-Waiting_on_Completions --> Waiting_on_Completions : MESSAGE WorkflowTermination
-@enduml

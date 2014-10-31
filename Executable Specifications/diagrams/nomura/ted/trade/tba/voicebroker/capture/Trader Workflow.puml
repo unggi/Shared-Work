@@ -1,5 +1,5 @@
 @startuml
-!include ..\..\..\..\..\..\/Skin.iuml
+!include ../../../../../..//Skin.iuml
 state "WAIT_STATE Trader Rejects" as Trader_Rejects <<WAIT>>
 state "ACTION_STATE Notify Orchestrator" as Notify_Orchestrator <<ACTION>>
 state "ACTION_STATE Update Trade to Confirmed State" as Update_Trade_to_Confirmed_State <<ACTION>>
