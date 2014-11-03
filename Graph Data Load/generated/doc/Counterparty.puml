@@ -1,0 +1,17 @@
+@startuml
+
+!include Skin.iuml
+
+
+
+      
+class Counterparty {
+    <b>AccountID</b>: int
+    <b>CPKey</b>: String
+    <b>ShortName</b>: String
+    <b>Name</b>: String
+    <b>Recent</b>: String
+    <b>Alias</b>: String
+}
+
+@enduml

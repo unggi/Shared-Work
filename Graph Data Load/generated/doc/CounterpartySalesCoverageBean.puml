@@ -1,0 +1,15 @@
+@startuml
+
+!include Skin.iuml
+
+
+
+      
+class CounterpartySalesCoverageBean {
+    <b>ID</b>: String
+    <b>CounterpartyID</b>: String
+    <b>RepID</b>: int[]
+    <b>SalesCoverage</b>: String
+}
+
+@enduml

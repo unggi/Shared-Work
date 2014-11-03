@@ -1,0 +1,14 @@
+@startuml
+
+!include Skin.iuml
+
+hide members
+
+      
+class SalesCoverage
+class Client 
+SalesCoverage ---> Client : CounterpartyID Client >
+class SalesPerson 
+SalesCoverage ---> SalesPerson : RepID RegisteredRepID >
+
+@enduml
