@@ -1,4 +1,4 @@
-package spg
+package spg.util
 
 import java.sql.Time
 import java.util.Date
@@ -8,7 +8,7 @@ import scala.util.{Failure, Success, Try}
 
 object FieldAccessor {
 
-  import spg.FieldFormatter._
+  import spg.util.FieldFormatter._
 
   def set[FieldType](bean: AnyRef, fieldName: String, text: String, parser: (String) => Try[FieldType], setter: (AnyRef, FieldType) => Unit) =
     parser(text) match {

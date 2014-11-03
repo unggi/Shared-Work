@@ -3,20 +3,18 @@ package spg.etl
 import java.io.File
 
 import org.neo4j.graphdb.{DynamicLabel, GraphDatabaseService}
-import spg.datamodel.CmoBean
-import spg.etl.csv.CSVBatchDriver
+import spg.datamodel.Cmo
+import spg.etl.csv.{CSVDataSource, CSVBatchDriver}
 
 
-class CmoSecurityFileLoader(override val sourcePath: File, db: GraphDatabaseService) extends CSVBatchDriver {
+class CmoFileDataSource(csvPath: File) extends CSVDataSource[Cmo](csvPath, classOf[Cmo]) {
 
  override def delimiter: Char = '|'
-
-  override def progressInterval: Int = 10000
 
   //
   // Map Field Names to Model fields
   //
-  mapColumns(classOf[CmoBean],
+  mapColumns(
     "ESMP" -> "ESMID",
     "CSP" -> "CUSIP",
     "SecurityType" -> "SecurityType",
@@ -53,14 +51,4 @@ class CmoSecurityFileLoader(override val sourcePath: File, db: GraphDatabaseServ
     "SEC_ID" -> "SEC_ID",
     "MktSector" -> "MktSector"
   )
-
-  override def processRow(line: Int, data: Array[String]): Unit = {
-    val label = DynamicLabel.label("Security")
-
-    val node = db.createNode(label)
-    val bean = new CmoBean()
-
-    rowToBean(bean, node, data)
-  }
-
 }

@@ -8,6 +8,8 @@ import java.util.zip.ZipFile
 import au.com.bytecode.opencsv.CSVReader
 import org.neo4j.graphdb._
 import org.neo4j.unsafe.batchinsert.BatchInserters
+import spg.datamodel._
+import spg.util.FieldFormatter
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable
@@ -108,7 +110,7 @@ object DataLoader {
               println(s"Unknown Field Type Class = $beanClass Field = $fieldName FieldType = ${x.getSimpleName} value = $textValue")
           }
         } catch {
-          case e => println(s"Exception for $beanClass field = $fieldName type = ${field.getType.getSimpleName} value ${e.getMessage}")
+          case e:Throwable => println(s"Exception for $beanClass field = $fieldName type = ${field.getType.getSimpleName} value ${e.getMessage}")
         }
       }
     }
@@ -133,7 +135,7 @@ object DataLoader {
     CSV(path, 1000, ',', Some(map)) {
       (line, fields, record) =>
         val node = db.createNode(label)
-        copyRecordToNode(classOf[CounterpartyBean], node, fields, record)
+        copyRecordToNode(classOf[Counterparty], node, fields, record)
     }
   }
 
@@ -151,7 +153,7 @@ object DataLoader {
     CSV(path, 1000, ',', Some(map)) {
       (line, fields, record) =>
         val node = db.createNode(label)
-        copyRecordToNode(classOf[CounterpartySalesCoverageBean], node, fields, record)
+        copyRecordToNode(classOf[CounterpartySalesCoverage], node, fields, record)
     }
   }
 
@@ -171,7 +173,7 @@ object DataLoader {
     CSV(path, 100000, '|', Some(map)) {
       (line, fields, record) =>
         val node = db.createNode(label)
-        copyRecordToNode(classOf[CmoBean], node, fields, record)
+        copyRecordToNode(classOf[Cmo], node, fields, record)
         securityMap.put(node.getProperty("ESMID").asInstanceOf[String], node.getId)
     }
   }
@@ -186,10 +188,10 @@ object DataLoader {
       (line, fields, record) =>
 
 
-        val pool = new PoolBean()
+        val pool = new Pool()
         val node = db.createNode(label)
         copyRecordToNode(pool.getClass(), node, fields, record)
-        securityMap.put(pool.CSP, node.getId)
+        securityMap.put(pool.CUSIP, node.getId)
     }
   }
 
@@ -199,7 +201,7 @@ object DataLoader {
     CSV(path, 100000) {
       (line, fields, record) =>
         val node = db.createNode(label)
-        copyRecordToNode(classOf[TradeBean], node, fields, record)
+        copyRecordToNode(classOf[Trade], node, fields, record)
       //        securityMap.get(bean.Cusip) match {
       //          case Some(id) =>
       //            node.createRelationshipTo(db.getNodeById(id), Relationships.PRODUCT)

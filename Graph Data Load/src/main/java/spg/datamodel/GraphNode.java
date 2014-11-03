@@ -1,4 +1,4 @@
-package spg;
+package spg.datamodel;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,7 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface Relationship {
-    public String toClass();
+@Target(ElementType.TYPE)
+public @interface GraphNode {
+
+    public String label() default "";
+
 }

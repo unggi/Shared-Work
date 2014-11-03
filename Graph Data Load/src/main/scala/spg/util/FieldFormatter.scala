@@ -1,4 +1,4 @@
-package spg.etl
+package spg.util
 
 import java.sql.Time
 import java.text.SimpleDateFormat
@@ -19,7 +19,6 @@ object FieldFormatter {
   val ClassOfString = classOf[String]
   val ClassOfDate = classOf[Date]
   val ClassOfTime = classOf[Time]
-  val ClassOfBoolean = classOf[Boolean]
 
 
   def format(value: Double): String = value.toString
@@ -47,7 +46,6 @@ object FieldFormatter {
       case str: String => format(str)
       case time: Time => format(time)
       case date: Date => format(date)
-      case bool: Boolean => format(Boolean)
       case _ => s"${value.getClass.getSimpleName} is not a supported data type"
     }
 
@@ -70,6 +68,8 @@ object FieldFormatter {
     }
   }
 
+  def asBoolean(input: String): Try[Boolean] = Try(if (input.trim.toUpperCase.equals("TRUE")) true else false)
+
   def asTime(input: String): Try[Time] = {
     Try {
       val format1 = new SimpleDateFormat(timeFormats(0))
@@ -81,7 +81,4 @@ object FieldFormatter {
       new Time(format2.parse(input).getTime)
     }
   }
-
-  def asBoolean(input: String): Try[Boolean] = Try(if (asInteger(input).getOrElse(0) == 0) false else true)
-
 }

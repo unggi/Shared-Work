@@ -1,8 +1,6 @@
 package spg.datamodel
 
-import spg.DerivedRelationship
-
-class CounterpartySalesCoverageBean {
+class CounterpartySalesCoverage {
 
   /**
    * This is a string starting with "CP"
@@ -16,7 +14,6 @@ class CounterpartySalesCoverageBean {
   /**
    * The Rep's RR number
    */
-  @DerivedRelationship(fromClass = "SalesPerson", fromField="RepID", toClass="Client", toField="CounterpartyID")
   var RepID: Array[Int] = _
   /**
    * A special field encoded with the RR and names of covering sales people.

@@ -3,10 +3,10 @@ package spg.datamodel
 import java.sql.Time
 import java.util.Date
 
-import spg.{GraphNode, ID}
 
-@GraphNode(name="AgencyPool")
-class PoolBean {
+
+@GraphNode(label="AgencyPool")
+class Pool extends Security{
 
   @ID
   var ESMID: Int = -1

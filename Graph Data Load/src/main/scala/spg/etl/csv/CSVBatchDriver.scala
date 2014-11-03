@@ -7,79 +7,58 @@ import java.util.Date
 import java.util.zip.ZipFile
 
 import au.com.bytecode.opencsv.CSVReader
-import org.neo4j.graphdb.Node
-import spg.etl.{BatchDriver, DataSource, FieldFormatter}
+import spg.etl._
+import spg.util.FieldFormatter
 
 import scala.collection.JavaConversions._
-import scala.collection.immutable.HashMap
 import scala.collection.mutable.ListBuffer
+
+
+class EntityMetaModel(cls: Class[_]) {
+
+  def declaredFields: Array[Field] = cls.getDeclaredFields
+
+  def getField(name: String): Field = cls.getDeclaredField(name)
+
+  def simpleName = cls.getSimpleName
+
+  def forEachDeclaredField(action: (Field) => Unit) = declaredFields.foreach(action)
+
+}
 
 case class ColumnToModelMapping(column: String, model: String) {
   var field: Field = _
 }
 
-class NormalizedRecord extends HashMap[String, String]
+case class NameValuePair(name: String, value: Any)
 
-class CSVDataSource(sourcePath: File, driver: BatchDriver[NormalizedRecord]) extends DataSource[NormalizedRecord] {
+class CSVToModelMapping[T](cls: Class[_]) {
 
-  var currentLineNumber = 0
+  self: CSVDataSource[T] =>
 
-  def progressInterval: Int = 10000
-
+  val model = new EntityMetaModel(cls)
   val mapping = new ListBuffer[ColumnToModelMapping]()
 
-  val startTime = new Date().getTime
-  var input: List[Array[String]] = _
+  def mapColumns(map: Tuple2[String, String]*): Unit = {
 
-  def initialize: Unit = {
+    model.forEachDeclaredField { field => println(s"Field ${field.getName}")}
 
-    val fstrm = openFile()
-    val reader = new CSVReader(new InputStreamReader(fstrm), delimiter, '\000')
-    val input = reader.readAll
-    val header: Array[String] = reader.readNext()
-
-    // Check the headers from the file against the field to model mapping.
-    mapping.zip(header).foreach {
-      case (map: ColumnToModelMapping, csv: String) =>
-        println(s"Column = <${map.column}>  CSV = <${csv}> ")
-        require(map.column.equals(csv), s"CSV Column Heading: ${map.column} <> ${csv}")
+    map.foreach {
+      case Tuple2(column: String, modelField: String) =>
+        val c = ColumnToModelMapping(column, modelField)
+        try {
+          c.field = model.getField(modelField)
+        }
+        catch {
+          case e: Throwable =>
+            println(s"Missing field: ${model.simpleName} does not have field ${modelField} which comes from CSV column ${column}")
+        }
+        mapping.append(c)
     }
-    currentLineNumber = 1
-
   }
-
-  def hasMore = {
-
-  }
-
-  def next: NormalizedRecord = {
-    val line = reader.readNext
-    val record: NormalizedRecord = _
-    if (line != null || line.repr != null) {
-      // Convert to Record
-
-      //
-      // Every "interval" rows, print time and processing stats.
-      //
-
-      if (currentLineNumber % progressInterval == 0)
-        driver.printProgressMessage(startTime, currentLineNumber)
-
-      currentLineNumber = currentLineNumber + 1
-    }
-
-    reader.close()
-
-    driver.printProgressMessage(startTime, currentLineNumber)
-
-    record
-
-  }
-
-  def delimiter: Char = '~'
 
   def showColumnMapping(pw: PrintWriter): Unit = {
-    pw.println(s" ======== >> Processing ${sourcePath.getName}")
+    pw.println(s" ======== >> Processing ${self.sourcePath.getName}")
     pw.println(s"There are ${mapping.size} header columns in each input line")
 
     pw.println()
@@ -92,20 +71,96 @@ class CSVDataSource(sourcePath: File, driver: BatchDriver[NormalizedRecord]) ext
     pw.println("}")
   }
 
-  def mapColumns(cls: Class[_], map: Tuple2[String, String]*): Unit = {
 
-    map.foreach {
-      case Tuple2(column: String, model: String) =>
-        val c = ColumnToModelMapping(column, model)
-        try {
-          c.field = cls.getDeclaredField(model)
-        }
-        catch {
-          case e: Throwable =>
-            println(s"Missing field: ${cls.getSimpleName} does not have field ${model} from ${column}")
-        }
-        mapping.append(c)
+}
+
+case class Datum(list: List[NameValuePair])
+
+class CSVDataSource[T](val sourcePath: File, cls: Class[_]) extends CSVToModelMapping[T](cls) with DataSource[Datum] {
+
+
+  var input: List[Array[String]] = _
+
+  var lineNumber = 0
+
+  def delimiter: Char = '~'
+
+  def initialize: Unit = {
+
+    val fstrm = openFile()
+    val reader = new CSVReader(new InputStreamReader(fstrm), delimiter, '\000')
+    input = reader.readAll.toList
+    val header: Array[String] = input(0)
+
+    // Check the headers from the file against the field to model mapping.
+    mapping.zip(header).foreach {
+      case (map: ColumnToModelMapping, csv: String) =>
+        println(s"Column = <${map.column}>  CSV = <${csv}> ")
+        require(map.column.equals(csv), s"CSV Column Heading: ${map.column} <> ${csv}")
     }
+    lineNumber = 1
+  }
+
+  def hasMore = lineNumber < input.size
+
+  def next: Datum = {
+
+    val line = input(lineNumber)
+    lineNumber = lineNumber + 1
+
+    buildNormalizedRecord(line)
+  }
+
+  // Well formed values for using in case statements based on type switches.
+  val IntClass = classOf[Int]
+  val DoubleClass = classOf[Double]
+  val StringClass = classOf[String]
+  val DateClass = classOf[Date]
+  val TimeClass = classOf[Time]
+  val BooleanClass = classOf[Boolean]
+
+  def buildNormalizedRecord(record: Array[String]): Datum = {
+
+    val list = ListBuffer[NameValuePair]()
+
+    for ((entry: ColumnToModelMapping, textValue: String) <- mapping.zip(record) if textValue.length > 0) {
+
+      val modelName = entry.model
+      val field: Field = entry.field
+      require(field != null, s"Field not found: class = ${model.simpleName} field = ${entry.field}")
+
+      try {
+
+        field.getType match {
+          case IntClass =>
+            val integer = FieldFormatter.asInteger(textValue).get
+            list += NameValuePair(modelName, integer)
+          case DoubleClass =>
+            val dbl = FieldFormatter.asDouble(textValue).get
+            list += NameValuePair(modelName, dbl)
+          case DateClass =>
+            val date = FieldFormatter.asDate(textValue).get
+            list += NameValuePair(modelName, date)
+          case TimeClass =>
+            val time = FieldFormatter.asTime(textValue).get
+            list += NameValuePair(modelName, time)
+          case StringClass =>
+            list += NameValuePair(modelName, textValue)
+          case BooleanClass =>
+            val bool = FieldFormatter.asBoolean(textValue).get
+            list += NameValuePair(modelName, if (bool) "true" else "false")
+          case x =>
+            //
+            // Don't add to list if the field type is unknown
+            //
+            println(s"Unknown Field Type Class = $model Field = ${entry.model} FieldType = ${x.getSimpleName} value = $textValue")
+        }
+      } catch {
+        case e: Throwable =>
+          System.err.println(s"Exception for class = ${model.simpleName} field = ${field.getName} type = ${field.getType.getSimpleName} value ${e.getMessage}")
+      }
+    }
+    Datum(list.toList)
   }
 
   def openFile(): InputStream =
@@ -117,87 +172,15 @@ class CSVDataSource(sourcePath: File, driver: BatchDriver[NormalizedRecord]) ext
     }
     else
       new FileInputStream(sourcePath)
+
 }
 
+class CSVBatchDriver(src: DataSource[Datum], trx: DataTransformation[Datum], tgt: DataTarget[Datum]) extends ETLTask[Datum] {
 
-trait CSVBatchDriver extends BatchDriver[NormalizedRecord] {
+  def source: DataSource[Datum] = src
 
-  def sourcePath: File
+  def transformer: DataTransformation[Datum] = trx
 
-
-  /**
-   * To be overidden in a subclass
-   * @param line
-   * @param data
-   */
-  def processRow(line: Int, data: Array[String]): Unit
-
-
-  // Well formed values for using in case statements based on type switches.
-  val IntClass = classOf[Int]
-  val DoubleClass = classOf[Double]
-  val StringClass = classOf[String]
-  val DateClass = classOf[Date]
-  val TimeClass = classOf[Time]
-  val BooleanClass = classOf[Boolean]
-
-
-  def rowToBean(bean: AnyRef, node: Node, record: Array[String]): Unit = {
-
-    import spg.etl.FieldAccessor._
-    val beanClass = bean.getClass
-
-    for ((entry: ColumnToModelMapping, textValue: String) <- mapping.zip(record)) {
-
-      if (textValue.length > 0) {
-
-        val modelName = entry.model
-        var field: Field = null
-
-        try {
-          field = entry.field
-          require(field != null, s"Field not found: bean = ${beanClass.getSimpleName} field = ${entry.field}")
-
-          field.getType match {
-            case IntClass =>
-              val integer = FieldFormatter.asInteger(textValue)
-              node.setProperty(modelName, integer.get)
-              setField(bean, modelName, textValue)
-            case DoubleClass =>
-              val dbl = FieldFormatter.asDouble(textValue)
-              node.setProperty(modelName, dbl.get)
-              setField(bean, modelName, textValue)
-            case DateClass =>
-              val date = FieldFormatter.asDate(textValue)
-              node.setProperty(modelName, date.get.getTime)
-              setField(bean, modelName, textValue)
-            case TimeClass =>
-              val time = FieldFormatter.asTime(textValue)
-              node.setProperty(modelName, time.get.getTime)
-              setField(bean, modelName, textValue)
-            case StringClass =>
-              node.setProperty(modelName, textValue)
-              setField(bean, modelName, textValue)
-            case BooleanClass =>
-              val bool = FieldFormatter.asBoolean(textValue)
-              node.setProperty(modelName, if (bool.get == true) 1 else 0)
-              setField(bean, modelName, textValue)
-            case x =>
-              println(s"Unknown Field Type Class = $beanClass Field = $modelName FieldType = ${x.getSimpleName} value = $textValue")
-          }
-        } catch {
-
-          case e: Throwable =>
-
-            System.err.println(s"Class = $beanClass")
-            System.err.println("Field Instance = " + field)
-            System.err.println(s"Field  = ${entry.field}")
-            System.err.println(s"Model = $modelName")
-            System.err.println(s"Type   = ${field.getType}")
-            System.err.println(s"Exception for $beanClass field = $modelName type = ${field.getType.getSimpleName} value ${e.getMessage}")
-        }
-      }
-    }
-  }
+  def target: DataTarget[Datum] = tgt
 }
 

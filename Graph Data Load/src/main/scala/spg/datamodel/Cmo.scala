@@ -3,11 +3,10 @@ package spg.datamodel
 import java.sql.Time
 import java.util.Date
 
-import spg.{GraphNode, ID}
 
 
-@GraphNode(name="Security")
-class CmoBean {
+@GraphNode(label="Security")
+class Cmo extends Security {
   @ID
   var ESMID: Int = -1
 

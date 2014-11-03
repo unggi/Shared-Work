@@ -1,4 +1,4 @@
-package spg;
+package spg.datamodel;
 
 
 import java.lang.annotation.ElementType;

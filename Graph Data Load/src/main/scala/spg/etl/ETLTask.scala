@@ -4,20 +4,28 @@ import java.io.PrintWriter
 import java.util.Date
 
 
-trait BatchDriver[Norm, Data] {
+trait ETLTask[Norm] {
 
   val pw: PrintWriter = new PrintWriter(System.out)
+  val startTime = new Date().getTime
+  var currentLineNumber = 0
+
+  def progressInterval: Int = 10000
 
   def source: DataSource[Norm]
 
-  def normalizer: DataTransformation[Norm]
+  def transformer: DataTransformation[Norm]
 
   def target: DataTarget[Norm]
 
   def runBatch(): Unit =
     while (source.hasMore) {
-      val normalized = normalizer(source.next)
+      val normalized = transformer(source.next)
       target.consume(normalized)
+      if (currentLineNumber % progressInterval == 0)
+        printProgressMessage(startTime, currentLineNumber)
+
+      currentLineNumber = currentLineNumber + 1
     }
 
   def runRecordByRecord(): Unit = {}

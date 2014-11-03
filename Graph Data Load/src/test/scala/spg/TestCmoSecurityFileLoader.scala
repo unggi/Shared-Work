@@ -3,7 +3,7 @@ package spg
 import java.io.{PrintWriter, File}
 
 import org.scalatest.{FlatSpec, Matchers}
-import spg.etl.CmoSecurityFileLoader
+import spg.etl.CmoFileDataSource
 import spg.util.GraphDatabaseTestHelper
 
 class TestCmoSecurityFileLoader extends FlatSpec with Matchers with GraphDatabaseTestHelper{
@@ -15,9 +15,9 @@ class TestCmoSecurityFileLoader extends FlatSpec with Matchers with GraphDatabas
 
     it should "Load a complete file" in {
 
-      val loader = new CmoSecurityFileLoader(new File(CMO_SECURITIES), database)
+      val loader = new CmoFileDataSource(new File(CMO_SECURITIES))
       val pw = new PrintWriter(System.out)
-      loader.processFile(pw)
+      //loader.processFile(pw)
       pw.flush()
       pw.close()
 

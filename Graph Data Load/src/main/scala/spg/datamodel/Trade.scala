@@ -3,15 +3,14 @@ package spg.datamodel
 import java.sql.Time
 import java.util.Date
 
-import spg.{DerivedFromAssociation, GraphNode, ID, Relationship}
+import spg.datamodel.Association.Cardinality
 
 
 /**
  * A Trade Record as read from a CSV file.
  */
-@GraphNode(name = "Trade")
-class TradeBean {
-
+@GraphNode(label= "Trade")
+class Trade {
 
   /**
    * TradeKey = TradeID + RevisionID - uniquely identifies the revision. In Sales application we are only
@@ -25,7 +24,7 @@ class TradeBean {
    * Unique Trade Key - an integer that remains immutable through every revision of a trade.
    */
   @ID
-  var TradeId: Int = 0
+  var TradeID: Int = 0
   /**
    * Revision ID
    */
@@ -34,13 +33,13 @@ class TradeBean {
   /**
    * Number of a trading book e.g. 07703602
    */
-  @Relationship(toClass = "TradingAccount")
+  @Association(toClass = classOf[TradingAccount])
   var Ledger: Int = 0
 
   /**
    * Human alias for a trading book.
    */
-  @DerivedFromAssociation(target = "TradingAccount", property = "BookName")
+  @Association(toClass = classOf[Trade])
   var BookName: String = ""
 
   /**
@@ -51,7 +50,7 @@ class TradeBean {
    * Unique counterparty identifier e.g."CP8875" if this is a client trade
    * or blank if this is an internal trade.
    */
-  @Relationship(toClass = "Counterparty")
+  @Association(toClass = classOf[Counterparty])
   var Counterparty: String = ""
 
   /**
@@ -67,13 +66,13 @@ class TradeBean {
    * Security Master Reference ID. Could be a ticker (e.g. EDZ4), a Cusip or a Pool number or other
    * tickerized identifiers for synthetic "multi-leg" trades (e.g. Dollar Roll).
    */
-  @Relationship(toClass = "Security")
+  @Association(toClass = classOf[Security])
   var ESMID: String = ""
 
   /**
    * Security CUSIP
    */
-  @DerivedFromAssociation(target = "Security", property = "CUSIP")
+
   var Cusip: String = ""
 
   /**
@@ -89,12 +88,12 @@ class TradeBean {
   /**
    * Broad instrument type
    *
-   *  - G = Non-Agency or CMO
-   *  - P = Passthru Pool
-   *  - MBS = TBA
-   *  - T = Treasury
-   *  - F = Future
-   *  - Blank - no classification
+   * - G = Non-Agency or CMO
+   * - P = Passthru Pool
+   * - MBS = TBA
+   * - T = Treasury
+   * - F = Future
+   * - Blank - no classification
    *
    */
   var InstrumentType: String = ""
@@ -102,6 +101,7 @@ class TradeBean {
   /**
    * Creation date and time stamp of this record.
    */
+  @Optional
   var CreateDate: Time = _
   /**
    * Execution date and time stamp of this trade.
@@ -114,20 +114,21 @@ class TradeBean {
   /**
    * Comments as a string.
    */
+  @Optional
   var Comments: String = ""
   /**
    * Sales Credit as a string. Contains ticks, points and text codes. Difficult to interpret.
    */
+  @Optional
   var SalesCredit: String = ""
   /**
    * Link to Sales Person node. Sales Person is the RR number or blank (for non-customer trades).
    */
-  @Relationship(toClass= "SalesPerson")
+  @Association(toClass = classOf[SalesPerson], srcCount = Cardinality.ZERO_OR_MORE)
   var SalesPerson: String = ""
   /**
    * Text name of the sales person.
    */
-  @DerivedFromAssociation(target = "SalesPerson", property = "Name")
   var SalesPersonName: String = ""
   /**
    * A code field - seems to be free form and not consistent.
@@ -140,38 +141,42 @@ class TradeBean {
   /**
    * Free form - not interpreted.
    */
+  @Optional
   var LevelSpot1: String = ""
   /**
    * Free form - not interpreted.
    */
+  @Optional
   var LevelSpot2: String = ""
   /**
    * Free form - not interpreted.
    */
+  @Optional
   var LevelSpot3: String = ""
   /**
    * Free form - not interpreted.
    */
+  @Optional
   var LevelSpot4: String = ""
   /**
    * Free form - not interpreted.
    */
+  @Optional
   var MarketContextNotes: String = ""
   /**
    * The login name of the user who captured the market context.
    */
-  @Relationship(toClass = "SalesPerson")
+  @Association(toClass = classOf[Trader])
   var MarketContextUpdateUser: String = ""
 
   /**
    * Name from Counterparty Node
    */
-  @DerivedFromAssociation(target = "CounterParty", property = "Name")
+  @Association(toClass = classOf[Counterparty])
   var CounterpartyName: String = ""
   /**
    * Security Description from Security Node
    */
-  @DerivedFromAssociation(target = "Security", property = "Description")
   var SecurityDescription: String = ""
   /**
    * Either "OPN" or "CAN" status.
@@ -181,24 +186,24 @@ class TradeBean {
   /**
    * One of
    *
-   *  - BATCHTRADE - a bulk loaded trade,
-   *  - TWOSECURITY - a two security trade,
-   *  - THREESECURITY - a three security trade,
-   *  - OR "-" if not a customer trade.
+   * - BATCHTRADE - a bulk loaded trade,
+   * - TWOSECURITY - a two security trade,
+   * - THREESECURITY - a three security trade,
+   * - OR "-" if not a customer trade.
    *
    */
   var DealType: String = ""
   /**
    * One of
    *
-   *  - AGENCYTRADE
-   *  - BATCHTRADE
-   *  - BUTTERFLY
-   *  - COUPON_SWAP
-   *  - DOLLAR_ROLL
-   *  - SWAP_SWITCH
-   *  - TSY_MTG_SWAP
-   *  - OR "-" if not a customer trade.
+   * - AGENCYTRADE
+   * - BATCHTRADE
+   * - BUTTERFLY
+   * - COUPON_SWAP
+   * - DOLLAR_ROLL
+   * - SWAP_SWITCH
+   * - TSY_MTG_SWAP
+   * - OR "-" if not a customer trade.
    *
    */
   var DealSubType: String = ""
@@ -209,37 +214,36 @@ class TradeBean {
   /**
    * Seems to be redundent - could be dropped.
    */
-  @DerivedFromAssociation(target = "Security", property = "Type")
   var SecurityType: String = ""
   /**
    * Sub type codes:
    *
-   *  - ARM - ARM Pool
-   *  - CMO - CMO
-   *  - F - Futures
-   *  - IOS - IOS Index trade.
-   *  - P -
-   *  - PFD - CLO
-   *  - T - Treasury
-   *  - TBA - TBA
+   * - ARM - ARM Pool
+   * - CMO - CMO
+   * - F - Futures
+   * - IOS - IOS Index trade.
+   * - P -
+   * - PFD - CLO
+   * - T - Treasury
+   * - TBA - TBA
    */
   var InstrumentSubType: String = ""
   /**
    * Original user who booked the trade - user name is key.
    */
-  @Relationship(toClass="User")
+  @Association(toClass = classOf[Person])
   var OrigCreateUser: String = ""
 
   /**
    * Last user who modifeid the trade.
    */
-  @Relationship(toClass="User")
+  @Association(toClass = classOf[Person])
   var CreateUser: String = ""
 
   /**
    * User ID of the trader who executed the trade.
    */
-  @Relationship(toClass="User")
+  @Association(toClass = classOf[Trader])
   var Trader: String = ""
 
   /**
@@ -247,16 +251,16 @@ class TradeBean {
    *
    * One of
    *
-   *  - MBS_BROKERTEC_TSY_PTF
-   *  - MBS_DEALERWEB_PTF
-   *  - TWEB_MBS
-   *  - MBS_CME_FUTURES_PTF
-   *  - Kozo Blotter
-   *  - BBG_TBA
-   *  - DEALERWEB_STP
-   *  - ICONNECT_STP
-   *  - MBS_BROKERTEC_MBS_PTF
-   *  - MBS_PTF
+   * - MBS_BROKERTEC_TSY_PTF
+   * - MBS_DEALERWEB_PTF
+   * - TWEB_MBS
+   * - MBS_CME_FUTURES_PTF
+   * - Kozo Blotter
+   * - BBG_TBA
+   * - DEALERWEB_STP
+   * - ICONNECT_STP
+   * - MBS_BROKERTEC_MBS_PTF
+   * - MBS_PTF
    *
    */
   var OrigSource: String = ""
@@ -266,18 +270,19 @@ class TradeBean {
    *
    * One of
    *
-   *  - PT
-   *  - CMO
-   *  - RMBS
-   *  - ABS
-   *  - CMBS
+   * - PT
+   * - CMO
+   * - RMBS
+   * - ABS
+   * - CMBS
    *
    */
-  @Relationship(toClass="Desk")
+  @Association(toClass=classOf[Desk])
   var BookDesk: String = ""
 
   /**
    * Desk Strategy - looks same as BookDesk
    */
+  @Optional
   var BookStrategy: String = ""
 }
