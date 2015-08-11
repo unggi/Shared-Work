@@ -1,0 +1,98 @@
+@startuml
+
+!include Skin.iuml
+
+hide members
+
+
+'
+' Inheritance
+'
+
+
+'
+' Relationships
+'
+
+package Securities {
+
+    class Security
+    class ABSSecurityIndicatives
+    class AssetSubType
+    class AssetType
+    class CMBSSecurityIndicatives
+    class CMOSecurityIndicatives
+    class RMBSSecurityIndicatives
+    class SecurityPerformance <<Flattened>>
+    interface SecurityIndicatives
+
+    Security "*"-d->"1" AssetSubType : RELATIONSHIP \#ASSET_SUB_TYPE >
+    Security "1"-d-->"1" SecurityIndicatives : RELATIONSHIP \#HAS_INDICATIVE >
+    Security "1"-d-->"1" SecurityPerformance : RELATIONSHIP \#HAS_PERFORMANCE >
+    AssetSubType "*"-u->"1" AssetType : RELATIONSHIP \#ASSET_SUB_TYPE
+    ABSSecurityIndicatives .u.|> SecurityIndicatives
+    CMBSSecurityIndicatives .u.|> SecurityIndicatives
+    CMOSecurityIndicatives .u.|> SecurityIndicatives
+    RMBSSecurityIndicatives .u.|> SecurityIndicatives
+}
+
+
+package "Traders And Sales Persons" {
+
+    class Person
+    class SalesPerson
+    class ClientCoverage
+    class Trader
+
+    Trader -d-> AssetSubType : RELATIONSHIP \#COVERS >
+    Person -d-> SalesPerson : RELATIONSHIP \#HAS_ROLE >
+    ClientCoverage "1"-r->"*" SalesClientValueMetrics : RELATIONSHIP \#HAS_METRICS >
+    SalesPerson --> ClientCoverage : RELATIONSHIP \#HAS_COVERAGE >
+    Person -d-> Trader : RELATIONSHIP \#HAS_ROLE >
+
+}
+
+package Clients {
+    class Client
+    class ClientValueMetrics <<Flattened>>
+    class SalesClientValueMetrics
+    class Portfolio
+
+    Client -d-> Portfolio: RELATIONSHIP \#HOLDS >
+    Client -d-> ClientValueMetrics : RELATIONSHIP \#HAS_METRICS >
+    Client -d-> TradeMetrics : RELATIONSHIP \#HAS_TRADE_METRICS >
+    ClientCoverage -> Client : RELATIONSHIP \#FOR_CLIENT >
+
+    Holding ---> Security: RELATIONSHIP \#OF_SECURITY >
+    Portfolio -d-> Holding: RELATIONSHIP \#CONTAINS >
+}
+
+
+
+package Archive {
+
+    HistoricBid <-d- HistoricBidListItem : RELATIONSHIP \#HISTORICALLY_HAS_BID >
+    HistoricBid <-d- HistoricClientInterest : RELATIONSHIP \#HISTORICALLY_HAS_BID >
+    HistoricBidList -u-> Client : RELATIONSHIP \#HISTORICALLY_FOR_CLIENT >
+    HistoricBidList -d=> HistoricBidListItem: RELATIONSHIP \#HISTORICALLY_HAS_ITEM >
+    HistoricBidList -d-> HistoricalPostCloseColor : RELATIONSHIP \#HISTORICALLY_HAS_POST_CLOSE_COLOR >
+    HistoricBidListItem -d-> HistoricClientInterest :   RELATIONSHIP \#HISTORICALLY_HAS_INTEREST >
+    HistoricBidListItem -d-> HistoricPriceTalk : RELATIONSHIP \#HISTORICALLY_HAS_PRICE_TALK >
+    HistoricBidListItem ---> Security: RELATIONSHIP \#FOR_SECURITY >
+    HistoricClientInterest ---> Client : RELATIONSHIP \#HISTORICALLY_IS_INTEREST_FOR_CLIENT >
+    HistoricClientInterest -d-> HistoricPriceTalk: RELATIONSHIP \#HISTORICALLY_HAS_PRICE_TALK >
+
+}
+
+package Trades {
+
+    class Trade
+    class TradingBook
+    Trade -> Client : RELATIONSHIP \#TRADED_BY>
+    Trade -> SalesPerson : RELATIONSHIP \#HAS_SALES_PERSON >
+    Trade -> Security : RELATIONSHIP \#SECURITY >
+    Trade ---> TradingBook : RELATIONSHIP \#LEDGER >
+    Trade --> Trader : RELATIONSHIP \#HAS_TRADER >
+}
+@enduml
+

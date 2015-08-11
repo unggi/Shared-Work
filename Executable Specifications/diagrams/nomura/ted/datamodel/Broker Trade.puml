@@ -1,0 +1,11 @@
+@startuml
+!include ..\..\..\/Skin.iuml
+state "WAIT_STATE Pending Front Office Confirmation" as Pending_Front_Office_Confirmation <<WAIT>>
+state "ACTION_STATE Front Office Confirmed" as Front_Office_Confirmed <<ACTION>>
+state "ACTION_STATE Front Office Rejected" as Front_Office_Rejected <<ACTION>>
+[*] --> Pending_Front_Office_Confirmation
+Pending_Front_Office_Confirmation --> Front_Office_Rejected : MESSAGE RejectBrokerTrade
+Front_Office_Rejected --> [*]
+Pending_Front_Office_Confirmation --> Front_Office_Confirmed : MESSAGE AcceptBrokerTrade
+Front_Office_Confirmed --> [*]
+@enduml

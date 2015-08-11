@@ -1,0 +1,10 @@
+@startuml
+
+!include Skin.iuml
+
+hide members
+
+      
+class ClientAccount
+
+@enduml

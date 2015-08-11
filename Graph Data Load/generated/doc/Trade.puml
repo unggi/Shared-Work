@@ -1,0 +1,54 @@
+@startuml
+
+!include Skin.iuml
+
+
+
+      
+class Trade {
+    <b>TradeKey</b>: double
+    <b>TradeId</b>: int
+    <b>RevId</b>: int
+    <b>Ledger</b>: int
+    <b>BookName</b>: String
+    <b>BuySell</b>: boolean
+    <b>Counterparty</b>: String
+    <b>TradePrice</b>: double
+    <b>Quantity</b>: double
+    <b>ESMID</b>: String
+    <b>Cusip</b>: String
+    <b>TradeDate</b>: Date
+    <b>SettleDate</b>: Date
+    <b>InstrumentType</b>: String
+    <b>CreateDate</b>: Time
+    <b>ExecutionDate</b>: Time
+    <b>OrigCreateTime</b>: Time
+    <b>Comments</b>: String
+    <b>SalesCredit</b>: String
+    <b>SalesPerson</b>: String
+    <b>SalesPersonName</b>: String
+    <b>SalesQualityOfBusiness</b>: String
+    <b>CurrentFace</b>: double
+    <b>LevelSpot1</b>: String
+    <b>LevelSpot2</b>: String
+    <b>LevelSpot3</b>: String
+    <b>LevelSpot4</b>: String
+    <b>MarketContextNotes</b>: String
+    <b>MarketContextUpdateUser</b>: String
+    <b>CounterpartyName</b>: String
+    <b>SecurityDescription</b>: String
+    <b>TradeStatus</b>: String
+    <b>DealType</b>: String
+    <b>DealSubType</b>: String
+    <b>MatchStatus</b>: String
+    <b>SecurityType</b>: String
+    <b>InstrumentSubType</b>: String
+    <b>OrigCreateUser</b>: String
+    <b>CreateUser</b>: String
+    <b>Trader</b>: String
+    <b>OrigSource</b>: String
+    <b>BookDesk</b>: String
+    <b>BookStrategy</b>: String
+}
+
+@enduml

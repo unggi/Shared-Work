@@ -1,0 +1,28 @@
+@startuml
+
+!include Skin.iuml
+
+hide members
+
+      
+class "Trade" as Trade
+class TradingAccount 
+class Counterparty 
+class Security 
+class SalesPerson 
+class User 
+class Desk 
+
+' Relationships
+
+Trade ---> TradingAccount : \#Ledger >
+Trade ---> Counterparty : \#Counterparty >
+Trade ---> Security : \#ESMID >
+Trade ---> SalesPerson : \#SalesPerson >
+Trade ---> SalesPerson : \#MarketContextUpdateUser >
+Trade -u-> User : \#OrigCreateUser >
+Trade -u-> User : \#CreateUser >
+Trade -u-> User : \#Trader >
+Trade -u-> Desk : \#BookDesk >
+
+@enduml
