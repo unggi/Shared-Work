@@ -1,7 +1,8 @@
 .class
 target/
-.idea/
+.idea/*
 project/
 *.iml
 diagrams/nomura/
 *.puml
+/Graph Data Load/.idea
