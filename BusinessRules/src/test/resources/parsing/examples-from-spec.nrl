@@ -1,0 +1,112 @@
+--
+-- Test examples extracted from the NRL specification document.
+--
+
+
+
+Model "unused"
+
+Context: Trade
+Validation Rule "date-1"
+startDate is before endDate
+
+Context: Trade ("trade")
+Validation Fragment "internal target is specified in"
+The trade.customer is equal to 'MyOrganisation'
+
+Context: Trade
+Rule "rule-1"
+If an internal target is specified in the Trade then the value is less than 1000000
+
+Context: Trade ("trade"), Trade ("trade2")
+Validation Fragment "is worth more than"
+trade.value.amount is greater than trade2.value.amount
+
+Context: Strategy
+Rule "rule-1"
+If the customerTrade is worth more than the tradeTrade then traderTrader.profitable = false
+
+Rule set "audit" applies to a Trade where the value is greater than 100000
+
+Context: Trade
+Validation Rule "rule-1"
+The counterParty is not equal to 'UNDESIRABLE'
+
+Context: Trade
+Validation Rule "rule-2"
+The currency is equal to 'GBP'
+
+Context: Trade
+Validation Rule "rule - 3"
+If internal information is specified in the Trade then its value is less than 1000000 else its value is less than 10000
+
+Context: Trade
+Validation Rule "rule - 3"
+value > 1000 and value < 10000
+
+Context: Trade
+Validation Rule "rule - 3"
+value > 10000 implies internal information is specified in the Trade
+
+Context: Trade
+Validation Rule "rule - 3"
+value < 1000000 and the internal information is specified in the Trade or value < 1000 and external information is specified
+
+-- Check that an attribute has a value
+Context: Trade
+Validation Rule "rule - 3"
+a value is present
+
+-- Check that a collection has at least one / at most three elements
+-- See later comments on 'elements' syntactic sugar
+Context: Trade
+Validation Rule "rule - 3"
+a transfer is present
+at most three transfer elements are present
+
+-- Check that a collection has at least one element that meets a
+-- condition
+Context: Trade
+Validation Rule "rule - 3"
+at least one transfer has direction = Direction.OUTBOUND
+
+-- Legal: follows a complete ExistsStatement
+Context: Trade
+Validation Rule "rule - 3"
+one transfer has direction = Direction.OUTBOUND and one has direction = Direction.INBOUND
+
+-- Illegal: no complete ExistsStatement before it - first part ambiguous
+Context: Trade
+Validation Rule "rule - 3"
+one has direction = Direction.INBOUND and one transfer has direction = Direction.OUTBOUND
+
+
+-- No variable used
+Context: Trade
+Validation Rule "rule - 3"
+every transfer has direction = Direction.OUTBOUND
+
+-- Alternative phrasing, complex condition
+Context: Trade
+Validation Rule "rule - 3"
+in each transfer (direction = Direction.OUTBOUND or direction = Direction.INBOUND)
+
+-- Variable used. Must be used to refer to the attribute now
+Context: Trade
+Validation Rule "rule - 3"
+for each "xfer" in the collection of transfer elements, xfer.direction = Direction.OUTBOUND
+
+
+-- Illegal - "direction not found in current context"
+Context: Trade
+Validation Rule "rule - 3"
+for each "xfer" in the collection of transfer elements, direction = Direction.OUTBOUND
+
+Context: Trade
+Validation Rule "rule - 3"
+If there is a Trade (the "trade") where trade.date > '2007-01-01' then trade.regulation = '2007'
+
+Context: Trade
+Validation Rule "rule - 3"
+There is no Trade where trade.date > '2007-01-01'
+

@@ -1,0 +1,68 @@
+group CodeGeneration;
+
+
+Definition(definition, package, classname) ::= <<
+
+package <package>;
+
+<Imports()>
+
+public class <classname> {
+<definition.multipleContextParameter.modelReferenceWithAlias:Fields()>
+<TestMethod(definition.constraint)>
+}
+>>
+
+Imports() ::= <<
+// Imports would go here
+>>
+
+Fields(att) ::= <<
+private <att.ref.text> <att.alias.text; format="unquoted">;
+
+public <att.ref.text> get<att.alias.text; format="capitalize">() {
+    return <att.alias.text; format="unquoted">;
+}
+
+public void set<att.alias.text; format="capitalize">(<att.ref.text> _<att.alias.text; format="unquoted">) {
+    <att.alias.text; format="unquoted"> = _<att.alias.text; format="unquoted">;
+}
+>>
+
+
+TestMethod(constraint) ::= <<
+
+@Override
+public Boolean test() {
+    return <Constraint(constraint)>;
+}
+
+>>
+
+
+Constraint(constraint) ::= <<
+    <if (constraint.condBlock)>
+        <LogicalStatement(constraint.condBlock)>
+        <LogicalStatement(constraint.elseBlock)>
+        <if (constraint.elseBlock)>
+            <LogicalStatement(constraint.elseBlock)>
+        <endif>
+    <else>
+        <constraint.logicalStatement:LogicalStatement(); separator= "\n">
+    <endif>
+>>
+
+LogicalStatement(stmt) ::= <<
+    <if (stmt.predicate.binaryPredicate)>
+        <BinaryPredicate(stmt.predicate.binaryPredicate)>
+    <else>
+        Not a binary predicate.
+    <endif>
+>>
+
+BinaryPredicate(pred) ::= <<
+Binary Predicate
+    <pred.left.text> <pred.binaryPredicate.text> <pred.right.text>
+>>
+
+

@@ -1,0 +1,12 @@
+// New Syntax Proposal for NRL specifications
+
+Model "unused"
+
+Definition of "is an internal trade"
+Given: Trade("trade"), Customer("entity")
+The trade.customer is equal to  'Nomura'
+
+Validation Rule "Internal Trade Market Value Limit"
+Context: Trade
+If the Trade  <<is an internal trade>> then the marketValue is less than 1000000
+
