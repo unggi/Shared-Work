@@ -75,23 +75,23 @@ simpleOrComplexConstraint  : '(' constraint ')' | predicate;
 // Predicates
 //
 predicate  :
-         left=expression binaryPredicate right=expression
-    |    expression 'is one of' listDefinition
-    |    expression 'is not one of' listDefinition
-    |    modelReference 'is a kind of' ModelElementName
-    |    expression
+         left=expression comparator right=expression            #BinaryPredicate
+    |    expression 'is one of' listDefinition                  #IsOneOfPredicate
+    |    expression 'is not one of' listDefinition              #IsNotOneOfPredicate
+    |    modelReference 'is a kind of' ModelElementName         #IsKindOfPredicate
+    |    expression                                             #UnaryExpressionPredicate
 //    |   multipleExistsStatement
 //    |   multipleNotExistsStatement
     ;
 
-binaryPredicate  :
-                                    IsEqualTo
-                                    | IsNotEqualTo
-                                    | IsGreaterThan
-                                    | IsGreaterThanOrEqualTo
-                                    | IsLessThanOrEqualTo
-                                    | IsLessThan
-                                    ;
+comparator  :
+              IsEqualTo
+            | IsNotEqualTo
+            | IsGreaterThan
+            | IsGreaterThanOrEqualTo
+            | IsLessThanOrEqualTo
+            | IsLessThan
+    ;
 
 listDefinition  : identifier (',' identifier)*
         ;
@@ -105,8 +105,8 @@ multipleNotExistsStatement  : 'following' ('is not present' | 'are not present')
 //
 // Expressions
 //
-expression  :   left=expression ('*' | '/' | '+' | '-'|'mod') right=expression
-            |   term
+expression  :   left=expression op=('*' | '/' | '+' | '-'|'mod') right=expression      #BinaryExpression
+            |   term                                                                #UnaryExpression
             ;
 
 //

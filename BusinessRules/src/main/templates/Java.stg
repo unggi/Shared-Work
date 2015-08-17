@@ -8,7 +8,9 @@ package <package>;
 <Imports()>
 
 public class <classname> {
+
 <definition.multipleContextParameter.modelReferenceWithAlias:Fields()>
+
 <TestMethod(definition.constraint)>
 }
 >>
@@ -41,28 +43,79 @@ public Boolean test() {
 
 
 Constraint(constraint) ::= <<
-    <if (constraint.condBlock)>
-        <LogicalStatement(constraint.condBlock)>
+<if (constraint.condBlock)>
+    <LogicalStatement(constraint.condBlock)>
+    <LogicalStatement(constraint.elseBlock)>
+    <if (constraint.elseBlock)>
         <LogicalStatement(constraint.elseBlock)>
-        <if (constraint.elseBlock)>
-            <LogicalStatement(constraint.elseBlock)>
-        <endif>
-    <else>
-        <constraint.logicalStatement:LogicalStatement(); separator= "\n">
     <endif>
+<else>
+    <constraint.logicalStatement:LogicalStatement()>
+<endif>
 >>
 
 LogicalStatement(stmt) ::= <<
-    <if (stmt.predicate.binaryPredicate)>
-        <BinaryPredicate(stmt.predicate.binaryPredicate)>
-    <else>
+    <if (stmt.predicate)><Predicate(stmt.predicate)><else>
         Not a binary predicate.
     <endif>
 >>
 
-BinaryPredicate(pred) ::= <<
-Binary Predicate
-    <pred.left.text> <pred.binaryPredicate.text> <pred.right.text>
+
+Predicate(pred) ::= <<
+<if (pred.left && pred.comparator && pred.right)>
+<BinaryPredicate(pred.left, pred.comparator, pred.right)>
+<elseif (pred.expression)>
+<else>
+Not a binary operator
+<endif>
 >>
 
+BinaryPredicate(left, op, right) ::= "<Expression(left)><Comparator(op)><Expression(right)>"
 
+Expression(exp) ::= <<
+<if (exp.left && exp.op && exp.right)><BinaryExpression(exp)>
+<elseif (exp.term)><Term(exp.term)><else>Expression Failed <exp.text>
+<endif>
+>>
+
+BinaryExpression(exp) ::= "<Expression(exp.left)><Comparator(exp.op)><Expression(exp.right)>"
+
+Comparator(op) ::= "<if (op.IsEqualTo)>==<else>Op is <op.text><endif>"
+
+Term(trm) ::= <<
+<if (trm.identifier)><Identifier(trm.identifier)>
+<elseif (trm.functionalExpression)>    Found a functionalExpression.
+<elseif( trm.modelReference && trm.FragmentName)>  Found a <modelReferencePath.text> trm.Fragment
+<else> Not found
+<endif>
+>>
+
+Identifier(id) ::= <<
+<if (id.BooleanLiteral)>
+    Boolean Literal\
+<elseif (id.collectionIndex)>
+    Collection Index
+<elseif (id.LiteralString)><id.LiteralString.text><elseif (id.Number)>
+    Number
+<elseif (id.IntegerNumber)>
+    IntegerNumber
+<elseif (id.modelReference)><ModelReference(id.modelReference)>
+<else>
+    Not found - Identifier <ShowMethods(id)>
+<endif>
+>>
+
+ModelReference(ref) ::= "REF"
+
+ShowMethods(node) ::= <<
+    <[node.class.declaredMethods,node.class.declaredFields]:ShowMethod(); separator="\n">
+>>
+
+ShowMethod(m) ::= <<
+<m.name; format="%-20s"> defined in <m.declaringClass.simpleName>
+>>
+
+Show(node) ::= <<
+    <node.Class.SimpleName>(<node.text>)
+    <node.children:Show()>
+>>

@@ -1,6 +1,7 @@
 package codegen
 
 import java.io.File
+import java.lang.reflect.Method
 import java.util.Locale
 
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
@@ -66,12 +67,13 @@ class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseLis
     st.add("package", "rules")
     st.add("classname", "TestClass")
 
-    System.err.println("Binary Predicate = " + ctx.constraint().logicalStatement(0).predicate.expression(0).getText)
+    System.err.println("Binary Predicate = " + ctx.constraint().logicalStatement(0).predicate.getClass)
   }
 
   override def exitDeclarations(ctx: BusinessRulesParser.DeclarationsContext): Unit = {
     super.exitDeclarations(ctx)
     System.err.println(st.render())
+    st.inspect()
   }
 
 }
