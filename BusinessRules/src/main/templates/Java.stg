@@ -36,7 +36,7 @@ TestMethod(constraint) ::= <<
 
 @Override
 public Boolean test() {
-    return <Constraint(constraint)>;
+    return <Constraint(constraint); format="trimmed">;
 }
 
 >>
@@ -44,37 +44,34 @@ public Boolean test() {
 
 Constraint(constraint) ::= <<
 <if (constraint.condBlock)>
-    <LogicalStatement(constraint.condBlock)>
-    <LogicalStatement(constraint.elseBlock)>
-    <if (constraint.elseBlock)>
-        <LogicalStatement(constraint.elseBlock)>
-    <endif>
-<else>
-    <constraint.logicalStatement:LogicalStatement()>
+<LogicalStatement(constraint.condBlock)>
+<LogicalStatement(constraint.elseBlock)>
+<if (constraint.elseBlock)>
+<LogicalStatement(constraint.elseBlock)>
 <endif>
+<else><constraint.logicalStatement:LogicalStatement();format="trimmed"><endif>
 >>
 
 LogicalStatement(stmt) ::= <<
-    <if (stmt.predicate)><Predicate(stmt.predicate)><else>
+    <if (stmt.predicate)><Predicate(stmt.predicate); format="trimmed"><else>
         Not a binary predicate.
-    <endif>
->>
+    <endif> >>
 
 
 Predicate(pred) ::= <<
 <if (pred.left && pred.comparator && pred.right)>
-<BinaryPredicate(pred.left, pred.comparator, pred.right)>
+<BinaryPredicate(pred.left, pred.comparator, pred.right);format="trimmed">bbb
 <elseif (pred.expression)>
+Place holder for pred.expression.
 <else>
 Not a binary operator
-<endif>
->>
+<endif> >>
 
 BinaryPredicate(left, op, right) ::= "<Expression(left)><Comparator(op)><Expression(right)>"
 
 Expression(exp) ::= <<
 <if (exp.left && exp.op && exp.right)><BinaryExpression(exp)>
-<elseif (exp.term)><Term(exp.term)><else>Expression Failed <exp.text>
+<elseif (exp.term)><Term(exp.term);format="trimmed"><else>Expression Failed <exp.text>
 <endif>
 >>
 
@@ -83,7 +80,7 @@ BinaryExpression(exp) ::= "<Expression(exp.left)><Comparator(exp.op)><Expression
 Comparator(op) ::= "<if (op.IsEqualTo)>==<else>Op is <op.text><endif>"
 
 Term(trm) ::= <<
-<if (trm.identifier)><Identifier(trm.identifier)>
+<if (trm.identifier)><Identifier(trm.identifier)>xxx
 <elseif (trm.functionalExpression)>    Found a functionalExpression.
 <elseif( trm.modelReference && trm.FragmentName)>  Found a <modelReferencePath.text> trm.Fragment
 <else> Not found
@@ -91,19 +88,14 @@ Term(trm) ::= <<
 >>
 
 Identifier(id) ::= <<
-<if (id.BooleanLiteral)>
-    Boolean Literal\
-<elseif (id.collectionIndex)>
-    Collection Index
-<elseif (id.LiteralString)><id.LiteralString.text><elseif (id.Number)>
-    Number
-<elseif (id.IntegerNumber)>
-    IntegerNumber
+<if (id.BooleanLiteral)>Boolean Literal
+<elseif (id.collectionIndex)>Collection Index
+<elseif (id.LiteralString)><id.LiteralString.text>
+<elseif (id.Number)>Number
+<elseif (id.IntegerNumber)>IntegerNumber
 <elseif (id.modelReference)><ModelReference(id.modelReference)>
-<else>
-    Not found - Identifier <ShowMethods(id)>
-<endif>
->>
+<else>Not found - Identifier <ShowMethods(id)>
+<endif>***>>
 
 ModelReference(ref) ::= "REF"
 

@@ -86,6 +86,7 @@ class StringArticleRenderer extends StringRenderer {
         case "ARTICLE" => articularize(o.asInstanceOf[String])
         case "CAPITALIZE" => capitalize(o.asInstanceOf[String])
         case "UNQUOTED" => unquote(o.asInstanceOf[String])
+        case "TRIMMED" => o.asInstanceOf[String].trim
         case _ =>
           super.toString(o, formatString, locale)
       }
