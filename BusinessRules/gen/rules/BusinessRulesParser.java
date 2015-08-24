@@ -35,20 +35,19 @@ public class BusinessRulesParser extends Parser {
 		RULE_definition = 6, RULE_ruleSet = 7, RULE_context = 8, RULE_multipleParameterContext = 9, 
 		RULE_multipleContextParameter = 10, RULE_modelReferenceWithAlias = 11, 
 		RULE_constraint = 12, RULE_logicalStatement = 13, RULE_simpleOrComplexConstraint = 14, 
-		RULE_predicate = 15, RULE_binaryPredicate = 16, RULE_listDefinition = 17, 
-		RULE_multipleExistsStatement = 18, RULE_multipleNotExistsStatement = 19, 
-		RULE_expression = 20, RULE_term = 21, RULE_identifier = 22, RULE_functionalExpression = 23, 
-		RULE_operatorInvocation = 24, RULE_operatorParameterList = 25, RULE_definitionApplication = 26, 
-		RULE_collectionIndex = 27, RULE_castExpression = 28, RULE_selectionExpression = 29, 
-		RULE_modelReference = 30, RULE_modelReferenceList = 31, RULE_modelPath = 32, 
-		RULE_dottedModelPath = 33, RULE_propertyOfModelPath = 34, RULE_compoundReport = 35, 
-		RULE_simpleReport = 36, RULE_concatenatedReport = 37, RULE_conditionalReport = 38, 
-		RULE_simpleTerm = 39;
+		RULE_predicate = 15, RULE_comparator = 16, RULE_listDefinition = 17, RULE_multipleExistsStatement = 18, 
+		RULE_multipleNotExistsStatement = 19, RULE_expression = 20, RULE_term = 21, 
+		RULE_identifier = 22, RULE_functionalExpression = 23, RULE_operatorInvocation = 24, 
+		RULE_operatorParameterList = 25, RULE_definitionApplication = 26, RULE_collectionIndex = 27, 
+		RULE_castExpression = 28, RULE_selectionExpression = 29, RULE_modelReference = 30, 
+		RULE_modelReferenceList = 31, RULE_modelPath = 32, RULE_dottedModelPath = 33, 
+		RULE_propertyOfModelPath = 34, RULE_compoundReport = 35, RULE_simpleReport = 36, 
+		RULE_concatenatedReport = 37, RULE_conditionalReport = 38, RULE_simpleTerm = 39;
 	public static final String[] ruleNames = {
 		"fileBody", "modelFileReferences", "modelFileReference", "declarations", 
 		"declaration", "validationRule", "definition", "ruleSet", "context", "multipleParameterContext", 
 		"multipleContextParameter", "modelReferenceWithAlias", "constraint", "logicalStatement", 
-		"simpleOrComplexConstraint", "predicate", "binaryPredicate", "listDefinition", 
+		"simpleOrComplexConstraint", "predicate", "comparator", "listDefinition", 
 		"multipleExistsStatement", "multipleNotExistsStatement", "expression", 
 		"term", "identifier", "functionalExpression", "operatorInvocation", "operatorParameterList", 
 		"definitionApplication", "collectionIndex", "castExpression", "selectionExpression", 
@@ -1029,10 +1028,84 @@ public class BusinessRulesParser extends Parser {
 	}
 
 	public static class PredicateContext extends ParserRuleContext {
+		public PredicateContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_predicate; }
+	 
+		public PredicateContext() { }
+		public void copyFrom(PredicateContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class IsNotOneOfPredicateContext extends PredicateContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ListDefinitionContext listDefinition() {
+			return getRuleContext(ListDefinitionContext.class,0);
+		}
+		public IsNotOneOfPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterIsNotOneOfPredicate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitIsNotOneOfPredicate(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitIsNotOneOfPredicate(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class UnaryExpressionPredicateContext extends PredicateContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public UnaryExpressionPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterUnaryExpressionPredicate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitUnaryExpressionPredicate(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitUnaryExpressionPredicate(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IsOneOfPredicateContext extends PredicateContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ListDefinitionContext listDefinition() {
+			return getRuleContext(ListDefinitionContext.class,0);
+		}
+		public IsOneOfPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterIsOneOfPredicate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitIsOneOfPredicate(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitIsOneOfPredicate(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BinaryPredicateContext extends PredicateContext {
 		public ExpressionContext left;
 		public ExpressionContext right;
-		public BinaryPredicateContext binaryPredicate() {
-			return getRuleContext(BinaryPredicateContext.class,0);
+		public ComparatorContext comparator() {
+			return getRuleContext(ComparatorContext.class,0);
 		}
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
@@ -1040,28 +1113,38 @@ public class BusinessRulesParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public ListDefinitionContext listDefinition() {
-			return getRuleContext(ListDefinitionContext.class,0);
+		public BinaryPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterBinaryPredicate(this);
 		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitBinaryPredicate(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitBinaryPredicate(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IsKindOfPredicateContext extends PredicateContext {
 		public ModelReferenceContext modelReference() {
 			return getRuleContext(ModelReferenceContext.class,0);
 		}
 		public TerminalNode ModelElementName() { return getToken(BusinessRulesParser.ModelElementName, 0); }
-		public PredicateContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_predicate; }
+		public IsKindOfPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterPredicate(this);
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterIsKindOfPredicate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitPredicate(this);
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitIsKindOfPredicate(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitPredicate(this);
+			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitIsKindOfPredicate(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1073,17 +1156,19 @@ public class BusinessRulesParser extends Parser {
 			setState(187);
 			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
+				_localctx = new BinaryPredicateContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(170);
-				((PredicateContext)_localctx).left = expression(0);
+				((BinaryPredicateContext)_localctx).left = expression(0);
 				setState(171);
-				binaryPredicate();
+				comparator();
 				setState(172);
-				((PredicateContext)_localctx).right = expression(0);
+				((BinaryPredicateContext)_localctx).right = expression(0);
 				}
 				break;
 			case 2:
+				_localctx = new IsOneOfPredicateContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(174);
@@ -1095,6 +1180,7 @@ public class BusinessRulesParser extends Parser {
 				}
 				break;
 			case 3:
+				_localctx = new IsNotOneOfPredicateContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(178);
@@ -1106,6 +1192,7 @@ public class BusinessRulesParser extends Parser {
 				}
 				break;
 			case 4:
+				_localctx = new IsKindOfPredicateContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(182);
@@ -1117,6 +1204,7 @@ public class BusinessRulesParser extends Parser {
 				}
 				break;
 			case 5:
+				_localctx = new UnaryExpressionPredicateContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(186);
@@ -1136,35 +1224,35 @@ public class BusinessRulesParser extends Parser {
 		return _localctx;
 	}
 
-	public static class BinaryPredicateContext extends ParserRuleContext {
+	public static class ComparatorContext extends ParserRuleContext {
 		public TerminalNode IsEqualTo() { return getToken(BusinessRulesParser.IsEqualTo, 0); }
 		public TerminalNode IsNotEqualTo() { return getToken(BusinessRulesParser.IsNotEqualTo, 0); }
 		public TerminalNode IsGreaterThan() { return getToken(BusinessRulesParser.IsGreaterThan, 0); }
 		public TerminalNode IsGreaterThanOrEqualTo() { return getToken(BusinessRulesParser.IsGreaterThanOrEqualTo, 0); }
 		public TerminalNode IsLessThanOrEqualTo() { return getToken(BusinessRulesParser.IsLessThanOrEqualTo, 0); }
 		public TerminalNode IsLessThan() { return getToken(BusinessRulesParser.IsLessThan, 0); }
-		public BinaryPredicateContext(ParserRuleContext parent, int invokingState) {
+		public ComparatorContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_binaryPredicate; }
+		@Override public int getRuleIndex() { return RULE_comparator; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterBinaryPredicate(this);
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterComparator(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitBinaryPredicate(this);
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitComparator(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitBinaryPredicate(this);
+			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitComparator(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final BinaryPredicateContext binaryPredicate() throws RecognitionException {
-		BinaryPredicateContext _localctx = new BinaryPredicateContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_binaryPredicate);
+	public final ComparatorContext comparator() throws RecognitionException {
+		ComparatorContext _localctx = new ComparatorContext(_ctx, getState());
+		enterRule(_localctx, 32, RULE_comparator);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -1368,32 +1456,57 @@ public class BusinessRulesParser extends Parser {
 	}
 
 	public static class ExpressionContext extends ParserRuleContext {
-		public ExpressionContext left;
-		public ExpressionContext right;
-		public TermContext term() {
-			return getRuleContext(TermContext.class,0);
+		public ExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
 		}
+		@Override public int getRuleIndex() { return RULE_expression; }
+	 
+		public ExpressionContext() { }
+		public void copyFrom(ExpressionContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class BinaryExpressionContext extends ExpressionContext {
+		public ExpressionContext left;
+		public Token op;
+		public ExpressionContext right;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public ExpressionContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_expression; }
+		public BinaryExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterExpression(this);
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterBinaryExpression(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitExpression(this);
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitBinaryExpression(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitExpression(this);
+			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitBinaryExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class UnaryExpressionContext extends ExpressionContext {
+		public TermContext term() {
+			return getRuleContext(TermContext.class,0);
+		}
+		public UnaryExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterUnaryExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitUnaryExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitUnaryExpression(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1415,6 +1528,10 @@ public class BusinessRulesParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
+			_localctx = new UnaryExpressionContext(_localctx);
+			_ctx = _localctx;
+			_prevctx = _localctx;
+
 			setState(210);
 			term();
 			}
@@ -1428,21 +1545,21 @@ public class BusinessRulesParser extends Parser {
 					_prevctx = _localctx;
 					{
 					{
-					_localctx = new ExpressionContext(_parentctx, _parentState);
-					_localctx.left = _prevctx;
-					_localctx.left = _prevctx;
+					_localctx = new BinaryExpressionContext(new ExpressionContext(_parentctx, _parentState));
+					((BinaryExpressionContext)_localctx).left = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_expression);
 					setState(212);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 					setState(213);
+					((BinaryExpressionContext)_localctx).op = _input.LT(1);
 					_la = _input.LA(1);
 					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29))) != 0)) ) {
-					_errHandler.recoverInline(this);
+						((BinaryExpressionContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 					} else {
 						consume();
 					}
 					setState(214);
-					((ExpressionContext)_localctx).right = expression(3);
+					((BinaryExpressionContext)_localctx).right = expression(3);
 					}
 					} 
 				}

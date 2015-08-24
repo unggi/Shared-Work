@@ -109,9 +109,9 @@ public class AntlrObjectModelAdaptor implements ModelAdaptor {
     }
 
     public synchronized Object getProperty(Interpreter interp, ST self, Object o, Object property, String propertyName) throws STNoSuchPropertyException {
-        System.err.printf("GET %s %s.%s ", self.getName(), o.getClass().getSimpleName(), propertyName);
+        //System.err.printf("GET %s %s.%s ", self.getName(), o.getClass().getSimpleName(), propertyName);
         Object value = _getProperty(interp, self, o, property, propertyName);
-        System.err.printf(" VAL = %s \n", (value == null ? "NULL" : value.toString()));
+        //System.err.printf(" VAL = %s \n", (value == null ? "NULL" : value.toString()));
         return value;
     }
 

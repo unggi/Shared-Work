@@ -4,7 +4,13 @@ Model "unused"
 
 Definition of "is an internal trade"
 Given: Trade("trade"), Customer("entity")
-The trade.customer is equal to  'Nomura'
+The customer of the trade is equal to  'Nomura'
+
+
+Definition of "is CFTC regulated"
+Given: Trade("atrade")
+The regulator of the trade is equal to 'CFTC'
+
 
 Validation Rule "Internal Trade Market Value Limit"
 Context: Trade

@@ -1,11 +1,10 @@
 package codegen
 
-import java.io.File
-import java.lang.reflect.Method
+import java.io.{File, FileOutputStream, PrintWriter}
 import java.util.Locale
 
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
-import org.stringtemplate.v4.{STGroup, STGroupFile, StringRenderer}
+import org.stringtemplate.v4._
 import rules.BusinessRulesParser._
 import rules.{BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
 
@@ -42,7 +41,7 @@ object CodeGenerator {
     parser.addParseListener(new JavaTargetListener(TEMPLATE_GROUP_FILE))
     val t: FileBodyContext = parser.fileBody
 
-    System.err.println("Parsing is complete")
+    println("Parsing is complete")
   }
 
   def usage(msg: String): Unit = {
@@ -53,29 +52,81 @@ object CodeGenerator {
 
 class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseListener {
 
+  val PACKAGE = "rules.compiled"
+  val CLASSNAME = "IntroductoryExample"
+  val OUTPUT_FILE_PATH = "gen/rules/compiled"
+
+  var output: AutoIndentWriter = _
+
+  var outputWriter: PrintWriter = _
+
   val group = new STGroupFile(templateGroupPath)
   STGroup.trackCreationEvents = true;
   group.registerModelAdaptor(classOf[Object], new AntlrObjectModelAdaptor())
   group.registerRenderer(classOf[String], new StringArticleRenderer())
 
-  val st = group.getInstanceOf("Definition")
+  var st: ST = _
+
+
+  override def enterFileBody(ctx: FileBodyContext) = {
+    super.enterFileBody(ctx)
+    try {
+
+      outputWriter = new PrintWriter(new FileOutputStream(OUTPUT_FILE_PATH + "/" + CLASSNAME + ".java"))
+      output = new AutoIndentWriter(outputWriter)
+
+      st = group.getInstanceOf("FileBodyHeader")
+
+      st.add("fileBody", ctx)
+      st.add("package", PACKAGE)
+      st.add("className", CLASSNAME)
+      st.write(output)
+      println(st.render())
+
+    }
+    catch {
+      case e: Throwable =>
+        System.err.println(s"Could not open output file: " + e.getStackTraceString)
+    }
+
+  }
 
   override def exitDefinition(ctx: DefinitionContext): Unit = {
     super.enterDefinition(ctx)
-
-    st.add("definition", ctx)
-    st.add("package", "rules")
-    st.add("classname", "TestClass")
-
-    System.err.println("Binary Predicate = " + ctx.constraint().logicalStatement(0).predicate.getClass)
   }
 
   override def exitDeclarations(ctx: BusinessRulesParser.DeclarationsContext): Unit = {
+
     super.exitDeclarations(ctx)
-    System.err.println(st.render())
+
+    st = group.getInstanceOf("Declarations")
+
+    st.add("declarations", ctx)
+
+    st.write(output)
+    println(st.render)
+
     st.inspect()
   }
 
+
+  override def exitFileBody(ctx: FileBodyContext) = {
+    super.exitFileBody(ctx)
+
+    st = group.getInstanceOf("FileBodyFooter")
+    st.add("fileBody", ctx)
+    st.add("package", PACKAGE)
+    st.add("className", CLASSNAME)
+
+    // Write the templates
+    st.write(output)
+    println(st.render())
+
+    // Close File Here
+    outputWriter.flush
+    outputWriter.close
+
+  }
 }
 
 class StringArticleRenderer extends StringRenderer {
@@ -104,7 +155,7 @@ class StringArticleRenderer extends StringRenderer {
     }
 
   def articularize(s: String): String = {
-    val unquoted = s.stripPrefix("\"").stripSuffix("\"")
+    val unquoted = unquote(s)
     if (isVowel(unquoted.charAt(0)))
       "an " + unquoted
     else
@@ -120,5 +171,5 @@ class StringArticleRenderer extends StringRenderer {
   }
 
   def unquote(s: String): String =
-    s.stripPrefix("\"").stripSuffix("\"")
+    s.stripPrefix("\"").stripSuffix("\"").stripPrefix("\'").stripSuffix("\'")
 }

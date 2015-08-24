@@ -1,103 +1,165 @@
 group CodeGeneration;
 
-
-Definition(definition, package, classname) ::= <<
-
+FileBodyHeader(fileBody, package, className) ::= <<
 package <package>;
 
 <Imports()>
 
-public class <classname> {
+public class <className> {
 
-<definition.multipleContextParameter.modelReferenceWithAlias:Fields()>
+>>
 
-<TestMethod(definition.constraint)>
+FileBodyFooter(fileBody, package, className) ::= <<
 }
+>>
+
+Declarations(declarations) ::= <<
+
+    // Assign each required field to a member variable
+    //
+    // Declare the member fields here.
+
+<declarations.declaration:
+{ decl |
+    <decl.definition.multipleContextParameter:
+    { param
+        |<param.modelReferenceWithAlias :
+        { r
+            |<r.ref.text> <r.alias.text;format="unquoted"> = "";
+        }>
+    }>
+}>
+// End of Declarations
+
+@Override
+public Boolean evaluate(Map\<String,Object> inputs) {
+    <declarations: Declaration(); separator="\n">
+    return true;
+}
+>>
+
+Declaration(decl) ::= <<
+<if (decl.definition)>
+    <Definition(decl.definition)>
+<elseif (decl.validationRule)>
+    //Skipping Validation Rule
+<endif>
+>>
+
+LocalVariableDecls(modelReferenceWithAlias) ::= <<
+    private String <ref> = <alias>;
+>>
+
+Definition(definition) ::= <<
+    <Constraint(definition.constraint)>
 >>
 
 Imports() ::= <<
-// Imports would go here
->>
-
-Fields(att) ::= <<
-private <att.ref.text> <att.alias.text; format="unquoted">;
-
-public <att.ref.text> get<att.alias.text; format="capitalize">() {
-    return <att.alias.text; format="unquoted">;
-}
-
-public void set<att.alias.text; format="capitalize">(<att.ref.text> _<att.alias.text; format="unquoted">) {
-    <att.alias.text; format="unquoted"> = _<att.alias.text; format="unquoted">;
-}
+import java.util.Map;
+import rules.runtime.RuleSet;
 >>
 
 
-TestMethod(constraint) ::= <<
-
-@Override
-public Boolean test() {
-    return <Constraint(constraint); format="trimmed">;
-}
-
->>
-
-
-Constraint(constraint) ::= <<
+Constraint(constraint) ::= <%
 <if (constraint.condBlock)>
-<LogicalStatement(constraint.condBlock)>
-<LogicalStatement(constraint.elseBlock)>
-<if (constraint.elseBlock)>
-<LogicalStatement(constraint.elseBlock)>
-<endif>
-<else><constraint.logicalStatement:LogicalStatement();format="trimmed"><endif>
->>
-
-LogicalStatement(stmt) ::= <<
-    <if (stmt.predicate)><Predicate(stmt.predicate); format="trimmed"><else>
-        Not a binary predicate.
-    <endif> >>
-
-
-Predicate(pred) ::= <<
-<if (pred.left && pred.comparator && pred.right)>
-<BinaryPredicate(pred.left, pred.comparator, pred.right);format="trimmed">bbb
-<elseif (pred.expression)>
-Place holder for pred.expression.
+    <LogicalStatement(constraint.condBlock)>
+    <LogicalStatement(constraint.elseBlock)>
+    <if (constraint.elseBlock)>
+        <LogicalStatement(constraint.elseBlock)>
+    <endif>
 <else>
-Not a binary operator
-<endif> >>
-
-BinaryPredicate(left, op, right) ::= "<Expression(left)><Comparator(op)><Expression(right)>"
-
-Expression(exp) ::= <<
-<if (exp.left && exp.op && exp.right)><BinaryExpression(exp)>
-<elseif (exp.term)><Term(exp.term);format="trimmed"><else>Expression Failed <exp.text>
+    <constraint.logicalStatement:LogicalStatement()>
 <endif>
->>
+%>
 
-BinaryExpression(exp) ::= "<Expression(exp.left)><Comparator(exp.op)><Expression(exp.right)>"
-
-Comparator(op) ::= "<if (op.IsEqualTo)>==<else>Op is <op.text><endif>"
-
-Term(trm) ::= <<
-<if (trm.identifier)><Identifier(trm.identifier)>xxx
-<elseif (trm.functionalExpression)>    Found a functionalExpression.
-<elseif( trm.modelReference && trm.FragmentName)>  Found a <modelReferencePath.text> trm.Fragment
-<else> Not found
+LogicalStatement(stmt) ::= <%
+<if (stmt.predicate)>
+    <Predicate(stmt.predicate)><\\>
+<else>
+    Not a binary predicate.
 <endif>
->>
+%>
 
-Identifier(id) ::= <<
-<if (id.BooleanLiteral)>Boolean Literal
-<elseif (id.collectionIndex)>Collection Index
-<elseif (id.LiteralString)><id.LiteralString.text>
-<elseif (id.Number)>Number
-<elseif (id.IntegerNumber)>IntegerNumber
-<elseif (id.modelReference)><ModelReference(id.modelReference)>
-<else>Not found - Identifier <ShowMethods(id)>
-<endif>***>>
 
-ModelReference(ref) ::= "REF"
+Predicate(pred) ::= <%
+<if (pred.left && pred.comparator && pred.right)><\\>
+    <BinaryPredicate(pred.left, pred.comparator, pred.right)><\\>
+<elseif (pred.expression)>
+    Place holder for pred.expression.<\\>
+<else>
+    Not a binary operator
+<endif>
+%>
+
+BinaryPredicate(left, op, right) ::= "<Expression(left)> <Comparator(op)> <Expression(right)>"
+
+Expression(exp) ::= <%
+<if (exp.left && exp.op && exp.right)>
+    <BinaryExpression(exp)>
+<elseif (exp.term)>
+    <Term(exp.term)>
+<else>
+    Expression Failed <exp.text>
+<endif>
+%>
+
+BinaryExpression(exp) ::= "<Expression(exp.left)> <Comparator(exp.op)> <Expression(exp.right)>"
+
+Comparator(op) ::= <%
+    <if (op.IsEqualTo)>
+        ==
+    <else>
+        Op is <op.text>
+    <endif>
+%>
+
+Term(trm) ::= <%
+<if (trm.identifier)>
+    <Identifier(trm.identifier)><\\>
+<elseif (trm.functionalExpression)>
+    Found a functionalExpression.
+<elseif( trm.modelReference && trm.FragmentName)>
+    Found a <modelReferencePath.text> trm.Fragment
+<else>
+    Not found
+<endif>
+%>
+
+Identifier(id) ::= <%
+<if (id.BooleanLiteral)>
+    Boolean Literal
+<elseif (id.collectionIndex)>
+    Collection Index
+<elseif (id.LiteralString)>
+    "<id.LiteralString.text;format="unquoted">"
+<elseif (id.Number)>
+    Number
+<elseif (id.IntegerNumber)>
+    IntegerNumber
+<elseif (id.modelReference)>
+    <ModelReference(id.modelReference)>
+<else>
+    Not found - Identifier <ShowMethods(id)>
+<endif>
+%>
+
+ModelReference(ref) ::= <%
+<if (ref.modelPath.propertyOfModelPath)>
+    <PropertyOfModelPath(ref.modelPath.propertyOfModelPath)>
+<elseif (ref.modelPath.dottedModelPath)>
+    <DottedModelPath(ref.modelPath.dottedModelPath)>
+<else>
+    Invalid Model Reference <Show(node)>
+<endif>
+%>
+
+DottedModelPath(path) ::= <%
+    <path.ModelElementName; separator=".">
+%>
+
+PropertyOfModelPath(path) ::= <%
+    <reverse(path.ModelElementName); separator=".">
+%>
 
 ShowMethods(node) ::= <<
     <[node.class.declaredMethods,node.class.declaredFields]:ShowMethod(); separator="\n">

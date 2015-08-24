@@ -101,17 +101,46 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSimpleOrComplexConstraint(BusinessRulesParser.SimpleOrComplexConstraintContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link BusinessRulesParser#predicate}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPredicate(BusinessRulesParser.PredicateContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link BusinessRulesParser#binaryPredicate}.
+	 * Visit a parse tree produced by the {@code BinaryPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBinaryPredicate(BusinessRulesParser.BinaryPredicateContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IsOneOfPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIsOneOfPredicate(BusinessRulesParser.IsOneOfPredicateContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IsNotOneOfPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIsNotOneOfPredicate(BusinessRulesParser.IsNotOneOfPredicateContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IsKindOfPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIsKindOfPredicate(BusinessRulesParser.IsKindOfPredicateContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code UnaryExpressionPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link BusinessRulesParser#comparator}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitComparator(BusinessRulesParser.ComparatorContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link BusinessRulesParser#listDefinition}.
 	 * @param ctx the parse tree
@@ -131,11 +160,19 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMultipleNotExistsStatement(BusinessRulesParser.MultipleNotExistsStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link BusinessRulesParser#expression}.
+	 * Visit a parse tree produced by the {@code BinaryExpression}
+	 * labeled alternative in {@link BusinessRulesParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpression(BusinessRulesParser.ExpressionContext ctx);
+	T visitBinaryExpression(BusinessRulesParser.BinaryExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code UnaryExpression}
+	 * labeled alternative in {@link BusinessRulesParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryExpression(BusinessRulesParser.UnaryExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree

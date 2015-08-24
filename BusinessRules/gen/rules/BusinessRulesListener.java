@@ -158,25 +158,75 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitSimpleOrComplexConstraint(BusinessRulesParser.SimpleOrComplexConstraintContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#predicate}.
-	 * @param ctx the parse tree
-	 */
-	void enterPredicate(BusinessRulesParser.PredicateContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#predicate}.
-	 * @param ctx the parse tree
-	 */
-	void exitPredicate(BusinessRulesParser.PredicateContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#binaryPredicate}.
+	 * Enter a parse tree produced by the {@code BinaryPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
 	 * @param ctx the parse tree
 	 */
 	void enterBinaryPredicate(BusinessRulesParser.BinaryPredicateContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#binaryPredicate}.
+	 * Exit a parse tree produced by the {@code BinaryPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
 	 * @param ctx the parse tree
 	 */
 	void exitBinaryPredicate(BusinessRulesParser.BinaryPredicateContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IsOneOfPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 */
+	void enterIsOneOfPredicate(BusinessRulesParser.IsOneOfPredicateContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IsOneOfPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 */
+	void exitIsOneOfPredicate(BusinessRulesParser.IsOneOfPredicateContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IsNotOneOfPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 */
+	void enterIsNotOneOfPredicate(BusinessRulesParser.IsNotOneOfPredicateContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IsNotOneOfPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 */
+	void exitIsNotOneOfPredicate(BusinessRulesParser.IsNotOneOfPredicateContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IsKindOfPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 */
+	void enterIsKindOfPredicate(BusinessRulesParser.IsKindOfPredicateContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IsKindOfPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 */
+	void exitIsKindOfPredicate(BusinessRulesParser.IsKindOfPredicateContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code UnaryExpressionPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code UnaryExpressionPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BusinessRulesParser#comparator}.
+	 * @param ctx the parse tree
+	 */
+	void enterComparator(BusinessRulesParser.ComparatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BusinessRulesParser#comparator}.
+	 * @param ctx the parse tree
+	 */
+	void exitComparator(BusinessRulesParser.ComparatorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BusinessRulesParser#listDefinition}.
 	 * @param ctx the parse tree
@@ -208,15 +258,29 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitMultipleNotExistsStatement(BusinessRulesParser.MultipleNotExistsStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#expression}.
+	 * Enter a parse tree produced by the {@code BinaryExpression}
+	 * labeled alternative in {@link BusinessRulesParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpression(BusinessRulesParser.ExpressionContext ctx);
+	void enterBinaryExpression(BusinessRulesParser.BinaryExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#expression}.
+	 * Exit a parse tree produced by the {@code BinaryExpression}
+	 * labeled alternative in {@link BusinessRulesParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpression(BusinessRulesParser.ExpressionContext ctx);
+	void exitBinaryExpression(BusinessRulesParser.BinaryExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code UnaryExpression}
+	 * labeled alternative in {@link BusinessRulesParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryExpression(BusinessRulesParser.UnaryExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code UnaryExpression}
+	 * labeled alternative in {@link BusinessRulesParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryExpression(BusinessRulesParser.UnaryExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree

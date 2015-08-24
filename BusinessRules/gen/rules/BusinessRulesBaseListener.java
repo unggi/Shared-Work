@@ -196,18 +196,6 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPredicate(BusinessRulesParser.PredicateContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPredicate(BusinessRulesParser.PredicateContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterBinaryPredicate(BusinessRulesParser.BinaryPredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -215,6 +203,66 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBinaryPredicate(BusinessRulesParser.BinaryPredicateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIsOneOfPredicate(BusinessRulesParser.IsOneOfPredicateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIsOneOfPredicate(BusinessRulesParser.IsOneOfPredicateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIsNotOneOfPredicate(BusinessRulesParser.IsNotOneOfPredicateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIsNotOneOfPredicate(BusinessRulesParser.IsNotOneOfPredicateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIsKindOfPredicate(BusinessRulesParser.IsKindOfPredicateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIsKindOfPredicate(BusinessRulesParser.IsKindOfPredicateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterComparator(BusinessRulesParser.ComparatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitComparator(BusinessRulesParser.ComparatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -256,13 +304,25 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpression(BusinessRulesParser.ExpressionContext ctx) { }
+	@Override public void enterBinaryExpression(BusinessRulesParser.BinaryExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpression(BusinessRulesParser.ExpressionContext ctx) { }
+	@Override public void exitBinaryExpression(BusinessRulesParser.BinaryExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUnaryExpression(BusinessRulesParser.UnaryExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnaryExpression(BusinessRulesParser.UnaryExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
