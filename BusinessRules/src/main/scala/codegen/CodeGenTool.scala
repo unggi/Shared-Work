@@ -105,8 +105,6 @@ class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseLis
 
     st.write(output)
     println(st.render)
-
-    st.inspect()
   }
 
 

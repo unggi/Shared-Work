@@ -15,27 +15,25 @@ FileBodyFooter(fileBody, package, className) ::= <<
 
 Declarations(declarations) ::= <<
 
-    // Assign each required field to a member variable
-    //
-    // Declare the member fields here.
+    @Override
+    public Boolean evaluate(Map\<String,Object> inputs) {
 
-<declarations.declaration:
-{ decl |
-    <decl.definition.multipleContextParameter:
-    { param
-        |<param.modelReferenceWithAlias :
-        { r
-            |<r.ref.text> <r.alias.text;format="unquoted"> = "";
+        //
+        // Assign each required field to a member variable
+        //
+        // Declare the member fields here.
+        //
+        <declarations.declaration:
+        { decl
+            |<decl.definition.multipleContextParameter:
+            { param
+                |<param.modelReferenceWithAlias:
+                { r
+                    |<r.ref.text> <r.alias.text;format="unquoted"> = "";
+                }>
+            }>
         }>
-    }>
-}>
-// End of Declarations
-
-@Override
-public Boolean evaluate(Map\<String,Object> inputs) {
-    <declarations: Declaration(); separator="\n">
-    return true;
-}
+    }
 >>
 
 Declaration(decl) ::= <<
