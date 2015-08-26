@@ -18,21 +18,7 @@ Declarations(declarations) ::= <<
     @Override
     public Boolean evaluate(Map\<String,Object> inputs) {
 
-        //
-        // Assign each required field to a member variable
-        //
-        // Declare the member fields here.
-        //
-        <declarations.declaration:
-        { decl
-            |<decl.definition.multipleContextParameter:
-            { param
-                |<param.modelReferenceWithAlias:
-                { r
-                    |<r.ref.text> <r.alias.text;format="unquoted"> = "";
-                }>
-            }>
-        }>
+        <declarations.declaration: Declaration()>
     }
 >>
 
