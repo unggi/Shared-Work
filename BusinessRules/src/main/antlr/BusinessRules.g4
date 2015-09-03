@@ -29,7 +29,7 @@ declaration
 //
 // Rules and Properties
 //
-validationRule  : 'Validation Rule' DoubleQuotedString context constraint ('report:' compoundReport)?;
+validationRule  : 'Validation Rule' name=DoubleQuotedString context constraint ('report:' compoundReport)?;
 
 // validationRuleVariableDeclaration  : simpleVariableDeclaration ','?;
 

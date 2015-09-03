@@ -67,7 +67,6 @@ class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseLis
 
   var st: ST = _
 
-
   override def enterFileBody(ctx: FileBodyContext) = {
     super.enterFileBody(ctx)
     try {
@@ -88,7 +87,6 @@ class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseLis
       case e: Throwable =>
         System.err.println(s"Could not open output file: " + e.getStackTraceString)
     }
-
   }
 
   override def exitDefinition(ctx: DefinitionContext): Unit = {
@@ -99,14 +97,13 @@ class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseLis
 
     super.exitDeclarations(ctx)
 
-    st = group.getInstanceOf("Declarations")
+    st = group.getInstanceOf("RuleEvaluator")
 
     st.add("declarations", ctx)
 
     st.write(output)
     println(st.render)
   }
-
 
   override def exitFileBody(ctx: FileBodyContext) = {
     super.exitFileBody(ctx)
@@ -135,7 +132,7 @@ class StringArticleRenderer extends StringRenderer {
         case "ARTICLE" => articularize(o.asInstanceOf[String])
         case "CAPITALIZE" => capitalize(o.asInstanceOf[String])
         case "UNQUOTED" => unquote(o.asInstanceOf[String])
-        case "TRIMMED" => o.asInstanceOf[String].trim
+        case "IDENTIFIER" => generateIdentifier(o.asInstanceOf[String] )
         case _ =>
           super.toString(o, formatString, locale)
       }
@@ -161,7 +158,7 @@ class StringArticleRenderer extends StringRenderer {
   }
 
   def capitalize(s: String): String = {
-    val unquoted = s.stripPrefix("\"").stripSuffix("\"")
+    val unquoted = unquote(s)
     if (unquoted.length > 0)
       unquoted.charAt(0).toUpper + unquoted.substring(1)
     else
@@ -170,4 +167,9 @@ class StringArticleRenderer extends StringRenderer {
 
   def unquote(s: String): String =
     s.stripPrefix("\"").stripSuffix("\"").stripPrefix("\'").stripSuffix("\'")
+
+  def generateIdentifier(s: String): String = unquote(s).replace(' ', '_')
+
+
+
 }

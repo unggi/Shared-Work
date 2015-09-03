@@ -13,30 +13,52 @@ FileBodyFooter(fileBody, package, className) ::= <<
 }
 >>
 
-Declarations(declarations) ::= <<
+RuleEvaluator(declarations) ::= <<
+    //
+    // Predicates are functions which return Boolean values
+    //
+
+    <declarations.declaration: MemberPredicates()>
 
     @Override
     public Boolean evaluate(Map\<String,Object> inputs) {
-
-        <declarations.declaration: Declaration()>
+        <declarations.declaration:{t|<if (t.definition)><EvaluateDefinitions(t.definition)><else><endif>}>
     }
 >>
 
-Declaration(decl) ::= <<
+MemberPredicates(decl) ::= <<
 <if (decl.definition)>
-    <Definition(decl.definition)>
-<elseif (decl.validationRule)>
-    //Skipping Validation Rule
+/**
+ *     Definition of <decl.definition.name.text>
+ */
+private boolean <decl.definition.name.text; format="identifier">(<ArgsWithCasting(decl.definition.multipleContextParameter)>) {
+    return (<Constraint(decl.definition.constraint)>);
+}
+<else>
+// Skipping a validation rule <decl.validationRule.name.text>
 <endif>
 >>
 
-LocalVariableDecls(modelReferenceWithAlias) ::= <<
-    private String <ref> = <alias>;
+EvaluateDefinitions(defn) ::= <<
+Boolean _<defn.name.text; format="identifier"> = <defn.name.text; format="identifier">(<ArgsWithCasting(defn.multipleContextParameter)>);
+
 >>
 
-Definition(definition) ::= <<
-    <Constraint(definition.constraint)>
->>
+ParameterList(parms) ::= <%
+    <parms.modelReferenceWithAlias:
+    { r
+        |<r.ref.text> <r.alias.text;format="unquoted">
+    }; separator=", " >
+%>
+
+ParametersWithCasting(parms) ::= <%
+    <parms.modelReferenceWithAlias:
+    { r
+        |<r.ref.text> <r.alias.text;format="unquoted">
+    }; separator=", " >
+%>
+
+
 
 Imports() ::= <<
 import java.util.Map;
