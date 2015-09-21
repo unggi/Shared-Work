@@ -51,7 +51,7 @@ ParameterList(parms) ::= <%
     }; separator=", " >
 %>
 
-ParametersWithCasting(parms) ::= <%
+ArgsWithCasting(parms) ::= <%
     <parms.modelReferenceWithAlias:
     { r
         |<r.ref.text> <r.alias.text;format="unquoted">
