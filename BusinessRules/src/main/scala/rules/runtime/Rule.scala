@@ -1,11 +1,10 @@
 package rules.runtime
 
+import scala.collection.mutable
 import scala.collection.mutable.{HashMap, ListBuffer}
 
-trait Rule {
-
-  def buildRuleContext(document: DocumentSource): RuleContext
-
+trait Rule extends RuleDependency {
+  def buildRuleContext(document: Document): RuleContext
 
   def fire(scope: RuleScope, context: RuleContext): Boolean
 }
@@ -14,21 +13,12 @@ trait RuleSet {
   def rules = new ListBuffer[Rule]()
 }
 
-trait RuleScope {
-  def bindings: HashMap[String, Any]
+class RuleScope() {
 
-  def enclosingScope: Option[RuleScope]
+  val bindings = new HashMap[String, Any]()
 
   def lookup(path: String): Option[Any] =
-    bindings.get(path) match {
-      case Some(value) => Some(value)
-      case None =>
-        enclosingScope match {
-          case Some(scope) =>
-            scope.lookup(path)
-          case None => None
-        }
-    }
+    bindings.get(path)
 
   def set(path: String, value: Any): RuleScope = {
     bindings.put(path, value)
@@ -48,18 +38,24 @@ trait RuleContext {
 
 case class Reference(path: String)
 
-trait DocumentSource {
+trait Document {
   def get[T](reference: Reference): T
-
 }
 
-class ExecutionEngine(rules: RuleSet) {
-  def execute(docSource: DocumentSource): Boolean = {
-    rules.rules.foreach { rule =>
+class ExecutionEngine(ruleSet: RuleSet) {
 
+  val globalScope = new RuleScope()
+
+  def execute(document: Document): Boolean = {
+
+    ruleSet.rules.foreach {
+      rule =>
+        val context = rule.buildRuleContext(document)
+        rule.fire(new RuleScope(), context)
     }
 
     true
   }
+
 }
 
