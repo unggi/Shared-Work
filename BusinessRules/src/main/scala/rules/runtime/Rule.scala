@@ -3,7 +3,7 @@ package rules.runtime
 import scala.collection.mutable
 import scala.collection.mutable.{HashMap, ListBuffer}
 
-trait Rule extends RuleDependency {
+trait Rule extends Dependable {
   def buildRuleContext(document: Document): RuleContext
 
   def fire(scope: RuleScope, context: RuleContext): Boolean
@@ -26,9 +26,8 @@ class RuleScope() {
   }
 }
 
-trait RuleDependency {
+trait Dependable {
   def predecessors: List[Rule]
-
   def successors: List[Rule]
 }
 
@@ -36,26 +35,24 @@ trait RuleContext {
   def map: Map[Reference, Any]
 }
 
-case class Reference(path: String)
+case class Reference(val path: String)
 
 trait Document {
   def get[T](reference: Reference): T
 }
 
-class ExecutionEngine(ruleSet: RuleSet) {
 
-  val globalScope = new RuleScope()
-
-  def execute(document: Document): Boolean = {
-
-    ruleSet.rules.foreach {
-      rule =>
-        val context = rule.buildRuleContext(document)
-        rule.fire(new RuleScope(), context)
-    }
-
-    true
-  }
-
+//
+// An execution plan is an abstract interface to an a code generated sub-class.
+// The sub-class implements an execute() method generated from the rule definitions.
+//
+// The execute() method simply applies rules in correct dependency order to the input document.
+//
+trait ExecutionPlan {
+  def execute(document: Document): Unit
 }
+
+
+
+
 

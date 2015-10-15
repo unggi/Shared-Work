@@ -8,168 +8,99 @@ import org.stringtemplate.v4._
 import rules.BusinessRulesParser._
 import rules.{BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
 
-object CodeGenerator {
+import scala.collection.mutable.ArrayBuffer
 
-  def TEMPLATE_GROUP_FILE = "src/main/templates/Java.stg"
+object CodeGenerator {
+  
+  var outputTarget = "Scala"
+  var templateGroupFile = ""
+  var outputPath = "gen/rules/compiled"
+  var packageName = "rules.compiled"
+  var templateDir = "src/main/templates"
 
   def main(args: Array[String]): Unit = {
     println("Business Rules Code Generator")
+
     if (args.length < 1)
-      usage("Invalid Number of Arguments")
+      usage("Invalid Number of Arguments - must be at least 1")
+    
+    val filelist = new ArrayBuffer[String]()
 
-    val template = new File(TEMPLATE_GROUP_FILE)
+    def GetOpt(list: List[String]): Unit =
+      list match {
+        case Nil => // Nothing to do
+        case "-java" :: tail =>
+          outputTarget = "Java"
+          GetOpt(tail)
+        case "-scala" :: tail =>
+          outputTarget = "Scala"
+          GetOpt(tail)
+        case "-templateDir" :: value  :: tail =>
+          templateDir = value
+          GetOpt(tail)
+        case "-groupfile" :: value :: tail =>
+          templateGroupFile = value
+          GetOpt(tail)
+        case "-outputPath" :: value :: tail =>
+          outputPath = value
+          GetOpt(tail)
+        case "-outputPackage" :: value :: tail =>
+          packageName = value
+          GetOpt(tail)
+        case any :: tail  =>
+          filelist.append(any)
+          GetOpt(tail)
+      }
+
+    val groupFile = s"$templateDir/$templateGroupFile.stg"
+
+    val template = new File(templateGroupFile)
     if (!template.exists())
-      usage("Cannot find template group file: " + TEMPLATE_GROUP_FILE)
+      usage("Cannot find template group file: " + templateGroupFile)
 
-    args.foreach(process(_))
+    filelist.foreach {
+      fileName =>
+        val file = new File(fileName)
+
+        if (!file.exists())
+              usage(s"File not found for NRL input source - $fileName in path ${file.getAbsoluteFile}.")
+
+        println(s"Processing input file <$fileName>.")
+
+        generate(file)
+
+        println(s"Processing input file <$fileName> is complete.")
+
+    }
   }
 
-  def process(fileName: String): Unit = {
-    println(s"Processing input file <$fileName>")
-    val file = new File(fileName)
-    if (!file.exists())
-      usage(s"File not found for NRL input source - ${file.getAbsoluteFile}")
+  def generate(file: File): Unit = {
 
     val input = new ANTLRFileStream(file.getAbsolutePath)
-
     val lexer = new BusinessRulesLexer(input)
     val tokens = new CommonTokenStream(lexer)
     val parser = new BusinessRulesParser(tokens)
 
     parser.setBuildParseTree(true)
 
-    parser.addParseListener(new JavaTargetListener(TEMPLATE_GROUP_FILE))
+    parser.addParseListener(new JavaTargetListener(templateGroupFile))
     val t: FileBodyContext = parser.fileBody
 
     println("Parsing is complete")
   }
 
   def usage(msg: String): Unit = {
-    System.err.println(s"Fatal Error: $msg")
+    System.err.println(s"Usage Error: $msg")
+
+    System.err.println
+      """
+        |Usage: CodeGenerator [-java | -scala] [-groupfile] [-outputpath] (rulefile)+
+      """.stripMargin
+
     System.exit(1)
   }
 }
 
-class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseListener {
-
-  val PACKAGE = "rules.compiled"
-  val CLASSNAME = "IntroductoryExample"
-  val OUTPUT_FILE_PATH = "gen/rules/compiled"
-
-  var output: AutoIndentWriter = _
-
-  var outputWriter: PrintWriter = _
-
-  val group = new STGroupFile(templateGroupPath)
-  STGroup.trackCreationEvents = true;
-  group.registerModelAdaptor(classOf[Object], new AntlrObjectModelAdaptor())
-  group.registerRenderer(classOf[String], new StringArticleRenderer())
-
-  var st: ST = _
-
-  override def enterFileBody(ctx: FileBodyContext) = {
-    super.enterFileBody(ctx)
-    try {
-
-      outputWriter = new PrintWriter(new FileOutputStream(OUTPUT_FILE_PATH + "/" + CLASSNAME + ".java"))
-      output = new AutoIndentWriter(outputWriter)
-
-      st = group.getInstanceOf("FileBodyHeader")
-
-      st.add("fileBody", ctx)
-      st.add("package", PACKAGE)
-      st.add("className", CLASSNAME)
-      st.write(output)
-      println(st.render())
-
-    }
-    catch {
-      case e: Throwable =>
-        System.err.println(s"Could not open output file: " + e.getStackTraceString)
-    }
-  }
-
-  override def exitDefinition(ctx: DefinitionContext): Unit = {
-    super.enterDefinition(ctx)
-  }
-
-  override def exitDeclarations(ctx: BusinessRulesParser.DeclarationsContext): Unit = {
-
-    super.exitDeclarations(ctx)
-
-    st = group.getInstanceOf("RuleEvaluator")
-
-    st.add("declarations", ctx)
-
-    st.write(output)
-    println(st.render)
-  }
-
-  override def exitFileBody(ctx: FileBodyContext) = {
-    super.exitFileBody(ctx)
-
-    st = group.getInstanceOf("FileBodyFooter")
-    st.add("fileBody", ctx)
-    st.add("package", PACKAGE)
-    st.add("className", CLASSNAME)
-
-    // Write the templates
-    st.write(output)
-    println(st.render())
-
-    // Close File Here
-    outputWriter.flush
-    outputWriter.close
-
-  }
-}
-
-class StringArticleRenderer extends StringRenderer {
-
-  override def toString(o: Any, formatString: String, locale: Locale): String =
-    if (formatString != null)
-      formatString.toUpperCase() match {
-        case "ARTICLE" => articularize(o.asInstanceOf[String])
-        case "CAPITALIZE" => capitalize(o.asInstanceOf[String])
-        case "UNQUOTED" => unquote(o.asInstanceOf[String])
-        case "IDENTIFIER" => generateIdentifier(o.asInstanceOf[String] )
-        case _ =>
-          super.toString(o, formatString, locale)
-      }
-    else
-      super.toString(o, formatString, locale)
-
-  def isVowel(ch: Char): Boolean =
-    ch.toUpper match {
-      case 'A' => true
-      case 'E' => true
-      case 'I' => true
-      case 'O' => true
-      case 'U' => true
-      case _ => false
-    }
-
-  def articularize(s: String): String = {
-    val unquoted = unquote(s)
-    if (isVowel(unquoted.charAt(0)))
-      "an " + unquoted
-    else
-      "a " + unquoted
-  }
-
-  def capitalize(s: String): String = {
-    val unquoted = unquote(s)
-    if (unquoted.length > 0)
-      unquoted.charAt(0).toUpper + unquoted.substring(1)
-    else
-      unquoted
-  }
-
-  def unquote(s: String): String =
-    s.stripPrefix("\"").stripSuffix("\"").stripPrefix("\'").stripSuffix("\'")
-
-  def generateIdentifier(s: String): String = unquote(s).replace(' ', '_')
 
 
 
-}
