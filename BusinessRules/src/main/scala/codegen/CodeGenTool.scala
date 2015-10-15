@@ -3,17 +3,18 @@ package codegen
 import java.io.{File, FileOutputStream, PrintWriter}
 import java.util.Locale
 
+import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
 import org.stringtemplate.v4._
 import rules.BusinessRulesParser._
-import rules.{BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
+import rules.{BusinessRulesBaseVisitor, BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
 
 import scala.collection.mutable.ArrayBuffer
 
 object CodeGenerator {
-  
+
   var outputTarget = "Scala"
-  var templateGroupFile = ""
+  var templateGroupFile = "Scala"
   var outputPath = "gen/rules/compiled"
   var packageName = "rules.compiled"
   var templateDir = "src/main/templates"
@@ -23,7 +24,7 @@ object CodeGenerator {
 
     if (args.length < 1)
       usage("Invalid Number of Arguments - must be at least 1")
-    
+
     val filelist = new ArrayBuffer[String]()
 
     def GetOpt(list: List[String]): Unit =
@@ -54,9 +55,9 @@ object CodeGenerator {
 
     val groupFile = s"$templateDir/$templateGroupFile.stg"
 
-    val template = new File(templateGroupFile)
+    val template = new File(groupFile)
     if (!template.exists())
-      usage("Cannot find template group file: " + templateGroupFile)
+      usage(s"Cannot find template group file: $groupFile")
 
     filelist.foreach {
       fileName =>
@@ -83,8 +84,17 @@ object CodeGenerator {
 
     parser.setBuildParseTree(true)
 
-    parser.addParseListener(new JavaTargetListener(templateGroupFile))
-    val t: FileBodyContext = parser.fileBody
+    if (outputTarget.equals("Java"))
+      parser.addParseListener(new JavaTargetListener(templateGroupFile))
+
+    val tree: FileBodyContext = parser.fileBody
+
+    if (outputTarget.equals("Scala")) {
+      val listener = new ScalaTargetListener(templateGroupFile)
+      val walker = new ParseTreeWalker()
+      walker.walk(listener, tree)
+
+    }
 
     println("Parsing is complete")
   }

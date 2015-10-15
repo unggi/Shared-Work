@@ -117,5 +117,11 @@
             <artifactId>nrlparser</artifactId>
             <version>1.4.18</version>
         </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.11</artifactId>
+            <version>${scalatest.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

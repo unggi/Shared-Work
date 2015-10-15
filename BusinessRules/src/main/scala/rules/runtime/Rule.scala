@@ -1,10 +1,8 @@
 package rules.runtime
 
-import scala.collection.mutable
 import scala.collection.mutable.{HashMap, ListBuffer}
 
 trait Rule extends Dependable {
-  def buildRuleContext(document: Document): RuleContext
 
   def fire(scope: RuleScope, context: RuleContext): Boolean
 }
@@ -28,6 +26,7 @@ class RuleScope() {
 
 trait Dependable {
   def predecessors: List[Rule]
+
   def successors: List[Rule]
 }
 
