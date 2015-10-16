@@ -36,7 +36,7 @@ object CodeGenerator {
         case "-scala" :: tail =>
           outputTarget = "Scala"
           GetOpt(tail)
-        case "-templateDir" :: value  :: tail =>
+        case "-templateDir" :: value :: tail =>
           templateDir = value
           GetOpt(tail)
         case "-groupfile" :: value :: tail =>
@@ -48,27 +48,24 @@ object CodeGenerator {
         case "-outputPackage" :: value :: tail =>
           packageName = value
           GetOpt(tail)
-        case any :: tail  =>
+        case any :: tail =>
           filelist.append(any)
           GetOpt(tail)
       }
 
-    val groupFile = s"$templateDir/$templateGroupFile.stg"
+    GetOpt(refArrayOps(args).toList)
 
-    val template = new File(groupFile)
-    if (!template.exists())
-      usage(s"Cannot find template group file: $groupFile")
 
     filelist.foreach {
       fileName =>
         val file = new File(fileName)
 
         if (!file.exists())
-              usage(s"File not found for NRL input source - $fileName in path ${file.getAbsoluteFile}.")
+          usage(s"File not found for NRL input source - $fileName in path ${file.getAbsoluteFile}.")
 
         println(s"Processing input file <$fileName>.")
 
-        generate(file)
+        generate(file, groupFile)
 
         println(s"Processing input file <$fileName> is complete.")
 
@@ -77,6 +74,12 @@ object CodeGenerator {
 
   def generate(file: File): Unit = {
 
+    val groupFile = s"$templateDir/$templateGroupFile.stg"
+
+    val template = new File(groupFile)
+    if (!template.exists())
+      usage(s"Cannot find template group file: $groupFile")
+
     val input = new ANTLRFileStream(file.getAbsolutePath)
     val lexer = new BusinessRulesLexer(input)
     val tokens = new CommonTokenStream(lexer)
@@ -84,17 +87,18 @@ object CodeGenerator {
 
     parser.setBuildParseTree(true)
 
-    if (outputTarget.equals("Java"))
-      parser.addParseListener(new JavaTargetListener(templateGroupFile))
-
     val tree: FileBodyContext = parser.fileBody
 
-    if (outputTarget.equals("Scala")) {
-      val listener = new ScalaTargetListener(templateGroupFile)
-      val walker = new ParseTreeWalker()
-      walker.walk(listener, tree)
+    val listener: BusinessRulesBaseListener =
+      outputTarget match {
+        case "scala" =>
+          new ScalaTargetListener(template)
+        case "java" =>
+          new JavaTargetListener(template)
+      }
 
-    }
+    val walker = new ParseTreeWalker()
+    walker.walk(listener, tree)
 
     println("Parsing is complete")
   }
@@ -103,9 +107,9 @@ object CodeGenerator {
     System.err.println(s"Usage Error: $msg")
 
     System.err.println
-      """
-        |Usage: CodeGenerator [-java | -scala] [-groupfile] [-outputpath] (rulefile)+
-      """.stripMargin
+    """
+      |Usage: CodeGenerator [-java | -scala] [-groupfile] [-outputpath] (rulefile)+
+    """.stripMargin
 
     System.exit(1)
   }

@@ -6,17 +6,12 @@ import org.stringtemplate.v4.{AutoIndentWriter, ST, STGroup, STGroupFile}
 import rules.BusinessRulesParser.{DefinitionContext, FileBodyContext}
 import rules.{BusinessRulesBaseListener, BusinessRulesParser}
 
-class ScalaTargetListener(templateGroupPath: String) extends BusinessRulesBaseListener {
-
-  val PACKAGE = "rules.compiled"
-  val CLASSNAME = "IntroductoryExample"
-  val OUTPUT_FILE_PATH = "gen/rules/compiled"
+class ScalaTargetListener(template: String, pkg: String, className: String, outputFilePath: String) extends BusinessRulesBaseListener {
 
   var output: AutoIndentWriter = _
-
   var outputWriter: PrintWriter = _
 
-  val group = new STGroupFile(templateGroupPath)
+  val group = new STGroupFile(template)
   STGroup.trackCreationEvents = true;
   group.registerModelAdaptor(classOf[Object], new AntlrObjectModelAdaptor())
   group.registerRenderer(classOf[String], new StringArticleRenderer())
@@ -27,14 +22,14 @@ class ScalaTargetListener(templateGroupPath: String) extends BusinessRulesBaseLi
     super.enterFileBody(ctx)
     try {
 
-      outputWriter = new PrintWriter(new FileOutputStream(OUTPUT_FILE_PATH + "/" + CLASSNAME + ".java"))
+      outputWriter = new PrintWriter(new FileOutputStream(outputFilePath + "/" + className + ".java"))
       output = new AutoIndentWriter(outputWriter)
 
       st = group.getInstanceOf("FileBodyHeader")
 
       st.add("fileBody", ctx)
-      st.add("package", PACKAGE)
-      st.add("className", CLASSNAME)
+      st.add("package", pkg)
+      st.add("className", className)
       st.write(output)
       println(st.render())
 
@@ -66,8 +61,8 @@ class ScalaTargetListener(templateGroupPath: String) extends BusinessRulesBaseLi
 
     st = group.getInstanceOf("FileBodyFooter")
     st.add("fileBody", ctx)
-    st.add("package", PACKAGE)
-    st.add("className", CLASSNAME)
+    st.add("package", pkg)
+    st.add("className", className)
 
     // Write the templates
     st.write(output)
