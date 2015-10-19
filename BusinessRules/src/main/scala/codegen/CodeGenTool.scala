@@ -1,13 +1,11 @@
 package codegen
 
-import java.io.{File, FileOutputStream, PrintWriter}
-import java.util.Locale
+import java.io.File
 
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
-import org.stringtemplate.v4._
 import rules.BusinessRulesParser._
-import rules.{BusinessRulesBaseVisitor, BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
+import rules.{BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -65,16 +63,14 @@ object CodeGenerator {
 
         println(s"Processing input file <$fileName>.")
 
-        generate(file, groupFile)
+        generate(file, s"$templateDir/$templateGroupFile.stg")
 
         println(s"Processing input file <$fileName> is complete.")
 
     }
   }
 
-  def generate(file: File): Unit = {
-
-    val groupFile = s"$templateDir/$templateGroupFile.stg"
+  def generate(file: File, groupFile: String): Unit = {
 
     val template = new File(groupFile)
     if (!template.exists())
@@ -89,15 +85,26 @@ object CodeGenerator {
 
     val tree: FileBodyContext = parser.fileBody
 
-    val listener: BusinessRulesBaseListener =
-      outputTarget match {
-        case "scala" =>
-          new ScalaTargetListener(template)
-        case "java" =>
-          new JavaTargetListener(template)
-      }
+    val symbolTable = new SymbolTable()
+
+    val validator: BusinessRulesBaseListener = new ValidationListener(symbolTable)
 
     val walker = new ParseTreeWalker()
+    walker.walk(validator, tree)
+
+    for ( (e,v) <- symbolTable.map ) {
+      println(s"$e ==> $v")
+    }
+
+    val listener: BusinessRulesBaseListener =
+      outputTarget.toLowerCase match {
+        case "scala" =>
+          new ScalaTargetListener(template.getAbsolutePath,
+            packageName, "RulePlan", outputPath)
+        case "java" =>
+          new JavaTargetListener(template.getAbsolutePath)
+      }
+
     walker.walk(listener, tree)
 
     println("Parsing is complete")

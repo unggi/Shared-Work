@@ -1,0 +1,11 @@
+group ScalaCodeGeneration;
+
+FileBodyHeader(fileBody, package, className) ::= <<
+package <package>;
+
+<Imports()>
+
+public class <className> {
+
+>>
+

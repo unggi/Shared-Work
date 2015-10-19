@@ -3,10 +3,11 @@ package codegen
 import java.io.{FileOutputStream, PrintWriter}
 
 import org.stringtemplate.v4.{AutoIndentWriter, ST, STGroup, STGroupFile}
-import rules.BusinessRulesParser.{DefinitionContext, FileBodyContext}
+import rules.BusinessRulesParser.FileBodyContext
 import rules.{BusinessRulesBaseListener, BusinessRulesParser}
 
-class ScalaTargetListener(template: String, pkg: String, className: String, outputFilePath: String) extends BusinessRulesBaseListener {
+class ScalaTargetListener(template: String, pkg: String, className: String, outputFilePath: String)
+  extends BusinessRulesBaseListener {
 
   var output: AutoIndentWriter = _
   var outputWriter: PrintWriter = _
@@ -20,9 +21,11 @@ class ScalaTargetListener(template: String, pkg: String, className: String, outp
 
   override def enterFileBody(ctx: FileBodyContext) = {
     super.enterFileBody(ctx)
+    val outputFileName = outputFilePath + "/" + className + ".scala"
+
     try {
 
-      outputWriter = new PrintWriter(new FileOutputStream(outputFilePath + "/" + className + ".java"))
+      outputWriter = new PrintWriter(new FileOutputStream(outputFileName))
       output = new AutoIndentWriter(outputWriter)
 
       st = group.getInstanceOf("FileBodyHeader")
@@ -36,12 +39,8 @@ class ScalaTargetListener(template: String, pkg: String, className: String, outp
     }
     catch {
       case e: Throwable =>
-        System.err.println(s"Could not open output file: " + e.getStackTraceString)
+        System.err.println(s"Could not open output file: $outputFileName\n" + e.getMessage)
     }
-  }
-
-  override def exitDefinition(ctx: DefinitionContext): Unit = {
-    super.enterDefinition(ctx)
   }
 
   override def exitDeclarations(ctx: BusinessRulesParser.DeclarationsContext): Unit = {
