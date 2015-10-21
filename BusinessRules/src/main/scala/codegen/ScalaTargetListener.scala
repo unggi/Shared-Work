@@ -47,7 +47,7 @@ class ScalaTargetListener(template: String, pkg: String, className: String, outp
 
     super.exitDeclarations(ctx)
 
-    st = group.getInstanceOf("RuleEvaluator")
+    st = group.getInstanceOf("RuleSet")
 
     st.add("declarations", ctx)
 

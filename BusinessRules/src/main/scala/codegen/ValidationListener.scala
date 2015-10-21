@@ -2,7 +2,7 @@ package codegen
 
 import org.antlr.v4.runtime.tree.TerminalNode
 import rules.BusinessRulesBaseListener
-import rules.BusinessRulesParser.{ContextContext, DottedModelPathContext}
+import rules.BusinessRulesParser.{ContextContext, DeclarationContext, DottedModelPathContext}
 import rules.runtime.Reference
 
 import scala.collection.JavaConversions._
@@ -15,12 +15,11 @@ case class ModelReference(referencePath: String, components: List[TerminalNode])
 class SymbolTable {
 
 
-  var map = new mutable.HashMap[String,SymbolValue]()
+  var map = new mutable.HashMap[String, SymbolValue]()
 
   def put(key: String, entry: SymbolValue): Option[SymbolValue] = map.put(key, entry)
 
   def lookup(key: String): Option[SymbolValue] = map.get(key)
-
 }
 
 /**
@@ -65,15 +64,13 @@ class DependencyGraph {
 
 }
 
-
-
 class ValidationListener(symbolTable: SymbolTable) extends BusinessRulesBaseListener {
 
   val scopeBindings = new mutable.Stack[String]()
 
   override def exitContext(ctx: ContextContext) = {
     super.exitContext(ctx)
-    ctx.modelReference().modelPath.dottedModelPath() match {
+    ctx.modelReferenceWithAlias.modelReference.modelPath.dottedModelPath() match {
       case null =>
       case path: DottedModelPathContext =>
         scopeBindings.push(addSymbol(path))
@@ -81,8 +78,10 @@ class ValidationListener(symbolTable: SymbolTable) extends BusinessRulesBaseList
     }
   }
 
-
-
+  override def exitDeclaration(ctx: DeclarationContext) = {
+    super.exitDeclaration(ctx)
+    scopeBindings.clear()
+  }
 
   def addSymbol(ctx: DottedModelPathContext): String = {
     val elements = ctx.ModelElementName().toList
@@ -94,14 +93,12 @@ class ValidationListener(symbolTable: SymbolTable) extends BusinessRulesBaseList
     }
 
     println(s"Add Symbol <$key> and <$elements>")
-
+    key
   }
 
   override def exitDottedModelPath(ctx: DottedModelPathContext) = {
     super.exitDottedModelPath(ctx)
 
     addSymbol(ctx)
-
-
   }
 }

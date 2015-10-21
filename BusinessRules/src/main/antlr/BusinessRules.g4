@@ -39,7 +39,7 @@ ruleSet  : 'Rule set' DoubleQuotedString ('applies to' modelReference 'where' co
 
 //globalVariableDeclaration  : simpleVariableDeclaration;
 
-context  : 'Context:' modelReference;
+context  : 'Context:' modelReferenceWithAlias;
 
 multipleParameterContext  : 'Context:' multipleContextParameter;
 

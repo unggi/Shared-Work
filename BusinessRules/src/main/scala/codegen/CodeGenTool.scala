@@ -16,6 +16,7 @@ object CodeGenerator {
   var outputPath = "gen/rules/compiled"
   var packageName = "rules.compiled"
   var templateDir = "src/main/templates"
+  var outputClass = "RulePlanExample"
 
   def main(args: Array[String]): Unit = {
     println("Business Rules Code Generator")
@@ -43,6 +44,9 @@ object CodeGenerator {
         case "-outputPath" :: value :: tail =>
           outputPath = value
           GetOpt(tail)
+        case "-outputClass" :: value :: tail =>
+          outputClass = value
+          GetOpt(tail)
         case "-outputPackage" :: value :: tail =>
           packageName = value
           GetOpt(tail)
@@ -52,7 +56,6 @@ object CodeGenerator {
       }
 
     GetOpt(refArrayOps(args).toList)
-
 
     filelist.foreach {
       fileName =>
@@ -100,7 +103,7 @@ object CodeGenerator {
       outputTarget.toLowerCase match {
         case "scala" =>
           new ScalaTargetListener(template.getAbsolutePath,
-            packageName, "RulePlan", outputPath)
+            packageName, outputClass, outputPath)
         case "java" =>
           new JavaTargetListener(template.getAbsolutePath)
       }

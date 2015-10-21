@@ -9,3 +9,38 @@ public class <className> {
 
 >>
 
+Imports() ::= <<
+ // No Imports
+>>
+
+RuleSet(declarations) ::= <<
+//
+// Rules are each aon object.
+//
+
+<declarations.declaration:Show()>
+
+>>
+
+FileBodyFooter(fileBody, package, className) ::= <<
+}
+>>
+
+Rule(decl) ::= <<
+    <decl.text; separator=" ">
+>>
+
+
+
+ShowMethods(node) ::= <<
+    <[node.class.declaredMethods,node.class.declaredFields]:ShowMethod(); separator="\n">
+>>
+
+ShowMethod(m) ::= <<
+<m.name; format="%-20s"> defined in <m.declaringClass.simpleName>
+>>
+
+Show(node) ::= <<
+    <node.Class.SimpleName>(<node.text>)
+    <node.children:Show()>
+>>
