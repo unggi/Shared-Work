@@ -57,10 +57,10 @@ constraint      :
 
  logicalStatement:
                 predicate
-//                |   existsStatement
-//                |   notExistsStatement
+                |   existsStatement
+                |   notExistsStatement
 //                |   globalExistsStatement
-//                |   forallStatement
+                |   forallStatement
 //                |   globalVariableDeclaration
                 ;
 
@@ -79,7 +79,7 @@ predicate  :
     |    expression 'is one of' listDefinition                  #IsOneOfPredicate
     |    expression 'is not one of' listDefinition              #IsNotOneOfPredicate
     |    modelReference 'is a kind of' ModelElementName         #IsKindOfPredicate
-    |    expression                                             #UnaryExpressionPredicate
+//    |    expression                                             #UnaryExpressionPredicate
 //    |   multipleExistsStatement
 //    |   multipleNotExistsStatement
     ;
@@ -123,7 +123,13 @@ term  :
     |   '(' constraint ')'
     ;
 
-identifier  : modelReference | LiteralString | Number | IntegerNumber | BooleanLiteral | collectionIndex
+identifier  :
+    modelReference
+    | LiteralString
+    | Number
+    | IntegerNumber
+    | BooleanLiteral
+    | collectionIndex
     ;
 
 functionalExpression  :
@@ -185,7 +191,7 @@ simpleTerm  :
 THE                 : ([Tt][Hh][Ee]) -> skip;
 AN                  : ([Aa][Nn]) -> skip;
 
-THEN                : 'then';
+THEN                : ([Tt][Hh][Ee][Nn]);
 IF                  : ([Ii][Ff]);
 ELSE                :([Ee][Ll][Ss][Ee]);
 
@@ -203,9 +209,9 @@ DoubleQuotedString  :   '"' (ESC | .)*? '"';
 fragment ESC        :   '\\' [btnr"\\];
 ModelElementName    :   Alpha (AlphaNumeric | '_' | '-')*;
 VariableName	    : 	ModelElementName;
-Alpha	            :   [a-zA-Z];
-Digit	            :   [0-9];
-AlphaNumeric	    :  	Alpha | Digit;
+fragment Alpha	    :   [a-zA-Z];
+fragment Digit	    :   [0-9];
+fragment AlphaNumeric	    :  	Alpha | Digit;
 Number	            :   ('-')? (Digit)+ '.' (Digit)*;
 OrdinalNumber	    :   'first' | 'second' | 'third' | (Digit+ ('th' | 'st' | 'nd' | 'rd'));
 IntegerNumber	    :   ('-')? (Digit)+;
@@ -221,19 +227,19 @@ WS                  :   [ \t\r\n]+ -> skip;
 //
 // Quantifiers
 //
-//existsStatement :
-//                    (enumerator ('of the')?)? modelReference ('has' | 'have' | 'is' | 'are') ('present' | simpleOrComplexConstraint)
-//                |   enumerator ('has' | 'have' | 'is' | 'are') simpleOrComplexConstraint
-//                ;
-//
-//enumerator  : ('at least' | 'at most' | 'exactly')? ('one' | 'two' | 'three' | 'four' | 'no' | 'none' | IntegerNumber);
-//
-//notExistsStatement  :   modelReference ('is not present' | 'are not present');
-//
-//globalExistsStatement   :    ('there is' | 'there are') ('no')? modelReference ('(' DoubleQuotedString ')')? ('where' simpleOrComplexConstraint)?;
-//
-//forallStatement :
-//                    ('each' | 'in each' | 'all' | 'every') ('of the')?  modelReference ('has' | 'have' | 'is' | 'are')? simpleOrComplexConstraint
-//                |   'for each' DoubleQuotedString 'in the collection of' modelReference ('has' | 'have' | 'is' | 'are' | ',')? simpleOrComplexConstraint
-//                ;
-//
+existsStatement :
+                    (enumerator ('of the')?)? modelReference ('has' | 'have' | 'is' | 'are') ('present' | simpleOrComplexConstraint)
+                |   enumerator ('has' | 'have' | 'is' | 'are') simpleOrComplexConstraint
+                ;
+
+enumerator  : ('at least' | 'at most' | 'exactly')? ('one' | 'two' | 'three' | 'four' | 'no' | 'none' | IntegerNumber);
+
+notExistsStatement  :   modelReference ('is not present' | 'are not present');
+
+globalExistsStatement   :    ('there is' | 'there are') ('no')? modelReference ('(' DoubleQuotedString ')')? ('where' simpleOrComplexConstraint)?;
+
+forallStatement :
+                    ('each' | 'in each' | 'all' | 'every') ('of the')?  modelReference ('has' | 'have' | 'is' | 'are')? simpleOrComplexConstraint
+                |   'for each' DoubleQuotedString 'in the collection of' modelReference ('has' | 'have' | 'is' | 'are' | ',')? simpleOrComplexConstraint
+                ;
+

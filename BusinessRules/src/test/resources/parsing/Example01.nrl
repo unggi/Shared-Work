@@ -2,8 +2,8 @@ Model "unused"
 
 Validation Rule "Interest Rate Swap - Exactly two Legs"
 Context: Instrument("instrument")
-IF the instrument is a kind of InterestRateSwap THEN it must have 2 legs
+IF the instrument is a kind of InterestRateSwap THEN the number of legs is equal to 2
 
 Validation Rule "Interest Rate Swap - Requires fixed and floating legs"
 Context: Instrument("swap")
-IF the instrument is a kind of InterestRateSwap THEN one leg must have type "fixed" and one leg must have type "float"
+IF the instrument is a kind of InterestRateSwap THEN one leg has type "fixed" and one leg has type "float"
