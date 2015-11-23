@@ -61,7 +61,6 @@ class DependencyGraph {
   def addDefinition(): Unit = {
 
   }
-
 }
 
 class ValidationListener(symbolTable: SymbolTable) extends BusinessRulesBaseListener {

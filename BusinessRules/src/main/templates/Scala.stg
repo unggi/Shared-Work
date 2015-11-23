@@ -15,7 +15,7 @@ Imports() ::= <<
 
 RuleSet(declarations) ::= <<
 //
-// Rules are each aon object.
+// Rules are each an object.
 //
 
 <declarations.declaration:Show()>

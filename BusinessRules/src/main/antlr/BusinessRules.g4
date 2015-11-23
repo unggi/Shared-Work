@@ -52,11 +52,14 @@ modelReferenceWithAlias : ref=modelReference '(' alias=DoubleQuotedString ')';
 //
 constraint      :
                     IF condBlock=logicalStatement THEN thenBlock=logicalStatement (ELSE  elseBlock=logicalStatement)?
-                |   logicalStatement (op=('and' | 'or' | 'implies' | 'if and only if' ) logicalStatement)*
+                |   logicalStatement
                 ;
 
- logicalStatement:
-                predicate
+binaryLogicalOperator: ('and' | 'or' | 'implies' | 'if and only if');
+
+logicalStatement:
+                logicalStatement binaryLogicalOperator logicalStatement
+                |   predicate
                 |   existsStatement
                 |   notExistsStatement
 //                |   globalExistsStatement
@@ -130,6 +133,7 @@ identifier  :
     | IntegerNumber
     | BooleanLiteral
     | collectionIndex
+    | DoubleQuotedString
     ;
 
 functionalExpression  :

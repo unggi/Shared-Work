@@ -1,6 +1,6 @@
 package rules.runtime
 
-import java.util.Date
+import java.util.{Calendar, Date}
 
 import org.scalatest.FlatSpec
 
@@ -14,7 +14,7 @@ class Instrument(val ID: String, val name: String, val legs : Array[Leg])
 
 case class InterestRateSwap(override val ID: String, override val name: String, override val legs: Array[Leg]) extends Instrument(ID, name, legs)
 
-case class Leg(val cashflowType: String, val issueDate: Date, val maturityDate: Date, val cashflowFrequency: Integer)
+case class Leg(cashflowType: String, issueDate: Date, maturityDate: Date, cashflowFrequency: Integer)
 
 
 // Rule: An interest rate swap must have exactly two legs.
@@ -39,12 +39,18 @@ object Rule2 {
 
 class TestRuleSet extends FlatSpec {
 
+  val issueDate = Calendar.getInstance()
+    issueDate.set(2015,12,1)
+
+  val maturityDate = Calendar.getInstance()
+  maturityDate.set(2025,12,1)
+
   // A sample Trade
   val trade =
     Trade("NFPS", "Morgan Stanley", "GBP", 1000000.0,
       InterestRateSwap("0101", "Interest Rate Swap", Array[Leg](
-        Leg("fixed", new Date(2015, 12, 1), new Date(2025, 12, 1), 2),
-        Leg("float", new Date(2015, 12, 1), new Date(2025, 12, 1), 4)))
+        Leg("fixed", issueDate.getTime, maturityDate.getTime, 2),
+        Leg("float", issueDate.getTime, maturityDate.getTime, 4)))
     )
 
   "A Trade" should "pass all constraints checks" in {
@@ -53,7 +59,6 @@ class TestRuleSet extends FlatSpec {
     assert(Rule1.evaluate(trade.instrument))
     assert(Rule2.evaluate(trade.instrument))
   }
-
 
   "A Stack" should "pop values in last-in-first-out order" in {
     val stack = new mutable.Stack[Int]
