@@ -88,6 +88,8 @@ object CodeGenerator {
 
     val tree: FileBodyContext = parser.fileBody
 
+
+
     val symbolTable = new SymbolTable()
 
     val validator: BusinessRulesBaseListener = new ValidationListener(symbolTable)

@@ -53,6 +53,7 @@ class ScalaTargetListener(template: String, pkg: String, className: String, outp
 
     st.write(output)
     println(st.render)
+    st.inspect
   }
 
   override def exitFileBody(ctx: FileBodyContext) = {

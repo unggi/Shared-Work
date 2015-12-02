@@ -48,7 +48,7 @@ class StringArticleRenderer extends StringRenderer {
   def unquote(s: String): String =
     s.stripPrefix("\"").stripSuffix("\"").stripPrefix("\'").stripSuffix("\'")
 
-  def generateIdentifier(s: String): String = unquote(s).replace(' ', '_')
+  def generateIdentifier(s: String): String = unquote(s).replaceAll("[-\\s]+", "_")
 
 
 

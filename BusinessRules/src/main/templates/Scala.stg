@@ -1,7 +1,7 @@
 group ScalaCodeGeneration;
 
 FileBodyHeader(fileBody, package, className) ::= <<
-package <package>;
+package <package>
 
 <Imports()>
 
@@ -18,7 +18,7 @@ RuleSet(declarations) ::= <<
 // Rules are each an object.
 //
 
-<declarations.declaration:Show()>
+<declarations.declaration: Rule()>
 
 >>
 
@@ -26,9 +26,70 @@ FileBodyFooter(fileBody, package, className) ::= <<
 }
 >>
 
-Rule(decl) ::= <<
-    <decl.text; separator=" ">
+Rule(declaration) ::= <<
+    //
+    // <declaration.validationRule.name.text>
+    //
+    <RuleClass(ID(declaration.validationRule.name.text), declaration.validationRule.name.text, declaration.validationRule.context, declaration.validationRule.constraint)>
+
 >>
+
+ID(text) ::= <%
+    <text; format="identifier">
+%>
+
+
+RuleClass(className,ruleName, context, constraint) ::= <<
+
+class <className>(<ruleName>) extends Rule {
+    def evaluate(<InputParamList(context)>): Boolean = {
+        <Constraint(constraint)>
+    }
+}
+
+>>
+
+InputParamList(context) ::= <%
+  <if(context.modelReferenceWithAlias)><InputParam(context.modelReferenceWithAlias)><endif>
+%>
+
+InputParam(reference) ::= <%
+    <reference.alias.text; format="unquoted">: <reference.ref.text>
+%>
+
+Constraint(constraint) ::= <%
+<if (constraint.condBlock)>
+   <IfThenConstraint(constraint.condBlock, constraint.thenBlock)>
+<else>
+    No Conditional
+<endif>
+%>
+
+IfThenConstraint(cond, then) ::= <<
+if (<LogicalStatement(cond)>) {
+    <LogicalStatement(then)>
+}
+>>
+
+LogicalStatement(stmt) ::= <%
+<if (stmt.predicate)>
+    <(stmt.predicate.class.simpleName)(stmt.predicate)>
+<endif>
+%>
+
+IsKindOfPredicateContext(predicate) ::= <%
+ <predicate.modelReference.text>.isInstanceOf[<predicate.ModelElementName.text>]
+%>
+
+BinaryPredicateContext(predicate) ::= <<
+    BinaryPredicate(<predicate.text>)
+   /*
+   <Show(predicate)>
+   */
+
+>>
+
+
 
 
 
