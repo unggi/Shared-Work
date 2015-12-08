@@ -19,7 +19,6 @@ RuleSet(declarations) ::= <<
 //
 
 <declarations.declaration: Rule()>
-
 >>
 
 FileBodyFooter(fileBody, package, className) ::= <<
@@ -34,9 +33,7 @@ Rule(declaration) ::= <<
 
 >>
 
-ID(text) ::= <%
-    <text; format="identifier">
-%>
+ID(text) ::= <%<text; format="identifier">%>
 
 
 RuleClass(className,ruleName, context, constraint) ::= <<
@@ -46,16 +43,13 @@ class <className>(<ruleName>) extends Rule {
         <Constraint(constraint)>
     }
 }
-
 >>
 
 InputParamList(context) ::= <%
   <if(context.modelReferenceWithAlias)><InputParam(context.modelReferenceWithAlias)><endif>
 %>
 
-InputParam(reference) ::= <%
-    <reference.alias.text; format="unquoted">: <reference.ref.text>
-%>
+InputParam(reference) ::= <%<reference.alias.text; format="unquoted">: <reference.ref.text>%>
 
 Constraint(constraint) ::= <%
 <if (constraint.condBlock)>
@@ -67,33 +61,50 @@ Constraint(constraint) ::= <%
 
 IfThenConstraint(cond, then) ::= <<
 if (<LogicalStatement(cond)>) {
-    <LogicalStatement(then)>
+    if (<LogicalStatement(then)>)
+        true
+    else
+        false
 }
 >>
 
-LogicalStatement(stmt) ::= <%
-<if (stmt.predicate)>
-    <(stmt.predicate.class.simpleName)(stmt.predicate)>
-<endif>
-%>
+LogicalStatement(stmt) ::= <%<Apply(stmt.predicate,stmt.predicate)>%>
 
 IsKindOfPredicateContext(predicate) ::= <%
- <predicate.modelReference.text>.isInstanceOf[<predicate.ModelElementName.text>]
+<predicate.modelReference.text>.isInstanceOf[<predicate.ModelElementName.text>]
 %>
 
-BinaryPredicateContext(predicate) ::= <<
-    BinaryPredicate(<predicate.text>)
-   /*
-   <Show(predicate)>
-   */
+BinaryPredicateContext(predicate) ::= <%
+<Apply(predicate.left,predicate.left)> <Apply(predicate.comparator,predicate.comparator)> <Apply(predicate.right,predicate.right)>
+%>
 
->>
+UnaryExpressionContext(expr) ::= <%<(expr.term.class.simpleName)(expr.term)>%>
 
+IsEqualToComparatorContext(comparator) ::= " == "
 
+TermContext(term) ::= <%<(term.class.simpleName)(term)>%>
 
+IdentifierTermContext(term) ::= <%<Apply(first(term.children),first(term.children))>%>
 
+IntegerNumberIdentifierContext(integer) ::= <%<trim(integer.text)>%>
+
+FunctionalExpressionTermContext(fn) ::= <%<FunctionalExpressionContext(fn.functionalExpression)>%>
+
+FunctionalExpressionContext(fn) ::= <%<(fn.class.simpleName)(fn.ref)>%>
+
+NumberOfExpressionContext(ref) ::= <%(<(ref.class.simpleName)(ref)>).size %>
+
+ModelReferenceContext(ref) ::= <%<ref.children:{ p |<(p.class.simpleName)(p)>}>%>
+
+DottedModelPathContext(path) ::= <%<path.children;separator=".">%>
+
+Apply(template, arg) ::= <%<(template.class.simpleName)(arg)>%>
 
 ShowMethods(node) ::= <<
+    <[node.class.declaredMethods]:ShowMethod(); separator="\n">
+>>
+
+ShowMembers(node) ::= <<
     <[node.class.declaredMethods,node.class.declaredFields]:ShowMethod(); separator="\n">
 >>
 

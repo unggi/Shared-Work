@@ -88,12 +88,12 @@ predicate  :
     ;
 
 comparator  :
-              IsEqualTo
-            | IsNotEqualTo
-            | IsGreaterThan
-            | IsGreaterThanOrEqualTo
-            | IsLessThanOrEqualTo
-            | IsLessThan
+              IsEqualTo                                         #IsEqualToComparator
+            | IsNotEqualTo                                      #IsNotEqualToComparator
+            | IsGreaterThan                                     #IsGreaterThanComparator
+            | IsGreaterThanOrEqualTo                            #IsGreaterThanOrEqualToComparator
+            | IsLessThanOrEqualTo                               #IsLessThanOrEqualToComparator
+            | IsLessThan                                        #IsLessThanComparator
     ;
 
 listDefinition  : identifier (',' identifier)*
@@ -116,30 +116,30 @@ expression  :   left=expression op=('*' | '/' | '+' | '-'|'mod') right=expressio
 // Terms
 //
 term  :
-        identifier
-    |   functionalExpression
-    |   modelReference FragmentName
-    |   operatorInvocation
-    |   definitionApplication
-    |   castExpression
-    |   selectionExpression
-    |   '(' constraint ')'
+        identifier                      #IdentifierTerm
+    |   functionalExpression            #FunctionalExpressionTerm
+    |   modelReference FragmentName     #ModelReferenceTerm
+    |   operatorInvocation              #OperatorInvocationTerm
+    |   definitionApplication           #DefinitionApplicatoinTerm
+    |   castExpression                  #CastExpressionTerm
+    |   selectionExpression             #SelectionExpressionTerm
+    |   '(' constraint ')'              #ConstraintTerm
     ;
 
 identifier  :
-    modelReference
-    | LiteralString
-    | Number
-    | IntegerNumber
-    | BooleanLiteral
-    | collectionIndex
-    | DoubleQuotedString
+    modelReference                      #ModelReferenceIdentifier
+    | LiteralString                     #LiteralStringIdentifier
+    | Number                            #NumberIdentifier
+    | IntegerNumber                     #IntegerNumberIdentifier
+    | BooleanLiteral                    #BooleanLiteralIdentifier
+    | collectionIndex                   #CollectionIndexIdentifier
+    | DoubleQuotedString                #DoubleQuotedStringIdentifier
     ;
 
 functionalExpression  :
-        'sum of' modelReference
-    |   'number of' modelReference
-    |   'number of' 'unique' modelReference '(' 'by' modelReference ')'
+        op='sum of' ref=modelReference                                              #SumOfExpression
+    |   op='number of' ref=modelReference                                           #NumberOfExpression
+    |   op='number of unique' ref=modelReference '(' 'by' key=modelReference ')'    #NumberOfUniqueExpression
     ;
 
 operatorInvocation  : OperatorName (operatorParameterList)?;
@@ -157,11 +157,9 @@ selectionExpression  : ('first' 'of'?)? modelReference 'where' simpleOrComplexCo
 //
 // Model References and Paths
 //
-modelReference  : modelPath;
+modelReference  : (propertyOfModelPath | dottedModelPath );
 
 modelReferenceList  : (modelReference)+;
-
-modelPath : (propertyOfModelPath | dottedModelPath );
 
 dottedModelPath  : ModelElementName ('.' ModelElementName)* ;
 

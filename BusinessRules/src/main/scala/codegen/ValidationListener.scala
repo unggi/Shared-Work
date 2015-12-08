@@ -69,7 +69,7 @@ class ValidationListener(symbolTable: SymbolTable) extends BusinessRulesBaseList
 
   override def exitContext(ctx: ContextContext) = {
     super.exitContext(ctx)
-    ctx.modelReferenceWithAlias.modelReference.modelPath.dottedModelPath() match {
+    ctx.modelReferenceWithAlias.modelReference.dottedModelPath() match {
       case null =>
       case path: DottedModelPathContext =>
         scopeBindings.push(addSymbol(path))
