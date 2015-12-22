@@ -13,7 +13,8 @@ class ScalaTargetListener(template: String, pkg: String, className: String, outp
   var outputWriter: PrintWriter = _
 
   val group = new STGroupFile(template)
-  STGroup.trackCreationEvents = true;
+  STGroup.trackCreationEvents = false
+  STGroup.verbose = false
   group.registerModelAdaptor(classOf[Object], new AntlrObjectModelAdaptor())
   group.registerRenderer(classOf[String], new StringArticleRenderer())
 

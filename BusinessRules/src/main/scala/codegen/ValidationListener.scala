@@ -82,16 +82,16 @@ class ValidationListener(symbolTable: SymbolTable) extends BusinessRulesBaseList
     scopeBindings.clear()
   }
 
-  def addSymbol(ctx: DottedModelPathContext): String = {
+  def addSymbol(ctx: DottedModelPathContext, verbose: Boolean = false): String = {
     val elements = ctx.ModelElementName().toList
     val key = elements.map(_.getText).mkString(".")
     symbolTable.put(key, ModelReference(key, elements)) match {
-      case Some(previous: ModelReference) => println("Duplicate Seen - OK")
-      case Some(other) => println("Error - duplicate key doesn't have same entry type")
+      case Some(previous: ModelReference) => if (verbose) println("Duplicate Seen - OK")
+      case Some(other) => if (verbose) println("Error - duplicate key doesn't have same entry type")
       case None =>
     }
 
-    println(s"Add Symbol <$key> and <$elements>")
+    if (verbose) println(s"Add Symbol <$key> and <$elements>")
     key
   }
 

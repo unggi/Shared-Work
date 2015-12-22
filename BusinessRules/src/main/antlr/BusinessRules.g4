@@ -51,19 +51,19 @@ modelReferenceWithAlias : ref=modelReference '(' alias=DoubleQuotedString ')';
 // Constraints
 //
 constraint      :
-                    IF condBlock=logicalStatement THEN thenBlock=logicalStatement (ELSE  elseBlock=logicalStatement)?
+                    'If' condBlock=logicalStatement 'then' thenBlock=logicalStatement ('else' elseBlock=logicalStatement)?
                 |   logicalStatement
                 ;
 
-binaryLogicalOperator: ('and' | 'or' | 'implies' | 'if and only if');
+binaryLogicalOperator: (and = 'and' | or = 'or' | implies = 'implies' | iff = 'if and only if');
 
 logicalStatement:
-                logicalStatement binaryLogicalOperator logicalStatement
-                |   predicate
-                |   existsStatement
-                |   notExistsStatement
+                left=logicalStatement op=binaryLogicalOperator right=logicalStatement #BinaryLogicalOperatorStatement
+                |   predicate                                           #LogicalPredicateStatement
+                |   existsStatement                                     #LogicalExistsStatement
+                |   notExistsStatement                                  #LogicalNotExistsStatement
 //                |   globalExistsStatement
-                |   forallStatement
+                |   forallStatement                                     #LogicalForAllStatement
 //                |   globalVariableDeclaration
                 ;
 
@@ -157,7 +157,7 @@ selectionExpression  : ('first' 'of'?)? modelReference 'where' simpleOrComplexCo
 //
 // Model References and Paths
 //
-modelReference  : (propertyOfModelPath | dottedModelPath );
+modelReference  : (propPath = propertyOfModelPath | dotPath = dottedModelPath );
 
 modelReferenceList  : (modelReference)+;
 
@@ -193,10 +193,6 @@ simpleTerm  :
 THE                 : ([Tt][Hh][Ee]) -> skip;
 AN                  : ([Aa][Nn]) -> skip;
 
-THEN                : ([Tt][Hh][Ee][Nn]);
-IF                  : ([Ii][Ff]);
-ELSE                :([Ee][Ll][Ss][Ee]);
-
 FragmentName	    :   '<<' .*? '>>';
 IsEqualTo           :    ('=' | 'is equal to');
 IsNotEqualTo        :   ('<>' | 'is not equal to');
@@ -230,15 +226,16 @@ WS                  :   [ \t\r\n]+ -> skip;
 // Quantifiers
 //
 existsStatement :
-                    (enumerator ('of the')?)? modelReference ('has' | 'have' | 'is' | 'are') ('present' | simpleOrComplexConstraint)
-                |   enumerator ('has' | 'have' | 'is' | 'are') simpleOrComplexConstraint
+                    (enumerator ('of the')?)? modelReference
+                    ('has' | 'have' | 'is' | 'are') ('present' | simpleOrComplexConstraint) #ModelReferenceExists
+                |   enumerator ('has' | 'have' | 'is' | 'are') simpleOrComplexConstraint    #SimpleExists
                 ;
 
-enumerator  : ('at least' | 'at most' | 'exactly')? ('one' | 'two' | 'three' | 'four' | 'no' | 'none' | IntegerNumber);
+enumerator  : (at_least = 'at least' | at_most = 'at most' | exactly ='exactly')? (one = 'one' | two='two' | three='three' | four='four' | no='no' | none='none' | integer = IntegerNumber);
 
 notExistsStatement  :   modelReference ('is not present' | 'are not present');
 
-globalExistsStatement   :    ('there is' | 'there are') ('no')? modelReference ('(' DoubleQuotedString ')')? ('where' simpleOrComplexConstraint)?;
+// globalExistsStatement   :    ('there is' | 'there are') ('no')? modelReference ('(' DoubleQuotedString ')')? ('where' simpleOrComplexConstraint)?;
 
 forallStatement :
                     ('each' | 'in each' | 'all' | 'every') ('of the')?  modelReference ('has' | 'have' | 'is' | 'are')? simpleOrComplexConstraint

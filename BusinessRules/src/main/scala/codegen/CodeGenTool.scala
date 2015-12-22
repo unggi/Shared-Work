@@ -2,7 +2,7 @@ package codegen
 
 import java.io.File
 
-import org.antlr.v4.runtime.tree.ParseTreeWalker
+import org.antlr.v4.runtime.tree.{ParseTree, ParseTreeWalker, TerminalNode}
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
 import rules.BusinessRulesParser._
 import rules.{BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
@@ -86,9 +86,55 @@ object CodeGenerator {
 
     parser.setBuildParseTree(true)
 
-    val tree: FileBodyContext = parser.fileBody
+    val tree: FileBodyContext = parser.fileBody()
+
+    println("TREE IS ============")
 
 
+    def printTreeClasses(ctx: ParseTree, depth: Int): Unit = {
+
+      for (i <- 0 until ctx.getChildCount) {
+        val child = ctx.getChild(i)
+
+        // If there are children then print an indent string using '-' character.
+        val ch = if (child.getChildCount > 0) '-' else ' '
+        for (j <- 0 until depth) print(ch)
+        print("> ")
+
+        // Find the child's name in the parent node - if it exists
+        val parent = child.getParent
+        val parentClass = parent.getClass
+
+        val childClassName = child.getClass.getSimpleName
+        val childFields = child.getClass.getDeclaredFields
+
+        val parentNameField = parentClass.getDeclaredFields.find {
+          fld =>
+            fld.get(parent) match {
+              case null => false
+              case node =>
+                node.equals(child)
+            }
+        }
+
+        if (parentNameField.isDefined)
+          print(parentNameField.get.getName + " = ")
+
+        if (child.isInstanceOf[TerminalNode])
+          print(child.getText)
+        else
+          print(childClassName)
+
+        if (!child.isInstanceOf[TerminalNode] && childFields.size > 0)
+          print(" [" + childFields.map(_.getName).mkString(" | ") + "]")
+
+        println()
+
+        printTreeClasses(child, depth + 2)
+
+      }
+    }
+    printTreeClasses(tree, 1)
 
     val symbolTable = new SymbolTable()
 
@@ -97,7 +143,7 @@ object CodeGenerator {
     val walker = new ParseTreeWalker()
     walker.walk(validator, tree)
 
-    for ( (e,v) <- symbolTable.map ) {
+    for ((e, v) <- symbolTable.map) {
       println(s"$e ==> $v")
     }
 
