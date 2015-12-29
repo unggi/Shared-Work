@@ -119,7 +119,7 @@ public class AntlrObjectModelAdaptor implements ModelAdaptor {
 
 
         if (o == null) {
-            throw new NullPointerException("o");
+            throw new NullPointerException("Object is NULL for property " + propertyName);
         } else {
             Class c = o.getClass();
             if (property == null) {

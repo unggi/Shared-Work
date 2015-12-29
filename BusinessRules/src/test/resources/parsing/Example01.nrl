@@ -7,3 +7,4 @@ If the instrument is a kind of InterestRateSwap then the number of legs is equal
 Validation Rule "Interest Rate Swap - Requires fixed and floating legs"
 Context: Instrument("instrument")
 If the instrument is a kind of InterestRateSwap then one of the legs has type = "fixed" and one of the legs has type = "float"
+

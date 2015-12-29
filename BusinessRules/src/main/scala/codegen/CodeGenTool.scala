@@ -1,7 +1,8 @@
 package codegen
 
-import java.io.File
+import java.io.{File, PrintWriter, StringWriter}
 
+import codegen.symbols.SymbolTable
 import org.antlr.v4.runtime.tree.{ParseTree, ParseTreeWalker, TerminalNode}
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
 import rules.BusinessRulesParser._
@@ -86,66 +87,9 @@ object CodeGenerator {
 
     parser.setBuildParseTree(true)
 
+
+    // parser.addParseListener(validator)
     val tree: FileBodyContext = parser.fileBody()
-
-    println("TREE IS ============")
-
-
-    def printTreeClasses(ctx: ParseTree, depth: Int): Unit = {
-
-      for (i <- 0 until ctx.getChildCount) {
-        val child = ctx.getChild(i)
-
-        // If there are children then print an indent string using '-' character.
-        val ch = if (child.getChildCount > 0) '-' else ' '
-        for (j <- 0 until depth) print(ch)
-        print("> ")
-
-        // Find the child's name in the parent node - if it exists
-        val parent = child.getParent
-        val parentClass = parent.getClass
-
-        val childClassName = child.getClass.getSimpleName
-        val childFields = child.getClass.getDeclaredFields
-
-        val parentNameField = parentClass.getDeclaredFields.find {
-          fld =>
-            fld.get(parent) match {
-              case null => false
-              case node =>
-                node.equals(child)
-            }
-        }
-
-        if (parentNameField.isDefined)
-          print(parentNameField.get.getName + " = ")
-
-        if (child.isInstanceOf[TerminalNode])
-          print(child.getText)
-        else
-          print(childClassName)
-
-        if (!child.isInstanceOf[TerminalNode] && childFields.size > 0)
-          print(" [" + childFields.map(_.getName).mkString(" | ") + "]")
-
-        println()
-
-        printTreeClasses(child, depth + 2)
-
-      }
-    }
-    printTreeClasses(tree, 1)
-
-    val symbolTable = new SymbolTable()
-
-    val validator: BusinessRulesBaseListener = new ValidationListener(symbolTable)
-
-    val walker = new ParseTreeWalker()
-    walker.walk(validator, tree)
-
-    for ((e, v) <- symbolTable.map) {
-      println(s"$e ==> $v")
-    }
 
     val listener: BusinessRulesBaseListener =
       outputTarget.toLowerCase match {
@@ -156,14 +100,80 @@ object CodeGenerator {
           new JavaTargetListener(template.getAbsolutePath)
       }
 
+    val walker = new ParseTreeWalker()
+
+    val symbolTable = new SymbolTable(true)
+
+    val validator = new ValidationListener(symbolTable)
+
+    walker.walk(validator, tree)
     walker.walk(listener, tree)
 
     println("Parsing is complete")
+
+    printTreeClasses(tree, 1, validator.nodeScopes)
+
+    symbolTable.print
   }
+
+  def printTreeClasses(ctx: ParseTree, depth: Int, scopes: ParseTreeScopeMap): Unit = {
+
+    for (i <- 0 until ctx.getChildCount) {
+      val child = ctx.getChild(i)
+
+      val sw = new StringWriter()
+      val pw = new PrintWriter(sw)
+
+      // If there are children then print an indent string using '-' character.
+      val ch = if (child.getChildCount > 0) '-' else ' '
+      for (j <- 0 until depth) pw.print(ch)
+      pw.print("> ")
+
+      // Find the child's name in the parent node - if it exists
+      val parent = child.getParent
+      val parentClass = parent.getClass
+
+      val childClassName = child.getClass.getSimpleName
+      val childFields = child.getClass.getDeclaredFields
+
+      val parentNameField = parentClass.getDeclaredFields.find {
+        fld =>
+          fld.get(parent) match {
+            case null => false
+            case node =>
+              node.equals(child)
+          }
+      }
+
+      if (parentNameField.isDefined)
+        pw.print(parentNameField.get.getName + " = ")
+
+      if (child.isInstanceOf[TerminalNode])
+        pw.print(child.getText)
+      else
+        pw.print(childClassName)
+
+      if (!child.isInstanceOf[TerminalNode] && childFields.size > 0)
+        pw.print(" [" + childFields.map(_.getName).mkString(" | ") + "]")
+
+      pw.flush()
+      scopes.get(child) match {
+        case Some(scope) =>
+          val len = sw.getBuffer.length()
+          val space = " " * (110 - len)
+          pw.print(s"$space ${scope.getClass.getSimpleName} " + scope.map.keys.mkString("[", " ", "]"))
+        case None =>
+      }
+
+      pw.flush()
+      println(sw.getBuffer)
+      printTreeClasses(child, depth + 2, scopes)
+    }
+  }
+
 
   def usage(msg: String): Unit = {
     System.err.println(s"Usage Error: $msg")
-
     System.err.println
     """
       |Usage: CodeGenerator [-java | -scala] [-groupfile] [-outputpath] (rulefile)+

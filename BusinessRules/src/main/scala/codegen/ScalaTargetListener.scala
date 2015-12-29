@@ -52,9 +52,10 @@ class ScalaTargetListener(template: String, pkg: String, className: String, outp
 
     st.add("declarations", ctx)
 
+
     st.write(output)
     println(st.render)
-    st.inspect
+//    st.inspect
   }
 
   override def exitFileBody(ctx: FileBodyContext) = {

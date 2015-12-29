@@ -1,103 +1,135 @@
 package codegen
 
-import org.antlr.v4.runtime.tree.TerminalNode
+import codegen.symbols.{ModelReferenceEntry, NestedScope, SymbolTable}
+import org.antlr.v4.runtime.tree.{ParseTree, TerminalNodeImpl}
+import org.antlr.v4.runtime.{CommonTokenFactory, ParserRuleContext}
 import rules.BusinessRulesBaseListener
-import rules.BusinessRulesParser.{ContextContext, DeclarationContext, DottedModelPathContext}
-import rules.runtime.Reference
+import rules.BusinessRulesParser._
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable
 
-abstract class SymbolValue() {}
+class ParseTreeScopeMap() {
+  var annotations = new mutable.HashMap[ParseTree, NestedScope]()
 
-case class ModelReference(referencePath: String, components: List[TerminalNode]) extends SymbolValue
+  def get(node: ParseTree): Option[NestedScope] = annotations.get(node)
 
-class SymbolTable {
+  def put(node: ParseTree, value: NestedScope): Unit = annotations.put(node, value)
 
-
-  var map = new mutable.HashMap[String, SymbolValue]()
-
-  def put(key: String, entry: SymbolValue): Option[SymbolValue] = map.put(key, entry)
-
-  def lookup(key: String): Option[SymbolValue] = map.get(key)
+  def removeFrom(node: ParseTree): Option[NestedScope] = annotations.remove(node)
 }
 
-/**
- *
- * A simple dependency graph representation to derive rule calculation paths.
- * This is not a generalized graph. It assumes:
- * <li> There are input nodes which are model references into the input document.
- * <li> A rule can produce variables and set them to values which may be inputs
- * to other rules.
- * <li> There are rule nodes which take in inputs of either model references or variables.
- * <li> The graph begins with input nodes which are model references and these have no predecessors.
- * <li> The graph "fires" or propogates from these nodes to the furthest most rule which has no outputs
- * or fails to validate.
- *
- **/
+class ValidationListener(val symbolTable: SymbolTable) extends BusinessRulesBaseListener {
 
-class DependencyGraph {
+  //
+  // We track the scope which applies for each node by using a Parse Tree property. This are
+  // not real properties - just annotations to the AST.
+  //
+  val nodeScopes = new ParseTreeScopeMap()
 
-  trait Node {
-
+  override def exitEveryRule(ctx: ParserRuleContext) = {
+    super.enterEveryRule(ctx)
+    nodeScopes.put(ctx, symbolTable.scope)
   }
 
-  case class ReferenceNode() extends Node {
+  override def enterDeclaration(ctx: DeclarationContext) = {
+    super.enterDeclaration(ctx)
+    symbolTable.openContextScope()
+    nodeScopes.put(ctx, symbolTable.scope)
 
+    println("Entering Declaration " + ctx.hashCode())
   }
-
-  case class RuleNode() extends Node {
-
-  }
-
-  case class VariableNode() extends Node {
-
-  }
-
-  def addModelReference(reference: Reference): Unit = {
-
-  }
-
-  def addDefinition(): Unit = {
-
-  }
-}
-
-class ValidationListener(symbolTable: SymbolTable) extends BusinessRulesBaseListener {
-
-  val scopeBindings = new mutable.Stack[String]()
 
   override def exitContext(ctx: ContextContext) = {
     super.exitContext(ctx)
+    //
+    // A context is a single clause in the validation rule which defines aliases
+    // that can be referenced explicitly or implicitly in the rule's constraint clause.
+    //
     ctx.modelReferenceWithAlias.modelReference.dottedModelPath() match {
       case null =>
       case path: DottedModelPathContext =>
-        scopeBindings.push(addSymbol(path))
-
+        val components: List[String] = path.ModelElementName.map(_.getText).toList
+        val alias =
+          if (ctx.modelReferenceWithAlias.alias != null)
+            ctx.modelReferenceWithAlias.alias.getText.stripSuffix("\"").stripPrefix("\"")
+          else
+            components.mkString(".")
+        symbolTable.declare(alias, new ModelReferenceEntry(alias, components))
     }
   }
 
   override def exitDeclaration(ctx: DeclarationContext) = {
     super.exitDeclaration(ctx)
-    scopeBindings.clear()
+    symbolTable.closeContextScope()
+    println("Exiting Declaration " + ctx.hashCode())
   }
 
-  def addSymbol(ctx: DottedModelPathContext, verbose: Boolean = false): String = {
-    val elements = ctx.ModelElementName().toList
-    val key = elements.map(_.getText).mkString(".")
-    symbolTable.put(key, ModelReference(key, elements)) match {
-      case Some(previous: ModelReference) => if (verbose) println("Duplicate Seen - OK")
-      case Some(other) => if (verbose) println("Error - duplicate key doesn't have same entry type")
+  override def enterModelReferenceIdentifier(ctx: ModelReferenceIdentifierContext) = {
+    super.enterModelReferenceIdentifier(ctx)
+    nodeScopes.put(ctx, symbolTable.scope)
+  }
+
+  override def exitModelReferenceIdentifier(ctx: ModelReferenceIdentifierContext) = {
+    super.exitModelReferenceIdentifier(ctx)
+
+    resolveFromNearestContext(ctx, ctx.modelReference)
+  }
+
+
+  override def enterNumberOfExpression(ctx: NumberOfExpressionContext) = {
+    super.enterNumberOfExpression(ctx)
+    nodeScopes.put(ctx, symbolTable.scope)
+  }
+
+  override def exitNumberOfExpression(ctx: NumberOfExpressionContext) = {
+    super.exitNumberOfExpression(ctx)
+    resolveFromNearestContext(ctx, ctx.modelReference())
+  }
+                                                   '
+
+  override def enterModelReferenceExists(ctx: ModelReferenceExistsContext) = {
+    super.enterModelReferenceExists(ctx)
+    nodeScopes.put(ctx, symbolTable.scope)
+  }
+
+  override def exitModelReferenceExists(ctx: ModelReferenceExistsContext) = {
+    super.exitModelReferenceExists(ctx)
+    resolveFromNearestContext(ctx,ctx.modelReference)
+  }
+
+  def resolveFromNearestContext[N <: ParserRuleContext](node: N, child: ModelReferenceContext): Unit = {
+    nodeScopes.get(node) match {
+      case Some(scope) =>
+        val firstModelElement = child.dottedModelPath.ModelElementName(0).getText
+
+        scope.resolveInContextScope(firstModelElement) match {
+
+          case Some(entry) if entry.name.equals(firstModelElement) =>
+          // The reference is fully qualified already (i.e. alias is the starting point of the dotted path).
+          // We don't need to do anything to modify the path - just check it against the model.
+
+          case Some(entry) =>
+            // Must be the alias name in which the first model element is a member
+            // We will insert a token for this name into the Model Reference at this point.
+            val dotPath = child.dottedModelPath()
+            val token = CommonTokenFactory.DEFAULT.create(0, entry.name)
+            val terminal = new TerminalNodeImpl(token)
+            terminal.parent = dotPath
+            dotPath.children.insert(0, terminal)
+
+          case None =>
+            println("Some terrible error has happened here ")
+
+        }
+
       case None =>
+
+      // Try the alias anyway.
+      // Later check this against the data model
+      //
     }
 
-    if (verbose) println(s"Add Symbol <$key> and <$elements>")
-    key
   }
 
-  override def exitDottedModelPath(ctx: DottedModelPathContext) = {
-    super.exitDottedModelPath(ctx)
-
-    addSymbol(ctx)
-  }
 }

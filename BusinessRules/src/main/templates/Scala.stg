@@ -143,7 +143,7 @@ ModelReferenceIdentifierContext(id) ::= <%
 <Apply(id.modelReference, id.modelReference)>
 %>
 
-DottedModelPathContext(path) ::= <%<path.children>%>
+DottedModelPathContext(path) ::= <%<path.children; separator=".">%>
 
 SimpleOrComplexConstraintContext(s) ::= <%
 <if(s.constraint)>

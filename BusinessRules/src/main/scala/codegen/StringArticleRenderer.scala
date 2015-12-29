@@ -50,6 +50,4 @@ class StringArticleRenderer extends StringRenderer {
 
   def generateIdentifier(s: String): String = unquote(s).replaceAll("[-\\s]+", "_")
 
-
-
 }

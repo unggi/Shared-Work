@@ -1,5 +1,10 @@
 grammar BusinessRules;
 
+
+@Before {
+    System.out.println("Before action");
+}
+
 //
 // Top Level File Processing
 //
