@@ -454,12 +454,12 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSimpleTerm(BusinessRulesParser.SimpleTermContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ModelReferenceExists}
+	 * Visit a parse tree produced by the {@code ConstrainedCollectionMembership}
 	 * labeled alternative in {@link BusinessRulesParser#existsStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitModelReferenceExists(BusinessRulesParser.ModelReferenceExistsContext ctx);
+	T visitConstrainedCollectionMembership(BusinessRulesParser.ConstrainedCollectionMembershipContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code SimpleExists}
 	 * labeled alternative in {@link BusinessRulesParser#existsStatement}.

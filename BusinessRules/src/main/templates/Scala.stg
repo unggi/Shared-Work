@@ -89,12 +89,17 @@ BinaryPredicateContext(predicate) ::= <%
 <Apply(predicate.right, predicate.right)>
 %>
 
-ModelReferenceExistsContext(stmt) ::= <%
+ConstrainedCollectionMembershipContext(stmt) ::= <%
+
      <Apply(stmt.modelReference, stmt.modelReference)>
      <if(stmt.simpleOrComplexConstraint)>.count(<Apply(stmt.simpleOrComplexConstraint,stmt.simpleOrComplexConstraint)>)
      <else>.size
      <endif>
-     <if(stmt.enumerator)><Apply(stmt.enumerator,stmt.enumerator)><endif>
+     <if(stmt.enumerator)>
+        <Apply(stmt.enumerator,stmt.enumerator)>
+     <else>
+        \u003C 0
+     <endif>
 %>
 
 EnumeratorContext(enum) ::= <%
@@ -183,3 +188,4 @@ Show(node) ::= <<
     <node.Class.SimpleName>(<node.text>)
     <node.children:Show()>
 >>
+

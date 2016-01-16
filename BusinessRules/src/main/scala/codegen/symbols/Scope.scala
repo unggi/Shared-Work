@@ -24,44 +24,35 @@ abstract class NestedScope(val parent: Option[NestedScope] = None) extends Lexic
     subScopes.append(child)
   }
 
-  def resolveInContextScope(name: String): Option[Entry] = {
+  def resolveFromContextScope(name: String): Option[Entry]
 
-
-    val result = this match {
-      case ctx: ContextScope =>
-        // This scope is a context
-        // Lookup the name directly in this context or answer the only member of the context which must be an alias.
-        map.get(name) match {
-          case Some(scope) => Some(scope)
-          case None => Some(ctx.map.values.toIterator.next)
-        }
-      case ctx: GlobalScope =>
-        map.get(name)
-      case ctx: NestedScope if parent.isDefined =>
-        map.get(name) match {
-          case Some(entry) => Some(entry)
-          case None => parent.get.resolveInContextScope(name)
-        }
-      case unknown =>
-        System.err.println(s"Unknown case in resolveInContextScope($name)")
-        None
-    }
-    result match {
-      case Some(x) =>
-        System.err.println("Resolve in Context Scope: " + name + " found " + result.get.name)
-      case None =>
-        System.err.println("Not found")
-    }
-    result
-
-  }
 }
 
-class GlobalScope() extends NestedScope(None)
+class GlobalScope() extends NestedScope(None) {
+  override def resolveFromContextScope(name: String): Option[Entry] = map.get(name)
+}
 
-class ContextScope(parentScope: NestedScope) extends NestedScope(Some(parentScope))
+class ContextScope(parentScope: NestedScope, val alias: Entry) extends NestedScope(Some(parentScope)) {
 
-class ConstraintScope(parentScope: NestedScope) extends NestedScope(Some(parentScope))
+  map.put(alias.name, alias)
+
+  // This scope is a context
+  // Lookup the name directly in this context or answer the only member of the context which must be an alias.
+  override def resolveFromContextScope(name: String): Option[Entry] =
+    Some(map.getOrElse(name, alias))
+
+}
+
+class CollectionMemberScope(parentScope: NestedScope) extends NestedScope(Some(parentScope)) {
+
+  // This is a scope in which an iteration variable is defined.
+  override def resolveFromContextScope(name: String): Option[Entry] =
+    map.get(name) match {
+      case Some(entry) => Some(entry)
+      case None => parent.get.resolveFromContextScope(name)
+    }
+
+}
 
 class SymbolTable(verbose: Boolean = false) extends LexicalScope {
   val global: GlobalScope = new GlobalScope()
@@ -72,8 +63,8 @@ class SymbolTable(verbose: Boolean = false) extends LexicalScope {
 
   override def resolve(name: String): Option[Entry] = scope.resolve(name)
 
-  def openContextScope(): Unit = trace("Open Context") {
-    val s = new ContextScope(scope)
+  def openContextScope(entry: Entry): Unit = trace("Open Context") {
+    val s = new ContextScope(scope, entry)
     scope.addSubScope(s)
     scope = s
   }
@@ -84,13 +75,23 @@ class SymbolTable(verbose: Boolean = false) extends LexicalScope {
 
   def openConstraintScope(): Unit = trace("Open Constraint") {
 
-    val s = new ConstraintScope(scope)
+    val s = new CollectionMemberScope(scope)
     scope.addSubScope(s)
     scope = s
   }
 
   def closeConstraintScope(): Unit = trace("Close Constraint") {
     scope = scope.parent.getOrElse(global)
+  }
+
+  def openCollectionMemberScope(): Unit = trace("Open Collection Member") {
+    val s = new CollectionMemberScope(scope)
+    scope.addSubScope(s)
+    scope = s
+  }
+
+  def closeCollectionMemberScope(): Unit = trace("Close Collection Member") {
+    scope.parent.getOrElse(global)
   }
 
   def trace[T](msg: String)(body: => T): T = {
@@ -128,3 +129,5 @@ case class ModelReferenceEntry(n: String, components: List[String]) extends Entr
 case class ValidationRuleEntry(n: String) extends Entry(n)
 
 case class DefinedTermEntry(n: String) extends Entry(n)
+
+case class LocalVariable(n: String) extends Entry(n)

@@ -70,7 +70,6 @@ object CodeGenerator {
         generate(file, s"$templateDir/$templateGroupFile.stg")
 
         println(s"Processing input file <$fileName> is complete.")
-
     }
   }
 
@@ -86,7 +85,6 @@ object CodeGenerator {
     val parser = new BusinessRulesParser(tokens)
 
     parser.setBuildParseTree(true)
-
 
     // parser.addParseListener(validator)
     val tree: FileBodyContext = parser.fileBody()
@@ -104,14 +102,18 @@ object CodeGenerator {
 
     val symbolTable = new SymbolTable(true)
 
+    val declarationPhase = new DeclarationPhase(symbolTable)
     val validator = new ValidationListener(symbolTable)
+    val dependencyAnalyzer = new DependencyAnalyzer(symbolTable)
 
+
+    walker.walk(declarationPhase, tree)
     walker.walk(validator, tree)
     walker.walk(listener, tree)
 
     println("Parsing is complete")
 
-    printTreeClasses(tree, 1, validator.nodeScopes)
+    printTreeClasses(tree, 1, declarationPhase.nodeScopes)
 
     symbolTable.print
   }
@@ -170,7 +172,6 @@ object CodeGenerator {
       printTreeClasses(child, depth + 2, scopes)
     }
   }
-
 
   def usage(msg: String): Unit = {
     System.err.println(s"Usage Error: $msg")

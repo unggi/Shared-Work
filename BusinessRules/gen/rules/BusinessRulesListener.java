@@ -758,17 +758,17 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitSimpleTerm(BusinessRulesParser.SimpleTermContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ModelReferenceExists}
+	 * Enter a parse tree produced by the {@code ConstrainedCollectionMembership}
 	 * labeled alternative in {@link BusinessRulesParser#existsStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterModelReferenceExists(BusinessRulesParser.ModelReferenceExistsContext ctx);
+	void enterConstrainedCollectionMembership(BusinessRulesParser.ConstrainedCollectionMembershipContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ModelReferenceExists}
+	 * Exit a parse tree produced by the {@code ConstrainedCollectionMembership}
 	 * labeled alternative in {@link BusinessRulesParser#existsStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitModelReferenceExists(BusinessRulesParser.ModelReferenceExistsContext ctx);
+	void exitConstrainedCollectionMembership(BusinessRulesParser.ConstrainedCollectionMembershipContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code SimpleExists}
 	 * labeled alternative in {@link BusinessRulesParser#existsStatement}.

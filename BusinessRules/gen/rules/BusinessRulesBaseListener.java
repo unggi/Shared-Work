@@ -832,13 +832,13 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModelReferenceExists(BusinessRulesParser.ModelReferenceExistsContext ctx) { }
+	@Override public void enterConstrainedCollectionMembership(BusinessRulesParser.ConstrainedCollectionMembershipContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModelReferenceExists(BusinessRulesParser.ModelReferenceExistsContext ctx) { }
+	@Override public void exitConstrainedCollectionMembership(BusinessRulesParser.ConstrainedCollectionMembershipContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

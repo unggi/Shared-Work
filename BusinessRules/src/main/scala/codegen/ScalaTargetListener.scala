@@ -16,7 +16,7 @@ class ScalaTargetListener(template: String, pkg: String, className: String, outp
   STGroup.trackCreationEvents = false
   STGroup.verbose = false
   group.registerModelAdaptor(classOf[Object], new AntlrObjectModelAdaptor())
-  group.registerRenderer(classOf[String], new StringArticleRenderer())
+  group.registerRenderer(classOf[String], new StringFormatter())
 
   var st: ST = _
 

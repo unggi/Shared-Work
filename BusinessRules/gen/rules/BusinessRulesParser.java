@@ -3522,6 +3522,32 @@ public class BusinessRulesParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class ConstrainedCollectionMembershipContext extends ExistsStatementContext {
+		public SimpleOrComplexConstraintContext collectionConstraint;
+		public ModelReferenceContext modelReference() {
+			return getRuleContext(ModelReferenceContext.class,0);
+		}
+		public EnumeratorContext enumerator() {
+			return getRuleContext(EnumeratorContext.class,0);
+		}
+		public SimpleOrComplexConstraintContext simpleOrComplexConstraint() {
+			return getRuleContext(SimpleOrComplexConstraintContext.class,0);
+		}
+		public ConstrainedCollectionMembershipContext(ExistsStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterConstrainedCollectionMembership(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitConstrainedCollectionMembership(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitConstrainedCollectionMembership(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class SimpleExistsContext extends ExistsStatementContext {
 		public EnumeratorContext enumerator() {
 			return getRuleContext(EnumeratorContext.class,0);
@@ -3544,31 +3570,6 @@ public class BusinessRulesParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class ModelReferenceExistsContext extends ExistsStatementContext {
-		public ModelReferenceContext modelReference() {
-			return getRuleContext(ModelReferenceContext.class,0);
-		}
-		public SimpleOrComplexConstraintContext simpleOrComplexConstraint() {
-			return getRuleContext(SimpleOrComplexConstraintContext.class,0);
-		}
-		public EnumeratorContext enumerator() {
-			return getRuleContext(EnumeratorContext.class,0);
-		}
-		public ModelReferenceExistsContext(ExistsStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).enterModelReferenceExists(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BusinessRulesListener ) ((BusinessRulesListener)listener).exitModelReferenceExists(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BusinessRulesVisitor ) return ((BusinessRulesVisitor<? extends T>)visitor).visitModelReferenceExists(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 
 	public final ExistsStatementContext existsStatement() throws RecognitionException {
 		ExistsStatementContext _localctx = new ExistsStatementContext(_ctx, getState());
@@ -3578,7 +3579,7 @@ public class BusinessRulesParser extends Parser {
 			setState(400);
 			switch ( getInterpreter().adaptivePredict(_input,39,_ctx) ) {
 			case 1:
-				_localctx = new ModelReferenceExistsContext(_localctx);
+				_localctx = new ConstrainedCollectionMembershipContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(388);
@@ -3632,7 +3633,7 @@ public class BusinessRulesParser extends Parser {
 				case OperatorName:
 					{
 					setState(393);
-					simpleOrComplexConstraint();
+					((ConstrainedCollectionMembershipContext)_localctx).collectionConstraint = simpleOrComplexConstraint();
 					}
 					break;
 				default:

@@ -493,7 +493,7 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitModelReferenceExists(BusinessRulesParser.ModelReferenceExistsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitConstrainedCollectionMembership(BusinessRulesParser.ConstrainedCollectionMembershipContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

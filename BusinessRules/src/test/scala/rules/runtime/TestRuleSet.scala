@@ -23,7 +23,6 @@ object Rule1 {
   def evaluate(instrument: Instrument): Boolean = {
     instrument.legs.length == 2
   }
-
 }
 
 // Rule: An interest rate swap has to have a fixed leg and a floating leg.
@@ -35,7 +34,6 @@ object Rule2 {
   }
 
 }
-
 
 class TestRuleSet extends FlatSpec {
 

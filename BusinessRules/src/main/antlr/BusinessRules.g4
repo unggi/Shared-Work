@@ -225,14 +225,12 @@ COMMENT             :   '--' .*? '\r'? '\n' -> skip;
 LINE_COMMENT        :   '//' .*? '\r'? '\n' -> skip;
 WS                  :   [ \t\r\n]+ -> skip;
 
-
-
 //
 // Quantifiers
 //
 existsStatement :
                     (enumerator ('of the')?)? modelReference
-                    ('has' | 'have' | 'is' | 'are') ('present' | simpleOrComplexConstraint) #ModelReferenceExists
+                    ('has' | 'have' | 'is' | 'are') ('present' | collectionConstraint = simpleOrComplexConstraint) #ConstrainedCollectionMembership
                 |   enumerator ('has' | 'have' | 'is' | 'are') simpleOrComplexConstraint    #SimpleExists
                 ;
 

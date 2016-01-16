@@ -18,7 +18,7 @@ class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseLis
   val group = new STGroupFile(templateGroupPath)
   STGroup.trackCreationEvents = true;
   group.registerModelAdaptor(classOf[Object], new AntlrObjectModelAdaptor())
-  group.registerRenderer(classOf[String], new StringArticleRenderer())
+  group.registerRenderer(classOf[String], new StringFormatter())
 
   var st: ST = _
 
