@@ -63,7 +63,7 @@ object CodeGenerator {
         val file = new File(fileName)
 
         if (!file.exists())
-          usage(s"File not found for NRL input source - $fileName in path ${file.getAbsoluteFile}.")
+          usage(s"File not found for NRL input source: $fileName in path ${file.getAbsoluteFile}.")
 
         println(s"Processing input file <$fileName>.")
 
