@@ -171,9 +171,6 @@
     <file url="file://$PROJECT_DIR$/src/main/templates/Java.stg" />
     <file url="file://$PROJECT_DIR$/src/main/templates/PrettyPrint.stg" />
   </component>
-  <component name="ProjectReloadState">
-    <option name="STATE" value="0" />
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
   <component name="ShelveChangesManager" show_recycled="false" />
 </project>

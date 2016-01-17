@@ -6,3 +6,11 @@ project/
 diagrams/nomura/
 *.puml
 /Graph Data Load/.idea
+
+*.xml
+
+BusinessRules/.idea/workspace.xml
+
+BusinessRules/gen/rules/compiled/IntroductoryExample.java
+
+BusinessRules/.idea/workspace.xml

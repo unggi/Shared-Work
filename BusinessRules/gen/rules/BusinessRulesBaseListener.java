@@ -172,13 +172,73 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLogicalStatement(BusinessRulesParser.LogicalStatementContext ctx) { }
+	@Override public void enterBinaryLogicalOperator(BusinessRulesParser.BinaryLogicalOperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLogicalStatement(BusinessRulesParser.LogicalStatementContext ctx) { }
+	@Override public void exitBinaryLogicalOperator(BusinessRulesParser.BinaryLogicalOperatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLogicalPredicateStatement(BusinessRulesParser.LogicalPredicateStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLogicalPredicateStatement(BusinessRulesParser.LogicalPredicateStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLogicalNotExistsStatement(BusinessRulesParser.LogicalNotExistsStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLogicalNotExistsStatement(BusinessRulesParser.LogicalNotExistsStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLogicalExistsStatement(BusinessRulesParser.LogicalExistsStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLogicalExistsStatement(BusinessRulesParser.LogicalExistsStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLogicalForAllStatement(BusinessRulesParser.LogicalForAllStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLogicalForAllStatement(BusinessRulesParser.LogicalForAllStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBinaryLogicalOperatorStatement(BusinessRulesParser.BinaryLogicalOperatorStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBinaryLogicalOperatorStatement(BusinessRulesParser.BinaryLogicalOperatorStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -244,25 +304,73 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) { }
+	@Override public void enterIsEqualToComparator(BusinessRulesParser.IsEqualToComparatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) { }
+	@Override public void exitIsEqualToComparator(BusinessRulesParser.IsEqualToComparatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComparator(BusinessRulesParser.ComparatorContext ctx) { }
+	@Override public void enterIsNotEqualToComparator(BusinessRulesParser.IsNotEqualToComparatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComparator(BusinessRulesParser.ComparatorContext ctx) { }
+	@Override public void exitIsNotEqualToComparator(BusinessRulesParser.IsNotEqualToComparatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIsGreaterThanComparator(BusinessRulesParser.IsGreaterThanComparatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIsGreaterThanComparator(BusinessRulesParser.IsGreaterThanComparatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIsGreaterThanOrEqualToComparator(BusinessRulesParser.IsGreaterThanOrEqualToComparatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIsGreaterThanOrEqualToComparator(BusinessRulesParser.IsGreaterThanOrEqualToComparatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIsLessThanOrEqualToComparator(BusinessRulesParser.IsLessThanOrEqualToComparatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIsLessThanOrEqualToComparator(BusinessRulesParser.IsLessThanOrEqualToComparatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIsLessThanComparator(BusinessRulesParser.IsLessThanComparatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIsLessThanComparator(BusinessRulesParser.IsLessThanComparatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -328,37 +436,217 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTerm(BusinessRulesParser.TermContext ctx) { }
+	@Override public void enterIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTerm(BusinessRulesParser.TermContext ctx) { }
+	@Override public void exitIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIdentifier(BusinessRulesParser.IdentifierContext ctx) { }
+	@Override public void enterFunctionalExpressionTerm(BusinessRulesParser.FunctionalExpressionTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIdentifier(BusinessRulesParser.IdentifierContext ctx) { }
+	@Override public void exitFunctionalExpressionTerm(BusinessRulesParser.FunctionalExpressionTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunctionalExpression(BusinessRulesParser.FunctionalExpressionContext ctx) { }
+	@Override public void enterModelReferenceTerm(BusinessRulesParser.ModelReferenceTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunctionalExpression(BusinessRulesParser.FunctionalExpressionContext ctx) { }
+	@Override public void exitModelReferenceTerm(BusinessRulesParser.ModelReferenceTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOperatorInvocationTerm(BusinessRulesParser.OperatorInvocationTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOperatorInvocationTerm(BusinessRulesParser.OperatorInvocationTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDefinitionApplicatoinTerm(BusinessRulesParser.DefinitionApplicatoinTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDefinitionApplicatoinTerm(BusinessRulesParser.DefinitionApplicatoinTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCastExpressionTerm(BusinessRulesParser.CastExpressionTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCastExpressionTerm(BusinessRulesParser.CastExpressionTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSelectionExpressionTerm(BusinessRulesParser.SelectionExpressionTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSelectionExpressionTerm(BusinessRulesParser.SelectionExpressionTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConstraintTerm(BusinessRulesParser.ConstraintTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConstraintTerm(BusinessRulesParser.ConstraintTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterModelReferenceIdentifier(BusinessRulesParser.ModelReferenceIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitModelReferenceIdentifier(BusinessRulesParser.ModelReferenceIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLiteralStringIdentifier(BusinessRulesParser.LiteralStringIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLiteralStringIdentifier(BusinessRulesParser.LiteralStringIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumberIdentifier(BusinessRulesParser.NumberIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumberIdentifier(BusinessRulesParser.NumberIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIntegerNumberIdentifier(BusinessRulesParser.IntegerNumberIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIntegerNumberIdentifier(BusinessRulesParser.IntegerNumberIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBooleanLiteralIdentifier(BusinessRulesParser.BooleanLiteralIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBooleanLiteralIdentifier(BusinessRulesParser.BooleanLiteralIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCollectionIndexIdentifier(BusinessRulesParser.CollectionIndexIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCollectionIndexIdentifier(BusinessRulesParser.CollectionIndexIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDoubleQuotedStringIdentifier(BusinessRulesParser.DoubleQuotedStringIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDoubleQuotedStringIdentifier(BusinessRulesParser.DoubleQuotedStringIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSumOfExpression(BusinessRulesParser.SumOfExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSumOfExpression(BusinessRulesParser.SumOfExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumberOfExpression(BusinessRulesParser.NumberOfExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumberOfExpression(BusinessRulesParser.NumberOfExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNumberOfUniqueExpression(BusinessRulesParser.NumberOfUniqueExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNumberOfUniqueExpression(BusinessRulesParser.NumberOfUniqueExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -460,18 +748,6 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModelPath(BusinessRulesParser.ModelPathContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitModelPath(BusinessRulesParser.ModelPathContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDottedModelPath(BusinessRulesParser.DottedModelPathContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -551,6 +827,66 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSimpleTerm(BusinessRulesParser.SimpleTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConstrainedCollectionMembership(BusinessRulesParser.ConstrainedCollectionMembershipContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConstrainedCollectionMembership(BusinessRulesParser.ConstrainedCollectionMembershipContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSimpleExists(BusinessRulesParser.SimpleExistsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSimpleExists(BusinessRulesParser.SimpleExistsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEnumerator(BusinessRulesParser.EnumeratorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEnumerator(BusinessRulesParser.EnumeratorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNotExistsStatement(BusinessRulesParser.NotExistsStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNotExistsStatement(BusinessRulesParser.NotExistsStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForallStatement(BusinessRulesParser.ForallStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForallStatement(BusinessRulesParser.ForallStatementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
