@@ -1,4 +1,4 @@
-group ScalaCodeGeneration;
+group ScalaCodeGeneration
 
 FileBodyHeader(fileBody, package, className) ::= <<
 package <package>
