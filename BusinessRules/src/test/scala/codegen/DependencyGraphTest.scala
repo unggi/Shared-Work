@@ -8,17 +8,18 @@ import org.stringtemplate.v4.AutoIndentWriter
 
 class DependencyGraphTest extends FlatSpec with Matchers {
 
+  import DependencyGraph._
 
   val graph = new DependencyGraph() {
 
-    val a = new InputNode("A", 1.0)
-    val b = new InputNode("B", "A Test String")
-    val c = new InputNode("C", Calendar.getInstance.getTime)
+    val a = new InputNode("A")
+    val b = new InputNode("B")
+    val c = new InputNode("C")
 
     addInputs(a, b, c)
 
-    val d = new RuleNode("D", true)
-    val e = new RuleNode("E", 55.2)
+    val d = new RuleNode("D")
+    val e = new RuleNode("E")
 
     addRules(d, e)
 
@@ -26,16 +27,16 @@ class DependencyGraphTest extends FlatSpec with Matchers {
     addDependency(a -> e)
     addDependency(b -> e)
 
-    val f = new VariableNode("F", "FFFF")
-    val g = new VariableNode("G", 3)
+    val f = new VariableNode("F")
+    val g = new VariableNode("G")
 
     addVariables(f, g)
 
     addDependency(f -> d)
     addDependency(g -> e)
 
-    val h = new OutputNode("H", false)
-    val i = new OutputNode("I", false)
+    val h = new OutputNode("H")
+    val i = new OutputNode("I")
 
     addOutputs(h, i)
 
@@ -55,15 +56,9 @@ class DependencyGraphTest extends FlatSpec with Matchers {
   }
 
   it should "dependency implies successor relationship" in {
-    val j = new InputNode("J", 3.4)
-    val k = new InputNode("K", 5)
+    val j = new InputNode("J")
+    val k = new InputNode("K")
     graph.addDependency(j -> k)
-
-  }
-
-  it should "retain typed values at nodes" in {
-    val m = new InputNode("M", 7.4)
-
   }
 
 

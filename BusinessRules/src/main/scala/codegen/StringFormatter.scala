@@ -3,6 +3,7 @@ package codegen
 import java.util.Locale
 
 import org.stringtemplate.v4.StringRenderer
+import rules.BusinessRulesParser.ModelReferenceContext
 
 object StringFormatter {
   def isVowel(ch: Char): Boolean =
@@ -36,6 +37,8 @@ object StringFormatter {
 
   def generateIdentifier(s: String): String = unquote(s).replaceAll("[-\\s]+", "_")
 
+  def toDotPath(modelReference: ModelReferenceContext): String =
+    modelReference.dotPath.children.toArray.mkString(".")
 }
 
 class StringFormatter extends StringRenderer {

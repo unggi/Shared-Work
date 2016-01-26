@@ -9,32 +9,27 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 
-trait Node {
-  val successors = new ListBuffer[Node]()
+object DependencyGraph {
 
-  def name: String = ""
+  trait Node {
+    val successors = new ListBuffer[Node]()
 
-  def isSuccessor(n: Node): Boolean = successors.contains(n.name)
+    def name: String = ""
 
-}
+    def isSuccessor(n: Node): Boolean = successors.contains(n.name)
+
+  }
 
 
-case class InputNode[T](override val name: String, val value: T) extends Node {
+  class InputNode(override val name: String) extends Node
 
-}
+  class RuleNode(override val name: String) extends Node
 
-case class RuleNode[T](override val name: String, val value: T) extends Node {
+  class VariableNode(override val name: String) extends Node
 
-}
-
-case class VariableNode[T](override val name: String, val value: T) extends Node {
-
-}
-
-case class OutputNode[T](override val name: String, val value: T) extends Node {
+  class OutputNode(override val name: String) extends Node
 
 }
-
 
 class DependencyGraph {
 
@@ -52,28 +47,29 @@ class DependencyGraph {
    *
    **/
 
+  import DependencyGraph._
 
   val inputs = new mutable.HashMap[String, Node]()
   val nodes = new mutable.HashMap[String, Node]()
 
 
-  def addInputs(args: InputNode[_]*): Unit = {
+  def addInputs(args: InputNode*): Unit = {
     for (input <- args) {
       inputs.put(input.name, input)
       nodes.put(input.name, input)
     }
   }
 
-  def addRules(rules: RuleNode[_]*) =
+  def addRules(rules: RuleNode*) =
     for (rule <- rules)
       nodes.put(rule.name, rule)
 
-  def addVariables(variables: VariableNode[_]*) =
+  def addVariables(variables: VariableNode*) =
     for (variable <- variables)
       nodes.put(variable.name, variable)
 
 
-  def addOutputs(outputs: OutputNode[_]*) =
+  def addOutputs(outputs: OutputNode*) =
     for (output <- outputs)
       nodes.put(output.name, output)
 
@@ -102,10 +98,10 @@ class DependencyGraph {
   def render(node: Node, pw: AutoIndentWriter, visited: Set[Node]): Unit = {
     pw.write("> ")
     node match {
-      case rule: RuleNode[_] => pw.write(s"Rule[${node.name}, ${rule.value}]\n")
-      case input: InputNode[_] => pw.write(s"Input[${node.name}, ${input.value}}\n")
-      case variable: VariableNode[_] => pw.write(s"Variable[${node.name}]\n")
-      case output: OutputNode[_] => pw.write(s"Output[${node.name}, ${}}]\n")
+      case rule: RuleNode => pw.write(s"Rule[${node.name}]\n")
+      case input: InputNode => pw.write(s"Input[${node.name}]\n")
+      case variable: VariableNode => pw.write(s"Variable[${node.name}]\n")
+      case output: OutputNode => pw.write(s"Output[${node.name}, ${}}]\n")
       case unknown =>
         System.err.println(s"Unknown Graph Node type: ${unknown.getClass}")
     }

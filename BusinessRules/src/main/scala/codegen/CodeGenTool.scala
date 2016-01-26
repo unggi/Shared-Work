@@ -3,8 +3,9 @@ package codegen
 import java.io.{File, PrintWriter, StringWriter}
 
 import codegen.symbols.SymbolTable
-import org.antlr.v4.runtime.tree.{ParseTree, ParseTreeWalker, TerminalNode}
+import org.antlr.v4.runtime.tree.{ParseTreeVisitor, ParseTree, ParseTreeWalker, TerminalNode}
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
+import org.stringtemplate.v4.AutoIndentWriter
 import rules.BusinessRulesParser._
 import rules.{BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
 
@@ -89,7 +90,7 @@ object CodeGenerator {
     // parser.addParseListener(validator)
     val tree: FileBodyContext = parser.fileBody()
 
-    val listener: BusinessRulesBaseListener =
+    val generator: BusinessRulesBaseListener =
       outputTarget.toLowerCase match {
         case "scala" =>
           new ScalaTargetListener(template.getAbsolutePath,
@@ -109,13 +110,16 @@ object CodeGenerator {
 
     walker.walk(declarationPhase, tree)
     walker.walk(validator, tree)
-    walker.walk(listener, tree)
+    walker.walk(dependencyAnalyzer, tree)
+    walker.walk(generator, tree)
 
     println("Parsing is complete")
 
     printTreeClasses(tree, 1, declarationPhase.nodeScopes)
 
     symbolTable.print
+
+    dependencyAnalyzer.graph.render(new AutoIndentWriter(new PrintWriter(System.err)))
   }
 
   def printTreeClasses(ctx: ParseTree, depth: Int, scopes: ParseTreeScopeMap): Unit = {

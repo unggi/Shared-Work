@@ -12,6 +12,7 @@ import scala.reflect._
 
 class DeclarationPhase(symbolTable: SymbolTable) extends BusinessRulesBaseListener {
 
+  import StringFormatter._
 
   //
   // We track the scope which applies for each node by using a Parse Tree property. This are
@@ -31,7 +32,6 @@ class DeclarationPhase(symbolTable: SymbolTable) extends BusinessRulesBaseListen
 
   override def enterContext(ctx: ContextContext) = {
 
-import StringFormatter._
     //
     // A context is a single clause in the validation rule which defines aliases
     // that can be referenced explicitly or implicitly in the rule's constraint clause.
@@ -93,17 +93,18 @@ import StringFormatter._
           }
 
         case None =>
+          // Exception: Unexpected Missing Scope Type
           println("Unexpected Missing Scope type here.")
       }
 
   def setFirstToken(child: ModelReferenceContext, newTokenText: String): Unit = {
+
     val dotPath = child.dottedModelPath()
     val token = CommonTokenFactory.DEFAULT.create(0, newTokenText)
     val terminal = new TerminalNodeImpl(token)
     terminal.parent = dotPath
     dotPath.children.insert(0, terminal)
+
   }
-
-
 }
 
