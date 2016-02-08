@@ -1,11 +1,10 @@
 package codegen
 
-import codegen.DependencyGraph.{OutputNode, VariableNode}
-import codegen.symbols.SymbolTable
+import codegen.symbols.SymbolTableBuilder
 import rules.BusinessRulesBaseListener
-import rules.BusinessRulesParser.{ModelReferenceContext, ValidationRuleContext, ContextContext}
+import rules.BusinessRulesParser.{ContextContext, ModelReferenceContext, ValidationRuleContext}
 
-class DependencyAnalyzer(symbolTable: SymbolTable) extends BusinessRulesBaseListener {
+class DependencyAnalyzer(symbolTable: SymbolTableBuilder) extends BusinessRulesBaseListener {
 
   import DependencyGraph._
   import StringFormatter._

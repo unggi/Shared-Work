@@ -2,10 +2,9 @@ package codegen
 
 import java.io.{File, PrintWriter, StringWriter}
 
-import codegen.symbols.SymbolTable
-import org.antlr.v4.runtime.tree.{ParseTreeVisitor, ParseTree, ParseTreeWalker, TerminalNode}
+import codegen.symbols.SymbolTableBuilder
+import org.antlr.v4.runtime.tree.{ParseTree, ParseTreeWalker, TerminalNode}
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
-import org.stringtemplate.v4.AutoIndentWriter
 import rules.BusinessRulesParser._
 import rules.{BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
 
@@ -101,25 +100,22 @@ object CodeGenerator {
 
     val walker = new ParseTreeWalker()
 
-    val symbolTable = new SymbolTable(true)
+    val builder = new SymbolTableBuilder(true)
 
-    val declarationPhase = new DeclarationPhase(symbolTable)
-    val validator = new ValidationListener(symbolTable)
-    val dependencyAnalyzer = new DependencyAnalyzer(symbolTable)
-
+    val declarationPhase = new DeclarationPhase(builder)
+    val validator = new ValidationListener(builder.symbolTable)
 
     walker.walk(declarationPhase, tree)
     walker.walk(validator, tree)
-    walker.walk(dependencyAnalyzer, tree)
     walker.walk(generator, tree)
 
     println("Parsing is complete")
 
     printTreeClasses(tree, 1, declarationPhase.nodeScopes)
 
-    symbolTable.print
+    builder.symbolTable.print()
 
-    dependencyAnalyzer.graph.render(new AutoIndentWriter(new PrintWriter(System.err)))
+    //  dependencyAnalyzer.graph.render(new AutoIndentWriter(new PrintWriter(System.err)))
   }
 
   def printTreeClasses(ctx: ParseTree, depth: Int, scopes: ParseTreeScopeMap): Unit = {
@@ -159,7 +155,7 @@ object CodeGenerator {
       else
         pw.print(childClassName)
 
-      if (!child.isInstanceOf[TerminalNode] && childFields.size > 0)
+      if (!child.isInstanceOf[TerminalNode] && childFields.nonEmpty)
         pw.print(" [" + childFields.map(_.getName).mkString(" | ") + "]")
 
       pw.flush()
@@ -167,7 +163,7 @@ object CodeGenerator {
         case Some(scope) =>
           val len = sw.getBuffer.length()
           val space = " " * (110 - len)
-          pw.print(s"$space ${scope.getClass.getSimpleName} " + scope.map.keys.mkString("[", " ", "]"))
+          pw.print(s"$space ${scope.getClass.getSimpleName} " /*+ scope.map.keys.mkString("[", " ", "]")*/)
         case None =>
       }
 
@@ -179,7 +175,7 @@ object CodeGenerator {
 
   def usage(msg: String): Unit = {
     System.err.println(s"Usage Error: $msg")
-    System.err.println
+    System.err.println()
     """
       |Usage: CodeGenerator [-java | -scala] [-groupfile] [-outputpath] (rulefile)+
     """.stripMargin

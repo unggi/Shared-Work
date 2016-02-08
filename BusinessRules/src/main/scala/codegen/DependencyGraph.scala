@@ -1,7 +1,5 @@
 package codegen
 
-import java.io.PrintWriter
-
 import org.stringtemplate.v4.AutoIndentWriter
 
 import scala.collection.immutable.HashSet
@@ -12,6 +10,7 @@ import scala.collection.mutable.ListBuffer
 object DependencyGraph {
 
   trait Node {
+
     val successors = new ListBuffer[Node]()
 
     def name: String = ""
@@ -20,7 +19,6 @@ object DependencyGraph {
 
   }
 
-
   class InputNode(override val name: String) extends Node
 
   class RuleNode(override val name: String) extends Node
@@ -28,6 +26,32 @@ object DependencyGraph {
   class VariableNode(override val name: String) extends Node
 
   class OutputNode(override val name: String) extends Node
+
+
+  trait BiDirectionalNode {
+    self =>
+    val successors = new ListBuffer[BiDirectionalNode]()
+    val predecessors = new ListBuffer[BiDirectionalNode]()
+
+    def name: String = ""
+
+    def isSuccessor(n: BiDirectionalNode): Boolean = successors.contains(n.name)
+
+    def isPredecessor(n: BiDirectionalNode): Boolean = predecessors.contains(n.name)
+
+    def addSuccessor(to: BiDirectionalNode): BiDirectionalNode = {
+      successors.append(to)
+      to.predecessors.append(self)
+      self
+    }
+
+    def addPredecessor(from: BiDirectionalNode): BiDirectionalNode = {
+      predecessors.append(from)
+      from.successors.append(self)
+      self
+    }
+  }
+
 
 }
 
