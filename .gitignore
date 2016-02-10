@@ -6,3 +6,5 @@ project/
 diagrams/nomura/
 *.puml
 /Graph Data Load/.idea
+/BusinessRules/.idea
+/BusinessRules/.idea/*
