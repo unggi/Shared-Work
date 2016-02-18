@@ -45,9 +45,9 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
         println("Unhandled entry type = " + unknown)
     }
 
-    for (subScope <- subScopes) {
+    for (subScope <- subScopes)
       subScope.print(depth + 1)
-    }
+
   }
 
 }
