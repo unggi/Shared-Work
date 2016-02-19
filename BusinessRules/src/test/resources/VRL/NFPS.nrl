@@ -1,0 +1,66 @@
+Model "NFPSValidationRequest"
+
+-- Map fields of the Trade object in the NFPS Validation Request to names understood in the domain model.
+Mapping of Trade
+    "Account" is Trade.CounterpartyOrThirdParty.Account
+    "Product Type" is
+
+
+
+
+-- Import functions to be invoked in the rules
+
+
+
+
+-- Basic definitions of terms
+Definition of "Account"
+Context is Trade("trade")
+Account is trade.CounterpartyOrThirdParty.Account
+
+-- Basic Data Validation Rules
+Validation Rule: "Trade must have a Trade Date"
+Context: Trade
+TradeDate must be present.
+
+Validation Rule: "Trade's counterparty must have an Account"
+Context: Trade
+<<Account>> must be present and <<Account>> is a kind of TradeAccount.
+
+Validation Rule: "Trade must have a Product Type"
+Context: Trade
+ProductType must be present.
+
+Definition of "Is an NFPS Trade"
+Context: Trade
+Entity of <<Account>> is "NFPS"
+
+Definition of "NFPS Rules Apply"
+Context: Trade
+<<Account>>
+
+Definition of "Organization"
+Context: Trade
+OwningOrg of <<Account>>
+
+Definition of "List of Product Types for this Organization"
+Context: Trade
+OrganisationProductTypes of <<Organization>>
+
+Definition of "Product Type"
+Context: Trade("trade")
+The ProductType of Trade
+
+Definition: "Organization Product Type"
+Context: Trade("trade")
+The first of the <<List of Product Types for this Organization>>
+where the ProductTypeNarrative of its Id equals the <<ProductType>>
+and the SystemCode of Id equals NFPSRules or SystemCode of Id equals NFPS.
+
+
+Validation Rule: "NFPS Counterparty Validation"
+Context: Trade("trade")
+if <<Is an NFPS Trade>> and SKIP_NFPS_VALIDATION is "true" and <<Organization>> is present
+then
+
+
