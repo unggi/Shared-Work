@@ -1,23 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="Dependency graph is now embedded in symbol table.&#10;&#10;DeclarationPhase is a tree walker that collects declarations of symbols.">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/scala/codegen/ParseTreeScopeMap.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/ParseTreeScopeAnnotations.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" afterPath="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseListener.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseVisitor.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesLexer.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesLexer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesListener.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesVisitor.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" />
+    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="Symbol table now built in two phases.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl" afterPath="$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/templates/Scala.stg" afterPath="$PROJECT_DIR$/src/main/templates/Scala.stg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BusinessRules.iws" />
@@ -137,9 +122,9 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="72" selection-start-line="17" selection-start-column="72" selection-end-line="17" selection-end-column="72" />
+              <caret line="16" column="72" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
               <folding>
-                <element signature="e#25#58#0" expanded="true" />
+                <marker date="1456147550000" expanded="true" signature="32:70" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -148,11 +133,11 @@
       <file leaf-file-name="DeclarationPhase.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5930807">
-              <caret line="48" column="42" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.44481054">
+              <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
               <folding>
-                <element signature="e#17#33#0" expanded="true" />
-                <element signature="e#515#539#0" expanded="true" />
+                <element signature="e#17#117#0" expanded="true" />
+                <element signature="e#390#414#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1697,7 +1682,7 @@
       <workItem from="1454553751449" duration="13597000" />
       <workItem from="1454802030693" duration="26384000" />
       <workItem from="1455159022669" duration="1620000" />
-      <workItem from="1455745807630" duration="70148000" />
+      <workItem from="1455745807630" duration="70420000" />
     </task>
     <task id="LOCAL-00001" summary="First end to end working version. Sample code is generated down to the predicate level.">
       <created>1439209622979</created>
@@ -1825,11 +1810,17 @@
       <option name="project" value="LOCAL" />
       <updated>1455883160225</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Symbol table now built in two phases.">
+      <created>1456147560086</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1456147560086</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="781640000" />
+    <option name="totallyTimeSpent" value="781912000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1842,7 +1833,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="42" y="23" width="1206" height="1337" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="PlantUML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24557166" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" x="1618" y="194" width="873" height="564" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1853,7 +1844,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959184" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274707" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1265" y="75" width="1089" height="830" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1265" y="75" width="1089" height="830" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928678" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.36971048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="2189" y="42" width="384" height="1321" />
@@ -1935,7 +1926,8 @@
     <MESSAGE value="Added parameterized type to dependency nodes." />
     <MESSAGE value="Dependency graph adds nodes as it is constructed. Edges don't work." />
     <MESSAGE value="Dependency graph is now embedded in symbol table.&#10;&#10;DeclarationPhase is a tree walker that collects declarations of symbols." />
-    <option name="LAST_COMMIT_MESSAGE" value="Dependency graph is now embedded in symbol table.&#10;&#10;DeclarationPhase is a tree walker that collects declarations of symbols." />
+    <MESSAGE value="Symbol table now built in two phases." />
+    <option name="LAST_COMMIT_MESSAGE" value="Symbol table now built in two phases." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1945,7 +1937,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala</url>
-          <line>45</line>
+          <line>41</line>
           <properties />
           <option name="timeStamp" value="31" />
         </line-breakpoint>
@@ -2282,9 +2274,9 @@
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="72" selection-start-line="17" selection-start-column="72" selection-end-line="17" selection-end-column="72" />
+          <caret line="16" column="72" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
           <folding>
-            <element signature="e#25#58#0" expanded="true" />
+            <marker date="1456147550000" expanded="true" signature="32:70" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -2601,11 +2593,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5930807">
-          <caret line="48" column="42" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.44481054">
+          <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
           <folding>
-            <element signature="e#17#33#0" expanded="true" />
-            <element signature="e#515#539#0" expanded="true" />
+            <element signature="e#17#117#0" expanded="true" />
+            <element signature="e#390#414#0" expanded="true" />
           </folding>
         </state>
       </provider>
