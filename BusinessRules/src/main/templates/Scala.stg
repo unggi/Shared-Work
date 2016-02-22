@@ -61,7 +61,7 @@ if (<Apply(cond,cond)>) {
 }
 >>
 
-IsKindOfPredicateContext(predicate) ::= <%<predicate.modelReference.text>.isInstanceOf[<predicate.ModelElementName.text>]%>
+IsKindOfPredicateContext(predicate) ::= <%<predicate.modelReference.symbol.name>.isInstanceOf[<predicate.ModelElementName.text>]%>
 
 LogicalExistsStatementContext(stmt) ::= <%<Apply(stmt.existsStatement,stmt.existsStatement)>%>
 
@@ -90,7 +90,7 @@ BinaryPredicateContext(predicate) ::= <%
 ConstrainedCollectionMembershipContext(stmt) ::= <%
 
      <Apply(stmt.modelReference, stmt.modelReference)>
-     <if(stmt.simpleOrComplexConstraint)>.count(<Apply(stmt.simpleOrComplexConstraint,stmt.simpleOrComplexConstraint)>)
+     <if(stmt.collectionConstraint)>.count(<Apply(stmt.collectionConstraint,stmt.collectionConstraint)>)
      <else>.size
      <endif>
      <if(stmt.enumerator)>
@@ -135,18 +135,12 @@ FunctionalExpressionContext(fn) ::= <%<Apply(fn,fn.ref)>%>
 NumberOfExpressionContext(ref) ::= <%<Apply(ref,ref)>.size %>
 
 ModelReferenceContext(ref) ::= <%
-<if (ref.dotPath)>
-    <Apply(ref.dotPath, ref.dotPath)>
-<elseif (ref.propPath)>
-    <Apply(ref.propPath, ref.propPath)>
-<endif>
+<[ref.symbol.name,ref.path]; separator=".">
 %>
 
 ModelReferenceIdentifierContext(id) ::= <%
 <Apply(id.modelReference, id.modelReference)>
 %>
-
-DottedModelPathContext(path) ::= <%<path.children; separator=".">%>
 
 SimpleOrComplexConstraintContext(s) ::= <%
 <if(s.constraint)>

@@ -13,7 +13,7 @@ class SymbolTable() {
   }
 }
 
-class SymbolTableBuilder(verbose: Boolean = true) {
+class SymbolTableBuilder(verbose: Boolean = false) {
 
   val symbolTable = new SymbolTable()
 

@@ -1,6 +1,11 @@
 // Generated from /Users/unggi/Development/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
 package rules;
 
+import codegen.symbols.ModelReferenceSymbol;
+import codegen.symbols.Symbol;
+import java.util.Collections;
+
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -148,13 +153,13 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModelReferenceWithAlias(BusinessRulesParser.ModelReferenceWithAliasContext ctx) { }
+	@Override public void enterModelReferenceParameter(BusinessRulesParser.ModelReferenceParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModelReferenceWithAlias(BusinessRulesParser.ModelReferenceWithAliasContext ctx) { }
+	@Override public void exitModelReferenceParameter(BusinessRulesParser.ModelReferenceParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -827,6 +832,18 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSimpleTerm(BusinessRulesParser.SimpleTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCollectionMemberConstraint(BusinessRulesParser.CollectionMemberConstraintContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCollectionMemberConstraint(BusinessRulesParser.CollectionMemberConstraintContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

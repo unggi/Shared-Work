@@ -42,19 +42,19 @@ class DependencyAnalyzer(symbolTable: SymbolTableBuilder) extends BusinessRulesB
    **/
   override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
 
-    val rule = new Rule(ctx.name.getText, ctx)
-    graph.addRules(rule)
-
-    val context = ctx.context()
-    val alias = context.modelReferenceWithAlias.alias.getText
-    val path = toDotPath(context.modelReferenceWithAlias.modelReference())
-
-    System.err.println(s"Path is $path")
-
-    activeConstraint = Some(rule)
-
-    val input = new Input(path, alias, context)
-    graph.addInputs(input)
+    //    val rule = new Rule(ctx.name.getText, ctx)
+    //    graph.addRules(rule)
+    //
+    //    val context = ctx.context()
+    //    val alias = context.modelReferenceWithAlias.alias.getText
+    //    val path = toDotPath(context.modelReferenceWithAlias.modelReference())
+    //
+    //    System.err.println(s"Path is $path")
+    //
+    //    activeConstraint = Some(rule)
+    //
+    //    val input = new Input(path, alias, context)
+    //    graph.addInputs(input)
 
   }
 

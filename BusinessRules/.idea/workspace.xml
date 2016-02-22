@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;">
+    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="Dependency graph is now embedded in symbol table.&#10;&#10;DeclarationPhase is a tree walker that collects declarations of symbols.">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/scala/codegen/ParseTreeScopeMap.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/ParseTreeScopeAnnotations.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" afterPath="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseListener.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseVisitor.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesLexer.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesLexer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesListener.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesVisitor.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl" afterPath="$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/templates/Scala.stg" afterPath="$PROJECT_DIR$/src/main/templates/Scala.stg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BusinessRules.iws" />
@@ -25,6 +40,63 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="NFPS.nrl" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="NGFP.java" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/test/resources/parsing/NGFP.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="168" column="44" selection-start-line="168" selection-start-column="44" selection-end-line="168" selection-end-column="44" />
+                    <folding>
+                      <element signature="e#988#989#0" expanded="false" />
+                      <element signature="e#1027#1028#0" expanded="false" />
+                      <element signature="e#1914#1915#0" expanded="false" />
+                      <element signature="e#1962#1963#0" expanded="false" />
+                      <element signature="e#2014#2015#0" expanded="false" />
+                      <element signature="e#2048#2049#0" expanded="false" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="CodeGenerator.scala" pinned="true" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.6441718">
+                    <caret line="98" column="7" selection-start-line="98" selection-start-column="7" selection-end-line="98" selection-end-column="7" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="Scala.stg" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="78" column="23" selection-start-line="78" selection-start-column="23" selection-end-line="82" selection-end-column="0" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="BusinessRules" />
@@ -35,17 +107,17 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="3" selection-start-line="35" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
+              <caret line="68" column="45" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Symbol.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
+      <file leaf-file-name="DependencyAnalyzer.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="2" column="15" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -55,47 +127,328 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+              <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResolutionPhase.scala" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.049423393">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CodeGenerator.scala" pinned="true" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
+      <file leaf-file-name="Symbol.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="177" column="24" selection-start-line="177" selection-start-column="24" selection-end-line="177" selection-end-column="24" />
-              <folding />
+              <caret line="17" column="72" selection-start-line="17" selection-start-column="72" selection-end-line="17" selection-end-column="72" />
+              <folding>
+                <element signature="e#25#58#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DeclarationPhase.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DeclarationPhase.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="19" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
-              <folding />
+            <state vertical-scroll-proportion="0.5930807">
+              <caret line="48" column="42" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
+              <folding>
+                <element signature="e#17#33#0" expanded="true" />
+                <element signature="e#515#539#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ValidationListener.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ValidationListener.scala">
+      <file leaf-file-name="BusinessRules.g4" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="53" selection-start-line="6" selection-start-column="53" selection-end-line="6" selection-end-column="53" />
+              <caret line="199" column="2" selection-start-line="199" selection-start-column="2" selection-end-line="199" selection-end-column="2" />
+              <folding>
+                <element signature="e#25#142#1" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BusinessRulesParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="3687" column="38" selection-start-line="3687" selection-start-column="38" selection-end-line="3687" selection-end-column="38" />
+              <folding>
+                <element signature="e#493#562#0" expanded="false" />
+                <element signature="e#6547#6548#0" expanded="false" />
+                <element signature="e#6571#6572#0" expanded="false" />
+                <element signature="e#6621#6622#0" expanded="false" />
+                <element signature="e#6645#6646#0" expanded="false" />
+                <element signature="e#7189#7190#0" expanded="false" />
+                <element signature="e#7255#7256#0" expanded="false" />
+                <element signature="e#7301#7302#0" expanded="false" />
+                <element signature="e#7360#7361#0" expanded="false" />
+                <element signature="e#7432#7433#0" expanded="false" />
+                <element signature="e#7469#7470#0" expanded="false" />
+                <element signature="e#9061#9062#0" expanded="false" />
+                <element signature="e#9098#9099#0" expanded="false" />
+                <element signature="e#10811#10812#0" expanded="false" />
+                <element signature="e#10848#10849#0" expanded="false" />
+                <element signature="e#12235#12236#0" expanded="false" />
+                <element signature="e#12292#12293#0" expanded="false" />
+                <element signature="e#12341#12342#0" expanded="false" />
+                <element signature="e#12399#12400#0" expanded="false" />
+                <element signature="e#12475#12476#0" expanded="false" />
+                <element signature="e#12512#12513#0" expanded="false" />
+                <element signature="e#14009#14010#0" expanded="false" />
+                <element signature="e#14066#14067#0" expanded="false" />
+                <element signature="e#14116#14117#0" expanded="false" />
+                <element signature="e#14177#14178#0" expanded="false" />
+                <element signature="e#14252#14253#0" expanded="false" />
+                <element signature="e#14289#14290#0" expanded="false" />
+                <element signature="e#15822#15823#0" expanded="false" />
+                <element signature="e#15876#15877#0" expanded="false" />
+                <element signature="e#15918#15919#0" expanded="false" />
+                <element signature="e#15975#15976#0" expanded="false" />
+                <element signature="e#16132#16133#0" expanded="false" />
+                <element signature="e#16193#16194#0" expanded="false" />
+                <element signature="e#16271#16272#0" expanded="false" />
+                <element signature="e#16308#16309#0" expanded="false" />
+                <element signature="e#18090#18091#0" expanded="false" />
+                <element signature="e#18147#18148#0" expanded="false" />
+                <element signature="e#18328#18329#0" expanded="false" />
+                <element signature="e#18365#18366#0" expanded="false" />
+                <element signature="e#19941#19942#0" expanded="false" />
+                <element signature="e#20002#20003#0" expanded="false" />
+                <element signature="e#20044#20045#0" expanded="false" />
+                <element signature="e#20101#20102#0" expanded="false" />
+                <element signature="e#20172#20173#0" expanded="false" />
+                <element signature="e#20209#20210#0" expanded="false" />
+                <element signature="e#21894#21895#0" expanded="false" />
+                <element signature="e#21931#21932#0" expanded="false" />
+                <element signature="e#23413#23414#0" expanded="false" />
+                <element signature="e#23450#23451#0" expanded="false" />
+                <element signature="e#25231#25232#0" expanded="false" />
+                <element signature="e#25268#25269#0" expanded="false" />
+                <element signature="e#27035#27036#0" expanded="false" />
+                <element signature="e#27096#27097#0" expanded="false" />
+                <element signature="e#27290#27291#0" expanded="false" />
+                <element signature="e#27327#27328#0" expanded="false" />
+                <element signature="e#29079#29080#0" expanded="false" />
+                <element signature="e#29141#29142#0" expanded="false" />
+                <element signature="e#29200#29201#0" expanded="false" />
+                <element signature="e#29263#29264#0" expanded="false" />
+                <element signature="e#29337#29338#0" expanded="false" />
+                <element signature="e#29374#29375#0" expanded="false" />
+                <element signature="e#31935#31936#0" expanded="false" />
+                <element signature="e#31972#31973#0" expanded="false" />
+                <element signature="e#33940#33941#0" expanded="false" />
+                <element signature="e#33977#33978#0" expanded="false" />
+                <element signature="e#34145#34146#0" expanded="false" />
+                <element signature="e#34173#34174#0" expanded="false" />
+                <element signature="e#34304#34305#0" expanded="false" />
+                <element signature="e#34360#34361#0" expanded="false" />
+                <element signature="e#35248#35249#0" expanded="false" />
+                <element signature="e#35313#35314#0" expanded="false" />
+                <element signature="e#36192#36193#0" expanded="false" />
+                <element signature="e#36254#36255#0" expanded="false" />
+                <element signature="e#37121#37122#0" expanded="false" />
+                <element signature="e#37183#37184#0" expanded="false" />
+                <element signature="e#38187#38188#0" expanded="false" />
+                <element signature="e#38249#38250#0" expanded="false" />
+                <element signature="e#38308#38309#0" expanded="false" />
+                <element signature="e#38371#38372#0" expanded="false" />
+                <element signature="e#42076#42077#0" expanded="false" />
+                <element signature="e#42133#42134#0" expanded="false" />
+                <element signature="e#42173#42174#0" expanded="false" />
+                <element signature="e#42229#42230#0" expanded="false" />
+                <element signature="e#42318#42319#0" expanded="false" />
+                <element signature="e#42355#42356#0" expanded="false" />
+                <element signature="e#44073#44074#0" expanded="false" />
+                <element signature="e#44110#44111#0" expanded="false" />
+                <element signature="e#44257#44258#0" expanded="false" />
+                <element signature="e#44285#44286#0" expanded="false" />
+                <element signature="e#44411#44412#0" expanded="false" />
+                <element signature="e#44472#44473#0" expanded="false" />
+                <element signature="e#45392#45393#0" expanded="false" />
+                <element signature="e#45449#45450#0" expanded="false" />
+                <element signature="e#45499#45500#0" expanded="false" />
+                <element signature="e#45560#45561#0" expanded="false" />
+                <element signature="e#46439#46440#0" expanded="false" />
+                <element signature="e#46496#46497#0" expanded="false" />
+                <element signature="e#46544#46545#0" expanded="false" />
+                <element signature="e#46600#46601#0" expanded="false" />
+                <element signature="e#46647#46648#0" expanded="false" />
+                <element signature="e#46704#46705#0" expanded="false" />
+                <element signature="e#47516#47517#0" expanded="false" />
+                <element signature="e#47573#47574#0" expanded="false" />
+                <element signature="e#47623#47624#0" expanded="false" />
+                <element signature="e#47684#47685#0" expanded="false" />
+                <element signature="e#50074#50075#0" expanded="false" />
+                <element signature="e#50111#50112#0" expanded="false" />
+                <element signature="e#50261#50262#0" expanded="false" />
+                <element signature="e#50289#50290#0" expanded="false" />
+                <element signature="e#57539#57540#0" expanded="false" />
+                <element signature="e#57595#57596#0" expanded="false" />
+                <element signature="e#57642#57643#0" expanded="false" />
+                <element signature="e#57699#57700#0" expanded="false" />
+                <element signature="e#57777#57778#0" expanded="false" />
+                <element signature="e#57814#57815#0" expanded="false" />
+                <element signature="e#59584#59585#0" expanded="false" />
+                <element signature="e#59649#59650#0" expanded="false" />
+                <element signature="e#59736#59737#0" expanded="false" />
+                <element signature="e#59773#59774#0" expanded="false" />
+                <element signature="e#61421#61422#0" expanded="false" />
+                <element signature="e#61486#61487#0" expanded="false" />
+                <element signature="e#63288#63289#0" expanded="false" />
+                <element signature="e#63325#63326#0" expanded="false" />
+                <element signature="e#63475#63476#0" expanded="false" />
+                <element signature="e#63503#63504#0" expanded="false" />
+                <element signature="e#63713#63714#0" expanded="false" />
+                <element signature="e#63769#63770#0" expanded="false" />
+                <element signature="e#63816#63817#0" expanded="false" />
+                <element signature="e#63873#63874#0" expanded="false" />
+                <element signature="e#64675#64676#0" expanded="false" />
+                <element signature="e#64726#64727#0" expanded="false" />
+                <element signature="e#67710#67711#0" expanded="false" />
+                <element signature="e#67747#67748#0" expanded="false" />
+                <element signature="e#67879#67880#0" expanded="false" />
+                <element signature="e#67907#67908#0" expanded="false" />
+                <element signature="e#68017#68018#0" expanded="false" />
+                <element signature="e#68074#68075#0" expanded="false" />
+                <element signature="e#69824#69825#0" expanded="false" />
+                <element signature="e#69890#69891#0" expanded="false" />
+                <element signature="e#70719#70720#0" expanded="false" />
+                <element signature="e#70776#70777#0" expanded="false" />
+                <element signature="e#71581#71582#0" expanded="false" />
+                <element signature="e#71642#71643#0" expanded="false" />
+                <element signature="e#73496#73497#0" expanded="false" />
+                <element signature="e#73557#73558#0" expanded="false" />
+                <element signature="e#74390#74391#0" expanded="false" />
+                <element signature="e#74455#74456#0" expanded="false" />
+                <element signature="e#77248#77249#0" expanded="false" />
+                <element signature="e#77285#77286#0" expanded="false" />
+                <element signature="e#77435#77436#0" expanded="false" />
+                <element signature="e#77463#77464#0" expanded="false" />
+                <element signature="e#79449#79450#0" expanded="false" />
+                <element signature="e#79510#79511#0" expanded="false" />
+                <element signature="e#81232#81233#0" expanded="false" />
+                <element signature="e#81294#81295#0" expanded="false" />
+                <element signature="e#85812#85813#0" expanded="false" />
+                <element signature="e#85849#85850#0" expanded="false" />
+                <element signature="e#86029#86030#0" expanded="false" />
+                <element signature="e#86057#86058#0" expanded="false" />
+                <element signature="e#86298#86299#0" expanded="false" />
+                <element signature="e#86358#86359#0" expanded="false" />
+                <element signature="e#86413#86414#0" expanded="false" />
+                <element signature="e#86474#86475#0" expanded="false" />
+                <element signature="e#87403#87404#0" expanded="false" />
+                <element signature="e#87464#87465#0" expanded="false" />
+                <element signature="e#88360#88361#0" expanded="false" />
+                <element signature="e#88421#88422#0" expanded="false" />
+                <element signature="e#91179#91180#0" expanded="false" />
+                <element signature="e#91216#91217#0" expanded="false" />
+                <element signature="e#92743#92744#0" expanded="false" />
+                <element signature="e#92799#92800#0" expanded="false" />
+                <element signature="e#92846#92847#0" expanded="false" />
+                <element signature="e#92903#92904#0" expanded="false" />
+                <element signature="e#92988#92989#0" expanded="false" />
+                <element signature="e#93025#93026#0" expanded="false" />
+                <element signature="e#95350#95351#0" expanded="false" />
+                <element signature="e#95387#95388#0" expanded="false" />
+                <element signature="e#96910#96911#0" expanded="false" />
+                <element signature="e#96971#96972#0" expanded="false" />
+                <element signature="e#97050#97051#0" expanded="false" />
+                <element signature="e#97087#97088#0" expanded="false" />
+                <element signature="e#98580#98581#0" expanded="false" />
+                <element signature="e#98641#98642#0" expanded="false" />
+                <element signature="e#98822#98823#0" expanded="false" />
+                <element signature="e#98859#98860#0" expanded="false" />
+                <element signature="e#100383#100384#0" expanded="false" />
+                <element signature="e#100444#100445#0" expanded="false" />
+                <element signature="e#100671#100672#0" expanded="false" />
+                <element signature="e#100708#100709#0" expanded="false" />
+                <element signature="e#102558#102559#0" expanded="false" />
+                <element signature="e#102624#102625#0" expanded="false" />
+                <element signature="e#102676#102677#0" expanded="false" />
+                <element signature="e#102738#102739#0" expanded="false" />
+                <element signature="e#102816#102817#0" expanded="false" />
+                <element signature="e#102853#102854#0" expanded="false" />
+                <element signature="e#104472#104473#0" expanded="false" />
+                <element signature="e#104532#104533#0" expanded="false" />
+                <element signature="e#104587#104588#0" expanded="false" />
+                <element signature="e#104648#104649#0" expanded="false" />
+                <element signature="e#104730#104731#0" expanded="false" />
+                <element signature="e#104767#104768#0" expanded="false" />
+                <element signature="e#106446#106447#0" expanded="false" />
+                <element signature="e#106511#106512#0" expanded="false" />
+                <element signature="e#106590#106591#0" expanded="false" />
+                <element signature="e#106627#106628#0" expanded="false" />
+                <element signature="e#108622#108623#0" expanded="false" />
+                <element signature="e#108687#108688#0" expanded="false" />
+                <element signature="e#108770#108771#0" expanded="false" />
+                <element signature="e#108807#108808#0" expanded="false" />
+                <element signature="e#110853#110854#0" expanded="false" />
+                <element signature="e#110911#110912#0" expanded="false" />
+                <element signature="e#110962#110963#0" expanded="false" />
+                <element signature="e#111021#111022#0" expanded="false" />
+                <element signature="e#111099#111100#0" expanded="false" />
+                <element signature="e#111136#111137#0" expanded="false" />
+                <element signature="e#113262#113263#0" expanded="false" />
+                <element signature="e#113327#113328#0" expanded="false" />
+                <element signature="e#113383#113384#0" expanded="false" />
+                <element signature="e#113447#113448#0" expanded="false" />
+                <element signature="e#113523#113524#0" expanded="false" />
+                <element signature="e#113560#113561#0" expanded="false" />
+                <element signature="e#115341#115342#0" expanded="false" />
+                <element signature="e#115397#115398#0" expanded="false" />
+                <element signature="e#115444#115445#0" expanded="false" />
+                <element signature="e#115501#115502#0" expanded="false" />
+                <element signature="e#115583#115584#0" expanded="false" />
+                <element signature="e#115620#115621#0" expanded="false" />
+                <element signature="e#117627#117628#0" expanded="false" />
+                <element signature="e#117684#117685#0" expanded="false" />
+                <element signature="e#117740#117741#0" expanded="false" />
+                <element signature="e#117800#117801#0" expanded="false" />
+                <element signature="e#117855#117856#0" expanded="false" />
+                <element signature="e#117916#117917#0" expanded="false" />
+                <element signature="e#117997#117998#0" expanded="false" />
+                <element signature="e#118034#118035#0" expanded="false" />
+                <element signature="e#119671#119672#0" expanded="false" />
+                <element signature="e#119728#119729#0" expanded="false" />
+                <element signature="e#119915#119916#0" expanded="false" />
+                <element signature="e#119980#119981#0" expanded="false" />
+                <element signature="e#120054#120055#0" expanded="false" />
+                <element signature="e#120091#120092#0" expanded="false" />
+                <element signature="e#129454#129455#0" expanded="false" />
+                <element signature="e#129491#129492#0" expanded="false" />
+                <element signature="e#132221#132222#0" expanded="false" />
+                <element signature="e#132282#132283#0" expanded="false" />
+                <element signature="e#132364#132365#0" expanded="false" />
+                <element signature="e#132401#132402#0" expanded="false" />
+                <element signature="e#133911#133912#0" expanded="false" />
+                <element signature="e#133972#133973#0" expanded="false" />
+                <element signature="e#134302#134303#0" expanded="false" />
+                <element signature="e#134339#134340#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResolutionPhase.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+              <folding>
+                <element signature="e#17#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BusinessRulesListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="28" column="7" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -116,9 +469,9 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Unggi Soemardjo &lt;unggi@soemardjo.com&gt;" />
         <option value="Unggi Soemardjo" />
         <option value="unggi@soemardjo.com &lt;unggi@soemardjo.com&gt;" />
-        <option value="Unggi Soemardjo &lt;unggi@soemardjo.com&gt;" />
       </list>
     </option>
     <option name="UPDATE_TYPE" value="REBASE" />
@@ -154,20 +507,15 @@
         <option value="$PROJECT_DIR$/src/main/scala/rules/runtime/Rule.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/JavaTargetListener.scala" />
         <option value="$PROJECT_DIR$/src/main/templates/Java.stg" />
-        <option value="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/analysis/AnalysisWalker.g" />
         <option value="$PROJECT_DIR$/src/test/resources/parsing/Example01.nrl" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/ScalaTargetListener.scala" />
         <option value="$PROJECT_DIR$/target/rules/compiled/SimpleRulesExample.scala" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/ParseTreeScopeMap.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/StringArticleRenderer.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/rules/runtime/TestRuleSet.scala" />
         <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/src/main/templates/Scala.stg" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/StringFormatter.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala" />
         <option value="$PROJECT_DIR$/src/main/diagrams/Skin.iuml" />
         <option value="$PROJECT_DIR$/src/test/scala/codegen/DependencyGraphTest.scala" />
         <option value="$PROJECT_DIR$/src/main/diagrams/Symbol Table.puml" />
@@ -176,13 +524,23 @@
         <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/ContextScope.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/ValidationListener.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/CodeGenTool.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala" />
         <option value="$PROJECT_DIR$/src/main/java/codegen/AntlrObjectModelAdaptor.java" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
+        <option value="$PROJECT_DIR$/src/test/resources/parsing/NGFP.java" />
+        <option value="$PROJECT_DIR$/src/test/resources/parsing/NFPS.nrl" />
+        <option value="$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ParseTreeScopeMap.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ParseTreeScopeAnnotations.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala" />
+        <option value="$PROJECT_DIR$/gen/rules/BusinessRulesParser.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala" />
+        <option value="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
+        <option value="$PROJECT_DIR$/src/main/templates/Scala.stg" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
+        <option value="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
       </list>
     </option>
   </component>
@@ -221,9 +579,9 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="26" />
+    <option name="x" value="42" />
     <option name="y" value="23" />
-    <option name="width" value="987" />
+    <option name="width" value="1206" />
     <option name="height" value="1337" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -299,8 +657,22 @@
               <option name="myItemId" value="Maven: org.scalatest:scalatest_2.11:2.2.5" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="scalatest_2.11-2.2.5.jar" />
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.scala-lang:scala-library:2.11.7" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala-library-2.11.7.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -314,25 +686,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Maven: org.scalatest:scalatest_2.11:2.2.5" />
+              <option name="myItemId" value="Maven: org.scala-lang:scala-library:2.11.7" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="scalatest_2.11-2.2.5.jar" />
+              <option name="myItemId" value="scala-library-2.11.7.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemId" value="collection" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -342,19 +704,125 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.scala-lang:scala-library:2.11.7" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala-library-2.11.7.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="collection" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SeqLike.class" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
               <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="antlr4-4.5.1.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="antlr4-4.5.1.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="Java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="antlr4-4.5.1.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
+              <option name="myItemId" value="ast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="antlr4-4.5.1.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
+              <option name="myItemId" value="tree" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="antlr4-4.5.1.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -371,20 +839,18 @@
               <option name="myItemId" value="BusinessRules" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codegen" />
+              <option name="myItemId" value="target" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -403,6 +869,58 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VRL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parsing" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -421,6 +939,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -580,7 +1102,29 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="diagrams" />
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="codegen" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -619,6 +1163,10 @@
               <option name="myItemId" value="gen" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -642,7 +1190,7 @@
     <property name="options.searchVisible" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/diagrams" />
+    <property name="last_opened_file_path" value="$USER_HOME$/.m2" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="true" />
     <property name="Repository.Attach.Sources" value="true" />
@@ -652,7 +1200,7 @@
     <property name="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4::/auto-gen" value="true" />
     <property name="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4::/gen-listener" value="true" />
     <property name="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4::/gen-visitor" value="true" />
-    <property name="settings.editor.selected.configurable" value="org.plantuml.idea.lang.settings.PlantUmlSettingsPage" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Java" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="FullScreen" value="false" />
@@ -682,6 +1230,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/resources/VRL" />
       <recent name="$PROJECT_DIR$/src/main/diagrams" />
       <recent name="$PROJECT_DIR$/src/main" />
     </key>
@@ -1148,7 +1697,7 @@
       <workItem from="1454553751449" duration="13597000" />
       <workItem from="1454802030693" duration="26384000" />
       <workItem from="1455159022669" duration="1620000" />
-      <workItem from="1455745807630" duration="2221000" />
+      <workItem from="1455745807630" duration="70148000" />
     </task>
     <task id="LOCAL-00001" summary="First end to end working version. Sample code is generated down to the predicate level.">
       <created>1439209622979</created>
@@ -1264,11 +1813,23 @@
       <option name="project" value="LOCAL" />
       <updated>1454938479952</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Dependency graph is now embedded in symbol table.&#10;&#10;DeclarationPhase is a tree walker that collects declarations of symbols.">
+      <created>1455793485239</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1455793485239</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Dependency graph is now embedded in symbol table.&#10;&#10;DeclarationPhase is a tree walker that collects declarations of symbols.">
+      <created>1455883160225</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1455883160225</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="713713000" />
+    <option name="totallyTimeSpent" value="781640000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1280,23 +1841,24 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="26" y="23" width="987" height="1337" extended-state="0" />
-    <editor active="true" />
+    <frame x="42" y="23" width="1206" height="1337" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="PlantUML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24557166" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" x="1618" y="194" width="873" height="564" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32473445" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32447666" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32125604" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959184" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274707" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1376" y="319" width="1089" height="830" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1265" y="75" width="1089" height="830" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928678" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.36971048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="1220" y="24" width="384" height="1321" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.36971048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="2189" y="42" width="384" height="1321" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32769728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="false" weight="1.0" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" x="998" y="83" width="1450" height="1318" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.083984375" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -1310,13 +1872,12 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39941478" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4522003" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
-      <window_info id="PlantUML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24579372" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" x="1618" y="194" width="873" height="564" />
+      <window_info id="PlantUML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24557166" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" x="1618" y="194" width="873" height="564" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32473445" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32447666" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
@@ -1331,14 +1892,14 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39949748" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3218727" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32125604" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39941478" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4522003" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274707" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1346" y="27" width="1089" height="846" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1401" y="474" width="1089" height="830" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928678" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.36971048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="1488" y="24" width="384" height="1321" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.36971048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="1755" y="39" width="384" height="1321" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
     </layout-to-restore>
@@ -1381,7 +1942,15 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="31" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="32" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1390,86 +1959,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="188" column="28" selection-start-line="188" selection-start-column="28" selection-end-line="188" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="106" column="44" selection-start-line="106" selection-start-column="44" selection-end-line="106" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.11.7-sources.jar!/scala/Symbol.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26702785">
-          <caret line="29" column="77" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.11.7-sources.jar!/scala/Predef.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.05446118">
-          <caret line="112" column="11" selection-start-line="112" selection-start-column="11" selection-end-line="112" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesLexer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.71428573">
@@ -1498,13 +1987,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3342071">
-          <caret line="17" column="69" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesBaseListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="6.1860466">
@@ -1516,14 +1998,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3255814">
-          <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1597,31 +2071,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="142" column="2" selection-start-line="142" selection-start-column="2" selection-end-line="142" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/ParserRuleContext.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.037037">
-          <caret line="151" column="30" selection-start-line="151" selection-start-column="30" selection-end-line="151" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ScalaTargetListener.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="54" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3327616">
-          <caret line="2899" column="0" selection-start-line="2899" selection-start-column="0" selection-end-line="2899" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1667,47 +2120,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ValidationListener.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="53" selection-start-line="6" selection-start-column="53" selection-end-line="6" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59372663">
-          <caret line="57" column="24" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="177" column="24" selection-start-line="177" selection-start-column="24" selection-end-line="177" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/codegen/AntlrObjectModelAdaptor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="85" column="12" selection-start-line="85" selection-start-column="12" selection-end-line="85" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/codegen/DependencyGraphTest.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="34" column="25" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1718,10 +2134,147 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/ParserInterpreter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="83.888885">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/Parser.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.333333">
+          <caret line="54" column="32" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/InterpreterRuleContext.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.555555">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/tree/ParseTreeProperty.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.3333333">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/tool/templates/codegen/Java/Java.stg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21004942">
+          <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/tree/Trees.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-25.0">
+          <caret line="67" column="66" selection-start-line="67" selection-start-column="66" selection-end-line="67" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/codegen/AntlrObjectModelAdaptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29325154">
+          <caret line="96" column="29" selection-start-line="96" selection-start-column="29" selection-end-line="96" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/tree/TerminalNode.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1142132">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/resources/parsing/NGFP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="168" column="44" selection-start-line="168" selection-start-column="44" selection-end-line="168" selection-end-column="44" />
+          <folding>
+            <element signature="e#988#989#0" expanded="false" />
+            <element signature="e#1027#1028#0" expanded="false" />
+            <element signature="e#1914#1915#0" expanded="false" />
+            <element signature="e#1962#1963#0" expanded="false" />
+            <element signature="e#2014#2015#0" expanded="false" />
+            <element signature="e#2048#2049#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.11.7/scala-library-2.11.7-sources.jar!/scala/collection/SeqLike.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33278418">
+          <caret line="270" column="6" selection-start-line="270" selection-start-column="6" selection-end-line="270" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/ParserRuleContext.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8388325">
+          <caret line="168" column="13" selection-start-line="168" selection-start-column="13" selection-end-line="168" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ValidationListener.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09202454">
+          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ParseTreeScopeAnnotations.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="7" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+          <folding>
+            <element signature="e#17#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="78" column="23" selection-start-line="78" selection-start-column="23" selection-end-line="82" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1729,7 +2282,311 @@
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="15" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
+          <caret line="17" column="72" selection-start-line="17" selection-start-column="72" selection-end-line="17" selection-end-column="72" />
+          <folding>
+            <element signature="e#25#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6441718">
+          <caret line="98" column="7" selection-start-line="98" selection-start-column="7" selection-end-line="98" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14827017">
+          <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3687" column="38" selection-start-line="3687" selection-start-column="38" selection-end-line="3687" selection-end-column="38" />
+          <folding>
+            <element signature="e#493#562#0" expanded="false" />
+            <element signature="e#6547#6548#0" expanded="false" />
+            <element signature="e#6571#6572#0" expanded="false" />
+            <element signature="e#6621#6622#0" expanded="false" />
+            <element signature="e#6645#6646#0" expanded="false" />
+            <element signature="e#7189#7190#0" expanded="false" />
+            <element signature="e#7255#7256#0" expanded="false" />
+            <element signature="e#7301#7302#0" expanded="false" />
+            <element signature="e#7360#7361#0" expanded="false" />
+            <element signature="e#7432#7433#0" expanded="false" />
+            <element signature="e#7469#7470#0" expanded="false" />
+            <element signature="e#9061#9062#0" expanded="false" />
+            <element signature="e#9098#9099#0" expanded="false" />
+            <element signature="e#10811#10812#0" expanded="false" />
+            <element signature="e#10848#10849#0" expanded="false" />
+            <element signature="e#12235#12236#0" expanded="false" />
+            <element signature="e#12292#12293#0" expanded="false" />
+            <element signature="e#12341#12342#0" expanded="false" />
+            <element signature="e#12399#12400#0" expanded="false" />
+            <element signature="e#12475#12476#0" expanded="false" />
+            <element signature="e#12512#12513#0" expanded="false" />
+            <element signature="e#14009#14010#0" expanded="false" />
+            <element signature="e#14066#14067#0" expanded="false" />
+            <element signature="e#14116#14117#0" expanded="false" />
+            <element signature="e#14177#14178#0" expanded="false" />
+            <element signature="e#14252#14253#0" expanded="false" />
+            <element signature="e#14289#14290#0" expanded="false" />
+            <element signature="e#15822#15823#0" expanded="false" />
+            <element signature="e#15876#15877#0" expanded="false" />
+            <element signature="e#15918#15919#0" expanded="false" />
+            <element signature="e#15975#15976#0" expanded="false" />
+            <element signature="e#16132#16133#0" expanded="false" />
+            <element signature="e#16193#16194#0" expanded="false" />
+            <element signature="e#16271#16272#0" expanded="false" />
+            <element signature="e#16308#16309#0" expanded="false" />
+            <element signature="e#18090#18091#0" expanded="false" />
+            <element signature="e#18147#18148#0" expanded="false" />
+            <element signature="e#18328#18329#0" expanded="false" />
+            <element signature="e#18365#18366#0" expanded="false" />
+            <element signature="e#19941#19942#0" expanded="false" />
+            <element signature="e#20002#20003#0" expanded="false" />
+            <element signature="e#20044#20045#0" expanded="false" />
+            <element signature="e#20101#20102#0" expanded="false" />
+            <element signature="e#20172#20173#0" expanded="false" />
+            <element signature="e#20209#20210#0" expanded="false" />
+            <element signature="e#21894#21895#0" expanded="false" />
+            <element signature="e#21931#21932#0" expanded="false" />
+            <element signature="e#23413#23414#0" expanded="false" />
+            <element signature="e#23450#23451#0" expanded="false" />
+            <element signature="e#25231#25232#0" expanded="false" />
+            <element signature="e#25268#25269#0" expanded="false" />
+            <element signature="e#27035#27036#0" expanded="false" />
+            <element signature="e#27096#27097#0" expanded="false" />
+            <element signature="e#27290#27291#0" expanded="false" />
+            <element signature="e#27327#27328#0" expanded="false" />
+            <element signature="e#29079#29080#0" expanded="false" />
+            <element signature="e#29141#29142#0" expanded="false" />
+            <element signature="e#29200#29201#0" expanded="false" />
+            <element signature="e#29263#29264#0" expanded="false" />
+            <element signature="e#29337#29338#0" expanded="false" />
+            <element signature="e#29374#29375#0" expanded="false" />
+            <element signature="e#31935#31936#0" expanded="false" />
+            <element signature="e#31972#31973#0" expanded="false" />
+            <element signature="e#33940#33941#0" expanded="false" />
+            <element signature="e#33977#33978#0" expanded="false" />
+            <element signature="e#34145#34146#0" expanded="false" />
+            <element signature="e#34173#34174#0" expanded="false" />
+            <element signature="e#34304#34305#0" expanded="false" />
+            <element signature="e#34360#34361#0" expanded="false" />
+            <element signature="e#35248#35249#0" expanded="false" />
+            <element signature="e#35313#35314#0" expanded="false" />
+            <element signature="e#36192#36193#0" expanded="false" />
+            <element signature="e#36254#36255#0" expanded="false" />
+            <element signature="e#37121#37122#0" expanded="false" />
+            <element signature="e#37183#37184#0" expanded="false" />
+            <element signature="e#38187#38188#0" expanded="false" />
+            <element signature="e#38249#38250#0" expanded="false" />
+            <element signature="e#38308#38309#0" expanded="false" />
+            <element signature="e#38371#38372#0" expanded="false" />
+            <element signature="e#42076#42077#0" expanded="false" />
+            <element signature="e#42133#42134#0" expanded="false" />
+            <element signature="e#42173#42174#0" expanded="false" />
+            <element signature="e#42229#42230#0" expanded="false" />
+            <element signature="e#42318#42319#0" expanded="false" />
+            <element signature="e#42355#42356#0" expanded="false" />
+            <element signature="e#44073#44074#0" expanded="false" />
+            <element signature="e#44110#44111#0" expanded="false" />
+            <element signature="e#44257#44258#0" expanded="false" />
+            <element signature="e#44285#44286#0" expanded="false" />
+            <element signature="e#44411#44412#0" expanded="false" />
+            <element signature="e#44472#44473#0" expanded="false" />
+            <element signature="e#45392#45393#0" expanded="false" />
+            <element signature="e#45449#45450#0" expanded="false" />
+            <element signature="e#45499#45500#0" expanded="false" />
+            <element signature="e#45560#45561#0" expanded="false" />
+            <element signature="e#46439#46440#0" expanded="false" />
+            <element signature="e#46496#46497#0" expanded="false" />
+            <element signature="e#46544#46545#0" expanded="false" />
+            <element signature="e#46600#46601#0" expanded="false" />
+            <element signature="e#46647#46648#0" expanded="false" />
+            <element signature="e#46704#46705#0" expanded="false" />
+            <element signature="e#47516#47517#0" expanded="false" />
+            <element signature="e#47573#47574#0" expanded="false" />
+            <element signature="e#47623#47624#0" expanded="false" />
+            <element signature="e#47684#47685#0" expanded="false" />
+            <element signature="e#50074#50075#0" expanded="false" />
+            <element signature="e#50111#50112#0" expanded="false" />
+            <element signature="e#50261#50262#0" expanded="false" />
+            <element signature="e#50289#50290#0" expanded="false" />
+            <element signature="e#57539#57540#0" expanded="false" />
+            <element signature="e#57595#57596#0" expanded="false" />
+            <element signature="e#57642#57643#0" expanded="false" />
+            <element signature="e#57699#57700#0" expanded="false" />
+            <element signature="e#57777#57778#0" expanded="false" />
+            <element signature="e#57814#57815#0" expanded="false" />
+            <element signature="e#59584#59585#0" expanded="false" />
+            <element signature="e#59649#59650#0" expanded="false" />
+            <element signature="e#59736#59737#0" expanded="false" />
+            <element signature="e#59773#59774#0" expanded="false" />
+            <element signature="e#61421#61422#0" expanded="false" />
+            <element signature="e#61486#61487#0" expanded="false" />
+            <element signature="e#63288#63289#0" expanded="false" />
+            <element signature="e#63325#63326#0" expanded="false" />
+            <element signature="e#63475#63476#0" expanded="false" />
+            <element signature="e#63503#63504#0" expanded="false" />
+            <element signature="e#63713#63714#0" expanded="false" />
+            <element signature="e#63769#63770#0" expanded="false" />
+            <element signature="e#63816#63817#0" expanded="false" />
+            <element signature="e#63873#63874#0" expanded="false" />
+            <element signature="e#64675#64676#0" expanded="false" />
+            <element signature="e#64726#64727#0" expanded="false" />
+            <element signature="e#67710#67711#0" expanded="false" />
+            <element signature="e#67747#67748#0" expanded="false" />
+            <element signature="e#67879#67880#0" expanded="false" />
+            <element signature="e#67907#67908#0" expanded="false" />
+            <element signature="e#68017#68018#0" expanded="false" />
+            <element signature="e#68074#68075#0" expanded="false" />
+            <element signature="e#69824#69825#0" expanded="false" />
+            <element signature="e#69890#69891#0" expanded="false" />
+            <element signature="e#70719#70720#0" expanded="false" />
+            <element signature="e#70776#70777#0" expanded="false" />
+            <element signature="e#71581#71582#0" expanded="false" />
+            <element signature="e#71642#71643#0" expanded="false" />
+            <element signature="e#73496#73497#0" expanded="false" />
+            <element signature="e#73557#73558#0" expanded="false" />
+            <element signature="e#74390#74391#0" expanded="false" />
+            <element signature="e#74455#74456#0" expanded="false" />
+            <element signature="e#77248#77249#0" expanded="false" />
+            <element signature="e#77285#77286#0" expanded="false" />
+            <element signature="e#77435#77436#0" expanded="false" />
+            <element signature="e#77463#77464#0" expanded="false" />
+            <element signature="e#79449#79450#0" expanded="false" />
+            <element signature="e#79510#79511#0" expanded="false" />
+            <element signature="e#81232#81233#0" expanded="false" />
+            <element signature="e#81294#81295#0" expanded="false" />
+            <element signature="e#85812#85813#0" expanded="false" />
+            <element signature="e#85849#85850#0" expanded="false" />
+            <element signature="e#86029#86030#0" expanded="false" />
+            <element signature="e#86057#86058#0" expanded="false" />
+            <element signature="e#86298#86299#0" expanded="false" />
+            <element signature="e#86358#86359#0" expanded="false" />
+            <element signature="e#86413#86414#0" expanded="false" />
+            <element signature="e#86474#86475#0" expanded="false" />
+            <element signature="e#87403#87404#0" expanded="false" />
+            <element signature="e#87464#87465#0" expanded="false" />
+            <element signature="e#88360#88361#0" expanded="false" />
+            <element signature="e#88421#88422#0" expanded="false" />
+            <element signature="e#91179#91180#0" expanded="false" />
+            <element signature="e#91216#91217#0" expanded="false" />
+            <element signature="e#92743#92744#0" expanded="false" />
+            <element signature="e#92799#92800#0" expanded="false" />
+            <element signature="e#92846#92847#0" expanded="false" />
+            <element signature="e#92903#92904#0" expanded="false" />
+            <element signature="e#92988#92989#0" expanded="false" />
+            <element signature="e#93025#93026#0" expanded="false" />
+            <element signature="e#95350#95351#0" expanded="false" />
+            <element signature="e#95387#95388#0" expanded="false" />
+            <element signature="e#96910#96911#0" expanded="false" />
+            <element signature="e#96971#96972#0" expanded="false" />
+            <element signature="e#97050#97051#0" expanded="false" />
+            <element signature="e#97087#97088#0" expanded="false" />
+            <element signature="e#98580#98581#0" expanded="false" />
+            <element signature="e#98641#98642#0" expanded="false" />
+            <element signature="e#98822#98823#0" expanded="false" />
+            <element signature="e#98859#98860#0" expanded="false" />
+            <element signature="e#100383#100384#0" expanded="false" />
+            <element signature="e#100444#100445#0" expanded="false" />
+            <element signature="e#100671#100672#0" expanded="false" />
+            <element signature="e#100708#100709#0" expanded="false" />
+            <element signature="e#102558#102559#0" expanded="false" />
+            <element signature="e#102624#102625#0" expanded="false" />
+            <element signature="e#102676#102677#0" expanded="false" />
+            <element signature="e#102738#102739#0" expanded="false" />
+            <element signature="e#102816#102817#0" expanded="false" />
+            <element signature="e#102853#102854#0" expanded="false" />
+            <element signature="e#104472#104473#0" expanded="false" />
+            <element signature="e#104532#104533#0" expanded="false" />
+            <element signature="e#104587#104588#0" expanded="false" />
+            <element signature="e#104648#104649#0" expanded="false" />
+            <element signature="e#104730#104731#0" expanded="false" />
+            <element signature="e#104767#104768#0" expanded="false" />
+            <element signature="e#106446#106447#0" expanded="false" />
+            <element signature="e#106511#106512#0" expanded="false" />
+            <element signature="e#106590#106591#0" expanded="false" />
+            <element signature="e#106627#106628#0" expanded="false" />
+            <element signature="e#108622#108623#0" expanded="false" />
+            <element signature="e#108687#108688#0" expanded="false" />
+            <element signature="e#108770#108771#0" expanded="false" />
+            <element signature="e#108807#108808#0" expanded="false" />
+            <element signature="e#110853#110854#0" expanded="false" />
+            <element signature="e#110911#110912#0" expanded="false" />
+            <element signature="e#110962#110963#0" expanded="false" />
+            <element signature="e#111021#111022#0" expanded="false" />
+            <element signature="e#111099#111100#0" expanded="false" />
+            <element signature="e#111136#111137#0" expanded="false" />
+            <element signature="e#113262#113263#0" expanded="false" />
+            <element signature="e#113327#113328#0" expanded="false" />
+            <element signature="e#113383#113384#0" expanded="false" />
+            <element signature="e#113447#113448#0" expanded="false" />
+            <element signature="e#113523#113524#0" expanded="false" />
+            <element signature="e#113560#113561#0" expanded="false" />
+            <element signature="e#115341#115342#0" expanded="false" />
+            <element signature="e#115397#115398#0" expanded="false" />
+            <element signature="e#115444#115445#0" expanded="false" />
+            <element signature="e#115501#115502#0" expanded="false" />
+            <element signature="e#115583#115584#0" expanded="false" />
+            <element signature="e#115620#115621#0" expanded="false" />
+            <element signature="e#117627#117628#0" expanded="false" />
+            <element signature="e#117684#117685#0" expanded="false" />
+            <element signature="e#117740#117741#0" expanded="false" />
+            <element signature="e#117800#117801#0" expanded="false" />
+            <element signature="e#117855#117856#0" expanded="false" />
+            <element signature="e#117916#117917#0" expanded="false" />
+            <element signature="e#117997#117998#0" expanded="false" />
+            <element signature="e#118034#118035#0" expanded="false" />
+            <element signature="e#119671#119672#0" expanded="false" />
+            <element signature="e#119728#119729#0" expanded="false" />
+            <element signature="e#119915#119916#0" expanded="false" />
+            <element signature="e#119980#119981#0" expanded="false" />
+            <element signature="e#120054#120055#0" expanded="false" />
+            <element signature="e#120091#120092#0" expanded="false" />
+            <element signature="e#129454#129455#0" expanded="false" />
+            <element signature="e#129491#129492#0" expanded="false" />
+            <element signature="e#132221#132222#0" expanded="false" />
+            <element signature="e#132282#132283#0" expanded="false" />
+            <element signature="e#132364#132365#0" expanded="false" />
+            <element signature="e#132401#132402#0" expanded="false" />
+            <element signature="e#133911#133912#0" expanded="false" />
+            <element signature="e#133972#133973#0" expanded="false" />
+            <element signature="e#134302#134303#0" expanded="false" />
+            <element signature="e#134339#134340#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="199" column="2" selection-start-line="199" selection-start-column="2" selection-end-line="199" selection-end-column="2" />
+          <folding>
+            <element signature="e#25#142#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1737,24 +2594,19 @@
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="3" selection-start-line="35" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
+          <caret line="68" column="45" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="19" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.049423393">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.5930807">
+          <caret line="48" column="42" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
+          <folding>
+            <element signature="e#17#33#0" expanded="true" />
+            <element signature="e#515#539#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

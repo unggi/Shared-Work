@@ -1,5 +1,10 @@
 // Generated from /Users/unggi/Development/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
 package rules;
+
+import codegen.symbols.ModelReferenceSymbol;
+import codegen.symbols.Symbol;
+import java.util.Collections;
+
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -77,11 +82,11 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMultipleContextParameter(BusinessRulesParser.MultipleContextParameterContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link BusinessRulesParser#modelReferenceWithAlias}.
+	 * Visit a parse tree produced by {@link BusinessRulesParser#modelReferenceParameter}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitModelReferenceWithAlias(BusinessRulesParser.ModelReferenceWithAliasContext ctx);
+	T visitModelReferenceParameter(BusinessRulesParser.ModelReferenceParameterContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link BusinessRulesParser#constraint}.
 	 * @param ctx the parse tree
@@ -453,6 +458,12 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitSimpleTerm(BusinessRulesParser.SimpleTermContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link BusinessRulesParser#collectionMemberConstraint}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCollectionMemberConstraint(BusinessRulesParser.CollectionMemberConstraintContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ConstrainedCollectionMembership}
 	 * labeled alternative in {@link BusinessRulesParser#existsStatement}.

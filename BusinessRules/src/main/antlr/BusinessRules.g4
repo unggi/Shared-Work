@@ -1,8 +1,10 @@
 grammar BusinessRules;
 
 
-@Before {
-    System.out.println("Before action");
+@header {
+import codegen.symbols.ModelReferenceSymbol;
+import codegen.symbols.Symbol;
+import java.util.Collections;
 }
 
 //
@@ -44,13 +46,13 @@ ruleSet  : 'Rule set' DoubleQuotedString ('applies to' modelReference 'where' co
 
 //globalVariableDeclaration  : simpleVariableDeclaration;
 
-context  : 'Context:' modelReferenceWithAlias;
+context  : 'Context:' modelReferenceParameter;
 
 multipleParameterContext  : 'Context:' multipleContextParameter;
 
-multipleContextParameter  : modelReferenceWithAlias (',' modelReferenceWithAlias)*;
+multipleContextParameter  : modelReferenceParameter (',' modelReferenceParameter)*;
 
-modelReferenceWithAlias : ref=modelReference '(' alias=DoubleQuotedString ')';
+modelReferenceParameter : ref=modelReference '(' alias=DoubleQuotedString ')';
 
 //
 // Constraints
@@ -162,13 +164,17 @@ selectionExpression  : ('first' 'of'?)? modelReference 'where' simpleOrComplexCo
 //
 // Model References and Paths
 //
-modelReference  : (propPath = propertyOfModelPath | dotPath = dottedModelPath );
+modelReference locals[Symbol symbol, List<TerminalNode> path] : (propPath = propertyOfModelPath | dotPath = dottedModelPath );
 
 modelReferenceList  : (modelReference)+;
 
-dottedModelPath  : ModelElementName ('.' ModelElementName)* ;
+dottedModelPath  : ModelElementName ('.' ModelElementName)* { $modelReference::path = $ctx.getTokens(ModelElementName); };
 
-propertyOfModelPath : ModelElementName ('of' ModelElementName)+;
+propertyOfModelPath : ModelElementName ('of' ModelElementName)+
+{
+    $modelReference::path = $ctx.getTokens(ModelElementName);
+    Collections.reverse($modelReference::path);
+};
 
 //
 // Reporting
@@ -189,6 +195,29 @@ simpleTerm  :
     |   functionalExpression
     |   operatorInvocation
     ;
+
+
+//
+// Quantifiers
+//
+collectionMemberConstraint[ModelReferenceContext reference] : simpleOrComplexConstraint;
+
+existsStatement :
+                    (enumerator ('of the')?)? ref=modelReference
+                    ('has' | 'have' | 'is' | 'are') ('present' | collectionMemberConstraint[$ref.ctx]) #ConstrainedCollectionMembership
+                |   enumerator ('has' | 'have' | 'is' | 'are') simpleOrComplexConstraint     #SimpleExists
+                ;
+
+enumerator  : (at_least = 'at least' | at_most = 'at most' | exactly ='exactly')? (one = 'one' | two='two' | three='three' | four='four' | no='no' | none='none' | integer = IntegerNumber);
+
+notExistsStatement  :   modelReference ('is not present' | 'are not present');
+
+// globalExistsStatement   :    ('there is' | 'there are') ('no')? modelReference ('(' DoubleQuotedString ')')? ('where' simpleOrComplexConstraint)?;
+
+forallStatement :
+                    ('each' | 'in each' | 'all' | 'every') ('of the')?  modelReference ('has' | 'have' | 'is' | 'are')? simpleOrComplexConstraint
+                |   'for each' DoubleQuotedString 'in the collection of' modelReference ('has' | 'have' | 'is' | 'are' | ',')? simpleOrComplexConstraint
+                ;
 
 //
 // Lexical Rules
@@ -225,23 +254,4 @@ COMMENT             :   '--' .*? '\r'? '\n' -> skip;
 LINE_COMMENT        :   '//' .*? '\r'? '\n' -> skip;
 WS                  :   [ \t\r\n]+ -> skip;
 
-//
-// Quantifiers
-//
-existsStatement :
-                    (enumerator ('of the')?)? modelReference
-                    ('has' | 'have' | 'is' | 'are') ('present' | collectionConstraint = simpleOrComplexConstraint) #ConstrainedCollectionMembership
-                |   enumerator ('has' | 'have' | 'is' | 'are') simpleOrComplexConstraint    #SimpleExists
-                ;
-
-enumerator  : (at_least = 'at least' | at_most = 'at most' | exactly ='exactly')? (one = 'one' | two='two' | three='three' | four='four' | no='no' | none='none' | integer = IntegerNumber);
-
-notExistsStatement  :   modelReference ('is not present' | 'are not present');
-
-// globalExistsStatement   :    ('there is' | 'there are') ('no')? modelReference ('(' DoubleQuotedString ')')? ('where' simpleOrComplexConstraint)?;
-
-forallStatement :
-                    ('each' | 'in each' | 'all' | 'every') ('of the')?  modelReference ('has' | 'have' | 'is' | 'are')? simpleOrComplexConstraint
-                |   'for each' DoubleQuotedString 'in the collection of' modelReference ('has' | 'have' | 'is' | 'are' | ',')? simpleOrComplexConstraint
-                ;
 

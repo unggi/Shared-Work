@@ -100,13 +100,14 @@ object CodeGenerator {
 
     val walker = new ParseTreeWalker()
 
-    val builder = new SymbolTableBuilder(true)
+    val builder = new SymbolTableBuilder(false)
 
     val declarationPhase = new DeclarationPhase(builder)
-    val validator = new ValidationListener(builder.symbolTable)
-
     walker.walk(declarationPhase, tree)
-    walker.walk(validator, tree)
+
+    val resolver = new ResolutionPhase(builder.symbolTable, declarationPhase.nodeScopes)
+    walker.walk(resolver, tree)
+
     walker.walk(generator, tree)
 
     println("Parsing is complete")
@@ -118,7 +119,7 @@ object CodeGenerator {
     //  dependencyAnalyzer.graph.render(new AutoIndentWriter(new PrintWriter(System.err)))
   }
 
-  def printTreeClasses(ctx: ParseTree, depth: Int, scopes: ParseTreeScopeMap): Unit = {
+  def printTreeClasses(ctx: ParseTree, depth: Int, scopes: ParseTreeScopeAnnotations): Unit = {
 
     for (i <- 0 until ctx.getChildCount) {
       val child = ctx.getChild(i)

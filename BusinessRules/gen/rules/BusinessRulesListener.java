@@ -1,5 +1,10 @@
 // Generated from /Users/unggi/Development/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
 package rules;
+
+import codegen.symbols.ModelReferenceSymbol;
+import codegen.symbols.Symbol;
+import java.util.Collections;
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -118,15 +123,15 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitMultipleContextParameter(BusinessRulesParser.MultipleContextParameterContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#modelReferenceWithAlias}.
+	 * Enter a parse tree produced by {@link BusinessRulesParser#modelReferenceParameter}.
 	 * @param ctx the parse tree
 	 */
-	void enterModelReferenceWithAlias(BusinessRulesParser.ModelReferenceWithAliasContext ctx);
+	void enterModelReferenceParameter(BusinessRulesParser.ModelReferenceParameterContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#modelReferenceWithAlias}.
+	 * Exit a parse tree produced by {@link BusinessRulesParser#modelReferenceParameter}.
 	 * @param ctx the parse tree
 	 */
-	void exitModelReferenceWithAlias(BusinessRulesParser.ModelReferenceWithAliasContext ctx);
+	void exitModelReferenceParameter(BusinessRulesParser.ModelReferenceParameterContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BusinessRulesParser#constraint}.
 	 * @param ctx the parse tree
@@ -757,6 +762,16 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSimpleTerm(BusinessRulesParser.SimpleTermContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BusinessRulesParser#collectionMemberConstraint}.
+	 * @param ctx the parse tree
+	 */
+	void enterCollectionMemberConstraint(BusinessRulesParser.CollectionMemberConstraintContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BusinessRulesParser#collectionMemberConstraint}.
+	 * @param ctx the parse tree
+	 */
+	void exitCollectionMemberConstraint(BusinessRulesParser.CollectionMemberConstraintContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ConstrainedCollectionMembership}
 	 * labeled alternative in {@link BusinessRulesParser#existsStatement}.
