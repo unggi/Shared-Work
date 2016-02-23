@@ -51,9 +51,7 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     assume(ctx.reference != null)
     assume(ctx.reference.symbol == null, "In declaration phase the symbol has not been set.")
 
-
-    symbolTable.openScope(new CollectionMemberScope(symbolTable.scope, "_", null))
-
+    symbolTable.openScope(new CollectionMemberScope(symbolTable.scope))
 
     nodeScopes.put(ctx, symbolTable.scope)
   }

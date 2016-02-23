@@ -77,17 +77,15 @@ case class MatchScope(parentScope: NestedScope, modelParameterName: String, mode
 
 }
 
-class CollectionMemberScope(parentScope: NestedScope, parameterName: String, collectionSymbol: ModelReferenceSymbol) extends NestedScope(Some(parentScope)) {
+class CollectionMemberScope(parentScope: NestedScope) extends NestedScope(Some(parentScope)) {
 
-  declare(new ModelParameterSymbol(parameterName, collectionSymbol))
+  var collectionSymbol: Symbol = _
+  var parameterName: String = _
 
-  override def resolveImplicitParameter(name: String): Option[Symbol] = {
+  override def resolveImplicitParameter(name: String): Option[Symbol] =
     Some(resolve(name) match {
       case Some(symbol) => symbol
       case None => collectionSymbol
     })
-
-  }
-
 }
 
