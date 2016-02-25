@@ -51,7 +51,7 @@ ParameterList(parms) ::= <%
     }; separator=", " >
 %>
 
-ParametersWithCasting(parms) ::= <%
+ArgsWithCasting(parms) ::= <%
     <parms.modelReferenceWithAlias:
     { r
         |<r.ref.text> <r.alias.text;format="unquoted">
@@ -167,15 +167,3 @@ PropertyOfModelPath(path) ::= <%
     <reverse(path.ModelElementName); separator=".">
 %>
 
-ShowMethods(node) ::= <<
-    <[node.class.declaredMethods,node.class.declaredFields]:ShowMethod(); separator="\n">
->>
-
-ShowMethod(m) ::= <<
-<m.name; format="%-20s"> defined in <m.declaringClass.simpleName>
->>
-
-Show(node) ::= <<
-    <node.Class.SimpleName>(<node.text>)
-    <node.children:Show()>
->>

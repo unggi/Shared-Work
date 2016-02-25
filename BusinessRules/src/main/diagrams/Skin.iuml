@@ -46,7 +46,6 @@ skinparam sequence {
 }
 
 skinparam object {
-    ArrowColor #
     BackgroundColor #add1b2
     BorderColor #555555
     FontSize 12
@@ -54,4 +53,6 @@ skinparam object {
     FontStyle plain
 
 }
+
+hide members
 

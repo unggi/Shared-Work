@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="&lt;elseif ()&gt;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/rules/runtime/RuleRunner.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/rules/runtime/RuleSet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/codegen/AntlrObjectModelAdaptor.java" afterPath="$PROJECT_DIR$/src/main/java/codegen/AntlrObjectModelAdaptor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseListener.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseVisitor.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesListener.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesVisitor.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/CodeGenTool.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/CodeGenTool.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/templates/Java.stg" afterPath="$PROJECT_DIR$/src/main/templates/Java.stg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/org_antlr_antlr4_4_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/org_antlr_antlr4_4_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/resources/parsing/proposed.nrl" afterPath="$PROJECT_DIR$/src/test/resources/parsing/proposed.nrl" />
+    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="CollectionMemberScope has a null symbol during declaration phase.">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BusinessRules.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
+    <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,92 +18,193 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/BusinessRules$CodeGenerator.coverage" NAME="CodeGenerator Coverage Results" MODIFIED="1448742857529" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>codegen.*</FILTER>
+    </SUITE>
+  </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="NFPS.nrl" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="NGFP.java" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/test/resources/parsing/NGFP.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="168" column="44" selection-start-line="168" selection-start-column="44" selection-end-line="168" selection-end-column="44" />
+                    <folding>
+                      <element signature="e#988#989#0" expanded="false" />
+                      <element signature="e#1027#1028#0" expanded="false" />
+                      <element signature="e#1914#1915#0" expanded="false" />
+                      <element signature="e#1962#1963#0" expanded="false" />
+                      <element signature="e#2014#2015#0" expanded="false" />
+                      <element signature="e#2048#2049#0" expanded="false" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="CodeGenerator.scala" pinned="true" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.6441718">
+                    <caret line="98" column="7" selection-start-line="98" selection-start-column="7" selection-end-line="98" selection-end-column="7" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file leaf-file-name="Scala.stg" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="78" column="23" selection-start-line="78" selection-start-column="23" selection-end-line="82" selection-end-column="0" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="BusinessRules" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.48978686">
-      <split-first>
-        <leaf>
-          <file leaf-file-name="CodeGenTool.scala" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenTool.scala">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.2058319">
-                  <caret line="103" column="89" selection-start-line="103" selection-start-column="31" selection-end-line="103" selection-end-column="31" />
-                  <folding>
-                    <element signature="e#17#69#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="RuleRunner.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/rules/runtime/RuleRunner.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="RuleSet.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/rules/runtime/RuleSet.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="2" column="38" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Java.stg" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/templates/Java.stg">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="BusinessRules.g4" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.4245283">
-                  <caret line="37" column="81" selection-start-line="37" selection-start-column="81" selection-end-line="37" selection-end-column="81" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file leaf-file-name="Scope.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DependencyAnalyzer.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SymbolTableBuilder.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Symbol.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="16" column="72" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
+              <folding>
+                <marker date="1456147550000" expanded="true" signature="32:70" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DeclarationPhase.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="49" column="31" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
+              <folding>
+                <element signature="e#17#117#0" expanded="true" />
+                <element signature="e#390#414#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BusinessRules.g4" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="201" column="2" selection-start-line="201" selection-start-column="2" selection-end-line="201" selection-end-column="2" />
+              <folding>
+                <element signature="e#25#142#1" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResolutionPhase.scala" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.4797546">
+              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+              <folding>
+                <element signature="e#17#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BusinessRulesListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="28" column="7" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
         <option value="Interface" />
+        <option value="UML Class" />
+        <option value="Scala Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Unggi Soemardjo &lt;unggi@soemardjo.com&gt;" />
         <option value="Unggi Soemardjo" />
+        <option value="unggi@soemardjo.com &lt;unggi@soemardjo.com&gt;" />
       </list>
     </option>
+    <option name="UPDATE_TYPE" value="REBASE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="Home" />
+      </map>
+    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -125,21 +217,54 @@
         <option value="$PROJECT_DIR$/src/test/resources/parsing/boolean.nrl" />
         <option value="$PROJECT_DIR$/src/test/resources/parsing/examples-from-spec.nrl" />
         <option value="$PROJECT_DIR$/src/main/java/BusinessRules/App.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/rules/tool/App.java" />
         <option value="$PROJECT_DIR$/src/main/templates/PrettyPrint.stg" />
         <option value="$PROJECT_DIR$/src/main/java/rules/tool/RuleListener.java" />
         <option value="$PROJECT_DIR$/src/main/java/rules/tool/Tool.java" />
         <option value="$PROJECT_DIR$/src/main/templates/JavaRules.stg" />
-        <option value="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" />
         <option value="$PROJECT_DIR$/src/main/java/BusinessRules/runtime/RuleRunner.java" />
         <option value="$PROJECT_DIR$/src/main/java/BusinessRules/runtime/RuleSet.java" />
         <option value="$PROJECT_DIR$/src/main/java/rules/runtime/RuleRunner.java" />
         <option value="$PROJECT_DIR$/gen/rules/compiled/IntroductoryExample.java" />
-        <option value="$PROJECT_DIR$/src/main/java/codegen/AntlrObjectModelAdaptor.java" />
-        <option value="$PROJECT_DIR$/src/main/templates/Java.stg" />
         <option value="$PROJECT_DIR$/src/test/resources/parsing/proposed.nrl" />
+        <option value="$PROJECT_DIR$/src/main/diagrams/Runtime Engine Class Diagram.puml" />
+        <option value="$PROJECT_DIR$/src/main/scala/rules/runtime/Rule.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/JavaTargetListener.scala" />
+        <option value="$PROJECT_DIR$/src/main/templates/Java.stg" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/analysis/AnalysisWalker.g" />
+        <option value="$PROJECT_DIR$/src/test/resources/parsing/Example01.nrl" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ScalaTargetListener.scala" />
+        <option value="$PROJECT_DIR$/target/rules/compiled/SimpleRulesExample.scala" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/StringArticleRenderer.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/rules/runtime/TestRuleSet.scala" />
+        <option value="$PROJECT_DIR$/.idea/misc.xml" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/StringFormatter.scala" />
+        <option value="$PROJECT_DIR$/src/main/diagrams/Skin.iuml" />
+        <option value="$PROJECT_DIR$/src/test/scala/codegen/DependencyGraphTest.scala" />
+        <option value="$PROJECT_DIR$/src/main/diagrams/Symbol Table.puml" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/DependencyGraph.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTable.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/ContextScope.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ValidationListener.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/CodeGenTool.scala" />
+        <option value="$PROJECT_DIR$/src/main/java/codegen/AntlrObjectModelAdaptor.java" />
+        <option value="$PROJECT_DIR$/src/test/resources/parsing/NGFP.java" />
+        <option value="$PROJECT_DIR$/src/test/resources/parsing/NFPS.nrl" />
+        <option value="$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ParseTreeScopeMap.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ParseTreeScopeAnnotations.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala" />
+        <option value="$PROJECT_DIR$/gen/rules/BusinessRulesParser.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala" />
+        <option value="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" />
+        <option value="$PROJECT_DIR$/src/main/templates/Scala.stg" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" />
+        <option value="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
       </list>
     </option>
   </component>
@@ -168,24 +293,6 @@
           <option name="myItemId" value="" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
         </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Parser" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Dependencies" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Parser" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
       </PATH>
     </treeState>
   </component>
@@ -196,10 +303,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="70" />
+    <option name="x" value="42" />
     <option name="y" value="23" />
-    <option name="width" value="2294" />
-    <option name="height" value="1289" />
+    <option name="width" value="1206" />
+    <option name="height" value="1337" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -211,35 +318,24 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="1" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
+      <flattenPackages ProjectPane="true" />
       <showMembers />
       <showModules />
       <showLibraryContents />
       <hideEmptyPackages />
       <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
+      <autoscrollToSource ProjectPane="true" />
+      <autoscrollFromSource ProjectPane="true" />
+      <sortByType ProjectPane="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Parser" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope">
-        <subPane subId="Project Files">
+        <subPane subId="Tests">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
               <option name="myItemId" value="" />
@@ -249,35 +345,11 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
+            <PATH_ELEMENT USER_OBJECT="src/test/resources">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BusinessRules">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BusinessRules">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="gen">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="rules">
+            <PATH_ELEMENT USER_OBJECT="parsing">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -306,73 +378,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ST4-4.0.8.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ST4-4.0.8.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="META-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ST4-4.0.8.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="META-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ST4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
+              <option name="myItemId" value="Maven: org.scalatest:scalatest_2.11:2.2.5" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -386,15 +392,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
+              <option name="myItemId" value="Maven: org.scala-lang:scala-library:2.11.7" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="runtime" />
+              <option name="myItemId" value="scala-library-2.11.7.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -408,19 +410,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
+              <option name="myItemId" value="Maven: org.scala-lang:scala-library:2.11.7" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
+              <option name="myItemId" value="scala-library-2.11.7.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="runtime" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tree" />
+              <option name="myItemId" value="collection" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -434,19 +432,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
+              <option name="myItemId" value="Maven: org.scala-lang:scala-library:2.11.7" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
+              <option name="myItemId" value="scala-library-2.11.7.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
+              <option name="myItemId" value="collection" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="v4" />
+              <option name="myItemId" value="SeqLike.class" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="antlr4-4.5.1.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -460,239 +476,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
+              <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="misc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codegen" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codegen" />
+              <option name="myItemId" value="antlr4-4.5.1.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -710,27 +498,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
+              <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
+              <option name="myItemId" value="antlr4-4.5.1.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="misc" />
+              <option name="myItemId" value="ast" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -744,27 +520,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
+              <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
+              <option name="myItemId" value="antlr4-4.5.1.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codegen" />
+              <option name="myItemId" value="tree" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -778,97 +542,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
+              <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
+              <option name="myItemId" value="antlr4-4.5.1.jar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="v4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codegen" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org.antlr:antlr4:4.5" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antlr4-4.5.jar" />
+              <option name="myItemId" value="runtime" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -906,11 +588,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="target" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="generated-sources" />
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -924,11 +606,19 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="target" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="codegen" />
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VRL" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -955,24 +645,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="parsing" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1019,12 +691,34 @@
               <option name="myItemId" value="scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="codegen" />
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="CodeGenTool.scala" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="symbols" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SymbolTableBuilder.scala" />
               <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1046,16 +740,16 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
+              <option name="myItemId" value="scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="rules" />
+              <option name="myItemId" value="symbols" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="Symbol.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1076,11 +770,41 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
+              <option name="myItemId" value="scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="rules" />
+              <option name="myItemId" value="symbols" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Scope.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="codegen" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1125,10 +849,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1172,36 +892,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gen" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compiled" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
@@ -1215,17 +914,17 @@
     <property name="options.searchVisible" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/resources/parsing/proposed.nrl" />
+    <property name="last_opened_file_path" value="$USER_HOME$/.m2" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="true" />
     <property name="Repository.Attach.Sources" value="true" />
     <property name="recentsLimit" value="5" />
-    <property name="restartRequiresConfirmation" value="true" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="dynamic.classpath" value="false" />
     <property name="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4::/auto-gen" value="true" />
     <property name="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4::/gen-listener" value="true" />
     <property name="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4::/gen-visitor" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Java" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="FullScreen" value="false" />
@@ -1233,6 +932,45 @@
     <property name="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4::/package" value="rules" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="364" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="366" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="370" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1164" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="364" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="366" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="370" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1164" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/scala/codegen/symbols" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="ScalaTest" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/resources/VRL" />
+      <recent name="$PROJECT_DIR$/src/main/diagrams" />
+      <recent name="$PROJECT_DIR$/src/main" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="org.scalatest.FunSuite" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="codegen.symbols" />
+      <recent name="codegen" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="codegen" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="codegen" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.CodeGenerator">
     <configuration default="false" name="CodeGenerator" type="Application" factoryName="Application" temporary="true">
@@ -1244,34 +982,78 @@
       </extension>
       <option name="MAIN_CLASS_NAME" value="codegen.CodeGenerator" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="src/test/resources/parsing/proposed.nrl" />
+      <option name="PROGRAM_PARAMETERS" value="-scala -outputClass SimpleRulesExample src/test/resources/parsing/Example01.nrl" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="Parser" />
+      <module name="BusinessRules" />
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="RuleRunner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="BusinessRules.runtime.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="BusinessRules.runtime.RuleRunner" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
+    <configuration default="false" name="TestRuleSet.A Stack should pop values in last-in-first-out order" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
       <module name="Parser" />
+      <setting name="path" value="rules.runtime.TestRuleSet" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="A Stack should pop values in last-in-first-out order" />
+      <setting name="testKind" value="Test name" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestRuleSet" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="Parser" />
+      <setting name="path" value="rules.runtime.TestRuleSet" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="DependencyGraphTest" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="BusinessRules" />
+      <setting name="path" value="codegen.DependencyGraphTest" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="TestRuleSet.A Trade should pass all constraints checks" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="BusinessRules" />
+      <setting name="path" value="rules.runtime.TestRuleSet" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="A Trade should pass all constraints checks" />
+      <setting name="testKind" value="Test name" />
+      <setting name="showProgressMessages" value="true" />
       <envs />
       <method />
     </configuration>
@@ -1316,6 +1098,55 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" runner="idea" />
       <module name="" />
@@ -1343,6 +1174,9 @@
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -1382,12 +1216,6 @@
       <setting name="testName" value="" />
       <setting name="testKind" value="Class" />
       <setting name="showProgressMessages" value="true" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
       <envs />
       <method />
     </configuration>
@@ -1450,11 +1278,11 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="TestRig" type="Application" factoryName="Application">
+    <configuration default="false" name="TestRig" type="Application" factoryName="Application" singleton="true">
       <extension name="coverage" enabled="false" merge="false" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="org.antlr.v4.runtime.misc.TestRig" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="rules.BusinessRules fileBody  -tokens -XdbgST -diagnostics -trace  -gui src/test/resources/parsing/proposed.nrl" />
+      <option name="PROGRAM_PARAMETERS" value="rules.BusinessRules fileBody  -tokens -XdbgST -diagnostics -trace  -gui src/test/resources/parsing/Example01.nrl" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -1495,17 +1323,23 @@
       <envs />
       <method />
     </configuration>
-    <list size="5">
+    <list size="8">
       <item index="0" class="java.lang.String" itemvalue="Application.TestRig" />
       <item index="1" class="java.lang.String" itemvalue="Application.TestRig Arguments" />
       <item index="2" class="java.lang.String" itemvalue="Application.Tool" />
       <item index="3" class="java.lang.String" itemvalue="Application.CodeGenerator" />
-      <item index="4" class="java.lang.String" itemvalue="Application.RuleRunner" />
+      <item index="4" class="java.lang.String" itemvalue="ScalaTest.TestRuleSet.A Stack should pop values in last-in-first-out order" />
+      <item index="5" class="java.lang.String" itemvalue="ScalaTest.TestRuleSet" />
+      <item index="6" class="java.lang.String" itemvalue="ScalaTest.DependencyGraphTest" />
+      <item index="7" class="java.lang.String" itemvalue="ScalaTest.TestRuleSet.A Trade should pass all constraints checks" />
     </list>
     <recent_temporary>
-      <list size="2">
+      <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Application.CodeGenerator" />
-        <item index="1" class="java.lang.String" itemvalue="Application.RuleRunner" />
+        <item index="1" class="java.lang.String" itemvalue="ScalaTest.DependencyGraphTest" />
+        <item index="2" class="java.lang.String" itemvalue="ScalaTest.TestRuleSet.A Trade should pass all constraints checks" />
+        <item index="3" class="java.lang.String" itemvalue="ScalaTest.TestRuleSet" />
+        <item index="4" class="java.lang.String" itemvalue="ScalaTest.TestRuleSet.A Stack should pop values in last-in-first-out order" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -1520,6 +1354,8 @@
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="StructureViewFactory">
+    <option name="AUTOSCROLL_MODE" value="false" />
+    <option name="AUTOSCROLL_FROM_SOURCE" value="true" />
     <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR,PARSER_LEXER_RULE_SORTER" />
   </component>
   <component name="SvnConfiguration">
@@ -1555,6 +1391,37 @@
       <workItem from="1439603869180" duration="25632000" />
       <workItem from="1439870055145" duration="15801000" />
       <workItem from="1440267599172" duration="25409000" />
+      <workItem from="1444186413551" duration="1049000" />
+      <workItem from="1444277957308" duration="3298000" />
+      <workItem from="1444645126689" duration="150000" />
+      <workItem from="1444868317896" duration="43267000" />
+      <workItem from="1445625337276" duration="1536000" />
+      <workItem from="1445775645437" duration="6604000" />
+      <workItem from="1448077228738" duration="2630000" />
+      <workItem from="1448107160565" duration="12563000" />
+      <workItem from="1448451557318" duration="8508000" />
+      <workItem from="1448562291635" duration="2951000" />
+      <workItem from="1448596756516" duration="132000" />
+      <workItem from="1448663565144" duration="52537000" />
+      <workItem from="1449618725345" duration="55705000" />
+      <workItem from="1450559902723" duration="13197000" />
+      <workItem from="1450660186004" duration="20040000" />
+      <workItem from="1450881929292" duration="7243000" />
+      <workItem from="1451000261278" duration="529000" />
+      <workItem from="1451003285830" duration="6224000" />
+      <workItem from="1451034261592" duration="664000" />
+      <workItem from="1451068019234" duration="21968000" />
+      <workItem from="1451217766649" duration="61092000" />
+      <workItem from="1452354482177" duration="35003000" />
+      <workItem from="1452912839927" duration="175000" />
+      <workItem from="1453012493092" duration="2379000" />
+      <workItem from="1453039479949" duration="486000" />
+      <workItem from="1453043062750" duration="2539000" />
+      <workItem from="1453045617157" duration="63931000" />
+      <workItem from="1454553751449" duration="13597000" />
+      <workItem from="1454802030693" duration="26384000" />
+      <workItem from="1455159022669" duration="1620000" />
+      <workItem from="1455745807630" duration="78912000" />
     </task>
     <task id="LOCAL-00001" summary="First end to end working version. Sample code is generated down to the predicate level.">
       <created>1439209622979</created>
@@ -1580,11 +1447,125 @@
       <option name="project" value="LOCAL" />
       <updated>1439981848847</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Refactoring of code generation driver to support scala generation.">
+      <created>1444907971346</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1444907971346</updated>
+    </task>
+    <task id="LOCAL-00006" summary="working symbol table and scala rule set sample">
+      <created>1445257862551</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1445257862551</updated>
+    </task>
+    <task id="LOCAL-00007" summary="In progress checkin - rule example and code example agree">
+      <created>1445424172556</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1445424172556</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Rule samples and grammar changes.">
+      <created>1445859812524</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1445859812524</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Example01 parsing is fixed">
+      <created>1448282415793</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1448282415793</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Code generation from Example01 is close but not done.">
+      <created>1449021486201</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1449021486201</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Generates &quot;number of&quot; clause">
+      <created>1449575634436</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1449575634436</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Example 01 parses and generates near working code.">
+      <created>1450790060289</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1450790060289</updated>
+    </task>
+    <task id="LOCAL-00013" summary="&#10;Builds nested scopes from model references in each context and applies those references to references in the constraint body.">
+      <created>1451395461252</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1451395461252</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Merging Home to master">
+      <created>1453044178127</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1453044178127</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Example 01 parses and generates near working code.">
+      <created>1453044849529</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1453044849529</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Checking in changes - Dependency Graph Complete">
+      <created>1453124225488</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1453124225488</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Added parameterized type to dependency nodes.">
+      <created>1453203429777</created>
+      <option name="number" value="00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1453203429777</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Dependency graph adds nodes as it is constructed. Edges don't work.">
+      <created>1453812049927</created>
+      <option name="number" value="00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1453812049927</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Dependency graph is now embedded in symbol table.&#10;&#10;DeclarationPhase is a tree walker that collects declarations of symbols.">
+      <created>1454938479952</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1454938479952</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Dependency graph is now embedded in symbol table.&#10;&#10;DeclarationPhase is a tree walker that collects declarations of symbols.">
+      <created>1455793485239</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1455793485239</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Dependency graph is now embedded in symbol table.&#10;&#10;DeclarationPhase is a tree walker that collects declarations of symbols.">
+      <created>1455883160225</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1455883160225</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Symbol table now built in two phases.">
+      <created>1456147560086</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1456147560086</updated>
+    </task>
+    <task id="LOCAL-00023" summary="CollectionMemberScope has a null symbol during declaration phase.">
+      <created>1456147791351</created>
+      <option name="number" value="00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1456147791351</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="243491000" />
+    <option name="totallyTimeSpent" value="790404000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1596,37 +1577,68 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="70" y="23" width="2294" height="1289" extended-state="0" />
+    <frame x="42" y="23" width="1206" height="1337" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="PlantUML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24557166" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" x="1618" y="194" width="873" height="564" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32447666" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32125604" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959184" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274707" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1265" y="75" width="1089" height="830" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928678" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36264658" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998326" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928678" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32663316" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32914573" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998326" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24955595" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15763766" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3835846" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.36971048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="2189" y="42" width="384" height="1321" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32769728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="false" weight="1.0" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" x="998" y="83" width="1450" height="1318" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.083984375" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39949748" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39941478" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4522003" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="PlantUML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24557166" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" x="1618" y="194" width="873" height="564" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32447666" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959184" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="false" weight="1.0" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" x="998" y="83" width="1450" height="1318" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.083984375" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39949748" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32125604" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39941478" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4522003" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274707" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1401" y="474" width="1089" height="830" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928678" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.36971048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="1755" y="39" width="384" height="1321" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -1640,15 +1652,43 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <MESSAGE value="First end to end working version. Sample code is generated down to the predicate level." />
     <MESSAGE value="Updated to generate down to Identifer, but not modelReference" />
     <MESSAGE value="Debugging spaces" />
-    <option name="LAST_COMMIT_MESSAGE" value="Debugging spaces" />
+    <MESSAGE value="Refactoring of code generation driver to support scala generation." />
+    <MESSAGE value="working symbol table and scala rule set sample" />
+    <MESSAGE value="In progress checkin - rule example and code example agree" />
+    <MESSAGE value="Rule samples and grammar changes." />
+    <MESSAGE value="Example01 parsing is fixed" />
+    <MESSAGE value="Code generation from Example01 is close but not done." />
+    <MESSAGE value="Generates &quot;number of&quot; clause" />
+    <MESSAGE value="&#10;Builds nested scopes from model references in each context and applies those references to references in the constraint body." />
+    <MESSAGE value="Merging Home to master" />
+    <MESSAGE value="Example 01 parses and generates near working code." />
+    <MESSAGE value="Checking in changes - Dependency Graph Complete" />
+    <MESSAGE value="Added parameterized type to dependency nodes." />
+    <MESSAGE value="Dependency graph adds nodes as it is constructed. Edges don't work." />
+    <MESSAGE value="Dependency graph is now embedded in symbol table.&#10;&#10;DeclarationPhase is a tree walker that collects declarations of symbols." />
+    <MESSAGE value="Symbol table now built in two phases." />
+    <MESSAGE value="CollectionMemberScope has a null symbol during declaration phase." />
+    <option name="LAST_COMMIT_MESSAGE" value="CollectionMemberScope has a null symbol during declaration phase." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="8" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala</url>
+          <line>41</line>
+          <properties />
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="32" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1657,242 +1697,296 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenTool.scala">
+    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesLexer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="118" column="14" selection-start-line="118" selection-start-column="14" selection-end-line="118" selection-end-column="14" />
-          <folding>
-            <element signature="e#17#69#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.71428573">
+          <caret line="44" column="42" selection-start-line="44" selection-start-column="42" selection-end-line="44" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/resources/parsing/proposed.nrl">
+    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesBaseVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
-          <folding />
+          <caret line="12" column="94" selection-start-line="12" selection-start-column="94" selection-end-line="12" selection-end-column="94" />
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/src.zip!/java/lang/Class.java">
+    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2937" column="51" selection-start-line="2937" selection-start-column="51" selection-end-line="2937" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#147821#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#23047#23048#0" expanded="false" />
-            <element signature="e#23104#23105#0" expanded="false" />
-            <element signature="e#23453#23454#0" expanded="false" />
-            <element signature="e#23509#23510#0" expanded="false" />
-            <element signature="e#32636#32637#0" expanded="false" />
-            <element signature="e#32683#32684#0" expanded="false" />
-            <element signature="e#45841#45842#0" expanded="false" />
-            <element signature="e#45932#45933#0" expanded="false" />
-            <element signature="e#56746#56747#0" expanded="false" />
-            <element signature="e#56789#56790#0" expanded="false" />
-            <element signature="e#58208#58209#0" expanded="false" />
-            <element signature="e#58257#58258#0" expanded="false" />
-            <element signature="e#58496#58497#0" expanded="false" />
-            <element signature="e#58567#58568#0" expanded="false" />
-            <element signature="e#58809#58810#0" expanded="false" />
-            <element signature="e#58891#58892#0" expanded="false" />
-            <element signature="e#104463#104464#0" expanded="false" />
-            <element signature="e#104523#104524#0" expanded="false" />
-            <element signature="e#112572#112573#0" expanded="false" />
-            <element signature="e#112604#112605#0" expanded="false" />
-            <element signature="e#112898#112899#0" expanded="false" />
-            <element signature="e#112942#112943#0" expanded="false" />
-            <element signature="e#114513#114514#0" expanded="false" />
-            <element signature="e#114550#114551#0" expanded="false" />
-            <element signature="e#114579#114580#0" expanded="false" />
-            <element signature="e#114620#114621#0" expanded="false" />
-            <element signature="e#117160#117161#0" expanded="false" />
-            <element signature="e#117198#117199#0" expanded="false" />
-            <element signature="e#136811#136812#0" expanded="false" />
-            <element signature="e#136896#136897#0" expanded="false" />
-            <element signature="e#139547#139548#0" expanded="false" />
-            <element signature="e#139624#139625#0" expanded="false" />
-            <element signature="e#144390#144391#0" expanded="false" />
-            <element signature="e#144427#144428#0" expanded="false" />
-          </folding>
+          <caret line="11" column="55" selection-start-line="11" selection-start-column="55" selection-end-line="11" selection-end-column="55" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5/antlr4-4.5.jar!/org/antlr/v4/tool/templates/codegen/Java/Java.stg">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr-runtime/3.2/antlr-runtime-3.2-sources.jar!/org/antlr/runtime/tree/TreeAdaptor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="612" column="0" selection-start-line="612" selection-start-column="0" selection-end-line="612" selection-end-column="0" />
-          <folding />
+          <caret line="68" column="107" selection-start-line="68" selection-start-column="77" selection-end-line="68" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesBaseListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="6.1860466">
+          <caret line="534" column="51" selection-start-line="534" selection-start-column="51" selection-end-line="534" selection-end-column="51" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/templates/Java.stg">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="141" column="22" selection-start-line="141" selection-start-column="22" selection-end-line="141" selection-end-column="22" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5/antlr4-4.5-sources.jar!/org/antlr/v4/codegen/CodeGenerator.java">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="198" column="0" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
-          <folding>
-            <element signature="e#6831#6832#0" expanded="true" />
-            <element signature="e#6900#6901#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-9.296296">
+          <caret line="704" column="138" selection-start-line="704" selection-start-column="125" selection-end-line="704" selection-end-column="138" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5/antlr4-4.5-sources.jar!/org/antlr/v4/codegen/JavaTarget.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="13" selection-start-line="46" selection-start-column="7" selection-end-line="46" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#4241#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#2022#2031#0" expanded="false" />
-            <element signature="e#2741#2749#0" expanded="false" />
-            <element signature="e#2792#2793#0" expanded="false" />
-            <element signature="e#2817#2818#0" expanded="false" />
-            <element signature="e#2865#2866#0" expanded="false" />
-            <element signature="e#2944#2945#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5/antlr4-4.5-sources.jar!/org/antlr/v4/codegen/CodeGeneratorExtension.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="13" selection-start-line="47" selection-start-column="13" selection-end-line="47" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#3534#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#2257#2258#0" expanded="false" />
-            <element signature="e#2286#2287#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
+    <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenTool.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="94" column="93" selection-start-line="94" selection-start-column="34" selection-end-line="94" selection-end-column="34" />
-          <folding>
-            <element signature="e#17#69#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/resources/parsing/proposed.nrl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="11" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/src.zip!/java/lang/Class.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2937" column="51" selection-start-line="2937" selection-start-column="51" selection-end-line="2937" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#147821#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#23047#23048#0" expanded="false" />
-            <element signature="e#23104#23105#0" expanded="false" />
-            <element signature="e#23453#23454#0" expanded="false" />
-            <element signature="e#23509#23510#0" expanded="false" />
-            <element signature="e#32636#32637#0" expanded="false" />
-            <element signature="e#32683#32684#0" expanded="false" />
-            <element signature="e#45841#45842#0" expanded="false" />
-            <element signature="e#45932#45933#0" expanded="false" />
-            <element signature="e#56746#56747#0" expanded="false" />
-            <element signature="e#56789#56790#0" expanded="false" />
-            <element signature="e#58208#58209#0" expanded="false" />
-            <element signature="e#58257#58258#0" expanded="false" />
-            <element signature="e#58496#58497#0" expanded="false" />
-            <element signature="e#58567#58568#0" expanded="false" />
-            <element signature="e#58809#58810#0" expanded="false" />
-            <element signature="e#58891#58892#0" expanded="false" />
-            <element signature="e#104463#104464#0" expanded="false" />
-            <element signature="e#104523#104524#0" expanded="false" />
-            <element signature="e#112572#112573#0" expanded="false" />
-            <element signature="e#112604#112605#0" expanded="false" />
-            <element signature="e#112898#112899#0" expanded="false" />
-            <element signature="e#112942#112943#0" expanded="false" />
-            <element signature="e#114513#114514#0" expanded="false" />
-            <element signature="e#114550#114551#0" expanded="false" />
-            <element signature="e#114579#114580#0" expanded="false" />
-            <element signature="e#114620#114621#0" expanded="false" />
-            <element signature="e#117160#117161#0" expanded="false" />
-            <element signature="e#117198#117199#0" expanded="false" />
-            <element signature="e#136811#136812#0" expanded="false" />
-            <element signature="e#136896#136897#0" expanded="false" />
-            <element signature="e#139547#139548#0" expanded="false" />
-            <element signature="e#139624#139625#0" expanded="false" />
-            <element signature="e#144390#144391#0" expanded="false" />
-            <element signature="e#144427#144428#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/templates/Java.stg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="117" column="17" selection-start-line="117" selection-start-column="17" selection-end-line="117" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5/antlr4-4.5.jar!/org/antlr/v4/tool/templates/codegen/Java/Java.stg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="605" column="55" selection-start-line="605" selection-start-column="0" selection-end-line="605" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
+    <entry file="file://$PROJECT_DIR$/.idea/uiDesigner.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/scala_compiler.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gen/rules/compiled/SimpleRulesExample.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07682458">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/rules/runtime/TestRuleSet.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/scalatest/scalatest_2.11/2.2.5/scalatest_2.11-2.2.5-sources.jar!/org/scalatest/tools/Runner.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2485" column="2" selection-start-line="2485" selection-start-column="2" selection-end-line="2485" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BusinessRules.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ScalaTargetListener.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="54" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/StringFormatter.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/stringtemplate/v4/AutoIndentWriter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0930641">
+          <caret line="103" column="17" selection-start-line="103" selection-start-column="17" selection-end-line="103" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/scalatest/scalatest_2.11/2.2.5/scalatest_2.11-2.2.5-sources.jar!/org/scalatest/Matchers.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.462264">
+          <caret line="1773" column="2" selection-start-line="1773" selection-start-column="2" selection-end-line="1773" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/diagrams/Skin.iuml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Readme.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DependencyGraph.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/codegen/DependencyGraphTest.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="25" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/diagrams/Symbol Table.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.51155114">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/ParserInterpreter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="83.888885">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/Parser.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.333333">
+          <caret line="54" column="32" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/InterpreterRuleContext.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.555555">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/tree/ParseTreeProperty.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.3333333">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/tool/templates/codegen/Java/Java.stg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21004942">
+          <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/tree/Trees.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-25.0">
+          <caret line="67" column="66" selection-start-line="67" selection-start-column="66" selection-end-line="67" selection-end-column="66" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/codegen/AntlrObjectModelAdaptor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="26" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.29325154">
+          <caret line="96" column="29" selection-start-line="96" selection-start-column="29" selection-end-line="96" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenTool.scala">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/tree/TerminalNode.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1142132">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/resources/parsing/NGFP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="168" column="44" selection-start-line="168" selection-start-column="44" selection-end-line="168" selection-end-column="44" />
           <folding>
-            <element signature="e#17#69#0" expanded="true" />
+            <element signature="e#988#989#0" expanded="false" />
+            <element signature="e#1027#1028#0" expanded="false" />
+            <element signature="e#1914#1915#0" expanded="false" />
+            <element signature="e#1962#1963#0" expanded="false" />
+            <element signature="e#2014#2015#0" expanded="false" />
+            <element signature="e#2048#2049#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.11.7/scala-library-2.11.7-sources.jar!/scala/collection/SeqLike.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33278418">
+          <caret line="270" column="6" selection-start-line="270" selection-start-column="6" selection-end-line="270" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/ParserRuleContext.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8388325">
+          <caret line="168" column="13" selection-start-line="168" selection-start-column="13" selection-end-line="168" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ValidationListener.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09202454">
+          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ParseTreeScopeAnnotations.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1900,292 +1994,116 @@
     <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <caret line="28" column="7" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Parser.iml">
+    <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="78" column="23" selection-start-line="78" selection-start-column="23" selection-end-line="82" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Parser.iml">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="16" column="72" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
+          <folding>
+            <marker date="1456147550000" expanded="true" signature="32:70" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Parser.iml">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6441718">
+          <caret line="98" column="7" selection-start-line="98" selection-start-column="7" selection-end-line="98" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14827017">
+          <caret line="26" column="25" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/resources/parsing/examples-from-spec.nrl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71705425">
-          <caret line="37" column="31" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4057971">
-          <caret line="226" column="60" selection-start-line="226" selection-start-column="60" selection-end-line="226" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/src.zip!/java/util/Formatter.java">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2453" column="21" selection-start-line="2453" selection-start-column="21" selection-end-line="2453" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/src.zip!/java/lang/String.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2854" column="18" selection-start-line="2854" selection-start-column="18" selection-end-line="2854" selection-end-column="18" />
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1492" column="21" selection-start-line="1492" selection-start-column="5" selection-end-line="1492" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/ST4/4.0.8/ST4-4.0.8.jar!/org/stringtemplate/v4/StringRenderer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.11111">
-          <caret line="35" column="78" selection-start-line="35" selection-start-column="78" selection-end-line="35" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/ST4-4.0.8-sources.jar!/org/stringtemplate/v4/compiler/GroupParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="13" selection-start-line="47" selection-start-column="13" selection-end-line="47" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/ST4-4.0.8-sources.jar!/org/stringtemplate/v4/compiler/STParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.222222">
-          <caret line="3630" column="317" selection-start-line="3630" selection-start-column="315" selection-end-line="3630" selection-end-column="317" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/ST4-4.0.8-sources.jar!/org/stringtemplate/v4/Interpreter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="367" column="40" selection-start-line="367" selection-start-column="36" selection-end-line="367" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/ST4-4.0.8-sources.jar!/org/stringtemplate/v4/StringRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47368422">
-          <caret line="55" column="74" selection-start-line="55" selection-start-column="53" selection-end-line="55" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/ST4-4.0.8-sources.jar!/org/stringtemplate/v4/compiler/STLexer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="264" column="59" selection-start-line="264" selection-start-column="54" selection-end-line="264" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5/antlr4-4.5.jar!/org/antlr/v4/tool/templates/codegen/Java/Java.stg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="612" column="0" selection-start-line="612" selection-start-column="0" selection-end-line="612" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/src.zip!/java/lang/Class.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2937" column="51" selection-start-line="2937" selection-start-column="51" selection-end-line="2937" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.24794069">
+          <caret line="3687" column="38" selection-start-line="3687" selection-start-column="38" selection-end-line="3687" selection-end-column="38" />
           <folding>
-            <element signature="e#0#147821#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#23047#23048#0" expanded="false" />
-            <element signature="e#23104#23105#0" expanded="false" />
-            <element signature="e#23453#23454#0" expanded="false" />
-            <element signature="e#23509#23510#0" expanded="false" />
-            <element signature="e#32636#32637#0" expanded="false" />
-            <element signature="e#32683#32684#0" expanded="false" />
-            <element signature="e#45841#45842#0" expanded="false" />
-            <element signature="e#45932#45933#0" expanded="false" />
-            <element signature="e#56746#56747#0" expanded="false" />
-            <element signature="e#56789#56790#0" expanded="false" />
-            <element signature="e#58208#58209#0" expanded="false" />
-            <element signature="e#58257#58258#0" expanded="false" />
-            <element signature="e#58496#58497#0" expanded="false" />
-            <element signature="e#58567#58568#0" expanded="false" />
-            <element signature="e#58809#58810#0" expanded="false" />
-            <element signature="e#58891#58892#0" expanded="false" />
-            <element signature="e#104463#104464#0" expanded="false" />
-            <element signature="e#104523#104524#0" expanded="false" />
-            <element signature="e#112572#112573#0" expanded="false" />
-            <element signature="e#112604#112605#0" expanded="false" />
-            <element signature="e#112898#112899#0" expanded="false" />
-            <element signature="e#112942#112943#0" expanded="false" />
-            <element signature="e#114513#114514#0" expanded="false" />
-            <element signature="e#114550#114551#0" expanded="false" />
-            <element signature="e#114579#114580#0" expanded="false" />
-            <element signature="e#114620#114621#0" expanded="false" />
-            <element signature="e#117160#117161#0" expanded="false" />
-            <element signature="e#117198#117199#0" expanded="false" />
-            <element signature="e#136811#136812#0" expanded="false" />
-            <element signature="e#136896#136897#0" expanded="false" />
-            <element signature="e#139547#139548#0" expanded="false" />
-            <element signature="e#139624#139625#0" expanded="false" />
-            <element signature="e#144390#144391#0" expanded="false" />
-            <element signature="e#144427#144428#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#123883#123884#0" expanded="true" />
+            <element signature="e#123920#123921#0" expanded="true" />
+            <element signature="e#124085#124086#0" expanded="true" />
+            <element signature="e#124113#124114#0" expanded="true" />
+            <element signature="e#124295#124296#0" expanded="true" />
+            <element signature="e#124356#124357#0" expanded="true" />
+            <element signature="e#124545#124546#0" expanded="true" />
+            <element signature="e#124602#124603#0" expanded="true" />
+            <element signature="e#125483#125484#0" expanded="true" />
+            <element signature="e#125540#125541#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5/antlr4-4.5-sources.jar!/org/antlr/v4/codegen/CodeGeneratorExtension.java">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="13" selection-start-line="47" selection-start-column="13" selection-end-line="47" selection-end-column="13" />
+          <caret line="49" column="31" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
           <folding>
-            <element signature="e#0#3534#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#2257#2258#0" expanded="false" />
-            <element signature="e#2286#2287#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5/antlr4-4.5-sources.jar!/org/antlr/v4/codegen/JavaTarget.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="7" selection-start-line="46" selection-start-column="7" selection-end-line="46" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#4241#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#2022#2031#0" expanded="false" />
-            <element signature="e#2741#2749#0" expanded="false" />
-            <element signature="e#2792#2793#0" expanded="false" />
-            <element signature="e#2817#2818#0" expanded="false" />
-            <element signature="e#2865#2866#0" expanded="false" />
-            <element signature="e#2944#2945#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5/antlr4-4.5-sources.jar!/org/antlr/v4/codegen/CodeGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.0034246">
-          <caret line="210" column="61" selection-start-line="210" selection-start-column="9" selection-end-line="210" selection-end-column="9" />
-          <folding>
-            <element signature="e#6831#6832#0" expanded="true" />
-            <element signature="e#6900#6901#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/ST4-4.0.8-sources.jar!/org/stringtemplate/v4/misc/TypeRegistry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29588336">
-          <caret line="61" column="71" selection-start-line="61" selection-start-column="38" selection-end-line="61" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/ST4-4.0.8-sources.jar!/org/stringtemplate/v4/STWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15437393">
-          <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/rules/runtime/RuleRunner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/codegen/AntlrObjectModelAdaptor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4912281">
-          <caret line="106" column="40" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/ST4-4.0.8-sources.jar!/org/stringtemplate/v4/ST.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.80701756">
-          <caret line="252" column="84" selection-start-line="252" selection-start-column="9" selection-end-line="252" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gen/rules/compiled/IntroductoryExample.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1754386">
-          <caret line="10" column="40" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="false" />
+            <element signature="e#17#117#0" expanded="true" />
+            <element signature="e#390#414#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4245283">
-          <caret line="37" column="81" selection-start-line="37" selection-start-column="81" selection-end-line="37" selection-end-column="81" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/resources/parsing/proposed.nrl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38135594">
-          <caret line="18" column="38" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/rules/runtime/RuleSet.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="38" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/templates/Java.stg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenTool.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2058319">
-          <caret line="103" column="89" selection-start-line="103" selection-start-column="31" selection-end-line="103" selection-end-column="31" />
+          <caret line="201" column="2" selection-start-line="201" selection-start-column="2" selection-end-line="201" selection-end-column="2" />
           <folding>
-            <element signature="e#17#69#0" expanded="true" />
+            <element signature="e#25#142#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4797546">
+          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+          <folding>
+            <element signature="e#17#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2235,7 +2153,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.42528737" />
               </list>
             </option>
           </splitter-proportions>
@@ -2243,7 +2161,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Parser</last-edited>
+          <last-edited>BusinessRules</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -2267,7 +2185,18 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>org.antlr:antlr4:4.5</last-edited>
+          <last-edited>scala-sdk-2.11.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.42528737" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>

@@ -1,5 +1,10 @@
 // Generated from /Users/unggi/Development/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
 package rules;
+
+import codegen.symbols.ModelReferenceSymbol;
+import codegen.symbols.Symbol;
+import java.util.Collections;
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -118,15 +123,15 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitMultipleContextParameter(BusinessRulesParser.MultipleContextParameterContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#modelReferenceWithAlias}.
+	 * Enter a parse tree produced by {@link BusinessRulesParser#modelReferenceParameter}.
 	 * @param ctx the parse tree
 	 */
-	void enterModelReferenceWithAlias(BusinessRulesParser.ModelReferenceWithAliasContext ctx);
+	void enterModelReferenceParameter(BusinessRulesParser.ModelReferenceParameterContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#modelReferenceWithAlias}.
+	 * Exit a parse tree produced by {@link BusinessRulesParser#modelReferenceParameter}.
 	 * @param ctx the parse tree
 	 */
-	void exitModelReferenceWithAlias(BusinessRulesParser.ModelReferenceWithAliasContext ctx);
+	void exitModelReferenceParameter(BusinessRulesParser.ModelReferenceParameterContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BusinessRulesParser#constraint}.
 	 * @param ctx the parse tree
@@ -138,15 +143,75 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitConstraint(BusinessRulesParser.ConstraintContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#logicalStatement}.
+	 * Enter a parse tree produced by {@link BusinessRulesParser#binaryLogicalOperator}.
 	 * @param ctx the parse tree
 	 */
-	void enterLogicalStatement(BusinessRulesParser.LogicalStatementContext ctx);
+	void enterBinaryLogicalOperator(BusinessRulesParser.BinaryLogicalOperatorContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#logicalStatement}.
+	 * Exit a parse tree produced by {@link BusinessRulesParser#binaryLogicalOperator}.
 	 * @param ctx the parse tree
 	 */
-	void exitLogicalStatement(BusinessRulesParser.LogicalStatementContext ctx);
+	void exitBinaryLogicalOperator(BusinessRulesParser.BinaryLogicalOperatorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LogicalPredicateStatement}
+	 * labeled alternative in {@link BusinessRulesParser#logicalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalPredicateStatement(BusinessRulesParser.LogicalPredicateStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LogicalPredicateStatement}
+	 * labeled alternative in {@link BusinessRulesParser#logicalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalPredicateStatement(BusinessRulesParser.LogicalPredicateStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LogicalNotExistsStatement}
+	 * labeled alternative in {@link BusinessRulesParser#logicalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalNotExistsStatement(BusinessRulesParser.LogicalNotExistsStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LogicalNotExistsStatement}
+	 * labeled alternative in {@link BusinessRulesParser#logicalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalNotExistsStatement(BusinessRulesParser.LogicalNotExistsStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LogicalExistsStatement}
+	 * labeled alternative in {@link BusinessRulesParser#logicalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalExistsStatement(BusinessRulesParser.LogicalExistsStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LogicalExistsStatement}
+	 * labeled alternative in {@link BusinessRulesParser#logicalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalExistsStatement(BusinessRulesParser.LogicalExistsStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LogicalForAllStatement}
+	 * labeled alternative in {@link BusinessRulesParser#logicalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalForAllStatement(BusinessRulesParser.LogicalForAllStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LogicalForAllStatement}
+	 * labeled alternative in {@link BusinessRulesParser#logicalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalForAllStatement(BusinessRulesParser.LogicalForAllStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BinaryLogicalOperatorStatement}
+	 * labeled alternative in {@link BusinessRulesParser#logicalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterBinaryLogicalOperatorStatement(BusinessRulesParser.BinaryLogicalOperatorStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BinaryLogicalOperatorStatement}
+	 * labeled alternative in {@link BusinessRulesParser#logicalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitBinaryLogicalOperatorStatement(BusinessRulesParser.BinaryLogicalOperatorStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BusinessRulesParser#simpleOrComplexConstraint}.
 	 * @param ctx the parse tree
@@ -206,27 +271,77 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitIsKindOfPredicate(BusinessRulesParser.IsKindOfPredicateContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code UnaryExpressionPredicate}
-	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * Enter a parse tree produced by the {@code IsEqualToComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
 	 * @param ctx the parse tree
 	 */
-	void enterUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx);
+	void enterIsEqualToComparator(BusinessRulesParser.IsEqualToComparatorContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code UnaryExpressionPredicate}
-	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * Exit a parse tree produced by the {@code IsEqualToComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
 	 * @param ctx the parse tree
 	 */
-	void exitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx);
+	void exitIsEqualToComparator(BusinessRulesParser.IsEqualToComparatorContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#comparator}.
+	 * Enter a parse tree produced by the {@code IsNotEqualToComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
 	 * @param ctx the parse tree
 	 */
-	void enterComparator(BusinessRulesParser.ComparatorContext ctx);
+	void enterIsNotEqualToComparator(BusinessRulesParser.IsNotEqualToComparatorContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#comparator}.
+	 * Exit a parse tree produced by the {@code IsNotEqualToComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
 	 * @param ctx the parse tree
 	 */
-	void exitComparator(BusinessRulesParser.ComparatorContext ctx);
+	void exitIsNotEqualToComparator(BusinessRulesParser.IsNotEqualToComparatorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IsGreaterThanComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
+	 * @param ctx the parse tree
+	 */
+	void enterIsGreaterThanComparator(BusinessRulesParser.IsGreaterThanComparatorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IsGreaterThanComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
+	 * @param ctx the parse tree
+	 */
+	void exitIsGreaterThanComparator(BusinessRulesParser.IsGreaterThanComparatorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IsGreaterThanOrEqualToComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
+	 * @param ctx the parse tree
+	 */
+	void enterIsGreaterThanOrEqualToComparator(BusinessRulesParser.IsGreaterThanOrEqualToComparatorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IsGreaterThanOrEqualToComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
+	 * @param ctx the parse tree
+	 */
+	void exitIsGreaterThanOrEqualToComparator(BusinessRulesParser.IsGreaterThanOrEqualToComparatorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IsLessThanOrEqualToComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
+	 * @param ctx the parse tree
+	 */
+	void enterIsLessThanOrEqualToComparator(BusinessRulesParser.IsLessThanOrEqualToComparatorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IsLessThanOrEqualToComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
+	 * @param ctx the parse tree
+	 */
+	void exitIsLessThanOrEqualToComparator(BusinessRulesParser.IsLessThanOrEqualToComparatorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IsLessThanComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
+	 * @param ctx the parse tree
+	 */
+	void enterIsLessThanComparator(BusinessRulesParser.IsLessThanComparatorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IsLessThanComparator}
+	 * labeled alternative in {@link BusinessRulesParser#comparator}.
+	 * @param ctx the parse tree
+	 */
+	void exitIsLessThanComparator(BusinessRulesParser.IsLessThanComparatorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BusinessRulesParser#listDefinition}.
 	 * @param ctx the parse tree
@@ -282,35 +397,221 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitUnaryExpression(BusinessRulesParser.UnaryExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#term}.
+	 * Enter a parse tree produced by the {@code IdentifierTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void enterTerm(BusinessRulesParser.TermContext ctx);
+	void enterIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#term}.
+	 * Exit a parse tree produced by the {@code IdentifierTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void exitTerm(BusinessRulesParser.TermContext ctx);
+	void exitIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#identifier}.
+	 * Enter a parse tree produced by the {@code FunctionalExpressionTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void enterIdentifier(BusinessRulesParser.IdentifierContext ctx);
+	void enterFunctionalExpressionTerm(BusinessRulesParser.FunctionalExpressionTermContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#identifier}.
+	 * Exit a parse tree produced by the {@code FunctionalExpressionTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void exitIdentifier(BusinessRulesParser.IdentifierContext ctx);
+	void exitFunctionalExpressionTerm(BusinessRulesParser.FunctionalExpressionTermContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#functionalExpression}.
+	 * Enter a parse tree produced by the {@code ModelReferenceTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunctionalExpression(BusinessRulesParser.FunctionalExpressionContext ctx);
+	void enterModelReferenceTerm(BusinessRulesParser.ModelReferenceTermContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#functionalExpression}.
+	 * Exit a parse tree produced by the {@code ModelReferenceTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunctionalExpression(BusinessRulesParser.FunctionalExpressionContext ctx);
+	void exitModelReferenceTerm(BusinessRulesParser.ModelReferenceTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code OperatorInvocationTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterOperatorInvocationTerm(BusinessRulesParser.OperatorInvocationTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code OperatorInvocationTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitOperatorInvocationTerm(BusinessRulesParser.OperatorInvocationTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code DefinitionApplicatoinTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterDefinitionApplicatoinTerm(BusinessRulesParser.DefinitionApplicatoinTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code DefinitionApplicatoinTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitDefinitionApplicatoinTerm(BusinessRulesParser.DefinitionApplicatoinTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CastExpressionTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterCastExpressionTerm(BusinessRulesParser.CastExpressionTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CastExpressionTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitCastExpressionTerm(BusinessRulesParser.CastExpressionTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SelectionExpressionTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterSelectionExpressionTerm(BusinessRulesParser.SelectionExpressionTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SelectionExpressionTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitSelectionExpressionTerm(BusinessRulesParser.SelectionExpressionTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ConstraintTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstraintTerm(BusinessRulesParser.ConstraintTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ConstraintTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstraintTerm(BusinessRulesParser.ConstraintTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ModelReferenceIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterModelReferenceIdentifier(BusinessRulesParser.ModelReferenceIdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ModelReferenceIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitModelReferenceIdentifier(BusinessRulesParser.ModelReferenceIdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LiteralStringIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterLiteralStringIdentifier(BusinessRulesParser.LiteralStringIdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LiteralStringIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitLiteralStringIdentifier(BusinessRulesParser.LiteralStringIdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NumberIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumberIdentifier(BusinessRulesParser.NumberIdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NumberIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumberIdentifier(BusinessRulesParser.NumberIdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IntegerNumberIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntegerNumberIdentifier(BusinessRulesParser.IntegerNumberIdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IntegerNumberIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntegerNumberIdentifier(BusinessRulesParser.IntegerNumberIdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BooleanLiteralIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterBooleanLiteralIdentifier(BusinessRulesParser.BooleanLiteralIdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BooleanLiteralIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitBooleanLiteralIdentifier(BusinessRulesParser.BooleanLiteralIdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CollectionIndexIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterCollectionIndexIdentifier(BusinessRulesParser.CollectionIndexIdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CollectionIndexIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitCollectionIndexIdentifier(BusinessRulesParser.CollectionIndexIdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code DoubleQuotedStringIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterDoubleQuotedStringIdentifier(BusinessRulesParser.DoubleQuotedStringIdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code DoubleQuotedStringIdentifier}
+	 * labeled alternative in {@link BusinessRulesParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitDoubleQuotedStringIdentifier(BusinessRulesParser.DoubleQuotedStringIdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SumOfExpression}
+	 * labeled alternative in {@link BusinessRulesParser#functionalExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSumOfExpression(BusinessRulesParser.SumOfExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SumOfExpression}
+	 * labeled alternative in {@link BusinessRulesParser#functionalExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSumOfExpression(BusinessRulesParser.SumOfExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NumberOfExpression}
+	 * labeled alternative in {@link BusinessRulesParser#functionalExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumberOfExpression(BusinessRulesParser.NumberOfExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NumberOfExpression}
+	 * labeled alternative in {@link BusinessRulesParser#functionalExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumberOfExpression(BusinessRulesParser.NumberOfExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NumberOfUniqueExpression}
+	 * labeled alternative in {@link BusinessRulesParser#functionalExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumberOfUniqueExpression(BusinessRulesParser.NumberOfUniqueExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NumberOfUniqueExpression}
+	 * labeled alternative in {@link BusinessRulesParser#functionalExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumberOfUniqueExpression(BusinessRulesParser.NumberOfUniqueExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BusinessRulesParser#operatorInvocation}.
 	 * @param ctx the parse tree
@@ -392,16 +693,6 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitModelReferenceList(BusinessRulesParser.ModelReferenceListContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#modelPath}.
-	 * @param ctx the parse tree
-	 */
-	void enterModelPath(BusinessRulesParser.ModelPathContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#modelPath}.
-	 * @param ctx the parse tree
-	 */
-	void exitModelPath(BusinessRulesParser.ModelPathContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link BusinessRulesParser#dottedModelPath}.
 	 * @param ctx the parse tree
 	 */
@@ -471,4 +762,68 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSimpleTerm(BusinessRulesParser.SimpleTermContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BusinessRulesParser#collectionMemberConstraint}.
+	 * @param ctx the parse tree
+	 */
+	void enterCollectionMemberConstraint(BusinessRulesParser.CollectionMemberConstraintContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BusinessRulesParser#collectionMemberConstraint}.
+	 * @param ctx the parse tree
+	 */
+	void exitCollectionMemberConstraint(BusinessRulesParser.CollectionMemberConstraintContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ConstrainedCollectionMembership}
+	 * labeled alternative in {@link BusinessRulesParser#existsStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstrainedCollectionMembership(BusinessRulesParser.ConstrainedCollectionMembershipContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ConstrainedCollectionMembership}
+	 * labeled alternative in {@link BusinessRulesParser#existsStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstrainedCollectionMembership(BusinessRulesParser.ConstrainedCollectionMembershipContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SimpleExists}
+	 * labeled alternative in {@link BusinessRulesParser#existsStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterSimpleExists(BusinessRulesParser.SimpleExistsContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SimpleExists}
+	 * labeled alternative in {@link BusinessRulesParser#existsStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitSimpleExists(BusinessRulesParser.SimpleExistsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BusinessRulesParser#enumerator}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnumerator(BusinessRulesParser.EnumeratorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BusinessRulesParser#enumerator}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnumerator(BusinessRulesParser.EnumeratorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BusinessRulesParser#notExistsStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotExistsStatement(BusinessRulesParser.NotExistsStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BusinessRulesParser#notExistsStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotExistsStatement(BusinessRulesParser.NotExistsStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link BusinessRulesParser#forallStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterForallStatement(BusinessRulesParser.ForallStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BusinessRulesParser#forallStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitForallStatement(BusinessRulesParser.ForallStatementContext ctx);
 }

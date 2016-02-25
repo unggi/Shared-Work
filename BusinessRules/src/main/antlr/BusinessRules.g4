@@ -1,5 +1,12 @@
 grammar BusinessRules;
 
+
+@header {
+import codegen.symbols.ModelReferenceSymbol;
+import codegen.symbols.Symbol;
+import java.util.Collections;
+}
+
 //
 // Top Level File Processing
 //
@@ -39,28 +46,31 @@ ruleSet  : 'Rule set' DoubleQuotedString ('applies to' modelReference 'where' co
 
 //globalVariableDeclaration  : simpleVariableDeclaration;
 
-context  : 'Context:' modelReference;
+context  : 'Context:' modelReferenceParameter;
 
 multipleParameterContext  : 'Context:' multipleContextParameter;
 
-multipleContextParameter  : modelReferenceWithAlias (',' modelReferenceWithAlias)*;
+multipleContextParameter  : modelReferenceParameter (',' modelReferenceParameter)*;
 
-modelReferenceWithAlias : ref=modelReference '(' alias=DoubleQuotedString ')';
+modelReferenceParameter : ref=modelReference '(' alias=DoubleQuotedString ')';
 
 //
 // Constraints
 //
 constraint      :
-                    IF condBlock=logicalStatement THEN thenBlock=logicalStatement (ELSE  elseBlock=logicalStatement)?
-                |   logicalStatement (op=('and' | 'or' | 'implies' | 'if and only if' ) logicalStatement)*
+                    'If' condBlock=logicalStatement 'then' thenBlock=logicalStatement ('else' elseBlock=logicalStatement)?
+                |   logicalStatement
                 ;
 
- logicalStatement:
-                predicate
-//                |   existsStatement
-//                |   notExistsStatement
+binaryLogicalOperator: (and = 'and' | or = 'or' | implies = 'implies' | iff = 'if and only if');
+
+logicalStatement:
+                left=logicalStatement op=binaryLogicalOperator right=logicalStatement #BinaryLogicalOperatorStatement
+                |   predicate                                           #LogicalPredicateStatement
+                |   existsStatement                                     #LogicalExistsStatement
+                |   notExistsStatement                                  #LogicalNotExistsStatement
 //                |   globalExistsStatement
-//                |   forallStatement
+                |   forallStatement                                     #LogicalForAllStatement
 //                |   globalVariableDeclaration
                 ;
 
@@ -79,18 +89,18 @@ predicate  :
     |    expression 'is one of' listDefinition                  #IsOneOfPredicate
     |    expression 'is not one of' listDefinition              #IsNotOneOfPredicate
     |    modelReference 'is a kind of' ModelElementName         #IsKindOfPredicate
-    |    expression                                             #UnaryExpressionPredicate
+//    |    expression                                             #UnaryExpressionPredicate
 //    |   multipleExistsStatement
 //    |   multipleNotExistsStatement
     ;
 
 comparator  :
-              IsEqualTo
-            | IsNotEqualTo
-            | IsGreaterThan
-            | IsGreaterThanOrEqualTo
-            | IsLessThanOrEqualTo
-            | IsLessThan
+              IsEqualTo                                         #IsEqualToComparator
+            | IsNotEqualTo                                      #IsNotEqualToComparator
+            | IsGreaterThan                                     #IsGreaterThanComparator
+            | IsGreaterThanOrEqualTo                            #IsGreaterThanOrEqualToComparator
+            | IsLessThanOrEqualTo                               #IsLessThanOrEqualToComparator
+            | IsLessThan                                        #IsLessThanComparator
     ;
 
 listDefinition  : identifier (',' identifier)*
@@ -113,23 +123,30 @@ expression  :   left=expression op=('*' | '/' | '+' | '-'|'mod') right=expressio
 // Terms
 //
 term  :
-        identifier
-    |   functionalExpression
-    |   modelReference FragmentName
-    |   operatorInvocation
-    |   definitionApplication
-    |   castExpression
-    |   selectionExpression
-    |   '(' constraint ')'
+        identifier                      #IdentifierTerm
+    |   functionalExpression            #FunctionalExpressionTerm
+    |   modelReference FragmentName     #ModelReferenceTerm
+    |   operatorInvocation              #OperatorInvocationTerm
+    |   definitionApplication           #DefinitionApplicatoinTerm
+    |   castExpression                  #CastExpressionTerm
+    |   selectionExpression             #SelectionExpressionTerm
+    |   '(' constraint ')'              #ConstraintTerm
     ;
 
-identifier  : modelReference | LiteralString | Number | IntegerNumber | BooleanLiteral | collectionIndex
+identifier  :
+    modelReference                      #ModelReferenceIdentifier
+    | LiteralString                     #LiteralStringIdentifier
+    | Number                            #NumberIdentifier
+    | IntegerNumber                     #IntegerNumberIdentifier
+    | BooleanLiteral                    #BooleanLiteralIdentifier
+    | collectionIndex                   #CollectionIndexIdentifier
+    | DoubleQuotedString                #DoubleQuotedStringIdentifier
     ;
 
 functionalExpression  :
-        'sum of' modelReference
-    |   'number of' modelReference
-    |   'number of' 'unique' modelReference '(' 'by' modelReference ')'
+        op='sum of' ref=modelReference                                              #SumOfExpression
+    |   op='number of' ref=modelReference                                           #NumberOfExpression
+    |   op='number of unique' ref=modelReference '(' 'by' key=modelReference ')'    #NumberOfUniqueExpression
     ;
 
 operatorInvocation  : OperatorName (operatorParameterList)?;
@@ -147,15 +164,17 @@ selectionExpression  : ('first' 'of'?)? modelReference 'where' simpleOrComplexCo
 //
 // Model References and Paths
 //
-modelReference  : modelPath;
+modelReference locals[Symbol symbol, List<TerminalNode> path] : (propPath = propertyOfModelPath | dotPath = dottedModelPath );
 
 modelReferenceList  : (modelReference)+;
 
-modelPath : (propertyOfModelPath | dottedModelPath );
+dottedModelPath  : ModelElementName ('.' ModelElementName)* { $modelReference::path = $ctx.getTokens(ModelElementName); };
 
-dottedModelPath  : ModelElementName ('.' ModelElementName)* ;
-
-propertyOfModelPath : ModelElementName ('of' ModelElementName)+;
+propertyOfModelPath : ModelElementName ('of' ModelElementName)+
+{
+    $modelReference::path = $ctx.getTokens(ModelElementName);
+    Collections.reverse($modelReference::path);
+};
 
 //
 // Reporting
@@ -177,6 +196,29 @@ simpleTerm  :
     |   operatorInvocation
     ;
 
+
+//
+// Quantifiers
+//
+collectionMemberConstraint[ModelReferenceContext reference] : simpleOrComplexConstraint;
+
+existsStatement :
+                    (enumerator ('of the')?)? ref=modelReference
+                    ('has' | 'have' | 'is' | 'are') ('present' | collectionMemberConstraint[$ref.ctx]) #ConstrainedCollectionMembership
+                |   enumerator ('has' | 'have' | 'is' | 'are') simpleOrComplexConstraint     #SimpleExists
+                ;
+
+enumerator  : (at_least = 'at least' | at_most = 'at most' | exactly ='exactly')? (one = 'one' | two='two' | three='three' | four='four' | no='no' | none='none' | integer = IntegerNumber);
+
+notExistsStatement  :   modelReference ('is not present' | 'are not present');
+
+// globalExistsStatement   :    ('there is' | 'there are') ('no')? modelReference ('(' DoubleQuotedString ')')? ('where' simpleOrComplexConstraint)?;
+
+forallStatement :
+                    ('each' | 'in each' | 'all' | 'every') ('of the')?  modelReference ('has' | 'have' | 'is' | 'are')? simpleOrComplexConstraint
+                |   'for each' DoubleQuotedString 'in the collection of' modelReference ('has' | 'have' | 'is' | 'are' | ',')? simpleOrComplexConstraint
+                ;
+
 //
 // Lexical Rules
 //
@@ -184,10 +226,6 @@ simpleTerm  :
 // Article stripping - has highest priority
 THE                 : ([Tt][Hh][Ee]) -> skip;
 AN                  : ([Aa][Nn]) -> skip;
-
-THEN                : 'then';
-IF                  : ([Ii][Ff]);
-ELSE                :([Ee][Ll][Ss][Ee]);
 
 FragmentName	    :   '<<' .*? '>>';
 IsEqualTo           :    ('=' | 'is equal to');
@@ -203,9 +241,9 @@ DoubleQuotedString  :   '"' (ESC | .)*? '"';
 fragment ESC        :   '\\' [btnr"\\];
 ModelElementName    :   Alpha (AlphaNumeric | '_' | '-')*;
 VariableName	    : 	ModelElementName;
-Alpha	            :   [a-zA-Z];
-Digit	            :   [0-9];
-AlphaNumeric	    :  	Alpha | Digit;
+fragment Alpha	    :   [a-zA-Z];
+fragment Digit	    :   [0-9];
+fragment AlphaNumeric	    :  	Alpha | Digit;
 Number	            :   ('-')? (Digit)+ '.' (Digit)*;
 OrdinalNumber	    :   'first' | 'second' | 'third' | (Digit+ ('th' | 'st' | 'nd' | 'rd'));
 IntegerNumber	    :   ('-')? (Digit)+;
@@ -217,23 +255,3 @@ LINE_COMMENT        :   '//' .*? '\r'? '\n' -> skip;
 WS                  :   [ \t\r\n]+ -> skip;
 
 
-
-//
-// Quantifiers
-//
-//existsStatement :
-//                    (enumerator ('of the')?)? modelReference ('has' | 'have' | 'is' | 'are') ('present' | simpleOrComplexConstraint)
-//                |   enumerator ('has' | 'have' | 'is' | 'are') simpleOrComplexConstraint
-//                ;
-//
-//enumerator  : ('at least' | 'at most' | 'exactly')? ('one' | 'two' | 'three' | 'four' | 'no' | 'none' | IntegerNumber);
-//
-//notExistsStatement  :   modelReference ('is not present' | 'are not present');
-//
-//globalExistsStatement   :    ('there is' | 'there are') ('no')? modelReference ('(' DoubleQuotedString ')')? ('where' simpleOrComplexConstraint)?;
-//
-//forallStatement :
-//                    ('each' | 'in each' | 'all' | 'every') ('of the')?  modelReference ('has' | 'have' | 'is' | 'are')? simpleOrComplexConstraint
-//                |   'for each' DoubleQuotedString 'in the collection of' modelReference ('has' | 'have' | 'is' | 'are' | ',')? simpleOrComplexConstraint
-//                ;
-//
