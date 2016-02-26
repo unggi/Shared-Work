@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="CollectionMemberScope has a null symbol during declaration phase.">
+    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="Fixing CollectionMemberScope - not quite done">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/templates/Scala.stg" afterPath="$PROJECT_DIR$/src/main/templates/Scala.stg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -58,21 +60,21 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="CodeGenerator.scala" pinned="true" current-in-tab="true">
+            <file leaf-file-name="CodeGenerator.scala" pinned="true" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.6441718">
+                  <state vertical-scroll-proportion="0.0">
                     <caret line="98" column="7" selection-start-line="98" selection-start-column="7" selection-end-line="98" selection-end-column="7" />
                     <folding />
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="Scala.stg" pinned="false" current-in-tab="false">
+            <file leaf-file-name="Scala.stg" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.0">
-                    <caret line="78" column="23" selection-start-line="78" selection-start-column="23" selection-end-line="82" selection-end-column="0" />
+                  <state vertical-scroll-proportion="0.22699386">
+                    <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
                     <folding />
                   </state>
                 </provider>
@@ -93,7 +95,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+              <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -135,7 +137,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="49" column="31" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
+              <caret line="60" column="28" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
               <folding>
                 <element signature="e#17#117#0" expanded="true" />
                 <element signature="e#390#414#0" expanded="true" />
@@ -147,10 +149,22 @@
       <file leaf-file-name="BusinessRules.g4" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="201" column="2" selection-start-line="201" selection-start-column="2" selection-end-line="201" selection-end-column="2" />
+            <state vertical-scroll-proportion="-4.4444447">
+              <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
               <folding>
                 <element signature="e#25#142#1" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BusinessRulesParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.8518518">
+              <caret line="3891" column="29" selection-start-line="3891" selection-start-column="29" selection-end-line="3891" selection-end-column="29" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -159,8 +173,8 @@
       <file leaf-file-name="ResolutionPhase.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4797546">
-              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.06095552">
+              <caret line="24" column="78" selection-start-line="24" selection-start-column="78" selection-end-line="24" selection-end-column="78" />
               <folding>
                 <element signature="e#17#41#0" expanded="true" />
               </folding>
@@ -258,13 +272,13 @@
         <option value="$PROJECT_DIR$/gen/rules/BusinessRulesParser.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala" />
         <option value="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" />
-        <option value="$PROJECT_DIR$/src/main/templates/Scala.stg" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" />
         <option value="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
+        <option value="$PROJECT_DIR$/src/main/templates/Scala.stg" />
       </list>
     </option>
   </component>
@@ -1421,7 +1435,7 @@
       <workItem from="1454553751449" duration="13597000" />
       <workItem from="1454802030693" duration="26384000" />
       <workItem from="1455159022669" duration="1620000" />
-      <workItem from="1455745807630" duration="78912000" />
+      <workItem from="1455745807630" duration="87123000" />
     </task>
     <task id="LOCAL-00001" summary="First end to end working version. Sample code is generated down to the predicate level.">
       <created>1439209622979</created>
@@ -1561,11 +1575,17 @@
       <option name="project" value="LOCAL" />
       <updated>1456147791351</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Fixing CollectionMemberScope - not quite done">
+      <created>1456227937605</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1456227937605</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="790404000" />
+    <option name="totallyTimeSpent" value="798615000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1583,13 +1603,13 @@
       <window_info id="PlantUML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24557166" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" x="1618" y="194" width="873" height="564" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32845646" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32447666" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32125604" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32125604" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959184" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274707" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1265" y="75" width="1089" height="830" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="542" y="431" width="1089" height="830" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928678" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.36971048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="2189" y="42" width="384" height="1321" />
@@ -1673,7 +1693,8 @@
     <MESSAGE value="Dependency graph is now embedded in symbol table.&#10;&#10;DeclarationPhase is a tree walker that collects declarations of symbols." />
     <MESSAGE value="Symbol table now built in two phases." />
     <MESSAGE value="CollectionMemberScope has a null symbol during declaration phase." />
-    <option name="LAST_COMMIT_MESSAGE" value="CollectionMemberScope has a null symbol during declaration phase." />
+    <MESSAGE value="Fixing CollectionMemberScope - not quite done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing CollectionMemberScope - not quite done" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1999,14 +2020,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="78" column="23" selection-start-line="78" selection-start-column="23" selection-end-line="82" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2019,7 +2032,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6441718">
+        <state vertical-scroll-proportion="0.0">
           <caret line="98" column="7" selection-start-line="98" selection-start-column="7" selection-end-line="98" selection-end-column="7" />
           <folding />
         </state>
@@ -2049,30 +2062,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24794069">
-          <caret line="3687" column="38" selection-start-line="3687" selection-start-column="38" selection-end-line="3687" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#123883#123884#0" expanded="true" />
-            <element signature="e#123920#123921#0" expanded="true" />
-            <element signature="e#124085#124086#0" expanded="true" />
-            <element signature="e#124113#124114#0" expanded="true" />
-            <element signature="e#124295#124296#0" expanded="true" />
-            <element signature="e#124356#124357#0" expanded="true" />
-            <element signature="e#124545#124546#0" expanded="true" />
-            <element signature="e#124602#124603#0" expanded="true" />
-            <element signature="e#125483#125484#0" expanded="true" />
-            <element signature="e#125540#125541#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="49" column="31" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
+          <caret line="60" column="28" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
           <folding>
             <element signature="e#17#117#0" expanded="true" />
             <element signature="e#390#414#0" expanded="true" />
@@ -2080,28 +2073,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="201" column="2" selection-start-line="201" selection-start-column="2" selection-end-line="201" selection-end-column="2" />
+          <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.4444447">
+          <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
           <folding>
             <element signature="e#25#142#1" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
+    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+        <state vertical-scroll-proportion="-1.8518518">
+          <caret line="3891" column="29" selection-start-line="3891" selection-start-column="29" selection-end-line="3891" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22699386">
+          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4797546">
-          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.06095552">
+          <caret line="24" column="78" selection-start-line="24" selection-start-column="78" selection-end-line="24" selection-end-column="78" />
           <folding>
             <element signature="e#17#41#0" expanded="true" />
           </folding>

@@ -41,11 +41,11 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
   def descriptor = s"${getClass.getSimpleName} (${symbols.size})"
 
   def print(depth: Int): Unit = {
-    val indent = " " * (depth * 4)
+    val indent = " " * (depth * 2)
     println(s"$indent$descriptor")
     symbols.foreach {
       case (name, symbol) =>
-        println(s"$indent   $name => ${symbol}")
+        println(s"$indent    $name => ${symbol}")
       case unknown =>
         println("Unhandled entry type = " + unknown)
     }
@@ -87,5 +87,7 @@ class CollectionMemberScope(parentScope: NestedScope) extends NestedScope(Some(p
       case Some(symbol) => symbol
       case None => collectionSymbol
     })
+
+  override def descriptor = s"CollectionMemberScope #$hashCode ($parameterName, $collectionSymbol)"
 }
 

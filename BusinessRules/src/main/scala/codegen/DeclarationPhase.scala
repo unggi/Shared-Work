@@ -56,6 +56,12 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     nodeScopes.put(ctx, symbolTable.scope)
   }
 
+  override def exitCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
+
+    symbolTable.closeScope()
+
+  }
+
   override def exitDeclaration(ctx: DeclarationContext) = {
     symbolTable.closeScope()
   }
