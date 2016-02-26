@@ -89,8 +89,8 @@ BinaryPredicateContext(predicate) ::= <%
 
 ConstrainedCollectionMembershipContext(stmt) ::= <%
 
-     <Apply(stmt.modelReference, stmt.modelReference)>
-     <if(stmt.collectionConstraint)>.count(<Apply(stmt.collectionConstraint,stmt.collectionConstraint)>)
+     <Apply(stmt.ref, stmt.ref)>
+     <if(stmt.collectionMemberConstraint)>.count(<Apply(stmt.collectionMemberConstraint,stmt.collectionMemberConstraint)>)
      <else>.size
      <endif>
      <if(stmt.enumerator)>
@@ -98,6 +98,10 @@ ConstrainedCollectionMembershipContext(stmt) ::= <%
      <else>
         \u003C 0
      <endif>
+%>
+
+CollectionMemberConstraintContext(stmt) ::= <%
+<SimpleOrComplexConstraintContext(stmt.simpleOrComplexConstraint)>
 %>
 
 EnumeratorContext(enum) ::= <%
