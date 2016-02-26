@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="Fixing CollectionMemberScope - not quite done">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/templates/Scala.stg" afterPath="$PROJECT_DIR$/src/main/templates/Scala.stg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BusinessRules.iws" />
@@ -73,8 +70,8 @@
             <file leaf-file-name="Scala.stg" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.22699386">
-                    <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+                  <state vertical-scroll-proportion="0.3006135">
+                    <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
                     <folding />
                   </state>
                 </provider>
@@ -101,34 +98,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DependencyAnalyzer.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DependencyAnalyzer.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SymbolTableBuilder.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Symbol.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="72" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
-              <folding>
-                <marker date="1456147550000" expanded="true" signature="32:70" placeholder="..." />
-              </folding>
+              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -173,8 +148,8 @@
       <file leaf-file-name="ResolutionPhase.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.06095552">
-              <caret line="24" column="78" selection-start-line="24" selection-start-column="78" selection-end-line="24" selection-end-column="78" />
+            <state vertical-scroll-proportion="0.023887973">
+              <caret line="15" column="78" selection-start-line="15" selection-start-column="78" selection-end-line="15" selection-end-column="78" />
               <folding>
                 <element signature="e#17#41#0" expanded="true" />
               </folding>
@@ -275,10 +250,10 @@
         <option value="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" />
         <option value="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
         <option value="$PROJECT_DIR$/src/main/templates/Scala.stg" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
       </list>
     </option>
   </component>
@@ -1435,7 +1410,7 @@
       <workItem from="1454553751449" duration="13597000" />
       <workItem from="1454802030693" duration="26384000" />
       <workItem from="1455159022669" duration="1620000" />
-      <workItem from="1455745807630" duration="87123000" />
+      <workItem from="1455745807630" duration="93139000" />
     </task>
     <task id="LOCAL-00001" summary="First end to end working version. Sample code is generated down to the predicate level.">
       <created>1439209622979</created>
@@ -1581,11 +1556,17 @@
       <option name="project" value="LOCAL" />
       <updated>1456227937605</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Fixing CollectionMemberScope - not quite done">
+      <created>1456448311905</created>
+      <option name="number" value="00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1456448311905</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="798615000" />
+    <option name="totallyTimeSpent" value="804631000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1609,7 +1590,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959184" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274707" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="542" y="431" width="1089" height="830" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1144" y="462" width="1089" height="830" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928678" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.36971048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="2189" y="42" width="384" height="1321" />
@@ -2020,16 +2001,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="72" selection-start-line="16" selection-start-column="72" selection-end-line="16" selection-end-column="72" />
-          <folding>
-            <marker date="1456147550000" expanded="true" signature="32:70" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2073,14 +2044,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.4444447">
@@ -2101,18 +2064,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22699386">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.3006135">
+          <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.06095552">
-          <caret line="24" column="78" selection-start-line="24" selection-start-column="78" selection-end-line="24" selection-end-column="78" />
+        <state vertical-scroll-proportion="0.023887973">
+          <caret line="15" column="78" selection-start-line="15" selection-start-column="78" selection-end-line="15" selection-end-column="78" />
           <folding>
             <element signature="e#17#41#0" expanded="true" />
           </folding>

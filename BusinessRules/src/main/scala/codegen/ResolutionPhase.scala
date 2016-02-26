@@ -46,47 +46,50 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
 
 
   override def enterCollectionMemberConstraint(collectionMemberConstraint: CollectionMemberConstraintContext): Unit = {
+    collectionMemberConstraint.reference.symbol =
+      resolveCollectionIndexParameter(scope) match {
+        case Some(symbol) =>
+          val scope = nodeScopes.get(collectionMemberConstraint).get.asInstanceOf[CollectionMemberScope]
+          scope.parameterName = "_"
+          scope.collectionSymbol = collectionMemberConstraint.reference.symbol
+          symbol
+        case None =>
+          System.err
+          _
 
-    collectionMemberConstraint.reference.symbol = resolve(collectionMemberConstraint.reference).get
+      }
 
-    val scope = nodeScopes.get(collectionMemberConstraint).get.asInstanceOf[CollectionMemberScope]
-
-    scope.parameterName = "_"
-    scope.collectionSymbol = collectionMemberConstraint.reference.symbol
 
   }
 
   def resolve(reference: ModelReferenceContext): Option[Symbol] = {
+
     val scopeOpt = nodeScopes.get(reference)
 
     assume(scopeOpt.isDefined, "Scope must have been set during declaration phase: node is " + reference.toStringTree)
 
-    val scope = scopeOpt.get
-
-    val symbol =
-      scope.resolve(reference.path.get(0).getText) match {
-        case Some(found) =>
-          //
-          // Model Reference path starts with some previously defined variable or context parameter
-          //
-          Some(found)
-        case None =>
-          //
-          // Model Reference path starts with an implicit context parameter. We need to find it and set this as the
-          // symbol for the this ModelReference context.
-          //
-          resolveImplicitParameter(scope)
-      }
-    System.err.println(s"RULE = ${reference.parent.getClass.getSimpleName} SYMBOL ${symbol.get}")
-
-    symbol
+    scopeOpt.get.resolve(reference.path.get(0).getText) match {
+      case Some(found) =>
+        Some(found)
+      case None =>
+        resolveImplicitParameter(scopeOpt.get)
+    }
   }
 
   // Walk back to a containing scope which is a rule scope and find the model reference there.
   def resolveImplicitParameter(scope: NestedScope): Option[Symbol] =
     scope match {
-      case ruleScope: MatchScope => Some(ruleScope.modelParameterType)
+      case ruleScope: MatchScope =>
+        Some(ruleScope.modelParameterType)
       case other: NestedScope if other.parent.isDefined => resolveImplicitParameter(other.parent.get)
       case unknown => None
+    }
+
+  def resolveCollectionIndexParameter(scope: NestedScope): Option[Symbol] =
+    scope match {
+      case s: CollectionMemberScope => Some(s.collectionSymbol)
+      case s: NestedScope if s.parent.isDefined => resolveCollectionIndexParameter(s.parent.get)
+      case _ => None
+
     }
 }
