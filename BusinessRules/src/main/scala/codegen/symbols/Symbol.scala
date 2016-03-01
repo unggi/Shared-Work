@@ -1,11 +1,46 @@
 package codegen.symbols
 
-import org.antlr.v4.runtime.tree.TerminalNode
+import scala.collection.mutable.ArrayBuffer
 
-abstract class Symbol(val name: String)
 
-case class ModelReferenceSymbol(override val name: String, components: List[TerminalNode]) extends Symbol(name) {
+abstract class Symbol(val name: String) {
+  def asComponents: Array[String] = Array(name)
+}
+
+case class ModelReferenceSymbol(override val name: String, components: List[String]) extends Symbol(name) {
+
+  var scope: Option[NestedScope] = None
+
   override def toString: String = s"ModelReference($name, ${components.head}, ${components.tail})"
+
+  override def asComponents: Array[String] = {
+
+    assume(scope.isDefined, "Model Reference Symbol should have been asigned a scope: " + toString)
+
+    val array = new ArrayBuffer[String]()
+    //
+    // Resolve the root object in the current scope
+    //
+    val root =
+      scope.get.resolve(name) match {
+        case Some(symbol) =>
+          System.err.println(s"Found Symbol through resolve(${name}) in scope ${scope.get.getClass.getSimpleName} <- ${scope.get.keys.mkString(" - ")}")
+          symbol.name
+        case None =>
+          scope.get.resolveImplicitParameter() match {
+            case Some(symbol) =>
+              System.err.println(s"Found Symbol through implicit(${name} in scope ${scope}")
+              symbol.name
+            case None =>
+              // Not able to resolve - should not happen
+              assume(false, "Symbol not able to be resolved: " + name)
+              "NOT FOUND"
+          }
+      }
+    array.append(root)
+    array.appendAll(components.tail)
+    array.toArray
+  }
 }
 
 case class ValidationRuleSymbol(override val name: String) extends Symbol(name)
@@ -14,10 +49,9 @@ case class DefinedTermSymbol(override val name: String) extends Symbol(name)
 
 case class LocalVariable(override val name: String) extends Symbol(name)
 
-case class ModelParameterSymbol(override val name: String, val reference: ModelReferenceSymbol) extends Symbol(name) {
-  override def toString: String = s"ModelParameter($name) ==> $reference"
-}
+case class ModelParameterSymbol(override val name: String, reference: ModelReferenceSymbol) extends Symbol(name) {
 
-case class CollectionIndexSymbol(override val name: String, val collection: ModelReferenceSymbol) extends Symbol(name) {
-  override def toString: String = s"CollectionIndex($name) ==> $collection"
+  System.err.println(s"ModelParameterSymbol($name, $reference) ==> $toString")
+
+  override def toString: String = s"ModelParameter($name) ==> $reference"
 }

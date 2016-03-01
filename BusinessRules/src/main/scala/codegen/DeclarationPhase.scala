@@ -1,6 +1,6 @@
 package codegen
 
-import codegen.symbols.{CollectionMemberScope, MatchScope, ModelReferenceSymbol, SymbolTableBuilder}
+import codegen.symbols._
 import org.antlr.v4.runtime.tree.TerminalNode
 import org.antlr.v4.runtime.{ParserRuleContext, Token}
 import rules.BusinessRulesBaseListener
@@ -22,49 +22,83 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
 
   var isCollectionMemberConstraint = false
 
-  override def enterEveryRule(ctx: ParserRuleContext) = {
+  override def enterEveryRule(ctx: ParserRuleContext) =
     nodeScopes.put(ctx, symbolTable.scope)
-  }
 
-  override def enterValidationRule(ctx: ValidationRuleContext) = {
+
+  var isInsideValidationRuleDecl = false
+
+  override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
+
 
     val ref = ctx.context.modelReferenceParameter.modelReference
 
-    assume(ref.dotPath != null || ref.propPath != null)
-    val components = ref.path.toList
-    val alias =
+    val alias: Option[String] =
       ctx.context.modelReferenceParameter.alias match {
-        case null => components.mkString(".")
-        case node: TerminalNode => unquote(node.getText)
-        case token: Token => unquote(token.getText)
+        case null => None
+        case node: TerminalNode => Some(unquote(node.getText))
+        case token: Token => Some(unquote(token.getText))
       }
 
-    val symbol = new ModelReferenceSymbol(alias, components.toList)
+    makeModelReferenceSymbol(alias, ref)
 
-    symbolTable.openScope(new MatchScope(symbolTable.scope, alias, symbol))
-    nodeScopes.put(ctx, symbolTable.scope)
+    isInsideValidationRuleDecl = true
+  }
+
+  override def exitContext(ctx: ContextContext): Unit = {
+    isInsideValidationRuleDecl = false
   }
 
   override def enterCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
 
-    System.err.println("REFERENCE = " + ctx.reference.getClass)
     assume(ctx.reference != null)
-    assume(ctx.reference.symbol == null, "In declaration phase the symbol has not been set.")
+    assume(ctx.reference.symbol == null, "In declaration phase the collection symbol has not been set - we only know the scope. " + ctx.getText)
 
-    symbolTable.openScope(new CollectionMemberScope(symbolTable.scope))
-
+    val scope = new CollectionMemberScope((symbolTable.scope))
+    symbolTable.openScope(scope)
     nodeScopes.put(ctx, symbolTable.scope)
   }
 
-  override def exitCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
-
+  override def exitCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit =
     symbolTable.closeScope()
 
+  override def exitDeclaration(ctx: DeclarationContext) =
+    symbolTable.closeScope()
+
+  override def enterModelReference(ctx: ModelReferenceContext): Unit = {
+    System.err.println("Entering MODEL REFERENCE => " + ctx.path.mkString("."))
+
+    makeModelReferenceSymbol(None, ctx)
   }
 
-  override def exitDeclaration(ctx: DeclarationContext) = {
-    symbolTable.closeScope()
-  }
+  def makeModelReferenceSymbol(aliasOpt: Option[String], ref: ModelReferenceContext): Unit =
+    if (!isInsideValidationRuleDecl) {
+
+      assume(ref.dotPath != null || ref.propPath != null)
+      val components = ref.path.map(p => p.getText).toList
+
+      val scope = symbolTable.scope
+      aliasOpt match {
+        case Some(alias) =>
+          val base = components.head
+          scope.resolve(base) match {
+            case Some(baseSymbol: ModelReferenceSymbol) => new ModelParameterSymbol(alias, baseSymbol)
+            case Some(baseSymbol) => assert(false, "The base of a component path does not resolved to a Model Parameter Symbol")
+            case None =>
+              val param = scope.resolveImplicitParameter()
+              assume(param.isDefined, "Implicit Parameter not found")
+              new ModelParameterSymbol(param.get.name,)
+
+
+          }
+        case None =>
+
+      }
+
+      nodeScopes.put(ref, symbolTable.scope)
+      symbol.scope = Some(symbolTable.scope)
+    }
+
 
 }
 

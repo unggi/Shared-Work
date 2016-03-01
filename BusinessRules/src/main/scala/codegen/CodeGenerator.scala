@@ -2,7 +2,7 @@ package codegen
 
 import java.io.{File, PrintWriter, StringWriter}
 
-import codegen.symbols.SymbolTableBuilder
+import codegen.symbols.{CollectionMemberScope, SymbolTableBuilder}
 import org.antlr.v4.runtime.tree.{ParseTree, ParseTreeWalker, TerminalNode}
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
 import rules.BusinessRulesParser._
@@ -160,11 +160,15 @@ object CodeGenerator {
         pw.print(" [" + childFields.map(_.getName).mkString(" | ") + "]")
 
       pw.flush()
+
+      val len = sw.getBuffer.length()
+      val space = " " * (110 - len)
+
       scopes.get(child) match {
-        case Some(scope) =>
-          val len = sw.getBuffer.length()
-          val space = " " * (110 - len)
-          pw.print(s"$space ${scope.getClass.getSimpleName} " /*+ scope.map.keys.mkString("[", " ", "]")*/)
+        case Some(scope: CollectionMemberScope) =>
+          pw.print(s"${space}Collection ${scope.collectionSymbol}" /*+ scope.map.keys.mkString("[", " ", "]")*/)
+        case Some(other) =>
+          pw.print(s"$space${other.getClass.getSimpleName}" /*+ scope.map.keys.mkString("[", " ", "]")*/)
         case None =>
       }
 

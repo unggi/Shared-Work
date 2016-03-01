@@ -139,7 +139,7 @@ FunctionalExpressionContext(fn) ::= <%<Apply(fn,fn.ref)>%>
 NumberOfExpressionContext(ref) ::= <%<Apply(ref,ref)>.size %>
 
 ModelReferenceContext(ref) ::= <%
-<[ref.symbol.name,ref.path]; separator=".">
+<[ref.symbol.asComponents,ref.path]; separator=".">
 %>
 
 ModelReferenceIdentifierContext(id) ::= <%
