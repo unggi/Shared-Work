@@ -1,5 +1,8 @@
 package codegen.symbols
 
+import codegen.ParseTreeScopeAnnotations
+import org.antlr.v4.runtime.tree.ParseTree
+
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -51,10 +54,11 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
   // Walk back to a containing scope which is a rule scope and find the model reference there.
   def resolveImplicitParameter(): Option[Symbol] =
     find(classOf[CollectionMemberScope], this) match {
-      case Some(collectionScope) => collectionScope.collectionSymbol
+      case Some(collectionScope) =>
+        collectionScope.collectionSymbol
       case None =>
         find(classOf[MatchScope], this) match {
-          case Some(matchScope) => Some(matchScope.parameter)
+          case Some(matchScope) => Some(matchScope.modelParameterSymbol)
           case None =>
             None
         }
@@ -67,6 +71,13 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
   }
 
   def descriptor = s"${getClass.getSimpleName} (${symbols.size})"
+
+  def printAncestors(ctx: ParseTree, scopes: ParseTreeScopeAnnotations, depth: Int = 0): Unit = {
+    val indent = " " * (depth * 2)
+    System.err.println(s"$indent${ctx.getClass.getSimpleName}: ${scopes.get(ctx).get.descriptor}")
+    if (ctx.getParent != null)
+      printAncestors(ctx.getParent, scopes, depth + 1)
+  }
 
   def print(depth: Int): Unit = {
     val indent = " " * (depth * 2)
@@ -90,12 +101,11 @@ class GlobalScope() extends NestedScope(None)
 class LocalScope(parentScope: NestedScope) extends NestedScope(Some(parentScope))
 
 
-case class MatchScope(parentScope: NestedScope, modelParameterName: String, modelParameterType: ModelReferenceSymbol) extends NestedScope(Some(parentScope)) {
-  val parameter = new ModelParameterSymbol(modelParameterName, modelParameterType)
+case class MatchScope(parentScope: NestedScope, modelParameterSymbol: ModelParameterSymbol) extends NestedScope(Some(parentScope)) {
 
-  declare(parameter)
+  declare(modelParameterSymbol)
 
-  override def descriptor = super.descriptor + " " + modelParameterName
+  override def descriptor = super.descriptor + " " + modelParameterSymbol.name
 
 }
 
@@ -103,6 +113,6 @@ class CollectionMemberScope(parentScope: NestedScope) extends NestedScope(Some(p
 
   var collectionSymbol: Option[Symbol] = None
 
-  override def descriptor = s"CollectionMemberScope (_ , ${collectionSymbol.get})"
+  override def descriptor = s"CollectionMemberScope (_ , ${collectionSymbol.getOrElse("Missing collection Symbol")})"
 }
 

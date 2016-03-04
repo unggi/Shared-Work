@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="Fixing generated scala">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" />
+    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="Stuck at collection index symbol">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/templates/Scala.stg" afterPath="$PROJECT_DIR$/src/main/templates/Scala.stg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BusinessRules.iws" />
@@ -51,6 +48,7 @@
                   <state vertical-scroll-proportion="0.0">
                     <caret line="168" column="44" selection-start-line="168" selection-start-column="44" selection-end-line="168" selection-end-column="44" />
                     <folding>
+                      <element signature="imports" expanded="false" />
                       <element signature="e#988#989#0" expanded="false" />
                       <element signature="e#1027#1028#0" expanded="false" />
                       <element signature="e#1914#1915#0" expanded="false" />
@@ -62,21 +60,21 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="CodeGenerator.scala" pinned="true" current-in-tab="false">
+            <file leaf-file-name="CodeGenerator.scala" pinned="true" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.0">
-                    <caret line="98" column="7" selection-start-line="98" selection-start-column="7" selection-end-line="98" selection-end-column="7" />
+                  <state vertical-scroll-proportion="0.70789474">
+                    <caret line="124" column="33" selection-start-line="124" selection-start-column="33" selection-end-line="124" selection-end-column="33" />
                     <folding />
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="Scala.stg" pinned="false" current-in-tab="true">
+            <file leaf-file-name="Scala.stg" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.7585139">
-                    <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="106" selection-end-column="30" />
+                  <state vertical-scroll-proportion="0.0">
+                    <caret line="108" column="32" selection-start-line="108" selection-start-column="32" selection-end-line="108" selection-end-column="32" />
                     <folding />
                   </state>
                 </provider>
@@ -97,8 +95,10 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="51" column="6" selection-start-line="51" selection-start-column="6" selection-end-line="51" selection-end-column="6" />
-              <folding />
+              <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+              <folding>
+                <element signature="e#25#65#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -107,32 +107,53 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="25" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding>
-                <element signature="e#25#70#0" expanded="true" />
+                <marker date="1456832061000" expanded="true" signature="32:68" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DeclarationPhase.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DeclarationPhase.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.14744645">
-              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
               <folding>
-                <element signature="e#17#41#0" expanded="true" />
-                <element signature="e#327#351#0" expanded="true" />
+                <element signature="e#314#338#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BusinessRulesLexer.tokens" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesLexer.tokens">
+      <file leaf-file-name="BusinessRulesParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesParser.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="2906" column="0" selection-start-line="2906" selection-start-column="0" selection-end-line="2906" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TerminalNode.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/tree/TerminalNode.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.3333333">
+              <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BusinessRules.g4" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-17.407408">
+              <caret line="207" column="64" selection-start-line="207" selection-start-column="64" selection-end-line="207" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -148,14 +169,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResolutionPhase.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ResolutionPhase.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding>
-                <element signature="e#17#41#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.19686985">
+              <caret line="41" column="27" selection-start-line="41" selection-start-column="27" selection-end-line="41" selection-end-column="27" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -164,7 +183,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="141" column="51" selection-start-line="141" selection-start-column="51" selection-end-line="141" selection-end-column="51" />
+              <caret line="116" column="24" selection-start-line="116" selection-start-column="24" selection-end-line="116" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -253,10 +272,10 @@
         <option value="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" />
         <option value="$PROJECT_DIR$/src/main/templates/Scala.stg" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
       </list>
     </option>
   </component>
@@ -295,8 +314,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="42" />
-    <option name="y" value="23" />
+    <option name="x" value="140" />
+    <option name="y" value="36" />
     <option name="width" value="1206" />
     <option name="height" value="1337" />
   </component>
@@ -326,28 +345,6 @@
       <sortByType ProjectPane="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Tests">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BusinessRules">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src/test/resources">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="parsing">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -424,32 +421,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Maven: org.scala-lang:scala-library:2.11.7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala-library-2.11.7.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="collection" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SeqLike.class" />
-              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BusinessRules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
             </PATH_ELEMENT>
@@ -499,6 +470,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BusinessRules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.antlr:antlr4:4.5.1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="antlr4-4.5.1.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tree" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -709,10 +702,6 @@
               <option name="myItemId" value="symbols" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SymbolTableBuilder.scala" />
-              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -886,8 +875,30 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope">
+        <subPane subId="Tests">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="BusinessRules">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src/test/resources">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="parsing">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1413,7 +1424,8 @@
       <workItem from="1454553751449" duration="13597000" />
       <workItem from="1454802030693" duration="26384000" />
       <workItem from="1455159022669" duration="1620000" />
-      <workItem from="1455745807630" duration="125041000" />
+      <workItem from="1455745807630" duration="126016000" />
+      <workItem from="1456888373430" duration="16364000" />
     </task>
     <task id="LOCAL-00001" summary="First end to end working version. Sample code is generated down to the predicate level.">
       <created>1439209622979</created>
@@ -1571,11 +1583,17 @@
       <option name="project" value="LOCAL" />
       <updated>1456490287539</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Stuck at collection index symbol">
+      <created>1456832069435</created>
+      <option name="number" value="00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1456832069435</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="836533000" />
+    <option name="totallyTimeSpent" value="853872000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1587,7 +1605,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="42" y="23" width="1206" height="1337" extended-state="0" />
+    <frame x="140" y="36" width="1206" height="1337" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="PlantUML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24557166" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" x="1618" y="194" width="873" height="564" />
@@ -1599,12 +1617,11 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959184" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274707" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1433" y="492" width="1089" height="830" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.3892261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1381" y="258" width="1089" height="830" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928678" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.36971048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="1404" y="55" width="384" height="1305" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.36971048" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="1502" y="68" width="384" height="1305" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32769728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="false" weight="1.0" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" x="998" y="83" width="1450" height="1318" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.083984375" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -1618,6 +1635,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39941478" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4522003" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32769728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="PlantUML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24557166" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" x="1618" y="194" width="873" height="564" />
@@ -1685,7 +1703,8 @@
     <MESSAGE value="CollectionMemberScope has a null symbol during declaration phase." />
     <MESSAGE value="Fixing CollectionMemberScope - not quite done" />
     <MESSAGE value="Fixing generated scala" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing generated scala" />
+    <MESSAGE value="Stuck at collection index symbol" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stuck at collection index symbol" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1852,7 +1871,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="83.888885">
           <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1860,7 +1878,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.333333">
           <caret line="54" column="32" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1868,7 +1885,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.555555">
           <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1876,7 +1892,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.3333333">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1884,7 +1899,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21004942">
           <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1892,7 +1906,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-25.0">
           <caret line="67" column="66" selection-start-line="67" selection-start-column="66" selection-end-line="67" selection-end-column="66" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1904,42 +1917,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/tree/TerminalNode.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1142132">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/resources/parsing/NGFP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="168" column="44" selection-start-line="168" selection-start-column="44" selection-end-line="168" selection-end-column="44" />
-          <folding>
-            <element signature="e#988#989#0" expanded="false" />
-            <element signature="e#1027#1028#0" expanded="false" />
-            <element signature="e#1914#1915#0" expanded="false" />
-            <element signature="e#1962#1963#0" expanded="false" />
-            <element signature="e#2014#2015#0" expanded="false" />
-            <element signature="e#2048#2049#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.11.7/scala-library-2.11.7-sources.jar!/scala/collection/SeqLike.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33278418">
           <caret line="270" column="6" selection-start-line="270" selection-start-column="6" selection-end-line="270" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1947,7 +1928,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8388325">
           <caret line="168" column="13" selection-start-line="168" selection-start-column="13" selection-end-line="168" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1999,16 +1979,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.444445">
-          <caret line="166" column="14" selection-start-line="166" selection-start-column="14" selection-end-line="166" selection-end-column="14" />
-          <folding>
-            <element signature="e#25#142#1" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/StringFormatter.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2025,28 +1995,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2906" column="0" selection-start-line="2906" selection-start-column="0" selection-end-line="2906" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/tree/ParseTreeWalker.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.777778">
           <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
+    <entry file="file://$PROJECT_DIR$/src/test/resources/parsing/NGFP.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="98" column="7" selection-start-line="98" selection-start-column="7" selection-end-line="98" selection-end-column="7" />
+          <caret line="168" column="44" selection-start-line="168" selection-start-column="44" selection-end-line="168" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#988#989#0" expanded="false" />
+            <element signature="e#1027#1028#0" expanded="false" />
+            <element signature="e#1914#1915#0" expanded="false" />
+            <element signature="e#1962#1963#0" expanded="false" />
+            <element signature="e#2014#2015#0" expanded="false" />
+            <element signature="e#2048#2049#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="116" column="24" selection-start-line="116" selection-start-column="24" selection-end-line="116" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/antlr/antlr4/4.5.1/antlr4-4.5.1.jar!/org/antlr/v4/runtime/tree/TerminalNode.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.3333333">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -2059,50 +2050,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#17#41#0" expanded="true" />
+            <marker date="1456832061000" expanded="true" signature="32:68" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.70789474">
+          <caret line="124" column="33" selection-start-line="124" selection-start-column="33" selection-end-line="124" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gen/rules/BusinessRulesParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="25" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+          <caret line="2906" column="0" selection-start-line="2906" selection-start-column="0" selection-end-line="2906" selection-end-column="0" />
           <folding>
-            <element signature="e#25#70#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.407408">
+          <caret line="207" column="64" selection-start-line="207" selection-start-column="64" selection-end-line="207" selection-end-column="64" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="6" selection-start-line="51" selection-start-column="6" selection-end-line="51" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/templates/Scala.stg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="141" column="51" selection-start-line="141" selection-start-column="51" selection-end-line="141" selection-end-column="51" />
-          <folding />
+          <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#65#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14744645">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
           <folding>
-            <element signature="e#17#41#0" expanded="true" />
-            <element signature="e#327#351#0" expanded="true" />
+            <element signature="e#314#338#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19686985">
+          <caret line="41" column="27" selection-start-line="41" selection-start-column="27" selection-end-line="41" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>

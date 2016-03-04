@@ -60,15 +60,24 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
 
     val root = reference.path.get(0).getText
 
-    scopeOpt.get.resolve(root) match {
+
+    System.err.println("Root to resolve is " + root)
+
+    val s = scopeOpt.get.resolve(root) match {
       case Some(found) =>
         Some(found)
       case None =>
+        System.err.println("Implicit Parameter search " + root)
         resolveImplicitParameter(scopeOpt.get) match {
-          case Some(parameter) => Some(parameter)
+          case Some(parameter) =>
+            System.err.println("Implicit Found: " + parameter)
+            scopeOpt.get.printAncestors(reference, nodeScopes, 0)
+            Some(parameter)
           case None => None
         }
     }
+    System.err.println("Resolved Reference is " + s)
+    s
   }
 
   def find[T <: NestedScope](cls: Class[T], start: NestedScope): Option[T] =
@@ -86,7 +95,7 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
       case Some(collectionScope) => collectionScope.collectionSymbol
       case None =>
         find(classOf[MatchScope], scope) match {
-          case Some(matchScope) => Some(matchScope.parameter)
+          case Some(matchScope) => Some(matchScope.modelParameterSymbol)
           case None =>
             None
         }

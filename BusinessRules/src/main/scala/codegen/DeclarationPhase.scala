@@ -30,17 +30,19 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
 
   override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
 
-
     val ref = ctx.context.modelReferenceParameter.modelReference
 
-    val alias: Option[String] =
+    val symbolOpt: Option[ModelParameterSymbol] =
       ctx.context.modelReferenceParameter.alias match {
-        case null => None
-        case node: TerminalNode => Some(unquote(node.getText))
-        case token: Token => Some(unquote(token.getText))
+        case node: TerminalNode => makeModelParameterSymbol(unquote(node.getText), ref)
+        case token: Token => makeModelParameterSymbol(unquote(token.getText), ref)
+        case unknown =>
+          assert(true, "Unhandled token type " + unknown)
+          None
       }
-
-    makeModelReferenceSymbol(alias, ref)
+    val scope = new MatchScope(symbolTable.scope, symbolOpt.get)
+    symbolTable.openScope(scope)
+    nodeScopes.put(ctx, symbolTable.scope)
 
     isInsideValidationRuleDecl = true
   }
@@ -49,12 +51,18 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     isInsideValidationRuleDecl = false
   }
 
+
+  override def enterConstrainedCollectionMembership(ctx: ConstrainedCollectionMembershipContext): Unit = {
+    ctx.collectionMemberConstraint.reference.symbol = makeModelReferenceSymbol(ctx.ref).get
+
+  }
+
   override def enterCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
 
     assume(ctx.reference != null)
-    assume(ctx.reference.symbol == null, "In declaration phase the collection symbol has not been set - we only know the scope. " + ctx.getText)
 
-    val scope = new CollectionMemberScope((symbolTable.scope))
+    val scope = new CollectionMemberScope(symbolTable.scope)
+    scope.collectionSymbol = Some(ctx.reference.symbol)
     symbolTable.openScope(scope)
     nodeScopes.put(ctx, symbolTable.scope)
   }
@@ -68,36 +76,50 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
   override def enterModelReference(ctx: ModelReferenceContext): Unit = {
     System.err.println("Entering MODEL REFERENCE => " + ctx.path.mkString("."))
 
-    makeModelReferenceSymbol(None, ctx)
+    makeModelReferenceSymbol(ctx)
   }
 
-  def makeModelReferenceSymbol(aliasOpt: Option[String], ref: ModelReferenceContext): Unit =
+
+  def makeModelReferenceSymbol(ref: ModelReferenceContext): Option[Symbol] =
     if (!isInsideValidationRuleDecl) {
-
-      assume(ref.dotPath != null || ref.propPath != null)
-      val components = ref.path.map(p => p.getText).toList
-
+      var components: List[String] = ref.path.map(p => p.getText).toList
       val scope = symbolTable.scope
-      aliasOpt match {
-        case Some(alias) =>
-          val base = components.head
-          scope.resolve(base) match {
-            case Some(baseSymbol: ModelReferenceSymbol) => new ModelParameterSymbol(alias, baseSymbol)
-            case Some(baseSymbol) => assert(false, "The base of a component path does not resolved to a Model Parameter Symbol")
-            case None =>
-              val param = scope.resolveImplicitParameter()
-              assume(param.isDefined, "Implicit Parameter not found")
-              new ModelParameterSymbol(param.get.name,)
-
-
-          }
+      val base = components.head
+      scope.resolve(base) match {
+        case Some(symbol) =>
         case None =>
+          val param = scope.resolveImplicitParameter()
+          if (param.isEmpty) {
+            scope.printAncestors(ref, nodeScopes)
+            scope.print(0)
+          }
 
+          assume(param.isDefined, "Must be able to find an implict parameter.")
+
+          components = param.get.name :: components
       }
-
-      nodeScopes.put(ref, symbolTable.scope)
-      symbol.scope = Some(symbolTable.scope)
+      ref.symbol = ModelReferenceSymbol(components.mkString("."), components)
+      Some(ref.symbol)
     }
+    else
+      None
+
+  def makeModelParameterSymbol(alias: String, ref: ModelReferenceContext): Option[ModelParameterSymbol] =
+    if (!isInsideValidationRuleDecl) {
+      //
+      // Create a Model Reference Symbol
+      //
+      // Context always has an alias
+      //
+      var components: List[String] = ref.path.map(p => p.getText).toList
+      val scope = symbolTable.scope
+      val base = components.head
+
+      val modelRef = new ModelReferenceSymbol(base, components)
+      Some(new ModelParameterSymbol(alias, modelRef))
+
+    } else
+      None
 
 
 }
