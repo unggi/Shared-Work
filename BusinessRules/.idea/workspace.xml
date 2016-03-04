@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="Stuck at collection index symbol">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
+    <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="Collection Scope bug stilll open">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BusinessRules.iws" />
@@ -1425,7 +1422,7 @@
       <workItem from="1454802030693" duration="26384000" />
       <workItem from="1455159022669" duration="1620000" />
       <workItem from="1455745807630" duration="126016000" />
-      <workItem from="1456888373430" duration="16364000" />
+      <workItem from="1456888373430" duration="16405000" />
     </task>
     <task id="LOCAL-00001" summary="First end to end working version. Sample code is generated down to the predicate level.">
       <created>1439209622979</created>
@@ -1589,11 +1586,17 @@
       <option name="project" value="LOCAL" />
       <updated>1456832069435</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Collection Scope bug stilll open">
+      <created>1457094618096</created>
+      <option name="number" value="00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1457094618096</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="853872000" />
+    <option name="totallyTimeSpent" value="853913000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1704,7 +1707,8 @@
     <MESSAGE value="Fixing CollectionMemberScope - not quite done" />
     <MESSAGE value="Fixing generated scala" />
     <MESSAGE value="Stuck at collection index symbol" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stuck at collection index symbol" />
+    <MESSAGE value="Collection Scope bug stilll open" />
+    <option name="LAST_COMMIT_MESSAGE" value="Collection Scope bug stilll open" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
