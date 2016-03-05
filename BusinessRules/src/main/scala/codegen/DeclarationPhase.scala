@@ -25,7 +25,6 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
   override def enterEveryRule(ctx: ParserRuleContext) =
     nodeScopes.put(ctx, symbolTable.scope)
 
-
   var isInsideValidationRuleDecl = false
 
   override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
@@ -40,6 +39,7 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
           assert(true, "Unhandled token type " + unknown)
           None
       }
+
     val scope = new MatchScope(symbolTable.scope, symbolOpt.get)
     symbolTable.openScope(scope)
     nodeScopes.put(ctx, symbolTable.scope)
@@ -51,18 +51,12 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     isInsideValidationRuleDecl = false
   }
 
-
-  override def enterConstrainedCollectionMembership(ctx: ConstrainedCollectionMembershipContext): Unit = {
-    ctx.collectionMemberConstraint.reference.symbol = makeModelReferenceSymbol(ctx.ref).get
-
-  }
-
   override def enterCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
 
     assume(ctx.reference != null)
 
     val scope = new CollectionMemberScope(symbolTable.scope)
-    scope.collectionSymbol = Some(ctx.reference.symbol)
+    scope.collectionSymbol = Some(CollectionIndexSymbol("_", ctx.reference.symbol))
     symbolTable.openScope(scope)
     nodeScopes.put(ctx, symbolTable.scope)
   }
@@ -75,10 +69,8 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
 
   override def enterModelReference(ctx: ModelReferenceContext): Unit = {
     System.err.println("Entering MODEL REFERENCE => " + ctx.path.mkString("."))
-
     makeModelReferenceSymbol(ctx)
   }
-
 
   def makeModelReferenceSymbol(ref: ModelReferenceContext): Option[Symbol] =
     if (!isInsideValidationRuleDecl) {
@@ -89,13 +81,7 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
         case Some(symbol) =>
         case None =>
           val param = scope.resolveImplicitParameter()
-          if (param.isEmpty) {
-            scope.printAncestors(ref, nodeScopes)
-            scope.print(0)
-          }
-
           assume(param.isDefined, "Must be able to find an implict parameter.")
-
           components = param.get.name :: components
       }
       ref.symbol = ModelReferenceSymbol(components.mkString("."), components)

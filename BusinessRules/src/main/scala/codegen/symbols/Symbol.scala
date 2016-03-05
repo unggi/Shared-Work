@@ -11,7 +11,7 @@ case class ModelReferenceSymbol(override val name: String, components: List[Stri
 
   var scope: Option[NestedScope] = None
 
-  override def toString: String = s"ModelReference($name, ${components.head}, ${components.tail})"
+  override def toString: String = s"${getClass.getSimpleName}($name, ${components.head}, ${components.tail})"
 
   override def asComponents: Array[String] = {
 
@@ -49,9 +49,6 @@ case class DefinedTermSymbol(override val name: String) extends Symbol(name)
 
 case class LocalVariable(override val name: String) extends Symbol(name)
 
-case class ModelParameterSymbol(override val name: String, reference: ModelReferenceSymbol) extends Symbol(name) {
+case class ModelParameterSymbol(override val name: String, reference: ModelReferenceSymbol) extends Symbol(name)
 
-  System.err.println(s"ModelParameterSymbol($name, $reference) ==> $toString")
-
-  override def toString: String = s"ModelParameter($name) ==> $reference"
-}
+case class CollectionIndexSymbol(override val name: String, reference: Symbol) extends Symbol(name)

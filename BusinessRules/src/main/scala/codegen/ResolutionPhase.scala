@@ -9,48 +9,9 @@ import rules.BusinessRulesParser._
  */
 class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
 
-  // IsKindOfPredicate
-  override def enterIsKindOfPredicate(ctx: IsKindOfPredicateContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference).get
+  override def enterModelReference(ctx: ModelReferenceContext): Unit =
+    ctx.symbol = resolve(ctx).get
 
-  override def enterModelReferenceTerm(ctx: ModelReferenceTermContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterModelReferenceIdentifier(ctx: ModelReferenceIdentifierContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterSumOfExpression(ctx: SumOfExpressionContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterNumberOfExpression(ctx: NumberOfExpressionContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterCollectionIndex(ctx: CollectionIndexContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterCastExpression(ctx: CastExpressionContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterSelectionExpression(ctx: SelectionExpressionContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterConstrainedCollectionMembership(ctx: ConstrainedCollectionMembershipContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-
-  override def enterNotExistsStatement(ctx: NotExistsStatementContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterForallStatement(ctx: ForallStatementContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-
-  override def enterCollectionMemberConstraint(collectionMemberConstraint: CollectionMemberConstraintContext): Unit = {
-
-    val scope = nodeScopes.get(collectionMemberConstraint).get.asInstanceOf[CollectionMemberScope]
-
-    scope.collectionSymbol = Some(collectionMemberConstraint.reference.symbol)
-  }
 
   def resolve(reference: ModelReferenceContext): Option[Symbol] = {
 
@@ -60,24 +21,15 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
 
     val root = reference.path.get(0).getText
 
-
-    System.err.println("Root to resolve is " + root)
-
-    val s = scopeOpt.get.resolve(root) match {
+    scopeOpt.get.resolve(root) match {
       case Some(found) =>
         Some(found)
       case None =>
-        System.err.println("Implicit Parameter search " + root)
         resolveImplicitParameter(scopeOpt.get) match {
-          case Some(parameter) =>
-            System.err.println("Implicit Found: " + parameter)
-            scopeOpt.get.printAncestors(reference, nodeScopes, 0)
-            Some(parameter)
+          case Some(parameter) => Some(parameter)
           case None => None
         }
     }
-    System.err.println("Resolved Reference is " + s)
-    s
   }
 
   def find[T <: NestedScope](cls: Class[T], start: NestedScope): Option[T] =
@@ -88,14 +40,15 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
     else
       None
 
-
   // Walk back to a containing scope which is a rule scope and find the model reference there.
   def resolveImplicitParameter(scope: NestedScope): Option[Symbol] =
     find(classOf[CollectionMemberScope], scope) match {
-      case Some(collectionScope) => collectionScope.collectionSymbol
+      case Some(collectionScope) =>
+        collectionScope.collectionSymbol
       case None =>
         find(classOf[MatchScope], scope) match {
-          case Some(matchScope) => Some(matchScope.modelParameterSymbol)
+          case Some(matchScope) =>
+            Some(matchScope.modelParameterSymbol)
           case None =>
             None
         }
