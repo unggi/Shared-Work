@@ -1,4 +1,4 @@
-package codegen;
+package codegen.modeladaptors;
 
 import org.stringtemplate.v4.Interpreter;
 import org.stringtemplate.v4.ModelAdaptor;
@@ -76,16 +76,14 @@ public class AntlrObjectModelAdaptor implements ModelAdaptor {
 
     protected static Method tryGetMethod(Class<?> clazz, String methodName) {
         try {
-            Method ex = clazz.getMethod(methodName, new Class[0]);
+            Method ex = clazz.getMethod(methodName);
             if (ex != null) {
                 ex.setAccessible(true);
             }
 
             return ex;
         } catch (NoSuchMethodException var3) {
-            ;
         } catch (SecurityException var4) {
-            ;
         }
 
         return null;
@@ -100,9 +98,7 @@ public class AntlrObjectModelAdaptor implements ModelAdaptor {
 
             return ex;
         } catch (NoSuchFieldException var3) {
-            ;
         } catch (SecurityException var4) {
-            ;
         }
 
         return null;
@@ -123,13 +119,13 @@ public class AntlrObjectModelAdaptor implements ModelAdaptor {
         } else {
             Class c = o.getClass();
             if (property == null) {
-                return this.throwNoSuchProperty(c, propertyName, (Exception) null);
+                return this.throwNoSuchProperty(c, propertyName, null);
             } else {
                 Member member = findMember(c, propertyName);
                 if (member != null) {
                     try {
                         if (member instanceof Method) {
-                            return ((Method) member).invoke(o, new Object[0]);
+                            return ((Method) member).invoke(o);
                         }
 
                         if (member instanceof Field) {
@@ -140,14 +136,14 @@ public class AntlrObjectModelAdaptor implements ModelAdaptor {
                     }
                 }
 
-                return this.throwNoSuchProperty(c, propertyName, (Exception) null);
+                return this.throwNoSuchProperty(c, propertyName, null);
             }
         }
 
     }
 
     protected Object throwNoSuchProperty(Class<?> clazz, String propertyName, Exception cause) {
-        throw new STNoSuchPropertyException(cause, (Object) null, clazz.getName() + "." + propertyName);
+        throw new STNoSuchPropertyException(cause, null, clazz.getName() + "." + propertyName);
     }
 }
 

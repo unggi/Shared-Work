@@ -36,11 +36,11 @@ declaration
 //
 // Rules and Properties
 //
-validationRule  : 'Validation Rule' name=DoubleQuotedString context constraint ('report:' compoundReport)?;
+validationRule  : 'Validation:' name=DoubleQuotedString context constraint ('report:' compoundReport)?;
 
 // validationRuleVariableDeclaration  : simpleVariableDeclaration ','?;
 
-definition  : 'Definition of' name=DoubleQuotedString 'Given:' multipleContextParameter  constraint;
+definition  : 'Definition:' name=DoubleQuotedString 'Given:' multipleContextParameter 'Value:' expression;
 
 ruleSet  : 'Rule set' DoubleQuotedString ('applies to' modelReference 'where' constraint)?;
 
@@ -57,9 +57,10 @@ modelReferenceParameter : ref=modelReference '(' alias=DoubleQuotedString ')';
 //
 // Constraints
 //
-constraint      :
-                    'If' condBlock=logicalStatement 'then' thenBlock=logicalStatement ('else' elseBlock=logicalStatement)?
+constraint      :   'Constraint:'
+                    ('If' condBlock=logicalStatement 'then' thenBlock=logicalStatement ('else' elseBlock=logicalStatement)?
                 |   logicalStatement
+                )
                 ;
 
 binaryLogicalOperator: (and = 'and' | or = 'or' | implies = 'implies' | iff = 'if and only if');

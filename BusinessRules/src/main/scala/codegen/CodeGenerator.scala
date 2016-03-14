@@ -75,6 +75,10 @@ object CodeGenerator {
 
   def generate(file: File, groupFile: String): Unit = {
 
+    val outputDir = new File(outputPath)
+    if (!outputDir.exists && !outputDir.isDirectory)
+      outputDir.mkdirs()
+
     val template = new File(groupFile)
     if (!template.exists())
       usage(s"Cannot find template group file: $groupFile")

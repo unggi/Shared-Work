@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <antlr4.maven.plugin.version>4.5</antlr4.maven.plugin.version>
         <java.version>1.8</java.version>
-        <scala.version>2.11.7</scala.version>
+        <scala.version>2.11.8</scala.version>
         <maven.scala.plugin.version>2.15.2</maven.scala.plugin.version>
         <akka.version>2.3.4</akka.version>
         <scalatest.version>2.2.5</scalatest.version>
