@@ -5,7 +5,7 @@ Definition:
 Given:
     Instrument("instrument")
 Value:
-    The instrument is a kind of InterestRateSwap.
+    The instrument is a kind of InterestRateSwap
 
 Validation:
     "Interest Rate Swap - Exactly two Legs"

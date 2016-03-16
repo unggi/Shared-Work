@@ -30,8 +30,8 @@ public class BusinessRulesParser extends Parser {
 		T__31=32, T__32=33, T__33=34, T__34=35, T__35=36, T__36=37, T__37=38, 
 		T__38=39, T__39=40, T__40=41, T__41=42, T__42=43, T__43=44, T__44=45, 
 		T__45=46, T__46=47, T__47=48, T__48=49, T__49=50, T__50=51, T__51=52, 
-		T__52=53, T__53=54, T__54=55, T__55=56, T__56=57, T__57=58, T__58=59, 
-		T__59=60, T__60=61, T__61=62, T__62=63, T__63=64, T__64=65, T__65=66,
+		T__52=53, T__53=54, T__54=55, T__55=56, T__56=57, T__57=58, T__58=59,
+			T__59 = 60, T__60 = 61, T__61 = 62, T__62 = 63, T__63 = 64, T__64 = 65, T__65 = 66,
 			T__66 = 67, T__67 = 68, T__68 = 69, T__69 = 70, T__70 = 71, T__71 = 72, THE = 73, AN = 74,
 			FragmentName = 75, IsEqualTo = 76, IsNotEqualTo = 77, IsGreaterThan = 78, IsLessThanOrEqualTo = 79,
 			IsGreaterThanOrEqualTo = 80, IsLessThan = 81, BooleanLiteral = 82, LiteralString = 83,
@@ -86,8 +86,8 @@ public class BusinessRulesParser extends Parser {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null,
+			null, null, null, null, null, null, null, null, null, null, null, null,
 			null, null, null, null, null, null, null, null, null, null, null, null,
 			null, "THE", "AN", "FragmentName", "IsEqualTo", "IsNotEqualTo", "IsGreaterThan",
 			"IsLessThanOrEqualTo", "IsGreaterThanOrEqualTo", "IsLessThan", "BooleanLiteral",
@@ -494,8 +494,8 @@ public class BusinessRulesParser extends Parser {
 			return getRuleContext(MultipleContextParameterContext.class,0);
 		}
 
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class, 0);
+		public PredicateContext predicate() {
+			return getRuleContext(PredicateContext.class, 0);
 		}
 		public TerminalNode DoubleQuotedString() { return getToken(BusinessRulesParser.DoubleQuotedString, 0); }
 		public DefinitionContext(ParserRuleContext parent, int invokingState) {
@@ -534,7 +534,7 @@ public class BusinessRulesParser extends Parser {
 			setState(123);
 				match(T__5);
 				setState(124);
-				expression(0);
+				predicate();
 			}
 		}
 		catch (RecognitionException re) {
@@ -4110,7 +4110,7 @@ public class BusinessRulesParser extends Parser {
 					"\5\n\6\2hg\3\2\2\2il\3\2\2\2jh\3\2\2\2jk\3\2\2\2k\t\3\2\2\2lj\3\2\2\2" +
 					"mp\5\16\b\2np\5\f\7\2om\3\2\2\2on\3\2\2\2p\13\3\2\2\2qr\7\4\2\2rs\7V\2" +
 					"\2st\5\22\n\2tw\5\32\16\2uv\7\5\2\2vx\5H%\2wu\3\2\2\2wx\3\2\2\2x\r\3\2" +
-					"\2\2yz\7\6\2\2z{\7V\2\2{|\7\7\2\2|}\5\26\f\2}~\7\b\2\2~\177\5,\27\2\177" +
+					"\2\2yz\7\6\2\2z{\7V\2\2{|\7\7\2\2|}\5\26\f\2}~\7\b\2\2~\177\5\"\22\2\177" +
 					"\17\3\2\2\2\u0080\u0081\7\t\2\2\u0081\u0087\7V\2\2\u0082\u0083\7\n\2\2" +
 					"\u0083\u0084\5@!\2\u0084\u0085\7\13\2\2\u0085\u0086\5\32\16\2\u0086\u0088" +
 					"\3\2\2\2\u0087\u0082\3\2\2\2\u0087\u0088\3\2\2\2\u0088\21\3\2\2\2\u0089" +

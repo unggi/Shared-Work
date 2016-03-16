@@ -38,13 +38,9 @@ declaration
 //
 validationRule  : 'Validation:' name=DoubleQuotedString context constraint ('report:' compoundReport)?;
 
-// validationRuleVariableDeclaration  : simpleVariableDeclaration ','?;
-
-definition  : 'Definition:' name=DoubleQuotedString 'Given:' multipleContextParameter 'Value:' expression;
+definition  : 'Definition:' name=DoubleQuotedString 'Given:' multipleContextParameter 'Value:' predicate;
 
 ruleSet  : 'Rule set' DoubleQuotedString ('applies to' modelReference 'where' constraint)?;
-
-//globalVariableDeclaration  : simpleVariableDeclaration;
 
 context  : 'Context:' modelReferenceParameter;
 
