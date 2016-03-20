@@ -52,3 +52,4 @@ case class LocalVariable(override val name: String) extends Symbol(name)
 case class ModelParameterSymbol(override val name: String, reference: ModelReferenceSymbol) extends Symbol(name)
 
 case class CollectionIndexSymbol(override val name: String, reference: Symbol) extends Symbol(name)
+

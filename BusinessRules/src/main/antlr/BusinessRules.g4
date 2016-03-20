@@ -44,7 +44,7 @@ ruleSet  : 'Rule set' DoubleQuotedString ('applies to' modelReference 'where' co
 
 context  : 'Context:' modelReferenceParameter;
 
-multipleParameterContext  : 'Context:' multipleContextParameter;
+//multipleParameterContext  : 'Context:' multipleContextParameter;
 
 multipleContextParameter  : modelReferenceParameter (',' modelReferenceParameter)*;
 
@@ -86,7 +86,7 @@ predicate  :
     |    expression 'is one of' listDefinition                  #IsOneOfPredicate
     |    expression 'is not one of' listDefinition              #IsNotOneOfPredicate
     |    modelReference 'is a kind of' ModelElementName         #IsKindOfPredicate
-//    |    expression                                             #UnaryExpressionPredicate
+    |    expression                                             #UnaryExpressionPredicate
 //    |   multipleExistsStatement
 //    |   multipleNotExistsStatement
     ;
@@ -122,9 +122,9 @@ expression  :   left=expression op=('*' | '/' | '+' | '-'|'mod') right=expressio
 term  :
         identifier                      #IdentifierTerm
     |   functionalExpression            #FunctionalExpressionTerm
-    |   modelReference FragmentName     #ModelReferenceTerm
+    |   modelReference FragmentName     #DefinedTermReferenceTerm
     |   operatorInvocation              #OperatorInvocationTerm
-    |   definitionApplication           #DefinitionApplicatoinTerm
+    |   definitionApplication           #DefinitionApplicationTerm
     |   castExpression                  #CastExpressionTerm
     |   selectionExpression             #SelectionExpressionTerm
     |   '(' constraint ')'              #ConstraintTerm

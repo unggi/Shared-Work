@@ -47,6 +47,7 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     isInsideValidationRuleDecl = true
   }
 
+
   override def exitContext(ctx: ContextContext): Unit = {
     isInsideValidationRuleDecl = false
   }
@@ -81,7 +82,7 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
         case Some(symbol) =>
         case None =>
           val param = scope.resolveImplicitParameter()
-          assume(param.isDefined, "Must be able to find an implict parameter.")
+          assume(param.isDefined, s"Cannot resolve an implicit object for $base")
           components = param.get.name :: components
       }
       ref.symbol = ModelReferenceSymbol(components.mkString("."), components)
