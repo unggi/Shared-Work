@@ -106,8 +106,10 @@ object CodeGenerator {
 
     val builder = new SymbolTableBuilder(false)
 
-    val declarationPhase = new DeclarationPhase(builder)
+    val declarationPhase = new DeclarationListener(builder)
     walker.walk(declarationPhase, tree)
+
+    printTreeClasses(tree, 1, declarationPhase.nodeScopes)
 
     val resolver = new ResolutionPhase(builder.symbolTable, declarationPhase.nodeScopes)
     walker.walk(resolver, tree)
@@ -116,7 +118,6 @@ object CodeGenerator {
 
     println("Parsing is complete")
 
-    printTreeClasses(tree, 1, declarationPhase.nodeScopes)
 
     builder.symbolTable.print()
 

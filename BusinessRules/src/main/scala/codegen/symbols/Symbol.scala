@@ -11,11 +11,11 @@ case class ModelReferenceSymbol(override val name: String, components: List[Stri
 
   var scope: Option[NestedScope] = None
 
-  override def toString: String = s"${getClass.getSimpleName}($name, ${components.head}, ${components.tail})"
+  override def toString: String = s"${getClass.getSimpleName}($name, ${components.mkString(", ")})"
 
   override def asComponents: Array[String] = {
 
-    assume(scope.isDefined, "Model Reference Symbol should have been asigned a scope: " + toString)
+    assume(scope.isDefined, "Model Reference Symbol should have been assigned a scope: " + toString)
 
     val array = new ArrayBuffer[String]()
     //

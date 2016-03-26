@@ -40,6 +40,9 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
         }
     }
 
+  def resolveInScope(name: String): Option[Symbol] =
+    symbols.get(name)
+
   def keys = symbols.keySet
 
   def find[T <: NestedScope](cls: Class[T], start: NestedScope): Option[T] =
@@ -107,6 +110,12 @@ case class MatchScope(parentScope: NestedScope, modelParameterSymbol: ModelParam
 
   override def descriptor = super.descriptor + " " + modelParameterSymbol.name
 
+}
+
+case class DefinitionScope(parentScope: NestedScope, parameters: List[ModelParameterSymbol]) extends NestedScope(Some(parentScope)) {
+  parameters.foreach(sym => declare(sym))
+
+  override def descriptor = super.descriptor + " " + parameters.mkString(", ")
 }
 
 class CollectionMemberScope(parentScope: NestedScope) extends NestedScope(Some(parentScope)) {

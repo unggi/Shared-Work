@@ -161,7 +161,8 @@ selectionExpression  : ('first' 'of'?)? modelReference 'where' simpleOrComplexCo
 //
 // Model References and Paths
 //
-modelReference locals[Symbol symbol, List<TerminalNode> path] : (propPath = propertyOfModelPath | dotPath = dottedModelPath );
+modelReference locals[Symbol symbol, List<TerminalNode> path] :
+    (propPath = propertyOfModelPath | dotPath = dottedModelPath );
 
 modelReferenceList  : (modelReference)+;
 

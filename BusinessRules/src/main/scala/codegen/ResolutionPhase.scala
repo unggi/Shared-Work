@@ -9,8 +9,10 @@ import rules.BusinessRulesParser._
  */
 class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
 
-  override def enterModelReference(ctx: ModelReferenceContext): Unit =
+  override def enterModelReference(ctx: ModelReferenceContext): Unit = {
+    System.err.println(s"Enter Model Reference: ${ctx.getText}")
     ctx.symbol = resolve(ctx).get
+  }
 
 
   def resolve(reference: ModelReferenceContext): Option[Symbol] = {

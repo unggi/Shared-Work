@@ -29,28 +29,55 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
 
   override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
 
-    val ref = ctx.context.modelReferenceParameter.modelReference
+    val ref = ctx.context.modelReferenceParameter
 
-    val symbolOpt: Option[ModelParameterSymbol] =
-      ctx.context.modelReferenceParameter.alias match {
-        case node: TerminalNode => makeModelParameterSymbol(unquote(node.getText), ref)
-        case token: Token => makeModelParameterSymbol(unquote(token.getText), ref)
-        case unknown =>
-          assert(true, "Unhandled token type " + unknown)
-          None
-      }
+    val parameter = tokenToText(ref.alias)
 
-    val scope = new MatchScope(symbolTable.scope, symbolOpt.get)
+    System.err.println(s"Reference path is ${ctx.context.modelReferenceParameter.alias}")
+    val symbol = makeModelParameterSymbol(parameter, ref.modelReference)
+    val scope = new MatchScope(symbolTable.scope, symbol.get)
+    symbolTable.openScope(scope)
+    nodeScopes.put(ctx, symbolTable.scope)
+
+    symbolTable.symbolTable.print
+
+    isInsideValidationRuleDecl = true
+  }
+
+  override def exitContext(ctx: ContextContext): Unit = {
+    isInsideValidationRuleDecl = false
+  }
+
+  override def enterDefinition(ctx: DefinitionContext): Unit = {
+    val references = ctx.multipleContextParameter.modelReferenceParameter.toList
+
+    val params =
+      for (ref <- references)
+        yield makeModelParameterSymbol(tokenToText(ref.alias), ref.modelReference)
+
+    val scope = new DefinitionScope(symbolTable.scope, params.flatten)
+
     symbolTable.openScope(scope)
     nodeScopes.put(ctx, symbolTable.scope)
 
     isInsideValidationRuleDecl = true
   }
 
-
-  override def exitContext(ctx: ContextContext): Unit = {
+  override def exitMultipleContextParameter(ctx: MultipleContextParameterContext): Unit = {
     isInsideValidationRuleDecl = false
   }
+
+  def tokenToText(token: Token): String = {
+
+    token match {
+      case node: TerminalNode => unquote(node.getText)
+      case token: Token => unquote(token.getText)
+      case unknown =>
+        assert(true, "Unhandled token type " + unknown)
+        ""
+    }
+  }
+
 
   override def enterCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
 
@@ -93,16 +120,14 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
 
   def makeModelParameterSymbol(alias: String, ref: ModelReferenceContext): Option[ModelParameterSymbol] =
     if (!isInsideValidationRuleDecl) {
-      //
-      // Create a Model Reference Symbol
-      //
-      // Context always has an alias
-      //
-      var components: List[String] = ref.path.map(p => p.getText).toList
+      System.err.println(s"alias = $alias ref = ${ref.getText}")
+      val components: List[String] = ref.path.map(p => p.getText).toList
       val scope = symbolTable.scope
       val base = components.head
 
       val modelRef = new ModelReferenceSymbol(base, components)
+
+      System.err.println(s"modelRef = ${modelRef}")
       Some(new ModelParameterSymbol(alias, modelRef))
 
     } else
