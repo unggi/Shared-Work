@@ -60,7 +60,7 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
       case Some(collectionScope) =>
         collectionScope.collectionSymbol
       case None =>
-        find(classOf[MatchScope], this) match {
+        find(classOf[RuleScope], this) match {
           case Some(matchScope) => Some(matchScope.modelParameterSymbol)
           case None =>
             None
@@ -103,7 +103,7 @@ class GlobalScope() extends NestedScope(None)
 class LocalScope(parentScope: NestedScope) extends NestedScope(Some(parentScope))
 
 
-case class MatchScope(parentScope: NestedScope, modelParameterSymbol: ModelParameterSymbol) extends NestedScope(Some(parentScope)) {
+case class RuleScope(parentScope: NestedScope, modelParameterSymbol: ModelParameterSymbol) extends NestedScope(Some(parentScope)) {
 
   declare(modelParameterSymbol)
 
@@ -114,7 +114,7 @@ case class MatchScope(parentScope: NestedScope, modelParameterSymbol: ModelParam
 case class DefinitionScope(parentScope: NestedScope, val parameters: List[ModelParameterSymbol]) extends NestedScope(Some(parentScope)) {
   parameters.foreach(sym => declare(sym))
 
-  override def descriptor = super.descriptor + " " + parameters.mkString(", ")
+  override def descriptor = s"${getClass.getSimpleName}(${parameters.map(_.name).mkString(", ")})"
 }
 
 class CollectionMemberScope(parentScope: NestedScope) extends NestedScope(Some(parentScope)) {

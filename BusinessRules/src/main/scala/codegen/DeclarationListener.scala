@@ -35,7 +35,7 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
     val parameter = tokenToText(ref.alias)
 
     val symbol = makeModelParameterSymbol(parameter, ref.modelReference)
-    val scope = new MatchScope(symbolTable.scope, symbol.get)
+    val scope = new RuleScope(symbolTable.scope, symbol.get)
     symbolTable.openScope(scope)
     nodeScopes.put(ctx, symbolTable.scope)
 

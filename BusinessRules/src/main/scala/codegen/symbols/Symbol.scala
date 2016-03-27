@@ -11,7 +11,7 @@ case class ModelReferenceSymbol(override val name: String, components: List[Stri
 
   var scope: Option[NestedScope] = None
 
-  override def toString: String = s"${getClass.getSimpleName}($name, ${components.mkString(", ")})"
+  override def toString: String = s"${getClass.getSimpleName}($name, [${components.mkString(", ")}])"
 
   override def asComponents: Array[String] = {
 

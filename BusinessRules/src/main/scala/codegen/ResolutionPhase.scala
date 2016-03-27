@@ -49,6 +49,31 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
       ctx.symbol = resolve(ctx).get
     }
 
+    //
+    // In a definition occurrences of a model reference are resolved firstly
+    // against the rule parameters. If these don't apply then the reference is ambiguous.
+    //
+    def resolve(reference: ModelReferenceContext): Option[Symbol] = {
+
+      val scopeOpt = nodeScopes.get(reference)
+
+      assume(scopeOpt.isDefined, "Scope must have been set during declaration phase: node is " + reference.toStringTree)
+
+      val scope = scopeOpt.get
+      val root = reference.path.get(0).getText
+      System.err.println(s"Resolving in a Definition: <$root> in ${scopeOpt.get.descriptor}")
+      find(classOf[CollectionMemberScope], scope) match {
+        case Some(collectionScope) =>
+          collectionScope.collectionSymbol
+        case None =>
+          find(classOf[DefinitionScope], scope) match {
+            case Some(definitionScope) if definitionScope.parameters.size > 0 =>
+              definitionScope.resolveInScope(root)
+            case None =>
+              None
+          }
+      }
+    }
   }
 
   override def enterDefinition(ctx: DefinitionContext): Unit = {
@@ -71,7 +96,7 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
       case Some(collectionScope) =>
         collectionScope.collectionSymbol
       case None =>
-        find(classOf[MatchScope], scope) match {
+        find(classOf[RuleScope], scope) match {
           case Some(matchScope) =>
             Some(matchScope.modelParameterSymbol)
           case None =>
