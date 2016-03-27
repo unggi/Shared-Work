@@ -7,7 +7,6 @@ import org.stringtemplate.v4.{AutoIndentWriter, ST, STGroup, STGroupFile}
 import rules.BusinessRulesParser.{DefinitionContext, FileBodyContext}
 import rules.{BusinessRulesBaseListener, BusinessRulesParser}
 
-
 class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseListener {
 
   val PACKAGE = "rules.compiled"

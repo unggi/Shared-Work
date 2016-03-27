@@ -111,7 +111,7 @@ case class MatchScope(parentScope: NestedScope, modelParameterSymbol: ModelParam
 
 }
 
-case class DefinitionScope(parentScope: NestedScope, parameters: List[ModelParameterSymbol]) extends NestedScope(Some(parentScope)) {
+case class DefinitionScope(parentScope: NestedScope, val parameters: List[ModelParameterSymbol]) extends NestedScope(Some(parentScope)) {
   parameters.foreach(sym => declare(sym))
 
   override def descriptor = super.descriptor + " " + parameters.mkString(", ")

@@ -15,6 +15,25 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
       System.err.println(s"Validation Rule Scope ")
       ctx.symbol = resolve(ctx).get
     }
+
+    def resolve(reference: ModelReferenceContext): Option[Symbol] = {
+
+      val scopeOpt = nodeScopes.get(reference)
+
+      assume(scopeOpt.isDefined, "Scope must have been set during declaration phase: node is " + reference.toStringTree)
+
+      val root = reference.path.get(0).getText
+
+      scopeOpt.get.resolve(root) match {
+        case Some(found) =>
+          Some(found)
+        case None =>
+          resolveImplicitParameter(scopeOpt.get) match {
+            case Some(parameter) => Some(parameter)
+            case None => None
+          }
+      }
+    }
   }
 
   override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
@@ -24,35 +43,18 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
   }
 
   class DefinitionResolutionPhase() extends BusinessRulesBaseListener {
+
     override def enterModelReference(ctx: ModelReferenceContext): Unit = {
       System.err.println(s"Definition Scope ")
-      // ctx.symbol = resolve(ctx).get
+      ctx.symbol = resolve(ctx).get
     }
+
   }
 
   override def enterDefinition(ctx: DefinitionContext): Unit = {
     val walker = new ParseTreeWalker()
     val resolver = new DefinitionResolutionPhase()
     walker.walk(resolver, ctx)
-  }
-
-  def resolve(reference: ModelReferenceContext): Option[Symbol] = {
-
-    val scopeOpt = nodeScopes.get(reference)
-
-    assume(scopeOpt.isDefined, "Scope must have been set during declaration phase: node is " + reference.toStringTree)
-
-    val root = reference.path.get(0).getText
-
-    scopeOpt.get.resolve(root) match {
-      case Some(found) =>
-        Some(found)
-      case None =>
-        resolveImplicitParameter(scopeOpt.get) match {
-          case Some(parameter) => Some(parameter)
-          case None => None
-        }
-    }
   }
 
   def find[T <: NestedScope](cls: Class[T], start: NestedScope): Option[T] =
@@ -74,8 +76,8 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
             Some(matchScope.modelParameterSymbol)
           case None =>
             find(classOf[DefinitionScope], scope) match {
-              case Some(definitionScope) =>
-                definitionScope.parameters.fro
+              case Some(definitionScope) if definitionScope.parameters.size > 0 =>
+                definitionScope.parameters.headOption
               case None =>
                 None
             }
