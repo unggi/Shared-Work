@@ -25,7 +25,6 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
   //
   val nodeScopes = new ParseTreeScopeAnnotations()
 
-
   override def enterEveryRule(ctx: ParserRuleContext) =
     nodeScopes.put(ctx, symbolTable.scope)
 
@@ -39,6 +38,7 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
     val scope = new MatchScope(symbolTable.scope, symbol.get)
     symbolTable.openScope(scope)
     nodeScopes.put(ctx, symbolTable.scope)
+
   }
 
   override def enterDefinition(ctx: DefinitionContext): Unit = {

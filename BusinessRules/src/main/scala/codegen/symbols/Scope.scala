@@ -96,7 +96,6 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
       subScope.print(depth + 1)
 
   }
-
 }
 
 class GlobalScope() extends NestedScope(None)

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f2ad37a-03dc-4c14-90b4-7994bb60d09a" name="Default" comment="Need to expand defined terms.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationListener.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseListener.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseVisitor.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesBaseVisitor.java" />
@@ -11,14 +9,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesListener.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesListener.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/rules/BusinessRulesVisitor.java" afterPath="$PROJECT_DIR$/gen/rules/BusinessRulesVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" afterPath="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/diagrams/Skin.iuml" afterPath="$PROJECT_DIR$/src/main/diagrams/Skin.iuml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationListener.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/DeclarationListener.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala" afterPath="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala" />
     </list>
     <ignored path="BusinessRules.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -88,11 +81,31 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="DeclarationListener.scala" pinned="false" current-in-tab="true">
+          <file leaf-file-name="DeclarationListener.scala" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationListener.scala">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="705">
-                  <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+                <state relative-caret-position="82">
+                  <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="DeclarationPhase.scala" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="135">
+                  <caret line="65" column="62" selection-start-line="65" selection-start-column="62" selection-end-line="65" selection-end-column="62" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Scope.scala" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="202">
+                  <caret line="89" column="32" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
                   <folding />
                 </state>
               </provider>
@@ -111,8 +124,8 @@
           <file leaf-file-name="ResolutionPhase.scala" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="165">
-                  <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+                <state relative-caret-position="60">
+                  <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -128,35 +141,25 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="examples-from-spec.nrl" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/test/resources/parsing/examples-from-spec.nrl">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
         </leaf>
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="ResolutionPhase.scala" pinned="false" current-in-tab="false">
+          <file leaf-file-name="ResolutionPhase.scala" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="270">
-                  <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+                <state relative-caret-position="697">
+                  <caret line="77" column="46" selection-start-line="77" selection-start-column="46" selection-end-line="77" selection-end-column="46" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="BusinessRules.g4" pinned="false" current-in-tab="true">
+          <file leaf-file-name="BusinessRules.g4" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="570">
-                  <caret line="176" column="2" selection-start-line="176" selection-start-column="2" selection-end-line="176" selection-end-column="2" />
+                <state relative-caret-position="2415">
+                  <caret line="165" column="0" selection-start-line="165" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -242,15 +245,15 @@
         <option value="$PROJECT_DIR$/src/test/resources/parsing/Example01.nrl" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/SymbolTableBuilder.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
         <option value="$PROJECT_DIR$/src/main/diagrams/Skin.iuml" />
         <option value="$PROJECT_DIR$/src/main/diagrams/NRL Parse Tree - 01.puml" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/DeclarationProcessor.scala" />
         <option value="$PROJECT_DIR$/src/main/antlr/BusinessRules.g4" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/codegen/DeclarationListener.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Symbol.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/DeclarationListener.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala" />
       </list>
     </option>
   </component>
@@ -1203,7 +1206,7 @@
       <workItem from="1458772035121" duration="413000" />
       <workItem from="1458773209309" duration="1507000" />
       <workItem from="1458965410231" duration="12864000" />
-      <workItem from="1459022218159" duration="9000" />
+      <workItem from="1459022218159" duration="5821000" />
     </task>
     <task id="LOCAL-00001" summary="First end to end working version. Sample code is generated down to the predicate level.">
       <created>1439209622979</created>
@@ -1436,11 +1439,18 @@
       <option name="project" value="LOCAL" />
       <updated>1458440789421</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Refactoring declaration processing and resolving symbols&#10;">
+      <created>1459022318659</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1459022318659</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="901060000" />
+    <option name="totallyTimeSpent" value="906872000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1452,18 +1462,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="PlantUML" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5701001" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" x="1618" y="194" width="873" height="564" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3277849" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32394367" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31445783" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33419243" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32522407" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6698795" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="376" y="136" width="964" height="661" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290653" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1474,16 +1486,14 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39759037" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39759037" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31445783" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39941478" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4522003" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6698795" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="376" y="136" width="964" height="661" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32549942" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1531,7 +1541,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
-    <MESSAGE value="Updated to generate down to Identifer, but not modelReference" />
     <MESSAGE value="Debugging spaces" />
     <MESSAGE value="Refactoring of code generation driver to support scala generation." />
     <MESSAGE value="working symbol table and scala rule set sample" />
@@ -1556,7 +1565,8 @@
     <MESSAGE value="Adding Definition and Value terms." />
     <MESSAGE value="Need to expand defined terms." />
     <MESSAGE value="Working on definitions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on definitions" />
+    <MESSAGE value="Refactoring declaration processing and resolving symbols&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring declaration processing and resolving symbols&#10;" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1769,13 +1779,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/resources/VRL/NFPS.nrl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1794,6 +1797,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="212">
           <caret line="55" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1895,13 +1899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/CodeGenerator.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1605">
@@ -1910,18 +1907,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/antlr/BusinessRules.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="176" column="2" selection-start-line="176" selection-start-column="2" selection-end-line="176" selection-end-column="2" />
+        <state relative-caret-position="2415">
+          <caret line="165" column="0" selection-start-line="165" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1936,8 +1925,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationListener.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+        <state relative-caret-position="82">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/DeclarationPhase.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="65" column="62" selection-start-line="65" selection-start-column="62" selection-end-line="65" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/symbols/Scope.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="89" column="32" selection-start-line="89" selection-start-column="32" selection-end-line="89" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/codegen/ResolutionPhase.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="77" column="46" selection-start-line="77" selection-start-column="46" selection-end-line="77" selection-end-column="46" />
           <folding />
         </state>
       </provider>

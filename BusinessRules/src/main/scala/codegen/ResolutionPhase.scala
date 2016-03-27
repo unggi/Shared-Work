@@ -1,19 +1,40 @@
 package codegen
 
 import codegen.symbols._
+import org.antlr.v4.runtime.tree.ParseTreeWalker
 import rules.BusinessRulesBaseListener
 import rules.BusinessRulesParser._
 
-/**
- * Walk through the parse tree and resolve symbols to declarations of symbols collected earlier
- */
+//
+// Find every model reference and resolve it depending on the enclosing scope
+//
 class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
 
-  override def enterModelReference(ctx: ModelReferenceContext): Unit = {
-    System.err.println(s"Enter Model Reference: ${ctx.getText}")
-    ctx.symbol = resolve(ctx).get
+  class ValidationRuleResolutionPhase() extends BusinessRulesBaseListener {
+    override def enterModelReference(ctx: ModelReferenceContext): Unit = {
+      System.err.println(s"Validation Rule Scope ")
+      ctx.symbol = resolve(ctx).get
+    }
   }
 
+  override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
+    val walker = new ParseTreeWalker()
+    val resolver = new ValidationRuleResolutionPhase()
+    walker.walk(resolver, ctx)
+  }
+
+  class DefinitionResolutionPhase() extends BusinessRulesBaseListener {
+    override def enterModelReference(ctx: ModelReferenceContext): Unit = {
+      System.err.println(s"Definition Scope ")
+      // ctx.symbol = resolve(ctx).get
+    }
+  }
+
+  override def enterDefinition(ctx: DefinitionContext): Unit = {
+    val walker = new ParseTreeWalker()
+    val resolver = new DefinitionResolutionPhase()
+    walker.walk(resolver, ctx)
+  }
 
   def resolve(reference: ModelReferenceContext): Option[Symbol] = {
 
@@ -52,7 +73,12 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
           case Some(matchScope) =>
             Some(matchScope.modelParameterSymbol)
           case None =>
-            None
+            find(classOf[DefinitionScope], scope) match {
+              case Some(definitionScope) =>
+                definitionScope.parameters.fro
+              case None =>
+                None
+            }
         }
     }
 }

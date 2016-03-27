@@ -81,13 +81,6 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitMultipleParameterContext(BusinessRulesParser.MultipleParameterContextContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitMultipleContextParameter(BusinessRulesParser.MultipleContextParameterContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -186,6 +179,17 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override
+	public T visitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) {
+		return visitChildren(ctx);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitIsEqualToComparator(BusinessRulesParser.IsEqualToComparatorContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -277,7 +281,9 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitModelReferenceTerm(BusinessRulesParser.ModelReferenceTermContext ctx) { return visitChildren(ctx); }
+	@Override
+	public T visitDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) {
+		return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -291,7 +297,9 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDefinitionApplicatoinTerm(BusinessRulesParser.DefinitionApplicatoinTermContext ctx) { return visitChildren(ctx); }
+	@Override
+	public T visitDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) {
+		return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

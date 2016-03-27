@@ -124,18 +124,6 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMultipleParameterContext(BusinessRulesParser.MultipleParameterContextContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMultipleParameterContext(BusinessRulesParser.MultipleParameterContextContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterMultipleContextParameter(BusinessRulesParser.MultipleContextParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -304,6 +292,24 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override
+	public void enterUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override
+	public void exitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIsEqualToComparator(BusinessRulesParser.IsEqualToComparatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -460,13 +466,15 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModelReferenceTerm(BusinessRulesParser.ModelReferenceTermContext ctx) { }
+	@Override
+	public void enterDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModelReferenceTerm(BusinessRulesParser.ModelReferenceTermContext ctx) { }
+	@Override
+	public void exitDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -484,13 +492,15 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDefinitionApplicatoinTerm(BusinessRulesParser.DefinitionApplicatoinTermContext ctx) { }
+	@Override
+	public void enterDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDefinitionApplicatoinTerm(BusinessRulesParser.DefinitionApplicatoinTermContext ctx) { }
+	@Override
+	public void exitDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
