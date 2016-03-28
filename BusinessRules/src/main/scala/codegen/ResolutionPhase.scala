@@ -8,23 +8,30 @@ import rules.BusinessRulesParser._
 //
 // Find every model reference and resolve it depending on the enclosing scope
 //
-class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
+class ResolutionPhase(symbolTable: SymbolTable, annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
+
+  def root(ctx: ModelReferenceContext): String =
+    if (ctx.dotPath != null)
+      ctx.dotPath.root.getText
+    else
+      ctx.propPath.root.getText
+
 
   class ValidationRuleResolutionPhase() extends BusinessRulesBaseListener {
     override def enterModelReference(ctx: ModelReferenceContext): Unit = {
       System.err.println(s"Validation Rule Scope ")
-      ctx.symbol = resolve(ctx).get
+      annotator.symbols.put(ctx, resolve(ctx).get)
     }
 
     def resolve(reference: ModelReferenceContext): Option[Symbol] = {
 
-      val scopeOpt = nodeScopes.get(reference)
+      val scopeOpt = annotator.scopes(reference)
 
       assume(scopeOpt.isDefined, "Scope must have been set during declaration phase: node is " + reference.toStringTree)
 
-      val root = reference.path.get(0).getText
+      val base = root(reference)
 
-      scopeOpt.get.resolve(root) match {
+      scopeOpt.get.resolve(base) match {
         case Some(found) =>
           Some(found)
         case None =>
@@ -46,7 +53,7 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
 
     override def enterModelReference(ctx: ModelReferenceContext): Unit = {
       System.err.println(s"Definition Scope ")
-      ctx.symbol = resolve(ctx).get
+      annotator.symbols.put(ctx, resolve(ctx).get)
     }
 
     //
@@ -55,20 +62,22 @@ class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnota
     //
     def resolve(reference: ModelReferenceContext): Option[Symbol] = {
 
-      val scopeOpt = nodeScopes.get(reference)
+      val scopeOpt = annotator.scopes(reference)
 
       assume(scopeOpt.isDefined, "Scope must have been set during declaration phase: node is " + reference.toStringTree)
 
       val scope = scopeOpt.get
-      val root = reference.path.get(0).getText
-      System.err.println(s"Resolving in a Definition: <$root> in ${scopeOpt.get.descriptor}")
+      val base = root(reference)
+
+      System.err.println(s"Resolving in a Definition: <$base> in ${scopeOpt.get.descriptor}")
+
       find(classOf[CollectionMemberScope], scope) match {
         case Some(collectionScope) =>
           collectionScope.collectionSymbol
         case None =>
           find(classOf[DefinitionScope], scope) match {
             case Some(definitionScope) if definitionScope.parameters.size > 0 =>
-              definitionScope.resolveInScope(root)
+              definitionScope.resolveInScope(base)
             case None =>
               None
           }

@@ -158,25 +158,15 @@ castExpression  : modelReference ('as a' | 'as an') ModelElementName;
 
 selectionExpression  : ('first' 'of'?)? modelReference 'where' simpleOrComplexConstraint;
 
-//
-// Model References and Paths
-//
-modelReference locals[Symbol symbol, List<TerminalNode> path] :
+modelReference:
     (propPath = propertyOfModelPath | dotPath = dottedModelPath );
 
 modelReferenceList  : (modelReference)+;
 
-dottedModelPath  : ModelElementName ('.' ModelElementName)* { $modelReference::path = $ctx.getTokens(ModelElementName); };
+dottedModelPath  : root=ModelElementName ('.' ModelElementName)*;
 
-propertyOfModelPath : ModelElementName ('of' ModelElementName)+
-{
-    $modelReference::path = $ctx.getTokens(ModelElementName);
-    Collections.reverse($modelReference::path);
-};
+propertyOfModelPath : ModelElementName ('of' ModelElementName)* 'of' root=ModelElementName;
 
-//
-// Reporting
-//
 compoundReport  : simpleReport ( (',')? simpleReport )*;
 
 simpleReport  :

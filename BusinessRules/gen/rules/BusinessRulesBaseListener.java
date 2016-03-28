@@ -295,19 +295,17 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	@Override
 	public void enterUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) {
 	}
-
 	/**
 	 * {@inheritDoc}
-	 * <p>
+	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override
 	public void exitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) {
 	}
-
 	/**
 	 * {@inheritDoc}
-	 * <p>
+	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void enterIsEqualToComparator(BusinessRulesParser.IsEqualToComparatorContext ctx) { }
@@ -467,14 +465,16 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override
-	public void enterDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) { }
+	public void enterDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) {
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override
-	public void exitDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) { }
+	public void exitDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) {
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -493,14 +493,16 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override
-	public void enterDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) { }
+	public void enterDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) {
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override
-	public void exitDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) { }
+	public void exitDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) {
+	}
 	/**
 	 * {@inheritDoc}
 	 *

@@ -23,10 +23,10 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
   // not real Java attributes of a node  - just annotations to the AST stored in a dictionary which maps nodes
   // to scopes.
   //
-  val nodeScopes = new ParseTreeScopeAnnotations()
+  val annotator = new ParseTreeScopeAnnotations()
 
   override def enterEveryRule(ctx: ParserRuleContext) =
-    nodeScopes.put(ctx, symbolTable.scope)
+    annotator.scopes.put(ctx, symbolTable.scope)
 
   override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
 
@@ -37,7 +37,7 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
     val symbol = makeModelParameterSymbol(parameter, ref.modelReference)
     val scope = new RuleScope(symbolTable.scope, symbol.get)
     symbolTable.openScope(scope)
-    nodeScopes.put(ctx, symbolTable.scope)
+    annotator.scopes.put(ctx, symbolTable.scope)
 
   }
 
@@ -51,7 +51,7 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
     val scope = new DefinitionScope(symbolTable.scope, params.flatten)
 
     symbolTable.openScope(scope)
-    nodeScopes.put(ctx, symbolTable.scope)
+    annotator.scopes.put(ctx, symbolTable.scope)
   }
 
   override def exitDeclaration(ctx: DeclarationContext) =
@@ -62,16 +62,19 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
     assume(ctx.reference != null)
 
     val scope = new CollectionMemberScope(symbolTable.scope)
-    scope.collectionSymbol = Some(CollectionIndexSymbol("_", ctx.reference.symbol))
+    val collectionReference = annotator.symbols(ctx.reference)
+    assume(collectionReference.isDefined, "Collection symbol has been defined already")
+    scope.collectionSymbol = Some(CollectionIndexSymbol("_", collectionReference.get))
     symbolTable.openScope(scope)
-    nodeScopes.put(ctx, symbolTable.scope)
+    annotator.scopes.put(ctx, symbolTable.scope)
   }
 
   override def exitCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit =
     symbolTable.closeScope()
 
   def makeModelParameterSymbol(alias: String, ref: ModelReferenceContext): Option[ModelParameterSymbol] = {
-    val components: List[String] = ref.path.map(p => p.getText).toList
+
+    val components: List[String] = annotator.paths(ref).get
     val base = components.head
 
     // TODO Validate the path after the head for member references.

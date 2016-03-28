@@ -262,15 +262,12 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void enterUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx);
-
 	/**
 	 * Exit a parse tree produced by the {@code UnaryExpressionPredicate}
 	 * labeled alternative in {@link BusinessRulesParser#predicate}.
-	 *
 	 * @param ctx the parse tree
 	 */
 	void exitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx);
-
 	/**
 	 * Enter a parse tree produced by the {@code IsEqualToComparator}
 	 * labeled alternative in {@link BusinessRulesParser#comparator}.
@@ -421,14 +418,12 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunctionalExpressionTerm(BusinessRulesParser.FunctionalExpressionTermContext ctx);
-
 	/**
 	 * Enter a parse tree produced by the {@code DefinedTermReferenceTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
 	void enterDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx);
-
 	/**
 	 * Exit a parse tree produced by the {@code DefinedTermReferenceTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
@@ -447,14 +442,12 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitOperatorInvocationTerm(BusinessRulesParser.OperatorInvocationTermContext ctx);
-
 	/**
 	 * Enter a parse tree produced by the {@code DefinitionApplicationTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
 	void enterDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx);
-
 	/**
 	 * Exit a parse tree produced by the {@code DefinitionApplicationTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.

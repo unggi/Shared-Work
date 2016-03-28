@@ -165,7 +165,6 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx);
-
 	/**
 	 * Visit a parse tree produced by the {@code IsEqualToComparator}
 	 * labeled alternative in {@link BusinessRulesParser#comparator}.

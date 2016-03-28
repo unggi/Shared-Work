@@ -109,9 +109,9 @@ object CodeGenerator {
     val declarationPhase = new DeclarationListener(builder)
     walker.walk(declarationPhase, tree)
 
-    printTreeClasses(tree, 1, declarationPhase.nodeScopes)
+    printTreeClasses(tree, 1, declarationPhase.annotator)
 
-    val resolver = new ResolutionPhase(builder.symbolTable, declarationPhase.nodeScopes)
+    val resolver = new ResolutionPhase(builder.symbolTable, declarationPhase.annotator)
     walker.walk(resolver, tree)
 
     walker.walk(generator, tree)
@@ -124,7 +124,7 @@ object CodeGenerator {
     //  dependencyAnalyzer.graph.render(new AutoIndentWriter(new PrintWriter(System.err)))
   }
 
-  def printTreeClasses(ctx: ParseTree, depth: Int, scopes: ParseTreeScopeAnnotations): Unit = {
+  def printTreeClasses(ctx: ParseTree, depth: Int, annotator: ParseTreeScopeAnnotations): Unit = {
 
     for (i <- 0 until ctx.getChildCount) {
       val child = ctx.getChild(i)
@@ -169,7 +169,7 @@ object CodeGenerator {
       val len = sw.getBuffer.length()
       val space = " " * (110 - len)
 
-      scopes.get(child) match {
+      annotator.scopes(child) match {
         case Some(scope: CollectionMemberScope) =>
           pw.print(s"${space}Collection ${scope.collectionSymbol}" /*+ scope.map.keys.mkString("[", " ", "]")*/)
         case Some(other) =>
@@ -179,7 +179,7 @@ object CodeGenerator {
 
       pw.flush()
       println(sw.getBuffer)
-      printTreeClasses(child, depth + 2, scopes)
+      printTreeClasses(child, depth + 2, annotator)
     }
   }
 

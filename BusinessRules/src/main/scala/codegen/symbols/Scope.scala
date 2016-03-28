@@ -75,11 +75,11 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
 
   def descriptor = s"${getClass.getSimpleName} (${symbols.size})"
 
-  def printAncestors(ctx: ParseTree, scopes: ParseTreeScopeAnnotations, depth: Int = 0): Unit = {
+  def printAncestors(ctx: ParseTree, annotations: ParseTreeScopeAnnotations, depth: Int = 0): Unit = {
     val indent = " " * (depth * 2)
-    System.err.println(s"$indent${ctx.getClass.getSimpleName}: ${scopes.get(ctx).get.descriptor}")
+    System.err.println(s"$indent${ctx.getClass.getSimpleName}: ${annotations.scopes.get(ctx).get.descriptor}")
     if (ctx.getParent != null)
-      printAncestors(ctx.getParent, scopes, depth + 1)
+      printAncestors(ctx.getParent, annotations, depth + 1)
   }
 
   def print(depth: Int): Unit = {

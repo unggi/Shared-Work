@@ -183,10 +183,9 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	public T visitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) {
 		return visitChildren(ctx);
 	}
-
 	/**
 	 * {@inheritDoc}
-	 * <p>
+	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
@@ -283,7 +282,8 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 */
 	@Override
 	public T visitDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) {
-		return visitChildren(ctx); }
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -299,7 +299,8 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 */
 	@Override
 	public T visitDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) {
-		return visitChildren(ctx); }
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
