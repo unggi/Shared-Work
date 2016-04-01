@@ -20,16 +20,16 @@ class ParseTreeScopeAnnotations() {
 class NodeMapping[T <: Object](val verbose: Boolean = true) {
   val map = new mutable.HashMap[ParseTree, T]()
 
-  def apply(node: ParseTree): Option[T] = trace(s"GET(${node.getText}") {
+  def apply(node: ParseTree): Option[T] = trace(s"GET(${node.getClass.getSimpleName} ${node.hashCode}") {
     map.get(node)
   }
 
-  def get(node: ParseTree): Option[T] = trace(s"GET(${node.getText}") {
+  def get(node: ParseTree): Option[T] = trace(s"GET(${node.})") {
     map.get(node)
   }
 
   def put(node: ParseTree, value: T): Option[T] =
-    trace(s"PUT(${node.getText} ${value}") {
+    trace(s"PUT(${node.getText} ${value})") {
       map.put(node, value)
     }
 
