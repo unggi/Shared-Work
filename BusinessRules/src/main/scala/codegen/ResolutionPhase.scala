@@ -1,95 +1,120 @@
 package codegen
 
 import codegen.symbols._
+import org.antlr.v4.runtime.tree.ParseTreeWalker
 import rules.BusinessRulesBaseListener
 import rules.BusinessRulesParser._
 
-/**
- * Walk through the parse tree and resolve symbols to declarations of symbols collected earlier
- */
-class ResolutionPhase(symbolTable: SymbolTable, nodeScopes: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
+//
+// Find every model reference and resolve it depending on the enclosing scope
+//
+class ResolutionPhase(symbolTable: SymbolTable, annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
 
-  // IsKindOfPredicate
-  override def enterIsKindOfPredicate(ctx: IsKindOfPredicateContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference).get
-
-  override def enterModelReferenceTerm(ctx: ModelReferenceTermContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterModelReferenceIdentifier(ctx: ModelReferenceIdentifierContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterSumOfExpression(ctx: SumOfExpressionContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterNumberOfExpression(ctx: NumberOfExpressionContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterCollectionIndex(ctx: CollectionIndexContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterCastExpression(ctx: CastExpressionContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterSelectionExpression(ctx: SelectionExpressionContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
-
-  override def enterConstrainedCollectionMembership(ctx: ConstrainedCollectionMembershipContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
+  def root(ctx: ModelReferenceContext): String =
+    if (ctx.dotPath != null)
+      ctx.dotPath.root.getText
+    else
+      ctx.propPath.root.getText
 
 
-  override def enterNotExistsStatement(ctx: NotExistsStatementContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
+  class ValidationRuleResolutionPhase() extends BusinessRulesBaseListener {
+    override def enterModelReference(ctx: ModelReferenceContext): Unit = {
+      System.err.println(s"Validation Rule Scope ")
+      annotator.symbols.put(ctx, resolve(ctx).get)
+    }
 
-  override def enterForallStatement(ctx: ForallStatementContext): Unit =
-    ctx.modelReference.symbol = resolve(ctx.modelReference()).get
+    def resolve(reference: ModelReferenceContext): Option[Symbol] = {
 
+      val scopeOpt = annotator.scopes(reference)
 
-  override def enterCollectionMemberConstraint(collectionMemberConstraint: CollectionMemberConstraintContext): Unit = {
-    collectionMemberConstraint.reference.symbol =
-      resolveCollectionIndexParameter(scope) match {
-        case Some(symbol) =>
-          val scope = nodeScopes.get(collectionMemberConstraint).get.asInstanceOf[CollectionMemberScope]
-          scope.parameterName = "_"
-          scope.collectionSymbol = collectionMemberConstraint.reference.symbol
-          symbol
+      assume(scopeOpt.isDefined, "Scope must have been set during declaration phase: node is " + reference.toStringTree)
+
+      val base = root(reference)
+
+      scopeOpt.get.resolve(base) match {
+        case Some(found) =>
+          Some(found)
         case None =>
-          System.err
-          _
-
+          resolveImplicitParameter(scopeOpt.get) match {
+            case Some(parameter) => Some(parameter)
+            case None => None
+          }
       }
-
-
-  }
-
-  def resolve(reference: ModelReferenceContext): Option[Symbol] = {
-
-    val scopeOpt = nodeScopes.get(reference)
-
-    assume(scopeOpt.isDefined, "Scope must have been set during declaration phase: node is " + reference.toStringTree)
-
-    scopeOpt.get.resolve(reference.path.get(0).getText) match {
-      case Some(found) =>
-        Some(found)
-      case None =>
-        resolveImplicitParameter(scopeOpt.get)
     }
   }
+
+  override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
+    val walker = new ParseTreeWalker()
+    val resolver = new ValidationRuleResolutionPhase()
+    walker.walk(resolver, ctx)
+  }
+
+  class DefinitionResolutionPhase() extends BusinessRulesBaseListener {
+
+    override def enterModelReference(ctx: ModelReferenceContext): Unit = {
+      System.err.println(s"Definition Scope ")
+      annotator.symbols.put(ctx, resolve(ctx).get)
+    }
+
+    //
+    // In a definition occurrences of a model reference are resolved firstly
+    // against the rule parameters. If these don't apply then the reference is ambiguous.
+    //
+    def resolve(reference: ModelReferenceContext): Option[Symbol] = {
+
+      val scopeOpt = annotator.scopes(reference)
+
+      assume(scopeOpt.isDefined, "Scope must have been set during declaration phase: node is " + reference.toStringTree)
+
+      val scope = scopeOpt.get
+      val base = root(reference)
+
+      System.err.println(s"Resolving in a Definition: <$base> in ${scopeOpt.get.descriptor}")
+
+      find(classOf[CollectionMemberScope], scope) match {
+        case Some(collectionScope) =>
+          collectionScope.collectionSymbol
+        case None =>
+          find(classOf[DefinitionScope], scope) match {
+            case Some(definitionScope) if definitionScope.parameters.size > 0 =>
+              definitionScope.resolveInScope(base)
+            case None =>
+              None
+          }
+      }
+    }
+  }
+
+  override def enterDefinition(ctx: DefinitionContext): Unit = {
+    val walker = new ParseTreeWalker()
+    val resolver = new DefinitionResolutionPhase()
+    walker.walk(resolver, ctx)
+  }
+
+  def find[T <: NestedScope](cls: Class[T], start: NestedScope): Option[T] =
+    if (start.getClass == cls)
+      Some(start.asInstanceOf[T])
+    else if (start.parent.isDefined)
+      find[T](cls, start.parent.get)
+    else
+      None
 
   // Walk back to a containing scope which is a rule scope and find the model reference there.
   def resolveImplicitParameter(scope: NestedScope): Option[Symbol] =
-    scope match {
-      case ruleScope: MatchScope =>
-        Some(ruleScope.modelParameterType)
-      case other: NestedScope if other.parent.isDefined => resolveImplicitParameter(other.parent.get)
-      case unknown => None
-    }
-
-  def resolveCollectionIndexParameter(scope: NestedScope): Option[Symbol] =
-    scope match {
-      case s: CollectionMemberScope => Some(s.collectionSymbol)
-      case s: NestedScope if s.parent.isDefined => resolveCollectionIndexParameter(s.parent.get)
-      case _ => None
-
+    find(classOf[CollectionMemberScope], scope) match {
+      case Some(collectionScope) =>
+        collectionScope.collectionSymbol
+      case None =>
+        find(classOf[RuleScope], scope) match {
+          case Some(matchScope) =>
+            Some(matchScope.modelParameterSymbol)
+          case None =>
+            find(classOf[DefinitionScope], scope) match {
+              case Some(definitionScope) if definitionScope.parameters.size > 0 =>
+                definitionScope.parameters.headOption
+              case None =>
+                None
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@ package codegen
 
 import java.io.{File, PrintWriter, StringWriter}
 
-import codegen.symbols.SymbolTableBuilder
+import codegen.symbols.{CollectionMemberScope, SymbolTableBuilder}
 import org.antlr.v4.runtime.tree.{ParseTree, ParseTreeWalker, TerminalNode}
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
 import rules.BusinessRulesParser._
@@ -75,6 +75,10 @@ object CodeGenerator {
 
   def generate(file: File, groupFile: String): Unit = {
 
+    val outputDir = new File(outputPath)
+    if (!outputDir.exists && !outputDir.isDirectory)
+      outputDir.mkdirs()
+
     val template = new File(groupFile)
     if (!template.exists())
       usage(s"Cannot find template group file: $groupFile")
@@ -102,24 +106,25 @@ object CodeGenerator {
 
     val builder = new SymbolTableBuilder(false)
 
-    val declarationPhase = new DeclarationPhase(builder)
+    val declarationPhase = new DeclarationListener(builder)
     walker.walk(declarationPhase, tree)
 
-    val resolver = new ResolutionPhase(builder.symbolTable, declarationPhase.nodeScopes)
+    printTreeClasses(tree, 1, declarationPhase.annotator)
+
+    val resolver = new ResolutionPhase(builder.symbolTable, declarationPhase.annotator)
     walker.walk(resolver, tree)
 
     walker.walk(generator, tree)
 
     println("Parsing is complete")
 
-    printTreeClasses(tree, 1, declarationPhase.nodeScopes)
 
     builder.symbolTable.print()
 
     //  dependencyAnalyzer.graph.render(new AutoIndentWriter(new PrintWriter(System.err)))
   }
 
-  def printTreeClasses(ctx: ParseTree, depth: Int, scopes: ParseTreeScopeAnnotations): Unit = {
+  def printTreeClasses(ctx: ParseTree, depth: Int, annotator: ParseTreeScopeAnnotations): Unit = {
 
     for (i <- 0 until ctx.getChildCount) {
       val child = ctx.getChild(i)
@@ -160,17 +165,21 @@ object CodeGenerator {
         pw.print(" [" + childFields.map(_.getName).mkString(" | ") + "]")
 
       pw.flush()
-      scopes.get(child) match {
-        case Some(scope) =>
-          val len = sw.getBuffer.length()
-          val space = " " * (110 - len)
-          pw.print(s"$space ${scope.getClass.getSimpleName} " /*+ scope.map.keys.mkString("[", " ", "]")*/)
+
+      val len = sw.getBuffer.length()
+      val space = " " * (110 - len)
+
+      annotator.scopes(child) match {
+        case Some(scope: CollectionMemberScope) =>
+          pw.print(s"${space}Collection ${scope.collectionSymbol}" /*+ scope.map.keys.mkString("[", " ", "]")*/)
+        case Some(other) =>
+          pw.print(s"$space${other.getClass.getSimpleName}" /*+ scope.map.keys.mkString("[", " ", "]")*/)
         case None =>
       }
 
       pw.flush()
       println(sw.getBuffer)
-      printTreeClasses(child, depth + 2, scopes)
+      printTreeClasses(child, depth + 2, annotator)
     }
   }
 

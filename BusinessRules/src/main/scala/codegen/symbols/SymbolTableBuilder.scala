@@ -13,8 +13,8 @@ class SymbolTable() {
   }
 }
 
-class SymbolTableBuilder(verbose: Boolean = false) {
-
+class SymbolTableBuilder(var verbose: Boolean = false) {
+  verbose = true
   val symbolTable = new SymbolTable()
 
   var scopeStack = new mutable.Stack[NestedScope]() {

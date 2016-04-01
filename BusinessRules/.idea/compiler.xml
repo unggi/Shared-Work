@@ -23,11 +23,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="BusinessRules" />
         <module name="Parser" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
-      <module name="Parser" target="1.5" />
+      <module name="BusinessRules" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

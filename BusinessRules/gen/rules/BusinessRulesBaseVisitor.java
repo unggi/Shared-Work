@@ -1,9 +1,5 @@
-// Generated from /Users/unggi/Development/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
+// Generated from /Users/unggi/GitHub/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
 package rules;
-
-import codegen.symbols.ModelReferenceSymbol;
-import codegen.symbols.Symbol;
-import java.util.Collections;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -79,13 +75,6 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitContext(BusinessRulesParser.ContextContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitMultipleParameterContext(BusinessRulesParser.MultipleParameterContextContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -190,6 +179,16 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override
+	public T visitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) {
+		return visitChildren(ctx);
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitIsEqualToComparator(BusinessRulesParser.IsEqualToComparatorContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -281,7 +280,10 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitModelReferenceTerm(BusinessRulesParser.ModelReferenceTermContext ctx) { return visitChildren(ctx); }
+	@Override
+	public T visitDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) {
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -295,7 +297,10 @@ public class BusinessRulesBaseVisitor<T> extends AbstractParseTreeVisitor<T> imp
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDefinitionApplicatoinTerm(BusinessRulesParser.DefinitionApplicatoinTermContext ctx) { return visitChildren(ctx); }
+	@Override
+	public T visitDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) {
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *

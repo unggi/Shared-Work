@@ -36,19 +36,15 @@ declaration
 //
 // Rules and Properties
 //
-validationRule  : 'Validation Rule' name=DoubleQuotedString context constraint ('report:' compoundReport)?;
+validationRule  : 'Validation:' name=DoubleQuotedString context constraint ('report:' compoundReport)?;
 
-// validationRuleVariableDeclaration  : simpleVariableDeclaration ','?;
-
-definition  : 'Definition of' name=DoubleQuotedString 'Given:' multipleContextParameter  constraint;
+definition  : 'Definition:' name=DoubleQuotedString 'Given:' multipleContextParameter 'Value:' predicate;
 
 ruleSet  : 'Rule set' DoubleQuotedString ('applies to' modelReference 'where' constraint)?;
 
-//globalVariableDeclaration  : simpleVariableDeclaration;
-
 context  : 'Context:' modelReferenceParameter;
 
-multipleParameterContext  : 'Context:' multipleContextParameter;
+//multipleParameterContext  : 'Context:' multipleContextParameter;
 
 multipleContextParameter  : modelReferenceParameter (',' modelReferenceParameter)*;
 
@@ -57,9 +53,10 @@ modelReferenceParameter : ref=modelReference '(' alias=DoubleQuotedString ')';
 //
 // Constraints
 //
-constraint      :
-                    'If' condBlock=logicalStatement 'then' thenBlock=logicalStatement ('else' elseBlock=logicalStatement)?
+constraint      :   'Constraint:'
+                    ('If' condBlock=logicalStatement 'then' thenBlock=logicalStatement ('else' elseBlock=logicalStatement)?
                 |   logicalStatement
+                )
                 ;
 
 binaryLogicalOperator: (and = 'and' | or = 'or' | implies = 'implies' | iff = 'if and only if');
@@ -89,7 +86,7 @@ predicate  :
     |    expression 'is one of' listDefinition                  #IsOneOfPredicate
     |    expression 'is not one of' listDefinition              #IsNotOneOfPredicate
     |    modelReference 'is a kind of' ModelElementName         #IsKindOfPredicate
-//    |    expression                                             #UnaryExpressionPredicate
+    |    expression                                             #UnaryExpressionPredicate
 //    |   multipleExistsStatement
 //    |   multipleNotExistsStatement
     ;
@@ -125,9 +122,9 @@ expression  :   left=expression op=('*' | '/' | '+' | '-'|'mod') right=expressio
 term  :
         identifier                      #IdentifierTerm
     |   functionalExpression            #FunctionalExpressionTerm
-    |   modelReference FragmentName     #ModelReferenceTerm
+    |   modelReference FragmentName     #DefinedTermReferenceTerm
     |   operatorInvocation              #OperatorInvocationTerm
-    |   definitionApplication           #DefinitionApplicatoinTerm
+    |   definitionApplication           #DefinitionApplicationTerm
     |   castExpression                  #CastExpressionTerm
     |   selectionExpression             #SelectionExpressionTerm
     |   '(' constraint ')'              #ConstraintTerm
@@ -161,24 +158,15 @@ castExpression  : modelReference ('as a' | 'as an') ModelElementName;
 
 selectionExpression  : ('first' 'of'?)? modelReference 'where' simpleOrComplexConstraint;
 
-//
-// Model References and Paths
-//
-modelReference locals[Symbol symbol, List<TerminalNode> path] : (propPath = propertyOfModelPath | dotPath = dottedModelPath );
+modelReference:
+    (propPath = propertyOfModelPath | dotPath = dottedModelPath );
 
 modelReferenceList  : (modelReference)+;
 
-dottedModelPath  : ModelElementName ('.' ModelElementName)* { $modelReference::path = $ctx.getTokens(ModelElementName); };
+dottedModelPath  : root=ModelElementName ('.' ModelElementName)*;
 
-propertyOfModelPath : ModelElementName ('of' ModelElementName)+
-{
-    $modelReference::path = $ctx.getTokens(ModelElementName);
-    Collections.reverse($modelReference::path);
-};
+propertyOfModelPath : ModelElementName ('of' ModelElementName)* 'of' root=ModelElementName;
 
-//
-// Reporting
-//
 compoundReport  : simpleReport ( (',')? simpleReport )*;
 
 simpleReport  :

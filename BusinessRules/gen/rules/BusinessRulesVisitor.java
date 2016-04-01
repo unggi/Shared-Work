@@ -1,9 +1,5 @@
-// Generated from /Users/unggi/Development/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
+// Generated from /Users/unggi/GitHub/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
 package rules;
-
-import codegen.symbols.ModelReferenceSymbol;
-import codegen.symbols.Symbol;
-import java.util.Collections;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -69,12 +65,6 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitContext(BusinessRulesParser.ContextContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link BusinessRulesParser#multipleParameterContext}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMultipleParameterContext(BusinessRulesParser.MultipleParameterContextContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link BusinessRulesParser#multipleContextParameter}.
 	 * @param ctx the parse tree
@@ -169,6 +159,13 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIsKindOfPredicate(BusinessRulesParser.IsKindOfPredicateContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code UnaryExpressionPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code IsEqualToComparator}
 	 * labeled alternative in {@link BusinessRulesParser#comparator}.
 	 * @param ctx the parse tree
@@ -257,12 +254,12 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunctionalExpressionTerm(BusinessRulesParser.FunctionalExpressionTermContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ModelReferenceTerm}
+	 * Visit a parse tree produced by the {@code DefinedTermReferenceTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitModelReferenceTerm(BusinessRulesParser.ModelReferenceTermContext ctx);
+	T visitDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code OperatorInvocationTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
@@ -271,12 +268,12 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOperatorInvocationTerm(BusinessRulesParser.OperatorInvocationTermContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code DefinitionApplicatoinTerm}
+	 * Visit a parse tree produced by the {@code DefinitionApplicationTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDefinitionApplicatoinTerm(BusinessRulesParser.DefinitionApplicatoinTermContext ctx);
+	T visitDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code CastExpressionTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.

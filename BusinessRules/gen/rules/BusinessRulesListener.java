@@ -1,9 +1,5 @@
-// Generated from /Users/unggi/Development/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
+// Generated from /Users/unggi/GitHub/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
 package rules;
-
-import codegen.symbols.ModelReferenceSymbol;
-import codegen.symbols.Symbol;
-import java.util.Collections;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -102,16 +98,6 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitContext(BusinessRulesParser.ContextContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BusinessRulesParser#multipleParameterContext}.
-	 * @param ctx the parse tree
-	 */
-	void enterMultipleParameterContext(BusinessRulesParser.MultipleParameterContextContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BusinessRulesParser#multipleParameterContext}.
-	 * @param ctx the parse tree
-	 */
-	void exitMultipleParameterContext(BusinessRulesParser.MultipleParameterContextContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BusinessRulesParser#multipleContextParameter}.
 	 * @param ctx the parse tree
@@ -271,6 +257,18 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitIsKindOfPredicate(BusinessRulesParser.IsKindOfPredicateContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code UnaryExpressionPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code UnaryExpressionPredicate}
+	 * labeled alternative in {@link BusinessRulesParser#predicate}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code IsEqualToComparator}
 	 * labeled alternative in {@link BusinessRulesParser#comparator}.
 	 * @param ctx the parse tree
@@ -421,17 +419,17 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitFunctionalExpressionTerm(BusinessRulesParser.FunctionalExpressionTermContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ModelReferenceTerm}
+	 * Enter a parse tree produced by the {@code DefinedTermReferenceTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void enterModelReferenceTerm(BusinessRulesParser.ModelReferenceTermContext ctx);
+	void enterDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ModelReferenceTerm}
+	 * Exit a parse tree produced by the {@code DefinedTermReferenceTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void exitModelReferenceTerm(BusinessRulesParser.ModelReferenceTermContext ctx);
+	void exitDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code OperatorInvocationTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
@@ -445,17 +443,17 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitOperatorInvocationTerm(BusinessRulesParser.OperatorInvocationTermContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code DefinitionApplicatoinTerm}
+	 * Enter a parse tree produced by the {@code DefinitionApplicationTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void enterDefinitionApplicatoinTerm(BusinessRulesParser.DefinitionApplicatoinTermContext ctx);
+	void enterDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code DefinitionApplicatoinTerm}
+	 * Exit a parse tree produced by the {@code DefinitionApplicationTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
 	 */
-	void exitDefinitionApplicatoinTerm(BusinessRulesParser.DefinitionApplicatoinTermContext ctx);
+	void exitDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code CastExpressionTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.

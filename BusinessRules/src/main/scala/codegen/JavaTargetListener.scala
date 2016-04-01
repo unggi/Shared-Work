@@ -2,9 +2,10 @@ package codegen
 
 import java.io.{FileOutputStream, PrintWriter}
 
-import org.stringtemplate.v4.{ST, STGroup, STGroupFile, AutoIndentWriter}
-import rules.{BusinessRulesParser, BusinessRulesBaseListener}
+import codegen.modeladaptors.AntlrObjectModelAdaptor
+import org.stringtemplate.v4.{AutoIndentWriter, ST, STGroup, STGroupFile}
 import rules.BusinessRulesParser.{DefinitionContext, FileBodyContext}
+import rules.{BusinessRulesBaseListener, BusinessRulesParser}
 
 class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseListener {
 

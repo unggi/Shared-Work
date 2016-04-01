@@ -1,5 +1,8 @@
 package codegen.symbols
 
+import codegen.ParseTreeScopeAnnotations
+import org.antlr.v4.runtime.tree.ParseTree
+
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -9,6 +12,8 @@ trait Scope {
 
   def resolve(name: String): Option[Symbol]
 
+  def hasDefined(name: String): Boolean
+
 }
 
 abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope {
@@ -16,7 +21,13 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
   private val symbols = new mutable.HashMap[String, Symbol]()
   private val subScopes = new ListBuffer[NestedScope]()
 
-  override def declare(symbol: Symbol): Option[Symbol] = symbols.put(symbol.name, symbol)
+  override def declare(symbol: Symbol): Option[Symbol] = {
+    assume(!symbols.contains(symbol.name), "Symbol already defined in the same scope")
+    symbols.put(symbol.name, symbol)
+  }
+
+  override def hasDefined(name: String): Boolean =
+    symbols.contains(name)
 
   override def resolve(name: String): Option[Symbol] =
     symbols.get(name) match {
@@ -29,8 +40,32 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
         }
     }
 
-  // Default is to find in the usual path via parent links.
-  def resolveImplicitParameter(name: String): Option[Symbol] = resolve(name)
+  def resolveInScope(name: String): Option[Symbol] =
+    symbols.get(name)
+
+  def keys = symbols.keySet
+
+  def find[T <: NestedScope](cls: Class[T], start: NestedScope): Option[T] =
+    if (start.getClass == cls)
+      Some(start.asInstanceOf[T])
+    else if (start.parent.isDefined)
+      find[T](cls, start.parent.get)
+    else
+      None
+
+
+  // Walk back to a containing scope which is a rule scope and find the model reference there.
+  def resolveImplicitParameter(): Option[Symbol] =
+    find(classOf[CollectionMemberScope], this) match {
+      case Some(collectionScope) =>
+        collectionScope.collectionSymbol
+      case None =>
+        find(classOf[RuleScope], this) match {
+          case Some(matchScope) => Some(matchScope.modelParameterSymbol)
+          case None =>
+            None
+        }
+    }
 
   def addSubScope(subScope: NestedScope): NestedScope = {
     subScopes.append(subScope)
@@ -40,12 +75,19 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
 
   def descriptor = s"${getClass.getSimpleName} (${symbols.size})"
 
+  def printAncestors(ctx: ParseTree, annotations: ParseTreeScopeAnnotations, depth: Int = 0): Unit = {
+    val indent = " " * (depth * 2)
+    System.err.println(s"$indent${ctx.getClass.getSimpleName}: ${annotations.scopes.get(ctx).get.descriptor}")
+    if (ctx.getParent != null)
+      printAncestors(ctx.getParent, annotations, depth + 1)
+  }
+
   def print(depth: Int): Unit = {
     val indent = " " * (depth * 2)
     println(s"$indent$descriptor")
     symbols.foreach {
       case (name, symbol) =>
-        println(s"$indent    $name => ${symbol}")
+        println(s"$indent    ${symbol.getClass.getSimpleName} : ${symbol}")
       case unknown =>
         println("Unhandled entry type = " + unknown)
     }
@@ -54,7 +96,6 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
       subScope.print(depth + 1)
 
   }
-
 }
 
 class GlobalScope() extends NestedScope(None)
@@ -62,32 +103,24 @@ class GlobalScope() extends NestedScope(None)
 class LocalScope(parentScope: NestedScope) extends NestedScope(Some(parentScope))
 
 
-case class MatchScope(parentScope: NestedScope, modelParameterName: String, modelParameterType: ModelReferenceSymbol) extends NestedScope(Some(parentScope)) {
+case class RuleScope(parentScope: NestedScope, modelParameterSymbol: ModelParameterSymbol) extends NestedScope(Some(parentScope)) {
 
-  declare(new ModelParameterSymbol(modelParameterName, modelParameterType))
+  declare(modelParameterSymbol)
 
-  // If the name argument isn't actually defined in the scope at any
-  // point in the path back to the global scope, then use the parameter
-  // defined in this scope.
-  override def resolveImplicitParameter(name: String): Option[Symbol] =
-    Some(resolve(name) match {
-      case Some(symbol) => symbol
-      case None => modelParameterType
-    })
+  override def descriptor = super.descriptor + " " + modelParameterSymbol.name
 
+}
+
+case class DefinitionScope(parentScope: NestedScope, val parameters: List[ModelParameterSymbol]) extends NestedScope(Some(parentScope)) {
+  parameters.foreach(sym => declare(sym))
+
+  override def descriptor = s"${getClass.getSimpleName}(${parameters.map(_.name).mkString(", ")})"
 }
 
 class CollectionMemberScope(parentScope: NestedScope) extends NestedScope(Some(parentScope)) {
 
-  var collectionSymbol: Symbol = _
-  var parameterName: String = _
+  var collectionSymbol: Option[Symbol] = None
 
-  override def resolveImplicitParameter(name: String): Option[Symbol] =
-    Some(resolve(name) match {
-      case Some(symbol) => symbol
-      case None => collectionSymbol
-    })
-
-  override def descriptor = s"CollectionMemberScope #$hashCode ($parameterName, $collectionSymbol)"
+  override def descriptor = s"CollectionMemberScope (_ , ${collectionSymbol.getOrElse("Missing collection Symbol")})"
 }
 
