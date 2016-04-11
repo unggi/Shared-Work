@@ -103,7 +103,7 @@ class GlobalScope() extends NestedScope(None)
 class LocalScope(parentScope: NestedScope) extends NestedScope(Some(parentScope))
 
 
-case class RuleScope(parentScope: NestedScope, modelParameterSymbol: ModelParameterSymbol) extends NestedScope(Some(parentScope)) {
+case class RuleScope(parentScope: NestedScope, modelParameterSymbol: Parameter) extends NestedScope(Some(parentScope)) {
 
   declare(modelParameterSymbol)
 
@@ -111,7 +111,7 @@ case class RuleScope(parentScope: NestedScope, modelParameterSymbol: ModelParame
 
 }
 
-case class DefinitionScope(parentScope: NestedScope, val parameters: List[ModelParameterSymbol]) extends NestedScope(Some(parentScope)) {
+case class DefinitionScope(parentScope: NestedScope, val parameters: List[Parameter]) extends NestedScope(Some(parentScope)) {
   parameters.foreach(sym => declare(sym))
 
   override def descriptor = s"${getClass.getSimpleName}(${parameters.map(_.name).mkString(", ")})"

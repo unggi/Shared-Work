@@ -30,15 +30,11 @@ declarations
 declaration
 		:   definition
 		|   validationRule
-	//	|	globalVariableDeclaration
 		;
 
-//
-// Rules and Properties
-//
 validationRule  : 'Validation:' name=DoubleQuotedString context constraint ('report:' compoundReport)?;
 
-definition  : 'Definition:' name=DoubleQuotedString 'Given:' multipleContextParameter 'Value:' predicate;
+definition  : 'Definition:' name=DoubleQuotedString 'Given:' multipleContextParameter 'Value:' value=predicate;
 
 ruleSet  : 'Rule set' DoubleQuotedString ('applies to' modelReference 'where' constraint)?;
 
@@ -50,9 +46,6 @@ multipleContextParameter  : modelReferenceParameter (',' modelReferenceParameter
 
 modelReferenceParameter : ref=modelReference '(' alias=DoubleQuotedString ')';
 
-//
-// Constraints
-//
 constraint      :   'Constraint:'
                     ('If' condBlock=logicalStatement 'then' thenBlock=logicalStatement ('else' elseBlock=logicalStatement)?
                 |   logicalStatement
@@ -66,21 +59,11 @@ logicalStatement:
                 |   predicate                                           #LogicalPredicateStatement
                 |   existsStatement                                     #LogicalExistsStatement
                 |   notExistsStatement                                  #LogicalNotExistsStatement
-//                |   globalExistsStatement
                 |   forallStatement                                     #LogicalForAllStatement
-//                |   globalVariableDeclaration
                 ;
 
 simpleOrComplexConstraint  : '(' constraint ')' | predicate;
 
-//
-// Variable Declaration
-//
-// simpleVariableDeclaration  : DoubleQuotedString ('is' | 'are' | 'represent' | 'represents') expression;
-
-//
-// Predicates
-//
 predicate  :
          left=expression comparator right=expression            #BinaryPredicate
     |    expression 'is one of' listDefinition                  #IsOneOfPredicate
@@ -109,25 +92,19 @@ multipleExistsStatement  : 'following' ('is present' | 'are present') ':' modelR
 multipleNotExistsStatement  : 'following' ('is not present' | 'are not present') ':' modelReferenceList
         ;
 
-//
-// Expressions
-//
-expression  :   left=expression op=('*' | '/' | '+' | '-'|'mod') right=expression      #BinaryExpression
-            |   term                                                                #UnaryExpression
+expression  :   left=expression op=('*' | '/' | '+' | '-'|'mod') right=expression       #BinaryExpression
+            |   term                                                                    #UnaryExpression
             ;
 
-//
-// Terms
-//
 term  :
-        identifier                      #IdentifierTerm
-    |   functionalExpression            #FunctionalExpressionTerm
+        functionalExpression            #FunctionalExpressionTerm
     |   modelReference FragmentName     #DefinedTermReferenceTerm
     |   operatorInvocation              #OperatorInvocationTerm
     |   definitionApplication           #DefinitionApplicationTerm
     |   castExpression                  #CastExpressionTerm
     |   selectionExpression             #SelectionExpressionTerm
     |   '(' constraint ')'              #ConstraintTerm
+    |   identifier                      #IdentifierTerm
     ;
 
 identifier  :

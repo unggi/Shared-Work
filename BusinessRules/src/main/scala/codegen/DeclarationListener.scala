@@ -1,7 +1,7 @@
 package codegen
 
 
-import codegen.symbols.{ModelParameterSymbol, ModelReferenceSymbol, _}
+import codegen.symbols.{Parameter, _}
 import org.antlr.v4.runtime.tree.TerminalNode
 import org.antlr.v4.runtime.{ParserRuleContext, Token}
 import rules.BusinessRulesBaseListener
@@ -25,8 +25,9 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
   //
   val annotator = new ParseTreeScopeAnnotations()
 
-  override def enterEveryRule(ctx: ParserRuleContext) =
+  override def enterEveryRule(ctx: ParserRuleContext) = {
     annotator.scopes.put(ctx, symbolTable.scope)
+  }
 
   override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
 
@@ -34,8 +35,8 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
 
     val parameter = tokenToText(ref.alias)
 
-    val symbol = makeModelParameterSymbol(parameter, ref.modelReference)
-    val scope = new RuleScope(symbolTable.scope, symbol.get)
+    val symbol = makeParameter(parameter, ref.modelReference)
+    val scope = new RuleScope(symbolTable.scope, symbol)
     symbolTable.openScope(scope)
     annotator.scopes.put(ctx, symbolTable.scope)
 
@@ -44,11 +45,11 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
   override def enterDefinition(ctx: DefinitionContext): Unit = {
     val references = ctx.multipleContextParameter.modelReferenceParameter.toList
 
-    val params =
+    val params: List[Parameter] =
       for (ref <- references)
-        yield makeModelParameterSymbol(tokenToText(ref.alias), ref.modelReference)
+        yield makeParameter(tokenToText(ref.alias), ref.modelReference)
 
-    val scope = new DefinitionScope(symbolTable.scope, params.flatten)
+    val scope = new DefinitionScope(symbolTable.scope, params)
 
     symbolTable.openScope(scope)
     annotator.scopes.put(ctx, symbolTable.scope)
@@ -62,9 +63,6 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
     assume(ctx.reference != null)
 
     val scope = new CollectionMemberScope(symbolTable.scope)
-    val collectionReference = annotator.symbols(ctx.reference)
-    assume(collectionReference.isDefined, "Collection symbol has been defined already")
-    scope.collectionSymbol = Some(CollectionIndexSymbol("_", collectionReference.get))
     symbolTable.openScope(scope)
     annotator.scopes.put(ctx, symbolTable.scope)
   }
@@ -72,16 +70,18 @@ class DeclarationListener(symbolTable: SymbolTableBuilder) extends BusinessRules
   override def exitCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit =
     symbolTable.closeScope()
 
-  def makeModelParameterSymbol(alias: String, ref: ModelReferenceContext): Option[ModelParameterSymbol] = {
+  def pathComponents(ref: ModelReferenceContext): List[String] =
+    if (ref.dotPath != null)
+      ref.dotPath.ModelElementName.map(_.getText).toList
+    else
+      ref.propPath.ModelElementName.map(_.getText).toList
 
-    val components: List[String] = annotator.paths(ref).get
+  def makeParameter(alias: String, ref: ModelReferenceContext): Parameter = {
+
+    val components: List[String] = pathComponents(ref)
     val base = components.head
 
-    // TODO Validate the path after the head for member references.
-
-    val modelRef = new ModelReferenceSymbol(base, components.tail)
-
-    Some(new ModelParameterSymbol(alias, modelRef))
+    new Parameter(alias, base)
   }
 
   def tokenToText(token: Token): String = token match {

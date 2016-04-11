@@ -2,8 +2,8 @@ package codegen
 
 import java.io.{File, PrintWriter, StringWriter}
 
-import codegen.symbols.{CollectionMemberScope, SymbolTableBuilder}
-import org.antlr.v4.runtime.tree.{ParseTree, ParseTreeWalker, TerminalNode}
+import codegen.symbols.SymbolTableBuilder
+import org.antlr.v4.runtime.tree.ParseTreeWalker
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
 import rules.BusinessRulesParser._
 import rules.{BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
@@ -18,6 +18,7 @@ object CodeGenerator {
   var packageName = "rules.compiled"
   var templateDir = "src/main/templates"
   var outputClass = "RulePlanExample"
+  var generateCode = true
 
   def main(args: Array[String]): Unit = {
     println("Business Rules Code Generator")
@@ -33,6 +34,8 @@ object CodeGenerator {
         case "-java" :: tail =>
           outputTarget = "Java"
           GetOpt(tail)
+        case "-noCodeGeneration" :: tail =>
+          generateCode = false
         case "-scala" :: tail =>
           outputTarget = "Scala"
           GetOpt(tail)
@@ -109,79 +112,32 @@ object CodeGenerator {
     val declarationPhase = new DeclarationListener(builder)
     walker.walk(declarationPhase, tree)
 
-    printTreeClasses(tree, 1, declarationPhase.annotator)
-
     val resolver = new ResolutionPhase(builder.symbolTable, declarationPhase.annotator)
     walker.walk(resolver, tree)
 
-    walker.walk(generator, tree)
+
+    val sw = new StringWriter()
+    val strm = new PrintWriter(sw)
+    val printer = new TreePrinter(0, declarationPhase.annotator, strm)
+    walker.walk(printer, tree)
+    strm.flush()
+    System.err.println()
+    System.err.println(sw.getBuffer)
+    System.err.println("=" * 80)
+    System.err.flush()
+
+    if (generateCode)
+      walker.walk(generator, tree)
+
+
 
     println("Parsing is complete")
-
 
     builder.symbolTable.print()
 
     //  dependencyAnalyzer.graph.render(new AutoIndentWriter(new PrintWriter(System.err)))
   }
 
-  def printTreeClasses(ctx: ParseTree, depth: Int, annotator: ParseTreeScopeAnnotations): Unit = {
-
-    for (i <- 0 until ctx.getChildCount) {
-      val child = ctx.getChild(i)
-
-      val sw = new StringWriter()
-      val pw = new PrintWriter(sw)
-
-      // If there are children then print an indent string using '-' character.
-      val ch = if (child.getChildCount > 0) '-' else ' '
-      for (j <- 0 until depth) pw.print(ch)
-      pw.print("> ")
-
-      // Find the child's name in the parent node - if it exists
-      val parent = child.getParent
-      val parentClass = parent.getClass
-
-      val childClassName = child.getClass.getSimpleName
-      val childFields = child.getClass.getDeclaredFields
-
-      val parentNameField = parentClass.getDeclaredFields.find {
-        fld =>
-          fld.get(parent) match {
-            case null => false
-            case node =>
-              node.equals(child)
-          }
-      }
-
-      if (parentNameField.isDefined)
-        pw.print(parentNameField.get.getName + " = ")
-
-      if (child.isInstanceOf[TerminalNode])
-        pw.print(child.getText)
-      else
-        pw.print(childClassName)
-
-      if (!child.isInstanceOf[TerminalNode] && childFields.nonEmpty)
-        pw.print(" [" + childFields.map(_.getName).mkString(" | ") + "]")
-
-      pw.flush()
-
-      val len = sw.getBuffer.length()
-      val space = " " * (110 - len)
-
-      annotator.scopes(child) match {
-        case Some(scope: CollectionMemberScope) =>
-          pw.print(s"${space}Collection ${scope.collectionSymbol}" /*+ scope.map.keys.mkString("[", " ", "]")*/)
-        case Some(other) =>
-          pw.print(s"$space${other.getClass.getSimpleName}" /*+ scope.map.keys.mkString("[", " ", "]")*/)
-        case None =>
-      }
-
-      pw.flush()
-      println(sw.getBuffer)
-      printTreeClasses(child, depth + 2, annotator)
-    }
-  }
 
   def usage(msg: String): Unit = {
     System.err.println(s"Usage Error: $msg")

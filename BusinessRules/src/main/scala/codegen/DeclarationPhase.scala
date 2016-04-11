@@ -75,7 +75,6 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
   //    }
   //  }
   //
-  //
   //  override def enterCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
   //
   //    assume(ctx.reference != null)

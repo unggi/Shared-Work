@@ -1,0 +1,31 @@
+Model "unused"
+
+
+// Examples of long "dotted" access paths
+Definition:
+    "has a long dotted path"
+Given:
+    Product("instrument")
+Value:
+    The product.standard.type is equal to "InterestRateSwap"
+
+
+--    The instrument.product.standard.type is a kind of InterestRateSwap
+
+--Validation:
+--    "Interest Rate Swap - Exactly two Legs"
+--Context:
+--    Instrument("instrument")
+--Constraint:
+--    If the instrument <<is an interest rate swap>>
+--    then the number of legs is equal to 2
+--
+--Validation:
+--    "Interest Rate Swap - Requires fixed and floating legs"
+--Context:
+--    Instrument("instrument")
+--Constraint:
+--    If the instrument is a kind of InterestRateSwap
+--    then one of the legs has type = "fixed" and one of the legs has type = "float"
+
+

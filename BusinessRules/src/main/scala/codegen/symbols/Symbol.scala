@@ -7,7 +7,7 @@ abstract class Symbol(val name: String) {
   def asComponents: Array[String] = Array(name)
 }
 
-case class ModelReferenceSymbol(override val name: String, components: List[String]) extends Symbol(name) {
+case class ParameterReference(parameter: Parameter, components: List[String]) extends Symbol(parameter.name) {
 
   var scope: Option[NestedScope] = None
 
@@ -49,7 +49,7 @@ case class DefinedTermSymbol(override val name: String) extends Symbol(name)
 
 case class LocalVariable(override val name: String) extends Symbol(name)
 
-case class ModelParameterSymbol(override val name: String, reference: ModelReferenceSymbol) extends Symbol(name)
+case class Parameter(override val name: String, classifier: String) extends Symbol(name)
 
 case class CollectionIndexSymbol(override val name: String, reference: Symbol) extends Symbol(name)
 
