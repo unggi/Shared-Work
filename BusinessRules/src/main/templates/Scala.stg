@@ -1,0 +1,187 @@
+FileBodyHeader(fileBody, package, className) ::= <<
+package <package>
+
+<Imports()>
+
+public class <className> {
+
+>>
+
+Imports() ::= <<
+ // No Imports
+>>
+
+RuleSet(declarations) ::= <<
+<declarations.declaration: Rule()>
+>>
+
+FileBodyFooter(fileBody, package, className) ::= <<
+}
+>>
+
+Rule(declaration) ::= <<
+    //
+    // <declaration.validationRule.text>
+    //
+    <Apply(declaration.validationRule, declaration.validationRule)>
+>>
+
+ID(text) ::=  <%<text; format="identifier"> %>
+
+ValidationRuleContext(rule) ::= <<
+
+class <ID(rule.name.text)>(<rule.name.text>) extends Rule {
+    def evaluate(<InputParamList(rule.context)>): Boolean = {
+       <Constraint(rule.constraint)>
+    }
+}
+
+>>
+
+InputParamList(context) ::= <%
+  <if(context.modelReferenceWithAlias)><InputParam(context.modelReferenceWithAlias)><endif>
+%>
+
+InputParam(reference) ::= <%<reference.alias.text; format="unquoted">: <reference.ref.text>%>
+
+Constraint(constraint) ::= <%
+<if (constraint.condBlock)>
+   <IfThenConstraint(constraint.condBlock, constraint.thenBlock)>
+<else>
+    No Conditional
+<endif>
+%>
+
+IfThenConstraint(cond, then) ::= <<
+if (<Apply(cond,cond)>) {
+    if (<Apply(then, then)>)
+        true
+    else
+        false
+}
+>>
+
+IsKindOfPredicateContext(predicate) ::= <%<predicate.modelReference.symbol.name>.isInstanceOf[<predicate.ModelElementName.text>]%>
+
+LogicalExistsStatementContext(stmt) ::= <%<Apply(stmt.existsStatement,stmt.existsStatement)>%>
+
+LogicalPredicateStatementContext(stmt) ::= <%<Apply(stmt.predicate, stmt.predicate)>%>
+
+BinaryLogicalOperatorStatementContext(predicate) ::= <%
+<Apply(predicate.left, predicate.left)>
+<Apply(predicate.op, predicate.op)>
+<Apply(predicate.right,predicate.right)>
+%>
+
+BinaryLogicalOperatorContext(op) ::= <%
+<\ >
+    <if (op.and)>&&
+    <else>Missing Operator = "<op.text>"
+    <endif>
+<\ >
+%>
+
+BinaryPredicateContext(predicate) ::= <%
+<Apply(predicate.left, predicate.left)>
+<Apply(predicate.comparator, predicate.comparator)>
+<Apply(predicate.right, predicate.right)>
+%>
+
+ConstrainedCollectionMembershipContext(stmt) ::= <%
+
+     <Apply(stmt.ref, stmt.ref)>
+     <if(stmt.collectionMemberConstraint)>.count(<Apply(stmt.collectionMemberConstraint,stmt.collectionMemberConstraint)>)
+     <else>.size
+     <endif>
+     <if(stmt.enumerator)>
+        <Apply(stmt.enumerator,stmt.enumerator)>
+     <else>
+        \u003C 0
+     <endif>
+%>
+
+CollectionMemberConstraintContext(stmt) ::= <%
+<SimpleOrComplexConstraintContext(stmt.simpleOrComplexConstraint)>
+%>
+
+EnumeratorContext(enum) ::= <%
+<\ >
+    <if (enum.at_least)><\u003E>
+    <elseif (enum.at_most)><\u003C>
+    <elseif (enum.exactly)>==
+    <else> ==
+    <endif>
+ <\ >
+    <if (enum.no || enum.none)>!
+    <elseif (enum.one)>1
+    <elseif (enum.two)>2
+    <elseif (enum.three)>3
+    <elseif (enum.four)>4
+    <elseif(enum.integer)><enum.number.text>
+    <endif>
+<\ >
+%>
+
+UnaryExpressionContext(expr) ::= <%<Apply(expr.term,expr.term)>%>
+
+IsEqualToComparatorContext(comparator) ::= " == "
+
+TermContext(term) ::= <%<Apply(term,term)>%>
+
+IdentifierTermContext(term) ::= <%<Apply(term.identifier,term.identifier)>%>
+
+IntegerNumberIdentifierContext(integer) ::= <%<trim(integer.text)>%>
+
+FunctionalExpressionTermContext(fn) ::= <%<FunctionalExpressionContext(fn.functionalExpression)>%>
+
+FunctionalExpressionContext(fn) ::= <%<Apply(fn,fn.ref)>%>
+
+NumberOfExpressionContext(ref) ::= <%<Apply(ref,ref)>.size %>
+
+ModelReferenceContext(ref) ::= <%
+<[ref.symbol.asComponents,ref.path]; separator=".">
+%>
+
+ModelReferenceIdentifierContext(id) ::= <%
+<Apply(id.modelReference, id.modelReference)>
+%>
+
+SimpleOrComplexConstraintContext(s) ::= <%
+<if(s.constraint)>
+    <Apply(s.constraint, s.constraint)>
+<else>
+    <Apply(s.predicate, s.predicate)>
+<endif>
+%>
+
+DoubleQuotedStringIdentifierContext(str) ::= <%
+    <str.text>
+%>
+
+Apply(template, arg) ::= <%<(template.class.simpleName)(arg)>%>
+
+ApplyWithDebug(template, arg) ::= <<
+Template =
+<Show(template)>
+Arg =
+<Show(arg.text)>
+<Apply(template, arg)>
+>>
+
+ShowMethods(node) ::= <<
+    <[node.class.declaredMethods]:ShowMethod(); separator="\n">
+>>
+
+ShowMembers(node) ::= <<
+    <[node.class.declaredMethods,node.class.declaredFields]:ShowMethod(); separator="\n">
+>>
+
+ShowMethod(m) ::= <<
+<m.name; format="%-20s"> defined in <m.declaringClass.simpleName>
+>>
+
+Show(node) ::= <<
+    <node.Class.SimpleName>(<node.text>)
+    <node.children:Show()>
+>>
+
