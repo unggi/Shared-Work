@@ -1,5 +1,6 @@
-// Generated from /Users/unggi/GitHub/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
+// Generated from /Users/unggi/Development/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
 package rules;
+
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -292,17 +293,13 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override
-	public void enterUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) {
-	}
+	@Override public void enterUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override
-	public void exitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) {
-	}
+	@Override public void exitUnaryExpressionPredicate(BusinessRulesParser.UnaryExpressionPredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -440,18 +437,6 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterFunctionalExpressionTerm(BusinessRulesParser.FunctionalExpressionTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -464,17 +449,13 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override
-	public void enterDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) {
-	}
+	@Override public void enterDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override
-	public void exitDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) {
-	}
+	@Override public void exitDefinedTermReferenceTerm(BusinessRulesParser.DefinedTermReferenceTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -492,17 +473,13 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override
-	public void enterDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) {
-	}
+	@Override public void enterDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override
-	public void exitDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) {
-	}
+	@Override public void exitDefinitionApplicationTerm(BusinessRulesParser.DefinitionApplicationTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -539,6 +516,18 @@ public class BusinessRulesBaseListener implements BusinessRulesListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitConstraintTerm(BusinessRulesParser.ConstraintTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -6,7 +6,7 @@ Definition:
     "has a long dotted path"
 Given:
     Product("instrument")
-Value:
+ Value:
     The product.standard.type is equal to "InterestRateSwap"
 
 

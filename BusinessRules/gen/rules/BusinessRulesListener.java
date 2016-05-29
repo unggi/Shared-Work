@@ -1,4 +1,4 @@
-// Generated from /Users/unggi/GitHub/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
+// Generated from /Users/unggi/Development/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
 package rules;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -395,18 +395,6 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 */
 	void exitUnaryExpression(BusinessRulesParser.UnaryExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code IdentifierTerm}
-	 * labeled alternative in {@link BusinessRulesParser#term}.
-	 * @param ctx the parse tree
-	 */
-	void enterIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code IdentifierTerm}
-	 * labeled alternative in {@link BusinessRulesParser#term}.
-	 * @param ctx the parse tree
-	 */
-	void exitIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code FunctionalExpressionTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
@@ -490,6 +478,18 @@ public interface BusinessRulesListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitConstraintTerm(BusinessRulesParser.ConstraintTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IdentifierTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IdentifierTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ModelReferenceIdentifier}
 	 * labeled alternative in {@link BusinessRulesParser#identifier}.

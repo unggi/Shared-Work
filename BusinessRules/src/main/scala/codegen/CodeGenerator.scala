@@ -1,9 +1,9 @@
 package codegen
 
-import java.io.{File, PrintWriter, StringWriter}
+import java.io.{File, PrintStream, PrintWriter, StringWriter}
 
 import codegen.symbols.SymbolTableBuilder
-import org.antlr.v4.runtime.tree.ParseTreeWalker
+import org.antlr.v4.runtime.tree.{ParseTree, ParseTreeWalker}
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
 import rules.BusinessRulesParser._
 import rules.{BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
@@ -109,27 +109,16 @@ object CodeGenerator {
 
     val builder = new SymbolTableBuilder(false)
 
-    val declarationPhase = new DeclarationListener(builder)
+    val declarationPhase = new DeclarationPhase(builder)
     walker.walk(declarationPhase, tree)
 
     val resolver = new ResolutionPhase(builder.symbolTable, declarationPhase.annotator)
     walker.walk(resolver, tree)
 
-
-    val sw = new StringWriter()
-    val strm = new PrintWriter(sw)
-    val printer = new TreePrinter(0, declarationPhase.annotator, strm)
-    walker.walk(printer, tree)
-    strm.flush()
-    System.err.println()
-    System.err.println(sw.getBuffer)
-    System.err.println("=" * 80)
-    System.err.flush()
+    printParseTree(tree, declarationPhase.annotator, System.err)
 
     if (generateCode)
       walker.walk(generator, tree)
-
-
 
     println("Parsing is complete")
 
@@ -148,6 +137,19 @@ object CodeGenerator {
 
     System.exit(1)
   }
+
+  def printParseTree(tree: ParseTree, annotations: ParseTreeScopeAnnotations, ostrm: PrintStream): Unit = {
+    val sw = new StringWriter()
+    val strm = new PrintWriter(sw)
+    val printer = new TreePrinter(0, annotations, strm)
+    new ParseTreeWalker().walk(printer, tree)
+    strm.flush()
+    ostrm.println()
+    ostrm.println(sw.getBuffer)
+    ostrm.println("=" * 80)
+    ostrm.flush()
+  }
+
 }
 
 

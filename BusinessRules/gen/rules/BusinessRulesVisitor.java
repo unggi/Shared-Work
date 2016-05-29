@@ -1,4 +1,4 @@
-// Generated from /Users/unggi/GitHub/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
+// Generated from /Users/unggi/Development/Shared-Work/BusinessRules/src/main/antlr/BusinessRules.g4 by ANTLR 4.5.1
 package rules;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
@@ -240,13 +240,6 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUnaryExpression(BusinessRulesParser.UnaryExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code IdentifierTerm}
-	 * labeled alternative in {@link BusinessRulesParser#term}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code FunctionalExpressionTerm}
 	 * labeled alternative in {@link BusinessRulesParser#term}.
 	 * @param ctx the parse tree
@@ -295,6 +288,13 @@ public interface BusinessRulesVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitConstraintTerm(BusinessRulesParser.ConstraintTermContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IdentifierTerm}
+	 * labeled alternative in {@link BusinessRulesParser#term}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentifierTerm(BusinessRulesParser.IdentifierTermContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ModelReferenceIdentifier}
 	 * labeled alternative in {@link BusinessRulesParser#identifier}.
