@@ -1,6 +1,7 @@
 .class
 target/
 .idea/*
+.idea/workspace.xml
 project/
 *.iml
 diagrams/nomura/
