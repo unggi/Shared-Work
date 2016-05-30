@@ -1,5 +1,6 @@
 .class
 target/
+.idea
 .idea/*
 .idea/workspace.xml
 project/
@@ -9,3 +10,5 @@ diagrams/nomura/
 /Graph Data Load/.idea
 /BusinessRules/.idea
 /BusinessRules/.idea/*
+gen/*
+gen
