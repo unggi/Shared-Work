@@ -2,9 +2,6 @@ grammar BusinessRules;
 
 
 @header {
-import codegen.symbols.ModelReferenceSymbol;
-import codegen.symbols.Symbol;
-import java.util.Collections;
 }
 
 //
