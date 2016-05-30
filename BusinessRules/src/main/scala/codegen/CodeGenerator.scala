@@ -14,7 +14,7 @@ object CodeGenerator {
 
   var outputTarget = "Scala"
   var templateGroupFile = "Scala"
-  var outputPath = "gen/rules/compiled"
+  var outputPath = "target/generated/rules/compiled"
   var packageName = "rules.compiled"
   var templateDir = "src/main/templates"
   var outputClass = "RulePlanExample"

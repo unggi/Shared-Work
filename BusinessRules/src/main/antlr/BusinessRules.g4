@@ -2,6 +2,7 @@ grammar BusinessRules;
 
 
 @header {
+
 }
 
 //
@@ -132,7 +133,7 @@ castExpression  : modelReference ('as a' | 'as an') ModelElementName;
 
 selectionExpression  : ('first' 'of'?)? modelReference 'where' simpleOrComplexConstraint;
 
-modelReference:
+modelReference locals[codegen.symbols.Symbol symbol]:
     (propPath = propertyOfModelPath | dotPath = dottedModelPath );
 
 modelReferenceList  : (modelReference)+;

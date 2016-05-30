@@ -47,6 +47,7 @@ class ResolutionPhase(symbolTable: SymbolTable, annotator: ParseTreeScopeAnnotat
         }
 
       System.err.println(s"Rule Resolved ${base} to ${symbol}")
+      ctx.symbol = symbol
       annotator.symbols.put(ctx, symbol)
     }
 
@@ -100,6 +101,7 @@ class ResolutionPhase(symbolTable: SymbolTable, annotator: ParseTreeScopeAnnotat
             new ParameterReference(parameter, pathComponents(ctx))
         }
       System.err.println(s"Definition Resolved ${base} to ${symbol}")
+      ctx.symbol = symbol
       annotator.symbols.put(ctx, symbol)
     }
   }

@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <url>http://maven.apache.org</url>
-
+    <!-- Common version numbers -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <antlr4.maven.plugin.version>4.5</antlr4.maven.plugin.version>
