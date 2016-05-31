@@ -12,7 +12,7 @@ Imports() ::= <<
 >>
 
 RuleSet(declarations) ::= <<
-<declarations.declaration: Rule()>
+<declarations.declaration: { decl | <if(decl.definition)> Output is <ShowMethods(decl)> <endif>}>
 >>
 
 FileBodyFooter(fileBody, package, className) ::= <<
@@ -20,15 +20,12 @@ FileBodyFooter(fileBody, package, className) ::= <<
 >>
 
 Rule(declaration) ::= <<
-    //
-    // <declaration.validationRule.text>
-    //
     <Apply(declaration.validationRule, declaration.validationRule)>
 >>
 
 ID(text) ::=  <%<text; format="identifier"> %>
 
-ValidationRuleContext(rule) ::= <<
+    ValidationRuleContext(rule) ::= <<
 
 class <ID(rule.name.text)>(<rule.name.text>) extends Rule {
     def evaluate(<InputParamList(rule.context)>): Boolean = {
