@@ -12,7 +12,7 @@ Imports() ::= <<
 >>
 
 RuleSet(declarations) ::= <<
-<declarations.declaration: { decl | <if(decl.definition)> Output is <ShowMethods(decl)> <endif>}>
+<declarations.declaration: { decl | <if(decl.definition)><ApplyWithDebug(decl.definition, decl.definition)><endif>}>
 >>
 
 FileBodyFooter(fileBody, package, className) ::= <<
@@ -23,9 +23,21 @@ Rule(declaration) ::= <<
     <Apply(declaration.validationRule, declaration.validationRule)>
 >>
 
+DefinitionContext(defn) ::= <<
+
+class <ID(defn.name.text)>(<defn.name.text>) extends DefinedTerm {
+    def evaluate(<InputParamList(defn.multipleContextParameter)>): Boolean = {
+       <Apply(defn.value, defn.value)>
+    }
+}
+
+    <Show(defn)>
+
+>>
+
 ID(text) ::=  <%<text; format="identifier"> %>
 
-    ValidationRuleContext(rule) ::= <<
+ValidationRuleContext(rule) ::= <<
 
 class <ID(rule.name.text)>(<rule.name.text>) extends Rule {
     def evaluate(<InputParamList(rule.context)>): Boolean = {
