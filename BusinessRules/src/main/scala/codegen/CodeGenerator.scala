@@ -124,6 +124,10 @@ object CodeGenerator {
 
     builder.symbolTable.print()
 
+    val pureCodeGenerator = new ScalaGenerator(tree, "rules.compiled", "GeneratedClass", outputDir)
+
+    pureCodeGenerator.genScalaClass()
+
     //  dependencyAnalyzer.graph.render(new AutoIndentWriter(new PrintWriter(System.err)))
   }
 
