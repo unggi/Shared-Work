@@ -1,11 +1,11 @@
 package codegen
 
 import java.io.{File, FileOutputStream, PrintWriter}
-import java.util
 
+import org.antlr.v4.runtime.ParserRuleContext
 import rules.BusinessRulesParser.{DefinitionContext, FileBodyContext}
 
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.ListBuffer
 
 
 //
@@ -54,7 +54,7 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
   }
 
   def genScalaClassBody(): Unit = {
-    val definitions =
+    val definitions: List[DefinitionContext] =
       selectChildren(fileBodyContext.declarations.declaration().iterator) {
         child =>
           child.getClass == classOf[DefinitionContext]
@@ -72,15 +72,17 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     """
   }
 
-  def selectChildren[T <: java.lang.Object](children: java.util.Iterator[T])(filterBy: (T) => Boolean): List[T]  = {
+  def selectChildren[P, T](children: java.util.Iterator[P])(filterBy: (T) => Boolean): List[T] = {
 
-    val selected = new util.ArrayList[T]()
+    val selected = new ListBuffer[T]()
+
     while (children.hasNext) {
-      val child = children.next
-      if (filterBy(child))
-        selected.append(child)
+      children.next.getClass match {
+        case child:  classOf[P]=>
+        case otherwise =>
+      }
     }
-    selected.toArray[T]
+    selected
 
   }
 
