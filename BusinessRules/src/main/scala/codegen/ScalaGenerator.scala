@@ -1,8 +1,10 @@
 package codegen
 
 import java.io.{File, FileOutputStream, PrintWriter}
+import java.util
 
 import org.antlr.v4.runtime.ParserRuleContext
+import org.antlr.v4.runtime.tree.ParseTree
 import rules.BusinessRulesParser.{DefinitionContext, FileBodyContext}
 
 import scala.collection.mutable.ListBuffer
@@ -13,6 +15,8 @@ import scala.collection.mutable.ListBuffer
 //
 
 class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, className: String, outputPath: File) {
+
+  import scala.collection.JavaConversions._
 
   var verbose = true
 
@@ -72,18 +76,15 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     """
   }
 
-  def selectChildren[P, T](children: java.util.Iterator[P])(filterBy: (T) => Boolean): List[T] = {
+  def selectChildren(tree: ParserRuleContext(filterBy: (ParserRuleContext) => Boolean): ListBuffer[ParserRuleContext] = {
 
-    val selected = new ListBuffer[T]()
+    var selected = new ListBuffer[ParserRuleContext]()
 
-    while (children.hasNext) {
-      children.next.getClass match {
-        case child:  classOf[P]=>
-        case otherwise =>
-      }
+    for (i <- 0 until tree.getChildCount) {
+      if (filterBy(tree.getChild(i)))
+        selected.append(tree.getChild(i))
     }
-    selected
-
+    selected.toList
   }
 
 }
