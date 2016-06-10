@@ -1,13 +1,12 @@
 package codegen
 
 import java.io.{File, FileOutputStream, PrintWriter}
-import java.util
 
 import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.tree.ParseTree
-import rules.BusinessRulesParser.{DefinitionContext, FileBodyContext}
+import rules.BusinessRulesParser.{DeclarationContext, DefinitionContext, FileBodyContext}
 
-import scala.collection.mutable.ListBuffer
+import scala.collection._
 
 
 //
@@ -58,13 +57,19 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
   }
 
   def genScalaClassBody(): Unit = {
-    val definitions: List[DefinitionContext] =
-      selectChildren(fileBodyContext.declarations.declaration().iterator) {
-        child =>
-          child.getClass == classOf[DefinitionContext]
-      }
+    // Collect Definitions
+    val definitions = query(fileBodyContext.declarations()) {
+      case decl: DeclarationContext => Option(decl.definition())
+      case otherwise => None
+    }
 
-    definitions.foreach(d => System.err.println("Definition\n============\n" + d.toStringTree))
+    definitions.foreach {
+      defn =>
+      // Generate definition code body
+    }
+
+    // Collect Validation Rules
+
 
   }
 
@@ -76,15 +81,11 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     """
   }
 
-  def selectChildren(tree: ParserRuleContext(filterBy: (ParserRuleContext) => Boolean): ListBuffer[ParserRuleContext] = {
+  def find[T <: ParserRuleContext](ctx: ParserRuleContext, cls: Class[T]): immutable.List[T] =
+    ctx.getRuleContexts(cls).toList
 
-    var selected = new ListBuffer[ParserRuleContext]()
+  def query[T <: ParserRuleContext](ctx: ParserRuleContext)(mapper: (ParserRuleContext) => Option[T]): immutable.List[T] =
+    find(ctx, classOf[ParserRuleContext]).flatMap{ mapper(_) }
 
-    for (i <- 0 until tree.getChildCount) {
-      if (filterBy(tree.getChild(i)))
-        selected.append(tree.getChild(i))
-    }
-    selected.toList
-  }
 
 }
