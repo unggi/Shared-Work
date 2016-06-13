@@ -35,10 +35,10 @@ object StringFormatter {
   def unquote(s: String): String =
     s.stripPrefix("\"").stripSuffix("\"").stripPrefix("\'").stripSuffix("\'")
 
-  def generateIdentifier(s: String): String = unquote(s).replaceAll("[-\\s]+", "_")
+  def id(s: String): String = unquote(s).replaceAll("[-\\s]+", "_")
 
-  def toDotPath(modelReference: ModelReferenceContext): String =
-    modelReference.dotPath.children.toArray.mkString(".")
+//  def toDotPath(modelReference: ModelReferenceContext): String =
+//    modelReference.dotPath.children.toArray.mkString(".")
 }
 
 class StringFormatter extends StringRenderer {
@@ -51,7 +51,7 @@ class StringFormatter extends StringRenderer {
         case "ARTICLE" => articularize(o.asInstanceOf[String])
         case "CAPITALIZE" => capitalize(o.asInstanceOf[String])
         case "UNQUOTED" => unquote(o.asInstanceOf[String])
-        case "IDENTIFIER" => generateIdentifier(o.asInstanceOf[String])
+        case "IDENTIFIER" => id(o.asInstanceOf[String])
         case _ =>
           super.toString(o, formatString, locale)
       }

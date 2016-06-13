@@ -7,7 +7,7 @@ Definition:
 Given:
     Product("instrument")
  Value:
-    The product.standard.type is equal to "InterestRateSwap"
+    The instrument.standard.type is equal to "InterestRateSwap"
 
 
 --    The instrument.product.standard.type is a kind of InterestRateSwap

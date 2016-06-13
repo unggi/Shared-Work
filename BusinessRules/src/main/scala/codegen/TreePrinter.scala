@@ -6,6 +6,7 @@ import codegen.symbols.{CollectionMemberScope, DefinitionScope, NestedScope, Rul
 import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.tree.TerminalNode
 import rules.BusinessRulesBaseListener
+import rules.BusinessRulesParser.ModelReferenceContext
 
 class TreePrinter(var indent: Int, annotator: ParseTreeScopeAnnotations, pw: PrintWriter) extends BusinessRulesBaseListener {
 
@@ -57,11 +58,17 @@ class TreePrinter(var indent: Int, annotator: ParseTreeScopeAnnotations, pw: Pri
     if (childFields.nonEmpty)
       pw.print(" [" + childFields.map(_.getName).mkString(" | ") + "]")
 
-    annotator.symbols(child) match {
-      case Some(symbol) =>
-        pw.print(s": $symbol ")
+//    annotator.symbols(child) match {
+//      case Some(symbol) =>
+//        pw.print(s": $symbol ")
+//      case otherwise =>
+//    }
+
+    child match {
+      case ref : ModelReferenceContext => pw.print(s": ${ref.symbol} ")
       case otherwise =>
     }
+
 
     pw.println("")
     indent = indent + 2

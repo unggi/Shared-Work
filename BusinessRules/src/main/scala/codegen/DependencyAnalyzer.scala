@@ -61,9 +61,9 @@ class DependencyAnalyzer(symbolTable: SymbolTableBuilder) extends BusinessRulesB
   override def enterModelReference(ctx: ModelReferenceContext): Unit = {
     activeConstraint match {
       case Some(rule) =>
-        System.err.println(s"MODEL REFERENCE - " + toDotPath(ctx))
-        val reference = graph.findNode(toDotPath(ctx))
-      //    graph.addDependency(reference.get -> rule)
+//        System.err.println(s"MODEL REFERENCE - " + toDotPath(ctx))
+//        val reference = graph.findNode(toDotPath(ctx))
+//      //    graph.addDependency(reference.get -> rule)
 
 
       case None =>

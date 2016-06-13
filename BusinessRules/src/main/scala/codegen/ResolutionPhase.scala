@@ -77,16 +77,17 @@ class ResolutionPhase(symbolTable: SymbolTable, annotator: ParseTreeScopeAnnotat
   override def enterDefinition(ctx: DefinitionContext): Unit = {
     val walker = new ParseTreeWalker()
     val resolver = new DefinitionResolutionPhase()
-    walker.walk(resolver, ctx.value)
+    walker.walk(resolver, ctx)
   }
 
   class DefinitionResolutionPhase() extends BusinessRulesBaseListener {
 
     override def enterModelReference(ctx: ModelReferenceContext): Unit = {
-      System.err.println(s"Definition Scope ")
+      System.err.println(s"Definition Scope: parent is <${nameOf(ctx.getParent)}>")
 
       val scopeOpt = annotator.scopes(ctx)
       assume(scopeOpt.isDefined, s"Scope not found for parse tree node: ${nameOf(ctx)}")
+
       val scope = scopeOpt.get.asInstanceOf[DefinitionScope]
       assume(scope.parent.isDefined, s"Current Scope does not have a parent: ${scope}")
 
@@ -97,10 +98,9 @@ class ResolutionPhase(symbolTable: SymbolTable, annotator: ParseTreeScopeAnnotat
           case Some(s) => s
           case None =>
             val parameter = scope.parameters.head
-            System.err.println(s"******* ${pathComponents(ctx)}")
             new ParameterReference(parameter, pathComponents(ctx))
         }
-      System.err.println(s"Definition Resolved ${base} to ${symbol}")
+      System.err.println(s"Definition Resolved <${base}> to <${symbol}>: \nfor node ${ctx.hashCode()}")
       ctx.symbol = symbol
       annotator.symbols.put(ctx, symbol)
     }
