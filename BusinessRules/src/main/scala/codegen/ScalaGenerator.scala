@@ -6,6 +6,7 @@ import codegen.symbols.ParameterReference
 import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.tree.ParseTree
 import rules.BusinessRulesParser._
+import codegen.symbols.Symbol
 
 import scala.collection._
 
@@ -119,12 +120,13 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     s"${unquote(param.alias.getText)}: ${genModelReference(param.ref)}"
   }
 
-  def genModelReference(ref: ModelReferenceContext) = alternates(ref) {
-    case param: ParameterReference => s"${param.components.head}"
-    case other => ref.symbol.name
-  }
+  def genModelReference(ref: ModelReferenceContext): String =
+    ref.symbol match {
+      case s: ParameterReference => s"${s.components.head}"
+      case s: Symbol => s.name
+    }
 
-  def genPredicate(value: PredicateContext) = alternates {
+  def genPredicate(value: PredicateContext) = alternates(value) {
     case pred: BinaryPredicateContext =>
       genExpression(pred.left) + genComparator(pred.comparator()) + genExpression(pred.right)
     case pred: IsOneOfPredicateContext => genIsOneOfPredicate(pred)
@@ -136,19 +138,19 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
 
 
   def genIsOneOfPredicate(pred: IsOneOfPredicateContext) = template {
-    ""
+    "1"
   }
 
   def genIsNotOneOfPredicate(pred: IsNotOneOfPredicateContext) = template {
-    ""
+    "2"
   }
 
   def genIsKindOfPredicate(pred: IsKindOfPredicateContext) = template {
-    ""
+    "3"
   }
 
   def genUnaryExpressionPredicate(pred: UnaryExpressionPredicateContext) = template {
-    ""
+    "4"
   }
 
   def genExpression(expr: ExpressionContext): String = alternates(expr) {
@@ -174,22 +176,22 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     case other => s"Unknown term type ${other}"
   }
 
-  def genIdentifierTerm(id: IdentifierTermContext): String = template {
-    ""
-  }
+  def genIdentifierTerm(id: IdentifierTermContext): String =
+    genIdentifier(id.identifier())
+
 
   def genFunctionalExpression(fexpr: FunctionalExpressionTermContext): String = template {
     "f"
   }
 
-  def genIdentifer(identifier: IdentifierContext) = alternates(identifier) {
-    case id: ModelReferenceIdentifierContext => ""
-    case id: LiteralStringIdentifierContext => ""
-    case id: NumberIdentifierContext => ""
-    case id: IntegerNumberIdentifierContext => ""
-    case id: BooleanLiteralIdentifierContext => ""
-    case id: CollectionIndexContext => ""
-    case id: DoubleQuotedStringIdentifierContext = ""
+  def genIdentifier(identifier: IdentifierContext) = alternates(identifier) {
+    case id: ModelReferenceIdentifierContext => genModelReference(id.modelReference())
+    case id: LiteralStringIdentifierContext => id.LiteralString.getSymbol.getText
+    case id: NumberIdentifierContext => id.Number.getText
+    case id: IntegerNumberIdentifierContext => id.IntegerNumber.getSymbol.getText
+    case id: BooleanLiteralIdentifierContext => id.BooleanLiteral.getSymbol.getText
+    case id: CollectionIndexContext => genModelReference(id.modelReference())
+    case id: DoubleQuotedStringIdentifierContext => ""
   }
 
   def find[T <: ParserRuleContext](ctx: ParserRuleContext, cls: Class[T]): immutable.List[T] =
