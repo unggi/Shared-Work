@@ -30,7 +30,7 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
 
   override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
 
-    val ref = ctx.context.modelReferenceParameter
+    val ref = ctx.context.parameterDeclaration()
 
     val parameter = tokenToText(ref.alias)
 
@@ -42,11 +42,11 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
   }
 
   override def enterDefinition(ctx: DefinitionContext): Unit = {
-    val references = ctx.multipleContextParameter.modelReferenceParameter.toList
+    val references = ctx.parameterDeclarations().parameterDeclaration().toList
 
-    val params: List[Parameter] =
-      for (ref <- references)
-        yield makeParameter(tokenToText(ref.alias), ref.modelReference)
+    val params: List[Parameter] = references.map {
+      ref => makeParameter(tokenToText(ref.alias), ref.modelReference)
+    }
 
     val scope = new DefinitionScope(symbolTable.scope, params)
 

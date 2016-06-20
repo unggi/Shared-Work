@@ -10,8 +10,6 @@ class ParseTreeScopeAnnotations() {
 
   val scopes = new NodeMapping[NestedScope]("Scopes")
 
-  val symbols = new NodeMapping[Symbol]("Symbols")
-
 }
 
 class NodeMapping[T <: Object](val id: String, val verbose: Boolean = false) {

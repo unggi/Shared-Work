@@ -32,17 +32,15 @@ declaration
 
 validationRule  : 'Validation:' name=DoubleQuotedString context constraint ('report:' compoundReport)?;
 
-definition  : 'Definition:' name=DoubleQuotedString 'Given:' multipleContextParameter 'Value:' value=predicate;
+definition  : 'Definition:' name=DoubleQuotedString 'Given:' parameterDeclarations 'Value:' value=predicate;
 
 ruleSet  : 'Rule set' DoubleQuotedString ('applies to' modelReference 'where' constraint)?;
 
-context  : 'Context:' modelReferenceParameter;
+context  : 'Context:' parameterDeclaration;
 
-//multipleParameterContext  : 'Context:' multipleContextParameter;
+parameterDeclarations : parameterDeclaration (',' parameterDeclaration)*;
 
-multipleContextParameter  : modelReferenceParameter (',' modelReferenceParameter)*;
-
-modelReferenceParameter : ref=modelReference '(' alias=DoubleQuotedString ')';
+parameterDeclaration : ref=modelReference '(' alias=DoubleQuotedString ')';
 
 constraint      :   'Constraint:'
                     ('If' condBlock=logicalStatement 'then' thenBlock=logicalStatement ('else' elseBlock=logicalStatement)?
@@ -96,7 +94,7 @@ expression  :   left=expression op=('*' | '/' | '+' | '-'|'mod') right=expressio
 
 term  :
         functionalExpression            #FunctionalExpressionTerm
-    |   modelReference FragmentName     #DefinedTermReferenceTerm
+    |   ref=modelReference frag=FragmentName     #DefinedTermReferenceTerm
     |   operatorInvocation              #OperatorInvocationTerm
     |   definitionApplication           #DefinitionApplicationTerm
     |   castExpression                  #CastExpressionTerm

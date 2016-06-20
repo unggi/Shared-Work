@@ -1,12 +1,12 @@
 package codegen
 
 import java.io.{File, FileOutputStream, PrintWriter}
+import java.rmi.UnexpectedException
 
-import codegen.symbols.ParameterReference
+import codegen.symbols.{Parameter, ParameterReference, Symbol}
 import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.tree.ParseTree
 import rules.BusinessRulesParser._
-import codegen.symbols.Symbol
 
 import scala.collection._
 
@@ -19,6 +19,7 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
 
   import scala.collection.JavaConversions._
   import StringFormatter._
+  import TreeUtilities._
 
   val verbose = false
 
@@ -75,17 +76,29 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
 
   def genScalaClassBody() = emit {
     // Collect Definitions
-    val definitions =
+    val definitions: List[DefinitionContext] =
       query(fileBodyContext.declarations()) {
-        case decl: DeclarationContext => Option(decl.definition())
+        case null =>
+          assert(false)
+          None
+        case decl: DeclarationContext =>
+          Option(decl.definition())
         case otherwise => None
       }
 
-    definitions.foreach(genDefinition(_))
+    definitions.foreach { d =>
+      assert(d != null)
+      genDefinition(d)
+    }
 
-    apply(fileBodyContext.declarations, classOf[DeclarationContext]) {
-      case decl: DeclarationContext => genDefinition(decl.definition)
-      case otherwise => ""
+
+        apply(fileBodyContext.declarations, classOf[DeclarationContext]) {
+      case decl: DeclarationContext =>
+        assert(decl != null)
+        genDefinition(decl.definition)
+      case null =>
+        assert(false, "Declaration is null")
+        "Null Decl"
     }
 
     // Collect Validation Rules
@@ -101,34 +114,45 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
   }
 
   def genDefinition(defn: DefinitionContext) = template {
+    require(defn != null, "Definition is null")
+    require(defn.name != null)
+    require(defn.parameterDeclarations() != null)
+    require(defn.value != null)
     s"""
        |class ${id(defn.name.getText)}(${defn.name.getText}) extends DefinedTerm {
-       |    def evaluate(${genInputParameterList(defn.multipleContextParameter)}): Boolean = {
+       |    def evaluate(${genParameterDeclarations(defn.parameterDeclarations)}): Boolean =
        |        ${genPredicate(defn.value)}
-       |}
     """
   }
 
-  def genInputParameterList(params: MultipleContextParameterContext): String = template {
-    apply(params, classOf[ModelReferenceParameterContext]) {
-      ref =>
-        genModelReferenceParameter(ref)
+  def genParameterDeclarations(params: ParameterDeclarationsContext): String = template {
+    apply(params, classOf[ParameterDeclarationContext]) {
+      genParameterDeclaration(_)
     }
   }
 
-  def genModelReferenceParameter(param: ModelReferenceParameterContext) = template {
-    s"${unquote(param.alias.getText)}: ${genModelReference(param.ref)}"
+  def genParameterDeclaration(param: ParameterDeclarationContext) = template {
+    val classifier = param.ref.symbol match {
+      case prm: Parameter => prm.classifier
+      case otherwise => throw new IllegalArgumentException(s"Expected a Parameter symbol but found ${otherwise}")
+    }
+    s"${unquote(param.alias.getText)}: $classifier"
   }
+
+  def genValidationRule() = template {
+    ""
+  }
+
 
   def genModelReference(ref: ModelReferenceContext): String =
     ref.symbol match {
-      case s: ParameterReference => s"${s.components.head}"
-      case s: Symbol => s.name
+      case Parameter(name, classifer) => s"${name}.${pathComponents(ref).tail.mkString(".")}"
+      case otherwise => throw new UnexpectedException(s"Symbol Type ${otherwise} is not handled.")
     }
 
   def genPredicate(value: PredicateContext) = alternates(value) {
     case pred: BinaryPredicateContext =>
-      genExpression(pred.left) + genComparator(pred.comparator()) + genExpression(pred.right)
+      s"${genExpression(pred.left)} ${genComparator(pred.comparator())} ${genExpression(pred.right)}"
     case pred: IsOneOfPredicateContext => genIsOneOfPredicate(pred)
     case pred: IsNotOneOfPredicateContext => genIsNotOneOfPredicate(pred)
     case pred: IsKindOfPredicateContext => genIsKindOfPredicate(pred)
@@ -136,20 +160,23 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     case other => s"Unknown predicate type ${other}"
   }
 
-
   def genIsOneOfPredicate(pred: IsOneOfPredicateContext) = template {
-    "1"
+    throw new NotImplementedError()
+    "Not Complete - IsOneOfPredicate"
   }
 
   def genIsNotOneOfPredicate(pred: IsNotOneOfPredicateContext) = template {
+    throw new NotImplementedError()
     "2"
   }
 
   def genIsKindOfPredicate(pred: IsKindOfPredicateContext) = template {
+    throw new NotImplementedError()
     "3"
   }
 
   def genUnaryExpressionPredicate(pred: UnaryExpressionPredicateContext) = template {
+    throw new NotImplementedError()
     "4"
   }
 
@@ -157,16 +184,21 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     case binary: BinaryExpressionContext => genExpression(binary.left) + binary.op.getText + genExpression(binary.right)
     case unary: UnaryExpressionContext => genTerm(unary.term())
     case other => s"Unknown expression type ${other}"
-
   }
 
-  def genComparator(expr: ComparatorContext) = template {
-    ""
+  def genComparator(expr: ComparatorContext) = alternates(expr) {
+    case c: IsEqualToComparatorContext => " == "
+    case c: IsNotEqualToComparatorContext => "!="
+    case c: IsGreaterThanComparatorContext => ">"
+    case c: IsGreaterThanOrEqualToComparatorContext => ">="
+    case c: IsLessThanOrEqualToComparatorContext => "<="
+    case c: IsLessThanComparatorContext => "<"
+    case otherwise => s"Unknown Comparator ${expr}"
   }
 
   def genTerm(term: TermContext): String = alternates(term) {
     case t: FunctionalExpressionTermContext => genFunctionalExpression(t)
-    case t: DefinedTermReferenceTermContext => ""
+    case t: DefinedTermReferenceTermContext => genModelReference(t.modelReference()) + t.FragmentName().getText
     case t: OperatorInvocationTermContext => ""
     case t: DefinitionApplicationTermContext => ""
     case t: CastExpressionTermContext => ""
@@ -191,16 +223,8 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     case id: IntegerNumberIdentifierContext => id.IntegerNumber.getSymbol.getText
     case id: BooleanLiteralIdentifierContext => id.BooleanLiteral.getSymbol.getText
     case id: CollectionIndexContext => genModelReference(id.modelReference())
-    case id: DoubleQuotedStringIdentifierContext => ""
+    case id: DoubleQuotedStringIdentifierContext => id.getText
   }
 
-  def find[T <: ParserRuleContext](ctx: ParserRuleContext, cls: Class[T]): immutable.List[T] =
-    ctx.getRuleContexts(cls).toList
-
-  def query[T <: ParserRuleContext](ctx: ParserRuleContext)(mapper: (ParserRuleContext) => Option[T]): immutable.List[T] =
-    find(ctx, classOf[ParserRuleContext]).flatMap(mapper(_))
-
-  def apply[P <: ParserRuleContext, C <: ParserRuleContext](ctx: P, cls: Class[C])(body: (C) => String): String =
-    ctx.getRuleContexts(cls).toList.foldLeft("")(_ + body(_))
 
 }

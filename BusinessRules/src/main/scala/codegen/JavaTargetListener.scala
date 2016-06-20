@@ -41,7 +41,7 @@ class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseLis
     }
     catch {
       case e: Throwable =>
-        System.err.println(s"Could not open output file: " + e.getStackTraceString)
+        System.err.println(s"Could not open output file: " + e.getStackTrace)
     }
   }
 

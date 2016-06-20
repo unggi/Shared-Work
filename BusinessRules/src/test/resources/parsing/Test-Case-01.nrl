@@ -9,17 +9,14 @@ Given:
  Value:
     The instrument.standard.type is equal to "InterestRateSwap"
 
+Validation:
+    "Interest Rate Swap - Exactly two Legs"
+Context:
+    Product("instrument")
+Constraint:
+    If the instrument <<is an interest rate swap>>
+    then the number of legs is equal to 2
 
---    The instrument.product.standard.type is a kind of InterestRateSwap
-
---Validation:
---    "Interest Rate Swap - Exactly two Legs"
---Context:
---    Instrument("instrument")
---Constraint:
---    If the instrument <<is an interest rate swap>>
---    then the number of legs is equal to 2
---
 --Validation:
 --    "Interest Rate Swap - Requires fixed and floating legs"
 --Context:
