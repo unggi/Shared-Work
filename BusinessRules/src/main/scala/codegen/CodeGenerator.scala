@@ -117,10 +117,10 @@ object CodeGenerator {
 
     printParseTree(tree, declarationPhase.annotator, System.err)
 
-    if (generateCode)
-      walker.walk(generator, tree)
+//    if (generateCode)
+//      walker.walk(generator, tree)
 
-    println("Parsing is complete")
+//    println("Parsing is complete")
 
     builder.symbolTable.print()
 
@@ -128,9 +128,7 @@ object CodeGenerator {
 
     pureCodeGenerator.genScalaClass()
 
-    //  dependencyAnalyzer.graph.render(new AutoIndentWriter(new PrintWriter(System.err)))
   }
-
 
   def usage(msg: String): Unit = {
     System.err.println(s"Usage Error: $msg")

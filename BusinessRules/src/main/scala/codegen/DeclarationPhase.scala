@@ -38,6 +38,7 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     val scope = new RuleScope(symbolTable.scope, symbol)
     symbolTable.openScope(scope)
     annotator.scopes.put(ctx, symbolTable.scope)
+    ref.modelReference.symbol = symbol
 
   }
 
@@ -80,7 +81,9 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     val components: List[String] = pathComponents(ref)
     val base = components.head
 
-    new Parameter(alias, base)
+    val p = new Parameter(alias, base)
+    System.err.println(s"New Parameter = $p")
+    p
   }
 
   def tokenToText(token: Token): String = token match {

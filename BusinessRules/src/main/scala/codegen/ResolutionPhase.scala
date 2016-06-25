@@ -41,11 +41,12 @@ object TreeUtilities {
   def query[T <: ParserRuleContext](ctx: ParserRuleContext)(mapper: (ParserRuleContext) => Option[T]): immutable.List[T] =
     find(ctx, classOf[ParserRuleContext]).flatMap(mapper(_))
 
-  def apply[P <: ParserRuleContext, C <: ParserRuleContext](ctx: P, cls: Class[C])(body: (C) => String): String = {
-
-    val list = ctx.getRuleContexts(cls)
+  def apply[P <: ParserRuleContext, C <: ParserRuleContext](ctx: P, cls: Class[C])(body: (C) => String): String =
     ctx.getRuleContexts(cls).toList.foldLeft("")(_ + body(_))
-  }
+
+
+  def apply[P <: ParserRuleContext](list: List[P])(body: (P) => String): String =
+    list.foldLeft("")(_ + body(_))
 
 }
 

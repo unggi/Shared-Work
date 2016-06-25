@@ -74,35 +74,26 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
        |"""
   }
 
-  def genScalaClassBody() = emit {
+  def genScalaClassBody() = {
+
+    val declarations: List[DeclarationContext] = fileBodyContext.declarations().declaration().toList
+
     // Collect Definitions
-    val definitions: List[DefinitionContext] =
-      query(fileBodyContext.declarations()) {
-        case null =>
-          assert(false)
-          None
-        case decl: DeclarationContext =>
-          Option(decl.definition())
-        case otherwise => None
-      }
-
-    definitions.foreach { d =>
-      assert(d != null)
-      genDefinition(d)
+    val definitions = declarations.flatMap {
+      case decl: DeclarationContext if decl.definition != null => Some(decl.definition)
+      case otherwise => None
     }
 
+    emit (apply(definitions)(genDefinition(_)))
 
-        apply(fileBodyContext.declarations, classOf[DeclarationContext]) {
-      case decl: DeclarationContext =>
-        assert(decl != null)
-        genDefinition(decl.definition)
-      case null =>
-        assert(false, "Declaration is null")
-        "Null Decl"
-    }
 
     // Collect Validation Rules
+    val rules = declarations.flatMap {
+      case decl: DeclarationContext if decl.validationRule() != null => Some(decl.validationRule())
+      case otherwise => None
+    }
 
+    emit (apply(rules)(genRule(_)))
   }
 
   def genScalaClassFooter() = emit {
@@ -125,6 +116,16 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     """
   }
 
+  def genRule(rule: ValidationRuleContext) = template {
+    s"""
+       |class ${id(rule.name.getText)} ($rule.name.getText}) extends ValidationRule {
+       |  def evaluate(${genParameterDeclaration(rule.context.parameterDeclaration())}: Boolean =
+       |    ${genConstraint(rule.constraint)}
+       |
+     """
+
+  }
+
   def genParameterDeclarations(params: ParameterDeclarationsContext): String = template {
     apply(params, classOf[ParameterDeclarationContext]) {
       genParameterDeclaration(_)
@@ -132,6 +133,9 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
   }
 
   def genParameterDeclaration(param: ParameterDeclarationContext) = template {
+    require(param != null)
+    require(param.modelReference != null)
+    require(param.ref.symbol != null)
     val classifier = param.ref.symbol match {
       case prm: Parameter => prm.classifier
       case otherwise => throw new IllegalArgumentException(s"Expected a Parameter symbol but found ${otherwise}")
@@ -139,10 +143,9 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     s"${unquote(param.alias.getText)}: $classifier"
   }
 
-  def genValidationRule() = template {
-    ""
+  def genConstraint(constraintContext: ConstraintContext) = template {
+    "Constraint Body"
   }
-
 
   def genModelReference(ref: ModelReferenceContext): String =
     ref.symbol match {
