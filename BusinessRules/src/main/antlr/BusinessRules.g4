@@ -42,11 +42,12 @@ parameterDeclarations : parameterDeclaration (',' parameterDeclaration)*;
 
 parameterDeclaration : ref=modelReference '(' alias=DoubleQuotedString ')';
 
-constraint      :   'Constraint:'
-                    ('If' condBlock=logicalStatement 'then' thenBlock=logicalStatement ('else' elseBlock=logicalStatement)?
-                |   logicalStatement
-                )
+constraint      :   'Constraint:' (ifConstraint | logicalStatement)
                 ;
+
+ifConstraint :
+    'If' condBlock=logicalStatement 'then' thenBlock=logicalStatement ('else' elseBlock=logicalStatement)?
+    ;
 
 binaryLogicalOperator: (and = 'and' | or = 'or' | implies = 'implies' | iff = 'if and only if');
 

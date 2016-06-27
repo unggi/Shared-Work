@@ -41,7 +41,11 @@ object TreeUtilities {
   def query[T <: ParserRuleContext](ctx: ParserRuleContext)(mapper: (ParserRuleContext) => Option[T]): immutable.List[T] =
     find(ctx, classOf[ParserRuleContext]).flatMap(mapper(_))
 
-  def apply[P <: ParserRuleContext, C <: ParserRuleContext](ctx: P, cls: Class[C])(body: (C) => String): String =
+//  def apply[P <: ParserRuleContext, C <: ParserRuleContext](ctx: P, cls: Class[C])(body: (C) => String): String =
+//    ctx.getRuleContexts(cls).toList.foldLeft("")(_ + body(_))
+
+
+  def apply[P <: ParserRuleContext, C <: ParserRuleContext](ctx: P, cls: Class[C],body: (C) => String): String =
     ctx.getRuleContexts(cls).toList.foldLeft("")(_ + body(_))
 
 
@@ -140,7 +144,9 @@ class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extend
 
     val symbol =
       scope.resolve(base) match {
-        case Some(s) => s
+        case Some(parameter: Parameter) => System.err.println(s"rule - $parameter\nContext is ${ctx.getParent.getText}")
+          new ParameterReference(parameter, pathComponents(ctx))
+        case Some(other) => assert(false); null
         case None =>
           //
           // Must be an implicit use of the parameter in the current rule scope
