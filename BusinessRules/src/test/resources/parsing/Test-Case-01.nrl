@@ -3,10 +3,10 @@ Model "unused"
 
 // Examples of long "dotted" access paths
 Definition:
-    "has a long dotted path"
+    "is an interest rate swap"
 Given:
     Product("instrument")
- Value:
+Value:
     The instrument.standard.type is equal to "InterestRateSwap"
 
 Validation:

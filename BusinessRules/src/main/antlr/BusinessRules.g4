@@ -40,7 +40,7 @@ context  : 'Context:' parameterDeclaration;
 
 parameterDeclarations : parameterDeclaration (',' parameterDeclaration)*;
 
-parameterDeclaration : ref=modelReference '(' alias=DoubleQuotedString ')';
+parameterDeclaration locals[codegen.symbols.Symbol symbol] : typeName= ModelElementName '(' alias=DoubleQuotedString ')';
 
 constraint      :   'Constraint:' (ifConstraint | logicalStatement)
                 ;
@@ -94,8 +94,8 @@ expression  :   left=expression op=('*' | '/' | '+' | '-'|'mod') right=expressio
             ;
 
 term  :
-        functionalExpression            #FunctionalExpressionTerm
-    |   ref=modelReference frag=FragmentName     #DefinedTermReferenceTerm
+        functionalExpression                    #FunctionalExpressionTerm
+    |   ref=modelReference frag=FragmentName    #DefinedTermReferenceTerm
     |   operatorInvocation              #OperatorInvocationTerm
     |   definitionApplication           #DefinitionApplicationTerm
     |   castExpression                  #CastExpressionTerm

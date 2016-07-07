@@ -102,7 +102,6 @@ class GlobalScope() extends NestedScope(None)
 
 class LocalScope(parentScope: NestedScope) extends NestedScope(Some(parentScope))
 
-
 case class RuleScope(parentScope: NestedScope, modelParameterSymbol: Parameter) extends NestedScope(Some(parentScope)) {
 
   declare(modelParameterSymbol)

@@ -30,29 +30,39 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
 
   override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
 
-    val ref = ctx.context.parameterDeclaration()
+    val decl = ctx.context.parameterDeclaration()
 
-    val parameter = tokenToText(ref.alias)
+    val parameter = tokenToText(decl.alias)
+    val typeName = tokenToText(decl.typeName)
 
-    val symbol = makeParameter(parameter, ref.modelReference)
+    val symbol = makeParameter(parameter, typeName)
     val scope = new RuleScope(symbolTable.scope, symbol)
     symbolTable.openScope(scope)
     annotator.scopes.put(ctx, symbolTable.scope)
-    ref.modelReference.symbol = symbol
-
+    decl.symbol = symbol
   }
 
   override def enterDefinition(ctx: DefinitionContext): Unit = {
     val references = ctx.parameterDeclarations().parameterDeclaration().toList
 
     val params: List[Parameter] = references.map {
-      ref => makeParameter(tokenToText(ref.alias), ref.modelReference)
+      ref =>
+        val param = makeParameter(tokenToText(ref.alias), tokenToText(ref.typeName))
+        ref.symbol = param
+        param
     }
 
     val scope = new DefinitionScope(symbolTable.scope, params)
 
     symbolTable.openScope(scope)
     annotator.scopes.put(ctx, symbolTable.scope)
+
+
+    val definitionSymbol = new DefinedTermSymbol(unquote(ctx.name.getText), ctx)
+    assume(scope.parent.isDefined)
+    scope.parent.get.declare(definitionSymbol)
+
+    System.err.println(s"Inserting ${definitionSymbol}")
   }
 
   override def exitDeclaration(ctx: DeclarationContext) =
@@ -76,15 +86,8 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     else
       ref.propPath.ModelElementName.map(_.getText).toList
 
-  def makeParameter(alias: String, ref: ModelReferenceContext): Parameter = {
-
-    val components: List[String] = pathComponents(ref)
-    val base = components.head
-
-    val p = new Parameter(alias, base)
-    System.err.println(s"New Parameter = $p")
-    p
-  }
+  def makeParameter(alias: String, typeName: String): Parameter =
+    new Parameter(alias, typeName)
 
   def tokenToText(token: Token): String = token match {
     case node: TerminalNode => unquote(node.getText)

@@ -16,70 +16,13 @@ import scala.collection._
 // Generate code from Scala strings and interpolated variables.
 //
 
-class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, className: String, outputPath: File) {
+class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, className: String, outputPath: File)
+  extends TemplateSupport(outputPath, className, ".scala") {
 
   import scala.collection.JavaConversions._
   import StringFormatter._
   import TreeUtilities._
 
-  val verbose = false
-
-  require(outputPath.isDirectory, s"Parameter outputPath does not contain a directory: outputPath = <$outputPath>")
-
-  val ostrm = new FileOutputStream(outputPath.getCanonicalPath + File.separator + className + ".scala")
-  val pw = new PrintWriter(ostrm)
-
-  def print(s: String): Unit = {
-    pw.print(s)
-  }
-
-  def emit(text: String): Unit = {
-    pw.print(text.stripMargin('|'))
-    System.err.print(text.stripMargin('|'))
-  }
-
-  def emit(text: => String): Unit = {
-    pw.print(text.stripMargin('|'))
-    System.err.print(text.stripMargin('|'))
-  }
-
-  def tbd(obj: Any): String = {
-    val msg =
-      obj match {
-        case s: String => s
-        case o => o.getClass.getSimpleName
-      }
-    val top = Thread.currentThread().getStackTrace()
-    s"NOT IMPLEMENTED ($msg)\n"
-  }
-
-  var indent = 0
-  val tabsize = 4
-
-  def template(text: => String): String =
-    if (verbose) {
-      indent = indent + tabsize
-      val top = Thread.currentThread.getStackTrace
-      val scope =
-        top(2).getMethodName match {
-          case "required" => top(3).getMethodName
-          case "optional" => top(3).getMethodName
-          case "apply" => top(3).getMethodName
-          case "alternates" => top(3).getMethodName
-          case "template" => top(3).getMethodName
-          case other => top(2).getMethodName
-        }
-      val tab: String = " " * indent
-      val s = s"""\n$tab>>> $scope [${text.stripMargin('|').trim}]\n$tab<<< $scope"""
-      indent = indent - tabsize
-      s
-    }
-    else
-      text.stripMargin('|')
-
-  def alternates[T](rule: T)(matcher: (T) => String): String = template {
-    matcher(rule)
-  }
 
   def genScalaClass(): Unit = {
 
@@ -121,16 +64,12 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
   }
 
   def genScalaClassFooter() = emit {
-    s"""
-       |}
-       |
-       |
-    """
+    s"""}"""
   }
 
   def genDefinition(defn: DefinitionContext) = template {
     s"""
-       |class ${id(defn.name.getText)}(${defn.name.getText}) extends DefinedTerm {
+       |  class ${id(defn.name.getText)}(${defn.name.getText}) extends DefinedTerm {
        |    def evaluate(${genParameterDeclarations(defn.parameterDeclarations)}): Boolean =
        |        ${genPredicate(defn.value)}
     """
@@ -138,33 +77,27 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
 
   def genRule(rule: ValidationRuleContext) = template {
     s"""
-       |class ${id(rule.name.getText)} (${rule.name.getText}) extends ValidationRule {
-       |  def evaluate(${genParameterDeclaration(rule.context.parameterDeclaration())}): Boolean =
-       |    ${genConstraint(rule.constraint)}
+       |  class ${id(rule.name.getText)} (${rule.name.getText}) extends ValidationRule {
+       |    def evaluate(${genParameterDeclaration(rule.context.parameterDeclaration())}): Boolean =
+       |      ${genConstraint(rule.constraint)}
        |
      """
-
   }
 
   def genParameterDeclarations(params: ParameterDeclarationsContext): String =
     apply(params, classOf[ParameterDeclarationContext], genParameterDeclaration)
 
-
-  def genParameterDeclaration(param: ParameterDeclarationContext) = alternates(param.ref.symbol) {
+  def genParameterDeclaration(param: ParameterDeclarationContext) = alternates(param.symbol) {
     case prm: Parameter =>
       s"${unquote(param.alias.getText)}: ${prm.classifier}"
     case otherwise =>
       throw new IllegalArgumentException(s"Expected a Parameter symbol but found ${otherwise}")
   }
 
-
   def genModelReference(ref: ModelReferenceContext): String =
     ref.symbol match {
-//      case Parameter(name, classifer) =>
-//        s"${name}.${pathComponents(ref).tail.mkString(".")}"
       case ParameterReference(param, components) =>
-        System.err.println(s"""PARAM REFERENCE ${components.mkString(".")}""")
-        s" REF ${param.asComponents.mkString(".")}"
+        s"${components.mkString(".")}"
       //case ParameterReference(param, components) => s" REF ${param.name}.${param.asComponents.tail.mkString(".")}"
       case otherwise =>
         throw new UnexpectedException(s"Symbol Type ${otherwise} is not handled.")
@@ -207,7 +140,7 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
 
   def genTerm(term: TermContext): String = alternates(term) {
     case t: FunctionalExpressionTermContext => genFunctionalExpressionTerm(t)
-    case t: DefinedTermReferenceTermContext => genModelReference(t.modelReference()) + t.FragmentName().getText
+    case t: DefinedTermReferenceTermContext => id(t.FragmentName().getText.stripPrefix("<<").stripSuffix(">>")) + "(" + genModelReference(t.modelReference()) + ")"
     case t: OperatorInvocationTermContext => tbd(t)
     case t: DefinitionApplicationTermContext => tbd(t)
     case t: CastExpressionTermContext => tbd(t)
@@ -225,7 +158,7 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     required(fexpr.functionalExpression, genFunctionalExpression)
 
   def genNumberOfExpression(expr: NumberOfExpressionContext) =
-    required(expr.ref, genModelReference)
+    required(expr.ref, genModelReference) + ".count"
 
   def genFunctionalExpression(ctx: FunctionalExpressionContext) = alternates(ctx) {
     case expr: SumOfExpressionContext => tbd(expr)
@@ -251,8 +184,14 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
       genLogicalStatement(ctx.logicalStatement)
   }
 
-  def genIfConstraint(ctx: IfConstraintContext): String =
-    required(ctx.condBlock, genLogicalStatement) + required(ctx.thenBlock, genLogicalStatement) + optional(ctx.elseBlock, genLogicalStatement)
+  def genIfConstraint(ctx: IfConstraintContext) = template {
+    "if (" +
+    required (ctx.condBlock, genLogicalStatement) +
+    ")\n{ " +
+    required (ctx.thenBlock, genLogicalStatement) + "\n}" +
+    optional (ctx.elseBlock, {
+      a : LogicalStatementContext => "else {" + genLogicalStatement (a) + "}"})
+  }
 
   val EMPTY = "<<EMPTY>>"
 
@@ -261,7 +200,7 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     else if (ctx.or != null) " || "
     else if (ctx.implies != null) "=>"
     else if (ctx.iff != null) "iff"
-    else s"Invalid Binrary Logical Operator: text is ${ctx.getText}"
+    else s"Invalid Binary Logical Operator: text is ${ctx.getText}"
   }
 
   def genBinaryLogicalOperatorStatement(stmt: BinaryLogicalOperatorStatementContext): String =
@@ -274,19 +213,16 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
 
   def genNotExistsStatement(ctx: NotExistsStatementContext) = tbd(ctx)
 
-
   def genLogicalExistsStatement(stmt: LogicalExistsStatementContext): String =
     required(stmt.existsStatement, genExistsStatement)
 
   def genLogicalNotExistsStatement(stmt: LogicalNotExistsStatementContext) =
     required(stmt.notExistsStatement, genNotExistsStatement)
 
-
   def genForAllStatement(ctx: ForallStatementContext) = tbd(ctx)
 
   def genLogicalForAllStatement(stmt: LogicalForAllStatementContext) =
     required(stmt.forallStatement, genForAllStatement)
-
 
   def genLogicalStatement(ctx: LogicalStatementContext) = alternates(ctx) {
     case stmt: BinaryLogicalOperatorStatementContext => genBinaryLogicalOperatorStatement(stmt)
@@ -296,19 +232,5 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     case stmt: LogicalForAllStatementContext => genLogicalForAllStatement(stmt)
     case other => s"Unknown logical statement type $other"
   }
-
-
-  def required[T](value: T, body: (T) => String): String = template {
-    require(value != null, "Required template section expected a non-null value")
-    body(value)
-  }
-
-  def optional[T](value: T, body: (T) => String): String = template {
-    if (value != null)
-      body(value)
-    else ""
-  }
-
-
 }
 

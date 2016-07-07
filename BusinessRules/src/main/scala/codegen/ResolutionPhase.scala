@@ -1,5 +1,7 @@
 package codegen
 
+import java.rmi.UnexpectedException
+
 import codegen.symbols._
 import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.tree.ParseTreeWalker
@@ -8,51 +10,6 @@ import rules.BusinessRulesParser._
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable
-
-
-object TreeUtilities {
-
-  def nameOf(any: Any): String = any.getClass.getSimpleName
-
-  def pathComponents(ref: ModelReferenceContext): List[String] =
-    if (ref.dotPath != null)
-      ref.dotPath.ModelElementName.map(_.getText).toList
-    else
-      ref.propPath.ModelElementName.map(_.getText).toList
-
-
-  def find[T <: NestedScope](cls: Class[T], start: NestedScope): Option[T] =
-    if (start.getClass == cls)
-      Some(start.asInstanceOf[T])
-    else if (start.parent.isDefined)
-      find[T](cls, start.parent.get)
-    else
-      None
-
-  def root(ctx: ModelReferenceContext): String =
-    if (ctx.dotPath != null)
-      ctx.dotPath.root.getText
-    else
-      ctx.propPath.root.getText
-
-  def find[T <: ParserRuleContext](ctx: ParserRuleContext, cls: Class[T]): immutable.List[T] =
-    ctx.getRuleContexts(cls).toList
-
-  def query[T <: ParserRuleContext](ctx: ParserRuleContext)(mapper: (ParserRuleContext) => Option[T]): immutable.List[T] =
-    find(ctx, classOf[ParserRuleContext]).flatMap(mapper(_))
-
-//  def apply[P <: ParserRuleContext, C <: ParserRuleContext](ctx: P, cls: Class[C])(body: (C) => String): String =
-//    ctx.getRuleContexts(cls).toList.foldLeft("")(_ + body(_))
-
-
-  def apply[P <: ParserRuleContext, C <: ParserRuleContext](ctx: P, cls: Class[C],body: (C) => String): String =
-    ctx.getRuleContexts(cls).toList.foldLeft("")(_ + body(_))
-
-
-  def apply[P <: ParserRuleContext](list: List[P])(body: (P) => String): String =
-    list.foldLeft("")(_ + body(_))
-
-}
 
 //
 // Find every model reference and resolve it depending on wheterh it is in a definition or a validation rule.
@@ -111,18 +68,23 @@ class DefinitionResolutionPhase(annotator: ParseTreeScopeAnnotations) extends Bu
     assume(scope.parent.isDefined, s"Current Scope does not have a parent: ${scope}")
 
     val base = root(ctx)
+    val path = pathComponents(ctx)
 
     val symbol =
       scope.resolve(base) match {
-        case Some(s) => s
+        case Some(s: Parameter) => new ParameterReference(s, path)
         case None =>
           // Default to the first parameter in the definitions list of declared parameters.
           // Might want to change this to a different criteria later on - especially when types are
           // associated to symbols.
-          scope.parameters.head
+          new ParameterReference(scope.parameters.head, path)
+        case otherwise =>
+          throw new UnexpectedException(s"Invalid symbol resolution result: $otherwise")
       }
-    System.err.println(s"Definition Resolved <${base}> to <${symbol}>: \nfor node ${ctx.hashCode()}")
+
     ctx.symbol = symbol
+    System.err.println(s"Definition Resolved <${base}> to <${symbol}>: \nfor node ${ctx.hashCode()}")
+
   }
 }
 
@@ -144,7 +106,8 @@ class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extend
 
     val symbol =
       scope.resolve(base) match {
-        case Some(parameter: Parameter) => System.err.println(s"rule - $parameter\nContext is ${ctx.getParent.getText}")
+        case Some(parameter: Parameter) =>
+          System.err.println(s"rule - $parameter\nContext is ${ctx.getParent.getText}")
           new ParameterReference(parameter, pathComponents(ctx))
         case Some(other) => assert(false); null
         case None =>
@@ -153,11 +116,36 @@ class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extend
           //
           val ruleScope = find(classOf[RuleScope], scope).get
           val parameter = ruleScope.modelParameterSymbol
-          new ParameterReference(parameter, pathComponents(ctx))
+          new ParameterReference(parameter, parameter.name :: pathComponents(ctx))
       }
 
-    System.err.println(s"Rule Resolved ${base} to ${symbol}")
+    System.err.println(s"Rule Resolved ${base} to ${symbol} ==> ${symbol.components.head}")
     ctx.symbol = symbol
+  }
+
+  override def enterDefinedTermReferenceTerm(ctx: DefinedTermReferenceTermContext): Unit = {
+
+    val scopeOpt = annotator.scopes(ctx)
+
+    assume(scopeOpt.isDefined, s"Scope not found for parse tree node: ${nameOf(ctx)}")
+
+    val scope = scopeOpt.get
+
+    assume(scope.parent.isDefined, s"Current scope must have a parent")
+
+    val name = ctx.frag.getText.stripPrefix("<<").stripSuffix(">>")
+
+    val defn = scope.resolve(name)
+
+
+    System.err.println(s"The definition [${name}]  is : " + defn)
+
+    scope.parent.get.print(5)
+
+    if (defn.isDefined && defn.get.isInstanceOf[DefinedTermSymbol]) {
+    } else {
+      assert(false)
+    }
   }
 }
 

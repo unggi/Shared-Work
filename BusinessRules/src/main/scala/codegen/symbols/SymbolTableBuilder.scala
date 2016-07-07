@@ -48,5 +48,4 @@ class SymbolTableBuilder(var verbose: Boolean = false) {
     result
   }
 
-
 }
