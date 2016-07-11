@@ -12,17 +12,17 @@ Value:
 Validation:
     "Interest Rate Swap - Exactly two Legs"
 Context:
-    Product("instrument")
+    Instrument("instrument")
 Constraint:
     If the instrument <<is an interest rate swap>>
     then the number of legs is equal to 2
 
---Validation:
---    "Interest Rate Swap - Requires fixed and floating legs"
---Context:
---    Instrument("instrument")
---Constraint:
---    If the instrument is a kind of InterestRateSwap
---    then one of the legs has type = "fixed" and one of the legs has type = "float"
+Validation:
+    "Interest Rate Swap - Requires fixed and floating legs"
+Context:
+    Instrument("instrument")
+Constraint:
+    If the instrument is a kind of InterestRateSwap
+    then one of the legs has type = "fixed" and one of the legs has type = "float"
 
 

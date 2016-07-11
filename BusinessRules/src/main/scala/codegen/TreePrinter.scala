@@ -18,7 +18,7 @@ class TreePrinter(var indent: Int, annotator: ParseTreeScopeAnnotations, pw: Pri
       val space = ">>>>> "
       annotator.scopes(child) match {
         case Some(scope: CollectionMemberScope) =>
-          pw.println(s"${space}CollectionScope ${scope.collectionSymbol} ${scope.collectionSymbol.getOrElse("<empty>")}")
+          pw.println(s"${space}CollectionScope ${scope}")
         case Some(rule: RuleScope) =>
           pw.println(s"${space}RuleScope ${rule.modelParameterSymbol}")
         case Some(definition: DefinitionScope) =>

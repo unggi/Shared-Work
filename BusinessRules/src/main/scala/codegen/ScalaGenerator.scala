@@ -4,13 +4,7 @@ import java.io.{File, FileOutputStream, PrintWriter}
 import java.rmi.UnexpectedException
 
 import codegen.symbols.{Parameter, ParameterReference, Symbol}
-import org.antlr.v4.runtime.ParserRuleContext
-import org.antlr.v4.runtime.tree.ParseTree
-import rules.BusinessRulesParser
 import rules.BusinessRulesParser._
-
-import scala.collection._
-
 
 //
 // Generate code from Scala strings and interpolated variables.
@@ -38,8 +32,7 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     s"""package $packageName
         |
        |class ${id(className)} {
-        |
-       |"""
+        |"""
   }
 
   def genScalaClassBody() = {
@@ -64,7 +57,9 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
   }
 
   def genScalaClassFooter() = emit {
-    s"""}"""
+    s"""
+       |}
+       |"""
   }
 
   def genDefinition(defn: DefinitionContext) = template {
@@ -117,7 +112,9 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
 
   def genIsNotOneOfPredicate(pred: IsNotOneOfPredicateContext) = tbd(pred)
 
-  def genIsKindOfPredicate(pred: IsKindOfPredicateContext) = tbd(pred)
+  def genIsKindOfPredicate(pred: IsKindOfPredicateContext) = template {
+    s"""${genModelReference(pred.ref)}.isInstanceOf[${pred.classifier.getText}]"""
+  }
 
   def genUnaryExpressionPredicate(pred: UnaryExpressionPredicateContext) =
     required(pred.expression, genExpression)
@@ -185,12 +182,16 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
   }
 
   def genIfConstraint(ctx: IfConstraintContext) = template {
-    "if (" +
-    required (ctx.condBlock, genLogicalStatement) +
-    ")\n{ " +
-    required (ctx.thenBlock, genLogicalStatement) + "\n}" +
-    optional (ctx.elseBlock, {
-      a : LogicalStatementContext => "else {" + genLogicalStatement (a) + "}"})
+    s"""if (${required(ctx.condBlock, genLogicalStatement)}) {
+            ${required(ctx.thenBlock, genLogicalStatement)}
+        }""" +
+      optional(ctx.elseBlock, {
+        a: LogicalStatementContext =>
+          s"""else {
+          ${genLogicalStatement(a)}
+          }
+            """
+      })
   }
 
   val EMPTY = "<<EMPTY>>"
@@ -209,12 +210,29 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
   def genLogicalPredicateStatement(stmt: LogicalPredicateStatementContext): String =
     required(stmt.predicate, genPredicate)
 
-  def genExistsStatement(ctx: ExistsStatementContext) = tbd(ctx)
-
   def genNotExistsStatement(ctx: NotExistsStatementContext) = tbd(ctx)
 
-  def genLogicalExistsStatement(stmt: LogicalExistsStatementContext): String =
-    required(stmt.existsStatement, genExistsStatement)
+  def genLogicalExistsStatement(stmt: LogicalExistsStatementContext): String = alternates(stmt.existsStatement) {
+    case e: ConstrainedCollectionMembershipContext => genConstrainedCollectionMembership(e)
+    case e: SimpleExistsContext => tbd(e)
+    case otherwise => System.err.println(s"Invalid type in match => $otherwise")
+      ""
+  }
+
+  def genConstrainedCollectionMembership(stmt: ConstrainedCollectionMembershipContext) = template {
+    val collection = stmt.ref.symbol
+    s"""${genModelReference(stmt.ref)}.count(${genCollectionMemberConstraint(stmt.collectionMemberConstraint())})"""
+  }
+
+  def genCollectionMemberConstraint(cons: CollectionMemberConstraintContext) =
+    required(cons.simpleOrComplexConstraint(), genSimpleOrComplexConstraint)
+
+  def genSimpleOrComplexConstraint(constraint: SimpleOrComplexConstraintContext) = template {
+    if (constraint.constraint != null)
+      genConstraint(constraint.constraint())
+    else
+      genPredicate(constraint.predicate())
+  }
 
   def genLogicalNotExistsStatement(stmt: LogicalNotExistsStatementContext) =
     required(stmt.notExistsStatement, genNotExistsStatement)

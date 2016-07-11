@@ -18,8 +18,8 @@ trait Scope {
 
 abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope {
 
-  private val symbols = new mutable.HashMap[String, Symbol]()
-  private val subScopes = new ListBuffer[NestedScope]()
+  val symbols = new mutable.HashMap[String, Symbol]()
+  val subScopes = new ListBuffer[NestedScope]()
 
   override def declare(symbol: Symbol): Option[Symbol] = {
     assume(!symbols.contains(symbol.name), "Symbol already defined in the same scope")
@@ -53,19 +53,18 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
     else
       None
 
-
-  // Walk back to a containing scope which is a rule scope and find the model reference there.
-  def resolveImplicitParameter(): Option[Symbol] =
-    find(classOf[CollectionMemberScope], this) match {
-      case Some(collectionScope) =>
-        collectionScope.collectionSymbol
-      case None =>
-        find(classOf[RuleScope], this) match {
-          case Some(matchScope) => Some(matchScope.modelParameterSymbol)
-          case None =>
-            None
-        }
-    }
+    // Walk back to a containing scope which is a rule scope and find the model reference there.
+    def resolveImplicitParameter(): Option[Symbol] =
+      find(classOf[CollectionMemberScope], this) match {
+        case Some(collectionScope) =>
+          collectionScope.collectionSymbol
+        case None =>
+          find(classOf[RuleScope], this) match {
+            case Some(matchScope) => Some(matchScope.modelParameterSymbol)
+            case None =>
+              None
+          }
+      }
 
   def addSubScope(subScope: NestedScope): NestedScope = {
     subScopes.append(subScope)
@@ -118,8 +117,17 @@ case class DefinitionScope(parentScope: NestedScope, val parameters: List[Parame
 
 class CollectionMemberScope(parentScope: NestedScope) extends NestedScope(Some(parentScope)) {
 
-  var collectionSymbol: Option[Symbol] = None
+  var collectionRef: Option[ParameterReference] = None
 
-  override def descriptor = s"CollectionMemberScope (_ , ${collectionSymbol.getOrElse("Missing collection Symbol")})"
+  lazy val element = new CollectionIndexSymbol("_", collectionRef.get)
+
+  override def descriptor = s"CollectionMemberScope (${collectionRef.get})"
+
+  override def resolve(name: String): Option[Symbol] =
+    parent.get.resolve(name) match {
+      case Some(symbol) if name.equals(symbol.name) =>
+          Some(element)
+        case None =>
+    }
 }
 

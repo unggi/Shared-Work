@@ -65,7 +65,7 @@ predicate  :
          left=expression comparator right=expression            #BinaryPredicate
     |    expression 'is one of' listDefinition                  #IsOneOfPredicate
     |    expression 'is not one of' listDefinition              #IsNotOneOfPredicate
-    |    modelReference 'is a kind of' ModelElementName         #IsKindOfPredicate
+    |    ref=modelReference 'is a kind of' classifier=ModelElementName         #IsKindOfPredicate
     |    expression                                             #UnaryExpressionPredicate
 //    |   multipleExistsStatement
 //    |   multipleNotExistsStatement

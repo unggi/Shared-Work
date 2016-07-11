@@ -29,7 +29,7 @@ case class Parameter(override val name: String, classifier: String) extends Symb
   override def toString: String = s"Parameter($name, $classifier)"
 }
 
-case class CollectionIndexSymbol(override val name: String, reference: Symbol) extends Symbol(name)
+case class CollectionIndexSymbol(override val name: String, collectionRef: Symbol) extends Symbol(name)
 
 
 

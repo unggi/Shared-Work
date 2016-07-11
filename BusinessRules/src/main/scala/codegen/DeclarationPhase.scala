@@ -70,8 +70,6 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
 
   override def enterCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
 
-    assume(ctx.reference != null)
-
     val scope = new CollectionMemberScope(symbolTable.scope)
     symbolTable.openScope(scope)
     annotator.scopes.put(ctx, symbolTable.scope)

@@ -18,11 +18,6 @@ abstract class TemplateSupport(path: File, basename: String, suffix: String) {
     pw.print(s)
   }
 
-  def emit(text: String): Unit = {
-    pw.print(text.stripMargin('|'))
-    System.err.print(text.stripMargin('|'))
-  }
-
   def emit(text: => String): Unit = {
     pw.print(text.stripMargin('|'))
     System.err.print(text.stripMargin('|'))
