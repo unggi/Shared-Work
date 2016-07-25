@@ -3,7 +3,7 @@ package codegen
 import java.io.{File, FileOutputStream, PrintWriter}
 import java.rmi.UnexpectedException
 
-import codegen.symbols.{Parameter, ParameterReference, Symbol}
+import codegen.symbols._
 import rules.BusinessRulesParser._
 
 //
@@ -93,9 +93,10 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
     ref.symbol match {
       case ParameterReference(param, components) =>
         s"${components.mkString(".")}"
-      //case ParameterReference(param, components) => s" REF ${param.name}.${param.asComponents.tail.mkString(".")}"
+      case ref: CollectionIndexReference =>
+        s"""${ref.name} ${ref}"""
       case otherwise =>
-        throw new UnexpectedException(s"Symbol Type ${otherwise} is not handled.")
+        failure(s"Symbol Type ${otherwise} is not handled.")
     }
 
   def genPredicate(value: PredicateContext) = alternates(value) {
@@ -220,8 +221,9 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
   }
 
   def genConstrainedCollectionMembership(stmt: ConstrainedCollectionMembershipContext) = template {
-    val collection = stmt.ref.symbol
-    s"""${genModelReference(stmt.ref)}.count(${genCollectionMemberConstraint(stmt.collectionMemberConstraint())})"""
+    val collection = stmt.collectionRef.symbol
+
+    s"""${genModelReference(stmt.collectionRef)}.count(${genCollectionMemberConstraint(stmt.collectionMemberConstraint())})"""
   }
 
   def genCollectionMemberConstraint(cons: CollectionMemberConstraintContext) =

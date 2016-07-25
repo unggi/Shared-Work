@@ -1,10 +1,11 @@
 package codegen
 
 import codegen.symbols.NestedScope
-import org.antlr.v4.runtime.ParserRuleContext
+import org.antlr.v4.runtime.tree.TerminalNode
+import org.antlr.v4.runtime.{ParserRuleContext, Token}
 import rules.BusinessRulesParser.ModelReferenceContext
-import scala.collection.JavaConversions._
 
+import scala.collection.JavaConversions._
 import scala.collection.immutable
 
 /**
@@ -12,7 +13,21 @@ import scala.collection.immutable
   */
 object TreeUtilities {
 
+  import StringFormatter._
+
   def nameOf(any: Any): String = any.getClass.getSimpleName
+
+  def tokenToText(token: Token): String = token match {
+    case node: TerminalNode => unquote(node.getText)
+    case token: Token => unquote(token.getText)
+    case unknown =>
+      assert(true, "Unhandled token type " + unknown)
+      ""
+  }
+
+  def failure(msg: String): Nothing = {
+    throw new RuntimeException(msg)
+  }
 
   def pathComponents(ref: ModelReferenceContext): List[String] =
     if (ref.dotPath != null)
@@ -40,7 +55,7 @@ object TreeUtilities {
   def query[T <: ParserRuleContext](ctx: ParserRuleContext)(mapper: (ParserRuleContext) => Option[T]): immutable.List[T] =
     find(ctx, classOf[ParserRuleContext]).flatMap(mapper(_))
 
-  def apply[P <: ParserRuleContext, C <: ParserRuleContext](ctx: P, cls: Class[C],body: (C) => String): String =
+  def apply[P <: ParserRuleContext, C <: ParserRuleContext](ctx: P, cls: Class[C], body: (C) => String): String =
     ctx.getRuleContexts(cls).toList.foldLeft("")(_ + body(_))
 
   def apply[P <: ParserRuleContext](list: List[P])(body: (P) => String): String =

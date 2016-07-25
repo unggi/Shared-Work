@@ -162,11 +162,11 @@ simpleTerm  :
 //
 // Quantifiers
 //
-collectionMemberConstraint[ModelReferenceContext reference] : simpleOrComplexConstraint;
+collectionMemberConstraint[ModelReferenceContext collectionRef] : simpleOrComplexConstraint;
 
 existsStatement :
-                    (enumerator ('of the')?)? ref=modelReference
-                    ('has' | 'have' | 'is' | 'are') ('present' | collectionMemberConstraint[$ref.ctx]) #ConstrainedCollectionMembership
+                    (enumerator ('of the')?)? collectionRef=modelReference
+                    ('has' | 'have' | 'is' | 'are') ('present' | collectionMemberConstraint[$collectionRef.ctx]) #ConstrainedCollectionMembership
                 |   enumerator ('has' | 'have' | 'is' | 'are') simpleOrComplexConstraint     #SimpleExists
                 ;
 

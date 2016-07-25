@@ -1,0 +1,7 @@
+
+
+Features for Nomura Rule Language
+
+FEATURE - Generate Code for Collection filter clauses.
+TODO   Review current implementation (which is not working!!!)
+TODO    Update this list to

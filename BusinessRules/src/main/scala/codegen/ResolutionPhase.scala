@@ -10,14 +10,12 @@ import rules.BusinessRulesParser._
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable
+import TreeUtilities._
 
 //
 // Find every model reference and resolve it depending on wheterh it is in a definition or a validation rule.
 //
-//
 class ResolutionPhase(symbolTable: SymbolTable, annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
-
-  import TreeUtilities._
 
   override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
     val walker = new ParseTreeWalker()
@@ -35,8 +33,6 @@ class ResolutionPhase(symbolTable: SymbolTable, annotator: ParseTreeScopeAnnotat
 
 class DefinitionResolutionPhase(annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
 
-  import TreeUtilities._
-
   override def enterModelReference(ctx: ModelReferenceContext): Unit = {
     System.err.println(s"Definition Scope: parent is <${nameOf(ctx.getParent)}>")
 
@@ -44,7 +40,7 @@ class DefinitionResolutionPhase(annotator: ParseTreeScopeAnnotations) extends Bu
     assume(scopeOpt.isDefined, s"Scope not found for parse tree node: ${nameOf(ctx)}")
 
     val scope = scopeOpt.get.asInstanceOf[DefinitionScope]
-    assume(scope.parent.isDefined, s"Current Scope does not have a parent: ${scope}")
+    assume(scope.parent.isDefined, s"Current Scope does not have a parent: $scope")
 
     val base = root(ctx)
     val path = pathComponents(ctx)
@@ -56,79 +52,66 @@ class DefinitionResolutionPhase(annotator: ParseTreeScopeAnnotations) extends Bu
         case None =>
           // Default to the first parameter in the definitions list of declared parameters.
           // Might want to change this to a different criteria later on - especially when types are
-          // associated to symbols.
+          // associated to symbols. E.g. find the next component element and check to see whether
+          // it is a member of the parameter's type. Then assume that if it is a member, this is the
+          // parameter reference being referred to.
           new ParameterReference(scope.parameters.head, path)
       }
 
     ctx.symbol = symbol
-    System.err.println(s"Definition Resolved <${base}> to <${symbol}>: \nfor node ${ctx.hashCode()}")
+    System.err.println(s"Definition Resolved <$base> to <$symbol>: \nfor node ${ctx.hashCode()}")
 
   }
 }
 
 class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
 
-  import TreeUtilities._
-
-  override def enterModelReference(ctx: ModelReferenceContext): Unit = {
-
-    val scopeOpt = annotator.scopes(ctx)
-
-    assume(scopeOpt.isDefined, s"Scope not found for parse tree node: ${nameOf(ctx)}")
-
-    val scope = scopeOpt.get
-
-    assume(scope.parent.isDefined, s"Current scope must have a parent")
-
-    val base = root(ctx)
-
-    val symbol =
-      scope.resolve(base) match {
-        case Some(parameter: Parameter) =>
-          new ParameterReference(parameter, pathComponents(ctx))
-        case Some(any) => require(false, s"Symbol was resolved to $any but should have been a Parameer"); null
+  override def enterModelReference(ctx: ModelReferenceContext): Unit =
+    ctx.symbol =
+      annotator.scopes(ctx) match {
+        case Some(scope) =>
+          scope.resolve(root(ctx), pathComponents(ctx))
         case None =>
-          //
-          // Must be an implicit use of the parameter in the current rule scope
-          //
-          val ruleScope = find(classOf[RuleScope], scope).get
-          val parameter = ruleScope.modelParameterSymbol
-          new ParameterReference(parameter, parameter.name :: pathComponents(ctx))
+          failure(s"Scope not found for parse tree node: ${nameOf(ctx)}")
       }
 
-    System.err.println(s"Rule Resolved ${base} to ${symbol} ==> ${symbol.components.head}")
-    ctx.symbol = symbol
-  }
-
-  override def enterDefinedTermReferenceTerm(ctx: DefinedTermReferenceTermContext): Unit = {
-
-    val scopeOpt = annotator.scopes(ctx)
-
-    assume(scopeOpt.isDefined, s"Scope not found for parse tree node: ${nameOf(ctx)}")
-
-    val scope = scopeOpt.get
-
-    assume(scope.parent.isDefined, s"Current scope must have a parent")
-
-    val name = ctx.frag.getText.stripPrefix("<<").stripSuffix(">>")
-
-    val defn = scope.resolve(name)
+  override def enterDefinedTermReferenceTerm(ctx: DefinedTermReferenceTermContext): Unit =
+    annotator.scopes(ctx) match {
+      case Some(scope) =>
+        val name = ctx.frag.getText.stripPrefix("<<").stripSuffix(">>")
+        val defn = scope.resolve(name)
+        // TODO - Insert the defined term here ????
+        System.err.println(s"The definition [$name]  is : " + defn)
+      case None =>
+        failure(s"Scope not found for parse tree node: ${nameOf(ctx)}")
+    }
 
 
-    System.err.println(s"The definition [${name}]  is : " + defn)
-
-//    scope.parent.get.print(5)
-
-    // TODO - Insert the defined term here ????
-  }
-
+  //
+  // At the point where the constraint is entered for a collection member test,
+  // the symbol has been declared but we don't know the collection it applies to yet
+  // because the collectionRef (i.e. a model reference) has't been established.
+  // This method sets the collection member scope's index symbol to the fully known
+  // reference to a symbol.
+  //
   override def enterCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
+    val rawScope = annotator.scopes(ctx)
+    System.err.println("Scope Chain")
+    System.err.println(s"$rawScope")
+    var s = rawScope
+    while (s.isDefined && s.get.parent.isDefined) {
+      s = s.get.parent
+      System.err.println(s" ==> ${nameOf(s.get)}")
+    }
 
-    val collection = ctx.reference.symbol.asInstanceOf[ParameterReference]
-    val constraint = ctx
-    val scope = annotator.scopes(constraint).get.asInstanceOf[CollectionMemberScope]
+    val scope = annotator.scopes(ctx).get.asInstanceOf[CollectionMemberScope]
+    scope.indexSymbol = Option(new CollectionIndexSymbol("_", ctx.collectionRef.symbol))
 
-    scope.collectionRef = Some(collection)
+
   }
+
+
 }
+
+
 

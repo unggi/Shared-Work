@@ -37,8 +37,6 @@ object StringFormatter {
 
   def id(s: String): String = unquote(s).replaceAll("[-\\s]+", "_")
 
-//  def toDotPath(modelReference: ModelReferenceContext): String =
-//    modelReference.dotPath.children.toArray.mkString(".")
 }
 
 class StringFormatter extends StringRenderer {

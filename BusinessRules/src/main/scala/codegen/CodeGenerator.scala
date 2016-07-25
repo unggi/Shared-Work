@@ -112,6 +112,8 @@ object CodeGenerator {
     val declarationPhase = new DeclarationPhase(builder)
     walker.walk(declarationPhase, tree)
 
+    printParseTree(tree, declarationPhase.annotator, System.err)
+
     val resolver = new ResolutionPhase(builder.symbolTable, declarationPhase.annotator)
     walker.walk(resolver, tree)
 

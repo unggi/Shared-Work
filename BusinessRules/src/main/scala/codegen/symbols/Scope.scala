@@ -1,6 +1,7 @@
 package codegen.symbols
 
 import codegen.ParseTreeScopeAnnotations
+import codegen.TreeUtilities._
 import org.antlr.v4.runtime.tree.ParseTree
 
 import scala.collection.mutable
@@ -10,7 +11,9 @@ trait Scope {
 
   def declare(entry: Symbol): Option[Symbol]
 
-  def resolve(name: String): Option[Symbol]
+  protected def resolve(name: String): Option[Symbol]
+
+  def resolve(name: String, components: List[String]): Symbol
 
   def hasDefined(name: String): Boolean
 
@@ -29,6 +32,25 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
   override def hasDefined(name: String): Boolean =
     symbols.contains(name)
 
+  override def resolve(base: String, components: List[String]): Symbol = {
+    resolve(base) match {
+      case Some(parameter: Parameter) =>
+        new ParameterReference(parameter, components)
+      case Some(index: CollectionIndexSymbol) =>
+        System.err.println(s"Found collection index: $index")
+        index
+      case Some(any) =>
+        require(false, s"Symbol was resolved to $any but should have been a Parameter or CollectionIndexSymbol"); null
+      case None =>
+        //
+        // Must be an implicit use of the parameter in the current rule scope
+        //
+        val ruleScope = find(classOf[RuleScope], this).get
+        val parameter = ruleScope.modelParameterSymbol
+        new ParameterReference(parameter, parameter.name :: components)
+    }
+  }
+
   override def resolve(name: String): Option[Symbol] =
     symbols.get(name) match {
       case Some(symbol) =>
@@ -40,9 +62,6 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
         }
     }
 
-  def resolveInScope(name: String): Option[Symbol] =
-    symbols.get(name)
-
   def keys = symbols.keySet
 
   def find[T <: NestedScope](cls: Class[T], start: NestedScope): Option[T] =
@@ -53,18 +72,6 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
     else
       None
 
-    // Walk back to a containing scope which is a rule scope and find the model reference there.
-    def resolveImplicitParameter(): Option[Symbol] =
-      find(classOf[CollectionMemberScope], this) match {
-        case Some(collectionScope) =>
-          collectionScope.collectionSymbol
-        case None =>
-          find(classOf[RuleScope], this) match {
-            case Some(matchScope) => Some(matchScope.modelParameterSymbol)
-            case None =>
-              None
-          }
-      }
 
   def addSubScope(subScope: NestedScope): NestedScope = {
     subScopes.append(subScope)
@@ -117,17 +124,19 @@ case class DefinitionScope(parentScope: NestedScope, val parameters: List[Parame
 
 class CollectionMemberScope(parentScope: NestedScope) extends NestedScope(Some(parentScope)) {
 
-  var collectionRef: Option[ParameterReference] = None
+  var indexSymbol: Option[CollectionIndexSymbol] = None
 
-  lazy val element = new CollectionIndexSymbol("_", collectionRef.get)
-
-  override def descriptor = s"CollectionMemberScope (${collectionRef.get})"
-
-  override def resolve(name: String): Option[Symbol] =
+  override def resolve(name: String, components: List[String]): Symbol =
     parent.get.resolve(name) match {
       case Some(symbol) if name.equals(symbol.name) =>
-          Some(element)
-        case None =>
+        symbol
+      case Some(other) =>
+        failure(s"Unexpected Symbol type: $other")
+      case None =>
+        new CollectionIndexReference(indexSymbol.get, components)
     }
+
+  override def descriptor = s"CollectionMemberScope (index = ${indexSymbol})"
+
 }
 
