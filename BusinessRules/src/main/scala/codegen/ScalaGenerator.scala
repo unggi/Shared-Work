@@ -94,7 +94,7 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
       case ParameterReference(param, components) =>
         s"${components.mkString(".")}"
       case ref: CollectionIndexReference =>
-        s"""${ref.name} ${ref}"""
+        s"""${ref.asComponents.mkString(".")}"""
       case otherwise =>
         failure(s"Symbol Type ${otherwise} is not handled.")
     }

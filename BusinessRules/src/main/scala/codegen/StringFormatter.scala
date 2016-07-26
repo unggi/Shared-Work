@@ -32,6 +32,7 @@ object StringFormatter {
       unquoted
   }
 
+
   def unquote(s: String): String =
     s.stripPrefix("\"").stripSuffix("\"").stripPrefix("\'").stripSuffix("\'")
 
