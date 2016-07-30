@@ -1,16 +1,10 @@
 package codegen
 
-import java.rmi.UnexpectedException
-
+import codegen.TreeUtilities._
 import codegen.symbols._
-import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import rules.BusinessRulesBaseListener
 import rules.BusinessRulesParser._
-
-import scala.collection.JavaConversions._
-import scala.collection.immutable
-import TreeUtilities._
 
 //
 // Find every model reference and resolve it depending on wheterh it is in a definition or a validation rule.
@@ -28,7 +22,6 @@ class ResolutionPhase(symbolTable: SymbolTable, annotator: ParseTreeScopeAnnotat
     val resolver = new DefinitionResolutionPhase(annotator)
     walker.walk(resolver, ctx)
   }
-
 }
 
 class DefinitionResolutionPhase(annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
@@ -47,7 +40,7 @@ class DefinitionResolutionPhase(annotator: ParseTreeScopeAnnotations) extends Bu
 
     val symbol =
       scope.resolve(base) match {
-        case Some(s: Parameter) => new ParameterReference(s, path)
+        case Some(s: Parameter) => ParameterReference(s, path)
         case Some(other) => require(other.isInstanceOf[Parameter]); null
         case None =>
           // Default to the first parameter in the definitions list of declared parameters.
@@ -55,13 +48,15 @@ class DefinitionResolutionPhase(annotator: ParseTreeScopeAnnotations) extends Bu
           // associated to symbols. E.g. find the next component element and check to see whether
           // it is a member of the parameter's type. Then assume that if it is a member, this is the
           // parameter reference being referred to.
-          new ParameterReference(scope.parameters.head, path)
+          ParameterReference(scope.parameters.head, path)
       }
 
     ctx.symbol = symbol
     System.err.println(s"Definition Resolved <$base> to <$symbol>: \nfor node ${ctx.hashCode()}")
 
   }
+
+  // TODO - Handle Collection Member Constraints as per below in Validation Rule Resolution
 }
 
 class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
@@ -105,7 +100,7 @@ class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extend
     }
 
     val scope = annotator.scopes(ctx).get.asInstanceOf[CollectionMemberScope]
-    scope.indexSymbol = Option(new CollectionIndexSymbol("_", ctx.collectionRef.symbol))
+    scope.indexSymbol = Option(CollectionIndexSymbol("_", ctx.collectionRef.symbol))
 
 
   }

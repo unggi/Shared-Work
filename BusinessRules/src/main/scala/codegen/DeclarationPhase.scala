@@ -12,8 +12,9 @@ import rules.BusinessRulesParser._
 //
 class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBaseListener {
 
-  import TreeUtilities.tokenToText
   import StringFormatter._
+  import TreeUtilities.tokenToText
+
   import scala.collection.JavaConversions._
 
   //
@@ -34,8 +35,8 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     val parameter = tokenToText(decl.alias)
     val typeName = tokenToText(decl.typeName)
 
-    val symbol = new Parameter(parameter, typeName)
-    val scope = new RuleScope(symbolTable.scope, symbol)
+    val symbol = Parameter(parameter, typeName)
+    val scope = RuleScope(symbolTable.scope, symbol)
     symbolTable.openScope(scope)
     annotator.scopes.put(ctx, symbolTable.scope)
     decl.symbol = symbol
@@ -46,27 +47,25 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
 
     val params: List[Parameter] = references.map {
       ref =>
-        val param = new Parameter(tokenToText(ref.alias), tokenToText(ref.typeName))
+        val param = Parameter(tokenToText(ref.alias), tokenToText(ref.typeName))
         ref.symbol = param
         param
     }
 
-    val scope = new DefinitionScope(symbolTable.scope, params)
+    val scope = DefinitionScope(symbolTable.scope, params)
 
     symbolTable.openScope(scope)
     annotator.scopes.put(ctx, symbolTable.scope)
 
 
-    val definitionSymbol = new DefinedTermSymbol(unquote(ctx.name.getText), ctx)
+    val definitionSymbol = DefinedTermSymbol(unquote(ctx.name.getText), ctx)
     assume(scope.parent.isDefined)
     scope.parent.get.declare(definitionSymbol)
   }
 
-  override def exitDefinition(ctx: DefinitionContext): Unit =
-    symbolTable.closeScope()
+  override def exitDefinition(ctx: DefinitionContext) = symbolTable.closeScope()
 
-  override def exitValidationRule(ctx: ValidationRuleContext) =
-    symbolTable.closeScope()
+  override def exitValidationRule(ctx: ValidationRuleContext) = symbolTable.closeScope()
 
   override def enterCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
 
@@ -75,9 +74,8 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     annotator.scopes.put(ctx, scope)
   }
 
-  override def exitCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
-    symbolTable.closeScope()
-  }
+  override def exitCollectionMemberConstraint(ctx: CollectionMemberConstraintContext) = symbolTable.closeScope()
+
 
 }
 
