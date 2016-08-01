@@ -58,19 +58,12 @@ class TreePrinter(var indent: Int, annotator: ParseTreeScopeAnnotations, pw: Pri
     if (childFields.nonEmpty)
       pw.print(" [" + childFields.map(_.getName).mkString(" | ") + "]")
 
-//    annotator.symbols(child) match {
-//      case Some(symbol) =>
-//        pw.print(s": $symbol ")
-//      case otherwise =>
-//    }
-
     child match {
       case ref : ModelReferenceContext => pw.print(s": ${ref.symbol} ")
       case otherwise =>
     }
 
     pw.println(" " * 10 + "." * 5 + lastScope)
-
 
     indent = indent + 2
   }
