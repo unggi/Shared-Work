@@ -2,7 +2,7 @@ package codegen
 
 import java.io.{FileOutputStream, PrintWriter}
 
-import codegen.modeladaptors.AntlrObjectModelAdaptor
+import codegen.modeladaptors.ANTLRObjectAdaptor
 import org.stringtemplate.v4.{AutoIndentWriter, ST, STGroup, STGroupFile}
 import rules.BusinessRulesParser.{DefinitionContext, FileBodyContext}
 import rules.{BusinessRulesBaseListener, BusinessRulesParser}
@@ -18,7 +18,7 @@ class JavaTargetListener(templateGroupPath: String) extends BusinessRulesBaseLis
 
   val group = new STGroupFile(templateGroupPath)
   STGroup.trackCreationEvents = true;
-  group.registerModelAdaptor(classOf[Object], new AntlrObjectModelAdaptor())
+  group.registerModelAdaptor(classOf[Object], new ANTLRObjectAdaptor())
   group.registerRenderer(classOf[String], new StringFormatter())
 
   var st: ST = _

@@ -83,6 +83,26 @@ object ModelFactory {
 }
 
 class Model(val root: Classifier) {
+
+  val classifierHash = new mutable.HashMap[String, Classifier]()
+  collectClassifiers(root)
+
+  def collectClassifiers(classifier: Classifier): Unit =
+    if (!classifierHash.contains(classifier.name))
+      classifier.outgoing.foreach {
+        case (name, association) =>
+          val target = association.target
+          classifierHash.put(target.name, target)
+          collectClassifiers(target)
+      }
+
+  def isValidClassifier(classifier: String): Boolean = {
+    return classifierHash.contains(classifier)
+  }
+
+  def getClassifierByName(name: String): Option[Classifier] =
+    classifierHash.get(name)
+
   def renderPUML(pw: PrintWriter): Unit = {
 
     def isPrimitive(prop: Property) = prop.classifier.isInstanceOf[Primitive]

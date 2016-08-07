@@ -1,5 +1,6 @@
 package codegen.symbols
 
+import codegen.model.Classifier
 import rules.BusinessRulesParser.DefinitionContext
 
 
@@ -14,7 +15,7 @@ case class DefinedTermSymbol(override val name: String, definition: DefinitionCo
 
 case class LocalVariable(override val name: String) extends Symbol(name)
 
-case class Parameter(override val name: String, classifier: String) extends Symbol(name) {
+case class Parameter(override val name: String, classifier: Classifier) extends Symbol(name) {
   override def toString: String = s"Parameter($name, $classifier)"
 }
 

@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AntlrObjectModelAdaptor implements ModelAdaptor {
+public class ANTLRObjectAdaptor implements ModelAdaptor {
 
     protected static final Member INVALID_MEMBER;
     protected static final Map<Class<?>, Map<String, Member>> membersCache;

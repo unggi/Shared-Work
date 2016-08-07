@@ -84,7 +84,7 @@ class ScalaGenerator(fileBodyContext: FileBodyContext, packageName: String, clas
 
   def genParameterDeclaration(param: ParameterDeclarationContext) = alternates(param.symbol) {
     case prm: Parameter =>
-      s"${unquote(param.alias.getText)}: ${prm.classifier}"
+      s"${unquote(param.alias.getText)}: ${prm.classifier.name}"
     case otherwise =>
       throw new IllegalArgumentException(s"Expected a Parameter symbol but found ${otherwise}")
   }

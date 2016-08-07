@@ -107,7 +107,10 @@ object CodeGenerator {
 
     val walker = new ParseTreeWalker()
 
-    val builder = new SymbolTableBuilder(false)
+    val modelPhase = new ModelBuilderPhase()
+
+    walker.walk(modelPhase, tree)
+    val builder = new SymbolTableBuilder(modelPhase.model, false)
 
     val declarationPhase = new DeclarationPhase(builder)
     walker.walk(declarationPhase, tree)

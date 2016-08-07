@@ -1,7 +1,7 @@
 package codegen
 
 
-import codegen.model.ModelFactory
+import codegen.model.{Classifier, ModelFactory}
 import codegen.symbols.{Parameter, _}
 import org.antlr.v4.runtime.ParserRuleContext
 import rules.BusinessRulesBaseListener
@@ -25,11 +25,6 @@ class DeclarationPhase(builder: SymbolTableBuilder) extends BusinessRulesBaseLis
   //
   val annotator = new ParseTreeScopeAnnotations()
 
-  override def enterModelFileReference(ctx: ModelFileReferenceContext): Unit = {
-    val modelPath = ctx.DoubleQuotedString().getText
-    val model = ModelFactory.create(modelPath)
-    builder.symbolTable = new SymbolTable(model)
-  }
 
   override def enterEveryRule(ctx: ParserRuleContext) = {
     annotator.scopes.put(ctx, builder.scope)
@@ -39,24 +34,34 @@ class DeclarationPhase(builder: SymbolTableBuilder) extends BusinessRulesBaseLis
 
     val decl = ctx.context.parameterDeclaration()
 
-    val parameter = tokenToText(decl.alias)
-    val typeName = tokenToText(decl.typeName)
 
-    val symbol = Parameter(parameter, typeName)
+    val symbol = bindClassifier(decl)
     val scope = RuleScope(builder.scope, symbol)
     builder.openScope(scope)
     annotator.scopes.put(ctx, builder.scope)
     decl.symbol = symbol
   }
 
+  def bindClassifier(decl: ParameterDeclarationContext): Parameter = {
+    val parameter = tokenToText(decl.alias)
+    val typeName = tokenToText(decl.typeName)
+
+    if (!builder.model.isValidClassifier(typeName))
+      throw new RuntimeException(s"Invalid type identifier: $typeName is not a valida type at Line ${decl.typeName.getLine}:${decl.typeName.getCharPositionInLine}")
+
+    val classifier = builder.model.getClassifierByName(typeName)
+    val symbol = new Parameter(parameter, classifier.get)
+
+    decl.symbol = symbol
+    symbol
+  }
+
   override def enterDefinition(ctx: DefinitionContext): Unit = {
     val references = ctx.parameterDeclarations().parameterDeclaration().toList
 
     val params: List[Parameter] = references.map {
-      ref =>
-        val param = Parameter(tokenToText(ref.alias), tokenToText(ref.typeName))
-        ref.symbol = param
-        param
+      decl =>
+        bindClassifier(decl)
     }
 
     val scope = DefinitionScope(builder.scope, params)

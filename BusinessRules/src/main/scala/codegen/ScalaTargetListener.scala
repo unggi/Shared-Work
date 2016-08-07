@@ -3,7 +3,7 @@ package codegen
 
 import java.io.{FileOutputStream, PrintWriter}
 
-import codegen.modeladaptors.AntlrObjectModelAdaptor
+import codegen.modeladaptors.{ANTLRObjectAdaptor}
 import org.stringtemplate.v4.{AutoIndentWriter, ST, STGroup, STGroupFile}
 import rules.BusinessRulesParser.FileBodyContext
 import rules.{BusinessRulesBaseListener, BusinessRulesParser}
@@ -17,7 +17,7 @@ class ScalaTargetListener(template: String, pkg: String, className: String, outp
   val group = new STGroupFile(template)
   STGroup.trackCreationEvents = false
   STGroup.verbose = false
-  group.registerModelAdaptor(classOf[Object], new AntlrObjectModelAdaptor())
+  group.registerModelAdaptor(classOf[Object], new ANTLRObjectAdaptor())
   group.registerRenderer(classOf[String], new StringFormatter())
 
   var st: ST = _

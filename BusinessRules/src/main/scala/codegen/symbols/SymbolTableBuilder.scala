@@ -5,7 +5,7 @@ import codegen.model.Model
 import scala.collection.mutable
 
 
-class SymbolTable(model: Model) {
+class SymbolTable(val model: Model) {
 
   val global = new GlobalScope()
 
@@ -15,9 +15,9 @@ class SymbolTable(model: Model) {
   }
 }
 
-class SymbolTableBuilder(var verbose: Boolean = true) {
+class SymbolTableBuilder(val model: Model,var verbose: Boolean = true) {
 
-  var symbolTable: SymbolTable = _
+  var symbolTable: SymbolTable = new SymbolTable(model)
 
   var scopeStack = new mutable.Stack[NestedScope]() {
     push(symbolTable.global)
