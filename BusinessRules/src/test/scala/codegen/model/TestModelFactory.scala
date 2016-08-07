@@ -11,38 +11,11 @@ import org.scalatest.FlatSpec
   */
 class TestModelFactory extends FlatSpec {
 
-  import GlobalClassifiers._
-  import MultiplicityValues._
-
-  var tradeClass: Classifier = _
   var snapshot: Snapshot = _
 
   override def withFixture(test: NoArgTest) = {
-    // Shared setup (run at beginning of each test)
-    val interestRateSwapClass = new Classifier("InterestRateSwap")
-      .addProperty("ID", StringType)
-      .addProperty("name", StringType)
-
-    val legClass = new Classifier("Leg")
-      .addProperty("cashflowType", StringType)
-      .addProperty("startDate", DateType)
-      .addProperty("endDate", DateType)
-      .addProperty("cashflowFrequency", IntegerType)
-
-    val swapToLeg = new Association("swap has legs", interestRateSwapClass, "swap", One, legClass, "leg", OneOrMore)
-
-    // Build a simple Interest Rate Swap Leg model
-    tradeClass = new Classifier("Trade")
-      .addProperty("entity", StringType)
-      .addProperty("counterparty", StringType)
-      .addProperty("currency", StringType)
-      .addProperty("notional", DoubleType)
-
-    val tradeToSwap = new Association("trade on a swap", tradeClass, "trade", One, interestRateSwapClass, "swap", One)
-
     snapshot = new Snapshot("out.puml")
-    snapshot.remove
-
+    if (snapshot.exists) snapshot.remove
     try
       test()
     finally {
@@ -52,7 +25,7 @@ class TestModelFactory extends FlatSpec {
 
 
   "A Model" should "render as a Plant UML file" in {
-    val model = new Model(tradeClass)
+    val model = ModelFactory.create("SampleTradeModel")
 
     val fostrm = new FileOutputStream("out.puml")
     val ppw = new PrintWriter(fostrm)
@@ -66,7 +39,6 @@ class TestModelFactory extends FlatSpec {
   "A Snapshot" should "not exist before being snapped" in {
 
     assert(!snapshot.exists)
-
   }
 
   it should "exist after taking a snapshot" in {

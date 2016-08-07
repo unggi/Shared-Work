@@ -1,6 +1,7 @@
 package codegen
 
 
+import codegen.model.ModelFactory
 import codegen.symbols.{Parameter, _}
 import org.antlr.v4.runtime.ParserRuleContext
 import rules.BusinessRulesBaseListener
@@ -10,7 +11,7 @@ import rules.BusinessRulesParser._
 //
 // Find every declaration and create a symbol table entry.
 //
-class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBaseListener {
+class DeclarationPhase(builder: SymbolTableBuilder) extends BusinessRulesBaseListener {
 
   import StringFormatter._
   import TreeUtilities.tokenToText
@@ -24,8 +25,14 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
   //
   val annotator = new ParseTreeScopeAnnotations()
 
+  override def enterModelFileReference(ctx: ModelFileReferenceContext): Unit = {
+    val modelPath = ctx.DoubleQuotedString().getText
+    val model = ModelFactory.create(modelPath)
+    builder.symbolTable = new SymbolTable(model)
+  }
+
   override def enterEveryRule(ctx: ParserRuleContext) = {
-    annotator.scopes.put(ctx, symbolTable.scope)
+    annotator.scopes.put(ctx, builder.scope)
   }
 
   override def enterValidationRule(ctx: ValidationRuleContext): Unit = {
@@ -36,9 +43,9 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     val typeName = tokenToText(decl.typeName)
 
     val symbol = Parameter(parameter, typeName)
-    val scope = RuleScope(symbolTable.scope, symbol)
-    symbolTable.openScope(scope)
-    annotator.scopes.put(ctx, symbolTable.scope)
+    val scope = RuleScope(builder.scope, symbol)
+    builder.openScope(scope)
+    annotator.scopes.put(ctx, builder.scope)
     decl.symbol = symbol
   }
 
@@ -52,10 +59,10 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
         param
     }
 
-    val scope = DefinitionScope(symbolTable.scope, params)
+    val scope = DefinitionScope(builder.scope, params)
 
-    symbolTable.openScope(scope)
-    annotator.scopes.put(ctx, symbolTable.scope)
+    builder.openScope(scope)
+    annotator.scopes.put(ctx, builder.scope)
 
 
     val definitionSymbol = DefinedTermSymbol(unquote(ctx.name.getText), ctx)
@@ -63,19 +70,17 @@ class DeclarationPhase(symbolTable: SymbolTableBuilder) extends BusinessRulesBas
     scope.parent.get.declare(definitionSymbol)
   }
 
-  override def exitDefinition(ctx: DefinitionContext) = symbolTable.closeScope()
+  override def exitDefinition(ctx: DefinitionContext) = builder.closeScope()
 
-  override def exitValidationRule(ctx: ValidationRuleContext) = symbolTable.closeScope()
+  override def exitValidationRule(ctx: ValidationRuleContext) = builder.closeScope()
 
   override def enterCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
 
-    val scope = new CollectionMemberScope(symbolTable.scope)
-    symbolTable.openScope(scope)
+    val scope = new CollectionMemberScope(builder.scope)
+    builder.openScope(scope)
     annotator.scopes.put(ctx, scope)
   }
 
-  override def exitCollectionMemberConstraint(ctx: CollectionMemberConstraintContext) = symbolTable.closeScope()
-
-
+  override def exitCollectionMemberConstraint(ctx: CollectionMemberConstraintContext) = builder.closeScope()
 }
 

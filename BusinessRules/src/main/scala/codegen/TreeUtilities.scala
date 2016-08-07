@@ -1,8 +1,9 @@
 package codegen
 
 import codegen.symbols.NestedScope
-import org.antlr.v4.runtime.tree.TerminalNode
-import org.antlr.v4.runtime.{ParserRuleContext, Token}
+import org.antlr.v4.runtime.tree.xpath.XPath
+import org.antlr.v4.runtime.tree.{ParseTree, TerminalNode}
+import org.antlr.v4.runtime.{Parser, ParserRuleContext, Token}
 import rules.BusinessRulesParser.ModelReferenceContext
 
 import scala.collection.JavaConversions._
@@ -35,11 +36,11 @@ object TreeUtilities {
     else
       ref.propPath.ModelElementName.map(_.getText).toList
 
-  def find[T <: NestedScope](cls: Class[T], start: NestedScope): Option[T] =
+  def findAncestor[T <: NestedScope](cls: Class[T], start: NestedScope): Option[T] =
     if (start.getClass == cls)
       Some(start.asInstanceOf[T])
     else if (start.parent.isDefined)
-      find[T](cls, start.parent.get)
+      findAncestor[T](cls, start.parent.get)
     else
       None
 
@@ -49,16 +50,21 @@ object TreeUtilities {
     else
       ctx.propPath.root.getText
 
-  def find[T <: ParserRuleContext](ctx: ParserRuleContext, cls: Class[T]): immutable.List[T] =
+  def findChild[T <: ParserRuleContext](ctx: ParserRuleContext, cls: Class[T]): immutable.List[T] =
     ctx.getRuleContexts(cls).toList
 
   def query[T <: ParserRuleContext](ctx: ParserRuleContext)(mapper: (ParserRuleContext) => Option[T]): immutable.List[T] =
-    find(ctx, classOf[ParserRuleContext]).flatMap(mapper(_))
+    findChild(ctx, classOf[ParserRuleContext]).flatMap(mapper(_))
 
   def apply[P <: ParserRuleContext, C <: ParserRuleContext](ctx: P, cls: Class[C], body: (C) => String): String =
     ctx.getRuleContexts(cls).toList.foldLeft("")(_ + body(_))
 
   def apply[P <: ParserRuleContext](list: List[P])(body: (P) => String): String =
     list.foldLeft("")(_ + body(_))
+
+  def find(ctx: ParserRuleContext, xpath: String, parser: Parser)(body: (ParseTree) => Unit): Unit = {
+    for (t <- XPath.findAll(ctx, xpath, parser))
+      body(t)
+  }
 
 }

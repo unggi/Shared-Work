@@ -71,6 +71,15 @@ object MultiplicityValues {
   */
 object ModelFactory {
 
+  def create(modelPath: String): Model = {
+    modelPath match {
+      case "SampleTradeModel" => new Model(SampleTradeModel.tradeClass)
+      case otherwise =>
+        assert(false, "Unknown Model Path: <" + otherwise + ">")
+        null
+    }
+
+  }
 }
 
 class Model(val root: Classifier) {
@@ -79,6 +88,8 @@ class Model(val root: Classifier) {
     def isPrimitive(prop: Property) = prop.classifier.isInstanceOf[Primitive]
 
     def render(cls: Classifier): Unit = {
+
+      require(cls != null)
 
       val scalars = cls.properties.values.filter(isPrimitive(_))
 
