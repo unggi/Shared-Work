@@ -18,6 +18,12 @@ class Classifier(override val name: String, isPrimitive: Boolean = false) extend
     this
   }
 
+  def findClassifierOfProperty(name: String): Option[Classifier] =
+    properties.get(name) match {
+      case Some(property) => Some(property.classifier)
+      case None => None
+    }
+
   val outgoing = new mutable.HashMap[String, Association]()
 
   def addOutgoing(assoc: Association): Classifier = {
@@ -26,6 +32,9 @@ class Classifier(override val name: String, isPrimitive: Boolean = false) extend
     this
   }
 
+  def findAssociationByTargetName(name: String): Option[Association] =
+    outgoing.get(name)
+
   val incoming = new mutable.HashMap[String, Association]()
 
   def addIncoming(assoc: Association): Classifier = {
@@ -33,6 +42,7 @@ class Classifier(override val name: String, isPrimitive: Boolean = false) extend
     incoming.put(assoc.sourceName, assoc)
     this
   }
+  override def toString(): String = name
 }
 
 class Property(override val name: String, val classifier: Classifier, multiplicity: Multiplicity) extends ModelElement(name)

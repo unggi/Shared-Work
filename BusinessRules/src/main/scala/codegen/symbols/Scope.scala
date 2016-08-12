@@ -36,18 +36,16 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
     resolve(base) match {
       case Some(parameter: Parameter) =>
         new ParameterReference(parameter, components)
-      case Some(index: CollectionIndexSymbol) =>
-        System.err.println(s"Found collection index: $index")
-        index
       case Some(any) =>
-        require(false, s"Symbol was resolved to $any but should have been a Parameter or CollectionIndexSymbol"); null
+        require(false, s"Symbol was resolved to $any but should have been a Parameter")
+        null
       case None =>
         //
         // Must be an implicit use of the parameter in the current rule scope
         //
         val ruleScope = find(classOf[RuleScope], this).get
         val parameter = ruleScope.modelParameterSymbol
-        new ParameterReference(parameter, parameter.name :: components)
+        new ParameterReference(parameter, components)
     }
   }
 

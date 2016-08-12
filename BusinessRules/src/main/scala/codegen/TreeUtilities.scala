@@ -31,8 +31,11 @@ object TreeUtilities {
   }
 
   def pathComponents(ref: ModelReferenceContext): List[String] =
-    if (ref.dotPath != null)
-      ref.dotPath.ModelElementName.map(_.getText).toList
+    if (ref.dotPath != null) {
+      def x = ref.dotPath.ModelElementName.map(_.getText).toList
+      System.err.println(s"""PATH COMPONENTS ${x.mkString(".")}""")
+      x
+    }
     else
       ref.propPath.ModelElementName.map(_.getText).toList
 
