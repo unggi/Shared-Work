@@ -6,7 +6,7 @@ import codegen.symbols.SymbolTableBuilder
 import org.antlr.v4.runtime.tree.{ParseTree, ParseTreeWalker}
 import org.antlr.v4.runtime.{ANTLRFileStream, CommonTokenStream}
 import rules.BusinessRulesParser._
-import rules.{BusinessRulesBaseListener, BusinessRulesLexer, BusinessRulesParser}
+import rules.{BusinessRulesLexer, BusinessRulesParser}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -93,45 +93,37 @@ object CodeGenerator {
 
     parser.setBuildParseTree(true)
 
-    // parser.addParseListener(validator)
+    // Parse Tree is build here starting at entry point called "fileBody" in the grammar.
     val tree: FileBodyContext = parser.fileBody()
 
-    val generator: BusinessRulesBaseListener =
-      outputTarget.toLowerCase match {
-        case "scala" =>
-          new ScalaTargetListener(template.getAbsolutePath,
-            packageName, outputClass, outputPath)
-        case "java" =>
-          new JavaTargetListener(template.getAbsolutePath)
-      }
-
+    // A tree walker will be reused several times to walk multiple phases.
     val walker = new ParseTreeWalker()
 
+    // Gather the models referenced in the input NRL
     val modelPhase = new ModelBuilderPhase()
-
     walker.walk(modelPhase, tree)
+
+    // Build the symbol table with every declaration of a symbol.
+    // The builder is passed to the Declaration Phase
     val builder = new SymbolTableBuilder(modelPhase.model, false)
 
+    // The Declaration Phase gathers all symbol declarations
     val declarationPhase = new DeclarationPhase(builder)
     walker.walk(declarationPhase, tree)
 
-    printParseTree(tree, declarationPhase.annotator, System.err)
-
+    // The Resolution Phase resolves all model references in the source rules.
     val resolver = new ResolutionPhase(builder.symbolTable, declarationPhase.annotator)
     walker.walk(resolver, tree)
 
+    // Print the whole parse tree for diagnostics
     printParseTree(tree, declarationPhase.annotator, System.err)
 
-//    if (generateCode)
-//      walker.walk(generator, tree)
-
-//    println("Parsing is complete")
-
+    // Print the symbol table for diagnostics
     builder.symbolTable.print()
 
-    val pureCodeGenerator = new ScalaGenerator(tree, "rules.compiled", "GeneratedClass", outputDir)
-
-    pureCodeGenerator.genScalaClass()
+    // Finally, create a generator and generate the source code for this input source.
+    val generator = new ScalaGenerator(tree, "rules.compiled", "GeneratedClass", outputDir)
+    generator.genScalaClass()
 
   }
 

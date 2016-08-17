@@ -18,12 +18,13 @@ class Classifier(override val name: String, isPrimitive: Boolean = false) extend
     this
   }
 
-  def findClassifierOfProperty(name: String): Option[Classifier] =
+  def findClassifierOfProperty(name: String): Option[Classifier] = {
+    System.err.println(s"""[[[[[[ Find Attribute $name of: ${properties.get(name)} in Keys(${properties.keySet.mkString(",  ")})""")
     properties.get(name) match {
       case Some(property) => Some(property.classifier)
       case None => None
     }
-
+  }
   val outgoing = new mutable.HashMap[String, Association]()
 
   def addOutgoing(assoc: Association): Classifier = {

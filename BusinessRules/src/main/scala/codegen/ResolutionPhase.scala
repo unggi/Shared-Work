@@ -7,7 +7,8 @@ import rules.BusinessRulesBaseListener
 import rules.BusinessRulesParser._
 
 //
-// Find every model reference and resolve it depending on wheterh it is in a definition or a validation rule.
+// Find every model reference and resolve it depending on whether it is
+// in a definition or a validation rule.
 //
 class ResolutionPhase(symbolTable: SymbolTable, annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
 
@@ -24,11 +25,12 @@ class ResolutionPhase(symbolTable: SymbolTable, annotator: ParseTreeScopeAnnotat
   }
 }
 
-class DefinitionResolutionPhase(annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
+//
+// Analyze a definition to resolve its' model references.
+//
+class DefinitionResolutionPhase(annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener with TypeChecking {
 
   override def enterModelReference(ctx: ModelReferenceContext): Unit = {
-    System.err.println(s"Definition Scope: parent is <${nameOf(ctx.getParent)}>")
-
     val scopeOpt = annotator.scopes(ctx)
     assume(scopeOpt.isDefined, s"Scope not found for parse tree node: ${nameOf(ctx)}")
 
@@ -38,21 +40,24 @@ class DefinitionResolutionPhase(annotator: ParseTreeScopeAnnotations) extends Bu
     val base = root(ctx)
     val path = pathComponents(ctx)
 
+    val line = ctx.start.getLine
+    val column = ctx.start.getCharPositionInLine
+
     val symbol =
       scope.resolve(base) match {
-        case Some(s: Parameter) => ParameterReference(s, path)
+        case Some(s: Parameter) =>
+          checkParameterRefTypes(ParameterReference(s, path), line, column)
         case Some(other) => require(other.isInstanceOf[Parameter]); null
         case None =>
           // By default choose first parameter as the implicit parameter - ???
-          ParameterReference(scope.parameters.head, path)
+          checkParameterRefTypes(ParameterReference(scope.parameters.head, path), line, column)
       }
 
     ctx.symbol = symbol
-    System.err.println(s"Definition Resolved <$base> to <$symbol>: \nfor node ${ctx.hashCode()}")
   }
 }
 
-class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener {
+class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extends BusinessRulesBaseListener with TypeChecking {
 
   override def enterModelReference(ctx: ModelReferenceContext): Unit =
     ctx.symbol =
@@ -60,35 +65,14 @@ class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extend
         case Some(scope) =>
           scope.resolve(root(ctx), pathComponents(ctx)) match {
             case ref: ParameterReference =>
-              try {
-                checkParameterRefTypes(ref)
-              }
-              catch {
-                case e: Throwable => failure(s"""Error ${e.getMessage} at line ${ctx.start.getLine}""")
-              }
-              ref
+              checkParameterRefTypes(ref, ctx.start.getLine, ctx.start.getCharPositionInLine)
+            case ndx: CollectionIndexReference =>
+              ndx
           }
         case None =>
           failure(s"Scope not found for parse tree node: ${nameOf(ctx)}")
       }
 
-  def checkParameterRefTypes(ref: ParameterReference): Unit = {
-    var cls = ref.parameter.classifier
-    for (component <- ref.components) {
-
-      cls.findClassifierOfProperty(component) match {
-        case Some(classifier) =>
-          cls = classifier
-        case None =>
-          cls.findAssociationByTargetName(component) match {
-            case Some(association) =>
-              cls = association.target
-            case None =>
-              failure(s"""Member \"$component\" of ${cls.name} not found in path ${ref.asComponents.mkString(".")}""")
-          }
-      }
-    }
-  }
 
   override def enterDefinedTermReferenceTerm(ctx: DefinedTermReferenceTermContext): Unit =
     annotator.scopes(ctx) match {
@@ -101,7 +85,6 @@ class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extend
         failure(s"Scope not found for parse tree node: ${nameOf(ctx)}")
     }
 
-
   //
   // At the point where the constraint is entered for a collection member test,
   // the symbol has been declared but we don't know the collection it applies to yet
@@ -111,12 +94,41 @@ class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extend
   //
   override def enterCollectionMemberConstraint(ctx: CollectionMemberConstraintContext): Unit = {
 
+    val paramRef = ctx.collectionRef.symbol.asInstanceOf[ParameterReference]
+    debug(s"CollectionMemberConstraint - $paramRef")
+
     val scope = annotator.scopes(ctx).get.asInstanceOf[CollectionMemberScope]
     scope.indexSymbol = Option(CollectionIndexSymbol("_", ctx.collectionRef.symbol))
-
   }
-
 }
 
 
+trait TypeChecking {
 
+  def checkParameterRefTypes(ref: ParameterReference, line: Int, column: Int): Symbol = {
+    var cls = ref.parameter.classifier
+
+    // Try walking the classifiers first and then try associations to match the component name.
+    for (component <- ref.components.tail)
+      cls.findClassifierOfProperty(component) match {
+        case Some(classifier) =>
+          System.err.println(s"[[[[[[[ Matched Property")
+          cls = classifier
+        case None =>
+          cls.findAssociationByTargetName(component) match {
+            case Some(association) =>
+              System.err.println(s"[[[[[[[ Matched Association")
+              cls = association.target
+            case None =>
+              failure(s"""Member \"$component\" of ${cls.name} not found in path ${ref.asComponents.mkString(".")} at $line:$column""")
+          }
+      }
+    // Reference is valid if we get to this point.
+    ref
+  }
+
+  def checkCollectionIndexReference(ref: CollectionIndexReference, line: Int, column: Int): Symbol = {
+    ref
+  }
+
+}

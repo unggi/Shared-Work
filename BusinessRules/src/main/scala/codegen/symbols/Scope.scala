@@ -45,7 +45,7 @@ abstract class NestedScope(var parent: Option[NestedScope] = None) extends Scope
         //
         val ruleScope = find(classOf[RuleScope], this).get
         val parameter = ruleScope.modelParameterSymbol
-        new ParameterReference(parameter, components)
+        new ParameterReference(parameter, parameter.name :: components)
     }
   }
 
@@ -135,6 +135,5 @@ class CollectionMemberScope(parentScope: NestedScope) extends NestedScope(Some(p
     }
 
   override def descriptor = s"CollectionMemberScope (index = ${indexSymbol})"
-
 }
 

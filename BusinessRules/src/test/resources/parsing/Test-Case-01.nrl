@@ -1,13 +1,13 @@
 Model "SampleTradeModel"
 
 
-// Examples of long "dotted" access paths
+// Define what an interest rate swap is
 Definition:
     "is an interest rate swap"
 Given:
     InterestRateSwap("instrument")
 Value:
-    The instrument.standard.type is equal to "InterestRateSwap"
+    The instrument.product.type is equal to "InterestRateSwap"
 
 Validation:
     "Interest Rate Swap - Exactly two Legs"

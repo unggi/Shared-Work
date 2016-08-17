@@ -63,7 +63,12 @@ class TreePrinter(var indent: Int, annotator: ParseTreeScopeAnnotations, pw: Pri
       case otherwise =>
     }
 
-    pw.println(" " * 10 + "." * 5 + lastScope)
+    // Print the top scope - diagnostics only
+    // pw.print(" " * 10 + "." * 5 + lastScope)
+
+    // End of line
+    pw.println()
+
 
     indent = indent + 2
   }

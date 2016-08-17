@@ -21,15 +21,21 @@ case class Parameter(override val name: String, classifier: Classifier) extends 
 
 case class ParameterReference(parameter: Parameter, components: List[String]) extends Symbol(parameter.name) {
 
+  require(components.size > 0, "Component list must have at least one member")
+  require(components.head.equals(parameter.name), "First component in Parameter Reference list must be the parameter itself.")
+
   override def toString: String = s"ParameterReference($parameter, [${components.mkString(", ")}])"
 
   override def asComponents: Array[String] = (parameter.name :: components).toArray
 
 }
 
-case class CollectionIndexSymbol(override val name: String, collectionRef: Symbol) extends Symbol(name) {
+//
+// An index into a Collection of Elements.
+//
+case class CollectionIndexSymbol(override val name: String, collectionRef: Symbol, elementClassifier: Classifier) extends Symbol(name) {
   override def toString: String =
-    s"CollectionIndexSymbol(name = $name, collectionRef = [$collectionRef])"
+    s"CollectionIndexSymbol(name = $name, collectionRef = [$collectionRef] $elementClassifier)"
 }
 
 case class CollectionIndexReference(collectionIndexSymbol: CollectionIndexSymbol, components: List[String]) extends Symbol(collectionIndexSymbol.name) {

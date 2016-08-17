@@ -26,8 +26,12 @@ object TreeUtilities {
       ""
   }
 
-  def failure(msg: String): Nothing = {
+  def failure[T](msg: String): T = {
     throw new RuntimeException(msg)
+  }
+
+  def debug(msg: String): Unit = {
+    System.err.println("DEBUG >> " + msg)
   }
 
   def pathComponents(ref: ModelReferenceContext): List[String] =
