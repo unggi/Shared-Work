@@ -131,6 +131,7 @@ class CollectionMemberScope(parentScope: NestedScope) extends NestedScope(Some(p
       case Some(other) =>
         failure(s"Unexpected Symbol type: $other")
       case None =>
+        require(indexSymbol.isDefined)
         new CollectionIndexReference(indexSymbol.get, components)
     }
 
