@@ -97,6 +97,11 @@ class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extend
     val paramRef = ctx.collectionRef.symbol.asInstanceOf[ParameterReference]
     debug(s"CollectionMemberConstraint - $paramRef")
 
+    paramRef.classifier.findAssociationByTargetName()
+
+
+
+
     val scope = annotator.scopes(ctx).get.asInstanceOf[CollectionMemberScope]
     scope.indexSymbol = Option(CollectionIndexSymbol("_", ctx.collectionRef.symbol))
   }
