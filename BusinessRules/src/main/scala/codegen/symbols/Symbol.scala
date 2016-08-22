@@ -42,7 +42,6 @@ case class CollectionIndexSymbol(override val name: String, association: Associa
     s"CollectionIndexSymbol(name = $name, association = ${association.name}, collection = ${association.targetName} type = ${association.target})"
 
   override def classifier: Classifier = association.target
-
 }
 
 case class CollectionIndexReference(collectionIndexSymbol: CollectionIndexSymbol, components: List[String]) extends Symbol(collectionIndexSymbol.name) {

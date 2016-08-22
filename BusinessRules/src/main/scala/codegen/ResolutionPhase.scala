@@ -1,6 +1,7 @@
 package codegen
 
 import codegen.TreeUtilities._
+import codegen.model.Association
 import codegen.symbols._
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import rules.BusinessRulesBaseListener
@@ -97,13 +98,10 @@ class ValidationRuleResolutionPhase(annotator: ParseTreeScopeAnnotations) extend
     val paramRef = ctx.collectionRef.symbol.asInstanceOf[ParameterReference]
     debug(s"CollectionMemberConstraint - $paramRef")
 
-    paramRef.classifier.findAssociationByTargetName()
-
-
-
+    val association: Option[Association] = paramRef.classifier.findAssociationByTargetName(paramRef.components.last)
 
     val scope = annotator.scopes(ctx).get.asInstanceOf[CollectionMemberScope]
-    scope.indexSymbol = Option(CollectionIndexSymbol("_", ctx.collectionRef.symbol))
+    scope.indexSymbol = Option(CollectionIndexSymbol("_", association.get))
   }
 }
 
@@ -117,12 +115,10 @@ trait TypeChecking {
     for (component <- ref.components.tail)
       cls.findClassifierOfProperty(component) match {
         case Some(classifier) =>
-          System.err.println(s"[[[[[[[ Matched Property")
           cls = classifier
         case None =>
           cls.findAssociationByTargetName(component) match {
             case Some(association) =>
-              System.err.println(s"[[[[[[[ Matched Association")
               cls = association.target
             case None =>
               failure(s"""Member \"$component\" of ${cls.name} not found in path ${ref.asComponents.mkString(".")} at $line:$column""")
