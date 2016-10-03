@@ -59,10 +59,7 @@ class DeclarationPhase(builder: SymbolTableBuilder) extends BusinessRulesBaseLis
   override def enterDefinition(ctx: DefinitionContext): Unit = {
     val references = ctx.parameterDeclarations().parameterDeclaration().toList
 
-    val params: List[Parameter] = references.map {
-      decl =>
-        bindClassifier(decl)
-    }
+    val params: List[Parameter] = references.map(bindClassifier(_))
 
     val scope = DefinitionScope(builder.scope, params)
 

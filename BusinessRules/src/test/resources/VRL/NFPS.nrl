@@ -1,16 +1,82 @@
 Model "NFPSValidationRequest"
 
--- Map fields of the Trade object in the NFPS Validation Request to names understood in the domain model.
-Mapping of Trade
-    "Account" is Trade.CounterpartyOrThirdParty.Account
-    "Product Type" is Trade.ProductType
-    "Organization" is Trade.Account.OwningOrg
-    "Product Types for this Organization" are Trade.Account.OwningOrg.OrganizationProductTypes
 
 
+
+-- Model is expanded here
+
+class Trade {
+    ValuationFunction
+    TicketID
+    DatabaseID
+    LegalEntity
+    BookID
+    Counterparty
+    TradeDate
+    Salesman
+    CounterpartyFacingEntity
+    CounterpartyOrThirdParty
+    ISDAProductTaxonomy
+    DTCCProductType
+    DeliveryCurrency
+    Currencies
+    SettlementType
+    BasketName
+    CDSClearingHouse
+    ClearingHouse
+    CPartyTrader
+    CSAPricingMode
+    DomSetIndex
+    ExecutingSalesperson
+    ExecutionVenueType
+    ExercisedFromOptionTradeDate
+    FgnSetIndex
+    FltCoupFreq
+    FltDC
+    FxdCoupFreq
+    FxdDC
+    FxRateUSDCCY
+    IsAssignedTrade
+    MandatoryClearingExemption
+    MandatoryClearingJurisdiction
+    MandatoryExecutionExemption
+    Margin
+    Maturity
+    Notional
+    ReferenceEntity
+    RuleIsValid
+    SetIndex
+    SourceSystem
+    StartType
+    Trader
+    TradeTenureDays
+    TradeTenureMonths
+}
 
 
 -- Import functions to be invoked in the rules
+External Function: exists in RDM (entityType: String, id: String): Boolean
+External Function: is related in RDM(sourceID: String, relationName: String,  targetID: String)
+
+
+-- Counterparty to Entity Relationship
+Definition of: Valid Entity in RDM
+Context: Trade
+LegalEntity <<exists in RDM>> as "Entity"
+
+Definition of: CounterpartyID
+Context: Trade
+if Counterparty <<exists in RDM>> as "Counterparty" then CounterpartyID is Counterparty
+
+Validation Rule: "Valid Counterparty has a Valid Entity in RDM"
+Context: Trade
+if
+    <<Valid Entity>> is present exists and CounterpartyID exists
+then
+    CounterpartyID <<is related in rdm>> to EntityID as "counterparty to entity link"
+
+
+
 
 
 
