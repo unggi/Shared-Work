@@ -1,9 +1,8 @@
 package codegen
 
-import java.io.StringWriter
-import java.util.{Calendar, Date}
+import java.io.{PrintWriter, StringWriter}
 
-import org.scalatest.{Matchers, FlatSpec, FunSuite}
+import org.scalatest.{FlatSpec, Matchers}
 import org.stringtemplate.v4.AutoIndentWriter
 
 class DependencyGraphTest extends FlatSpec with Matchers {
@@ -23,25 +22,25 @@ class DependencyGraphTest extends FlatSpec with Matchers {
 
     addRules(d, e)
 
-    addDependency(a -> d)
-    addDependency(a -> e)
-    addDependency(b -> e)
-
     val f = new VariableNode("F")
     val g = new VariableNode("G")
 
     addVariables(f, g)
 
-    addDependency(f -> d)
-    addDependency(g -> e)
+    val h = new FactNode("H")
+    val i = new FactNode("I")
 
-    val h = new OutputNode("H")
-    val i = new OutputNode("I")
+    addFacts(h, i)
 
-    addOutputs(h, i)
+    a -> d
+    d -> i
+    a -> e -> b -> e
 
-    addDependency(d -> h)
-    addDependency(e -> i)
+    f -> d
+    g -> e
+    d -> h
+    e -> i
+
   }
 
   "The test graph" should "render as defined" in {
@@ -58,9 +57,20 @@ class DependencyGraphTest extends FlatSpec with Matchers {
   it should "dependency implies successor relationship" in {
     val j = new InputNode("J")
     val k = new InputNode("K")
-    graph.addDependency(j -> k)
+    graph.addInputs(j, k)
+    j -> k
+    assert(j.isSuccessor(k))
   }
 
+  "The test graph" should "render UML as defined" in {
+
+    val sw = new StringWriter()
+
+    graph.toUml(new PrintWriter(sw))
+
+    println(sw.getBuffer.toString)
+    assert(true)
+  }
 
 
 }

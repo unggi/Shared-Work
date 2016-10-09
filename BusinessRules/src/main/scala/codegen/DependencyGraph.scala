@@ -1,65 +1,83 @@
 package codegen
 
+import java.io.PrintWriter
+
 import org.stringtemplate.v4.AutoIndentWriter
 
 import scala.collection.immutable.HashSet
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
-
 
 object DependencyGraph {
 
-  trait NodeWithSuccessors {
 
-    val successors = new ListBuffer[NodeWithSuccessors]()
-
+  trait Node {
     def name: String = ""
+  }
 
-    def isSuccessor(n: NodeWithSuccessors): Boolean = successors.contains(n.name)
+  trait Successors {
 
-    def addSuccessor(to: NodeWithSuccessors): NodeWithSuccessors = {
-      successors.append(to)
+    self: Node =>
+
+    val successors = mutable.Map[String, Node]()
+
+    def isSuccessor(n: Node): Boolean = successors.contains(n.name)
+
+    def addSuccessor(to: Node): Successors = {
+      successors.put(to.name, to)
       self
+    }
+
+    def ->(to: Node): Node = {
+      addSuccessor(to)
+      to
     }
 
   }
 
-  trait NodeWithPredecessors {
+  trait Predecessors {
+    self: Node =>
 
-    def name: String = ""
+    val predecessors = mutable.Map[String, Node]()
 
-    val predecessors = new ListBuffer[NodeWithPredecessors]()
+    def isPredecessor(n: Node): Boolean = predecessors.contains(n.name)
 
-    def isPredecessor(n: NodeWithPredecessors): Boolean = predecessors.contains(n.name)
-
-    def addPredecessor(from: NodeWithPredecessors): BiDirectionalNode = {
-      predecessors.append(from)
+    def addPredecessor(from: Node): Predecessors = {
+      predecessors.put(from.name, from)
       self
     }
   }
 
-  trait BiDirectionalNode extends NodeWithSuccessors with NodeWithPredecessors {
-    self =>
+  trait BiDirectionalNode extends Node with Predecessors with Successors {
+    self: Node =>
 
-    def addSuccessor(to: BiDirectionalNode): BiDirectionalNode = {
-      successors.append(to)
-      to.predecessors.append(self)
+    override def addSuccessor(to: Node): Successors = {
+      if (!self.name.equals(to.name)) {
+        super.addSuccessor(to)
+        to match {
+          case pre: Predecessors =>
+            pre.addPredecessor(self)
+        }
+      }
       self
     }
 
-    def addPredecessor(from: BiDirectionalNode): BiDirectionalNode = {
-      predecessors.append(from)
-      from.successors.append(self)
-      self
+    override def addPredecessor(from: Node): Predecessors = {
+      if (!self.name.equals(from.name)) {
+        super.addPredecessor(from)
+        from match {
+          case succ: Successors =>
+            succ.addSuccessor(self)
+        }
+      }
+      this
     }
   }
 
+  class InputNode(override val name: String) extends Node with Successors
 
-  class InputNode(override val name: String) extends NodeWithSuccessors
+  class RuleNode(override val name: String) extends Node with Predecessors
 
-  class RuleNode(override val name: String) extends BiDirectionalNode
-
-  class VariableNode(override val name: String) extends NodeWithSuccessors
+  class VariableNode(override val name: String) extends BiDirectionalNode
 
   class FactNode(override val name: String) extends BiDirectionalNode
 
@@ -83,8 +101,8 @@ class DependencyGraph {
 
   import DependencyGraph._
 
-  val inputs = new mutable.HashMap[String, NodeWithSuccessors]()
-  val nodes = new mutable.HashMap[String, NodeWithSuccessors]()
+  val inputs = mutable.Map[String, InputNode]()
+  val nodes = mutable.Map[String, Node]()
 
   def addInputs(args: InputNode*): Unit = {
     for (input <- args) {
@@ -101,40 +119,90 @@ class DependencyGraph {
     for (variable <- variables)
       nodes.put(variable.name, variable)
 
-  def addDependency(from: NodeWithSuccessors, to: NodeWithSuccessors) = from.successors.append(to)
+  def addFacts(facts: FactNode*) =
+    for (fact <- facts)
+      nodes.put(fact.name, fact)
 
-  def addDependency(link: Tuple2[NodeWithSuccessors, NodeWithSuccessors]) = link._1.successors.append(link._2)
+  def addDependency(from: Successors, to: Node) = from.addSuccessor(to)
 
-  def isDependency(from: NodeWithSuccessors, to: NodeWithSuccessors): Boolean = from.successors.contains(to.name)
 
-  def isDependency(link: Tuple2[NodeWithSuccessors, NodeWithSuccessors]) = link._1.successors.contains(link._2)
-
-  def findNode(name: String): Option[NodeWithSuccessors] = nodes.get(name)
+  def findNode(name: String): Option[Node] = nodes.get(name)
 
   val indent = "--"
 
   def render(pw: AutoIndentWriter): Unit = {
-    val visited = new HashSet[NodeWithSuccessors]()
-    for (node <- inputs.values) {
+    val visited = new HashSet[Node]()
+    val sorted = nodes.values.toArray.sortBy(_.name)
+    for (node <- sorted) {
       pw.write(s"Input[${node.name}]\n")
       pw.pushIndentation(indent)
-      node.successors.foreach(render(_, pw, visited + node))
+      node match {
+        case succ: Successors =>
+          succ.successors.values.foreach(render(_, pw, visited + node))
+        case _ =>
+      }
       pw.popIndentation
     }
   }
 
-  def render(node: NodeWithSuccessors, pw: AutoIndentWriter, visited: Set[NodeWithSuccessors]): Unit = {
+  def render(node: Node, pw: AutoIndentWriter, visited: Set[Node]): Unit = {
     pw.write("> ")
     node match {
-      case rule: RuleNode => pw.write(s"Rule[${node.name}]\n")
-      case input: InputNode => pw.write(s"Input[${node.name}]\n")
-      case variable: VariableNode => pw.write(s"Variable[${node.name}]\n")
-      case output: OutputNode => pw.write(s"Output[${node.name}, ${}}]\n")
+      case rule: RuleNode => pw.write(s"Rule[${rule.name}]\n")
+      case input: InputNode => pw.write(s"Input[${input.name}]\n")
+      case variable: VariableNode => pw.write(s"Variable[${variable.name}]\n")
+      case fact: FactNode => pw.write(s"Fact[${fact.name}]\n")
       case unknown =>
         System.err.println(s"Unknown Graph Node type: ${unknown.getClass}")
     }
     pw.pushIndentation(indent)
-    node.successors.foreach(render(_, pw, visited + node))
+    node match {
+      case succ: Successors =>
+        succ.successors.values.foreach(render(_, pw, visited + node))
+      case x =>
+    }
     pw.popIndentation
   }
+
+  def toUml(pw: PrintWriter): Unit = {
+    pw.println("@startuml")
+    val sorted = nodes.values.toArray.sortBy(_.name)
+    for (node <- sorted)
+      node match {
+        case rule: RuleNode =>
+          pw.println(s"""class ${rule.name} as "${simpleName(rule)}[${rule.name}]" """)
+        case input: InputNode =>
+          pw.println(s"""class ${input.name} as "${simpleName(input)}[${input.name}]" """)
+        case variable: VariableNode =>
+          pw.println(s"""class ${variable.name} as "${simpleName(variable)}[${variable.name}]" """)
+        case fact: FactNode =>
+          pw.println(s"""class ${fact.name} as "${simpleName(fact)}[${fact.name}]" """)
+        case unknown =>
+          System.err.println(s"Unknown Graph Node type: ${unknown.getClass}")
+      }
+    for (node <- sorted)
+      node match {
+        case succ: Successors =>
+          succ.successors.values.foreach {
+            s =>
+              pw.println(s"${node.name} ---> ${s.name}: >")
+          }
+        case _ =>
+
+      }
+    for (node <- sorted)
+      node match {
+        case pre: Predecessors =>
+          pre.predecessors.values.foreach {
+            p: Node =>
+              pw.println(s"${node.name} ---> ${p.name} :  <")
+          }
+        case _ =>
+      }
+    pw.println("@enduml")
+
+  }
+
+  def simpleName(obj: Any): String = obj.getClass.getSimpleName
 }
+
